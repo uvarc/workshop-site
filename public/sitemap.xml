@@ -24,6 +24,10 @@
   </url>
   
   <url>
+    <loc>/lesson/r-cond-iter/</loc>
+  </url>
+  
+  <url>
     <loc>/lesson/r-intro/</loc>
   </url>
   
@@ -31,6 +35,10 @@
     <loc>/lesson/</loc>
     <lastmod>2015-07-23T21:13:14-05:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/lesson/r-opt/</loc>
   </url>
   
   <url>

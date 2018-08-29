@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>R Optimization - SOMRC Workshops</title>
+  <meta property="og:title" content="R Optimization - SOMRC Workshops" />
+  <meta name="twitter:title" content="R Optimization - SOMRC Workshops" />
+  <meta name="description" content="SLIDES
+Setup install.packages(&quot;data.table&quot;) install.packages(&quot;readr&quot;) install.packages(&quot;profvis&quot;) install.packages(&quot;microbenchmark&quot;) install.packages(&quot;dplyr&quot;) install.packages(&quot;ggplot2&quot;) install.packages(&quot;pryr&quot;) install.packages(&quot;nycflights13&quot;) library(data.table) library(readr) library(profvis) library(microbenchmark) library(dplyr) library(ggplot2) library(pryr) library(nycflights13)  Overview One could argue that “optimizing” can generally refer to any strategy for improving a programmatic workflow. In terms of code, that could include making your script more legible … or using a more efficient memory footprint … or even making it work with a preferred set of tools or packages. But generally, when people refer to optimization they’re actually interested in improving speed of execution, and that will be the focus of this material.">
+  <meta property="og:description" content="SLIDES
+Setup install.packages(&quot;data.table&quot;) install.packages(&quot;readr&quot;) install.packages(&quot;profvis&quot;) install.packages(&quot;microbenchmark&quot;) install.packages(&quot;dplyr&quot;) install.packages(&quot;ggplot2&quot;) install.packages(&quot;pryr&quot;) install.packages(&quot;nycflights13&quot;) library(data.table) library(readr) library(profvis) library(microbenchmark) library(dplyr) library(ggplot2) library(pryr) library(nycflights13)  Overview One could argue that “optimizing” can generally refer to any strategy for improving a programmatic workflow. In terms of code, that could include making your script more legible … or using a more efficient memory footprint … or even making it work with a preferred set of tools or packages. But generally, when people refer to optimization they’re actually interested in improving speed of execution, and that will be the focus of this material.">
+  <meta name="twitter:description" content="SLIDES
+Setup install.packages(&quot;data.table&quot;) install.packages(&quot;readr&quot;) install.packages(&quot;profvis&quot;) install.packages(&quot;microbenchmark&quot;) …">
+  <meta name="author" content=""/>
+  <meta property="og:site_name" content="SOMRC Workshops" />
+  <meta property="og:url" content="/lesson/r-opt/" />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="generator" content="Hugo 0.37.1" />
+  <link rel="stylesheet" href="/css/style.css" media="all" />
+  <link rel="stylesheet" href="/css/syntax.css" media="all" />
+  <link rel="stylesheet" href="/css/custom.css" media="all" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+<header class="site-header">
+  <nav class="site-navi">
+    <h1 class="site-title"><a href="/">SOMRC Workshops</a></h1>
+    <ul class="site-navi-items">
+      <li class="site-navi-item-categories"><a href="/categories/" title="Topics">Topics</a></li>
+      <li class="site-navi-item-tags"><a href="/lesson/" title="Lessons">Lessons</a></li>
+      <li class="site-navi-item-cadre-academy"><a href="https://education.cadre.virginia.edu/" title="CADRE Academy">CADRE Academy</a></li>
+    </ul>
+  </nav>
+</header>
+<hr class="site-header-bottom">
+
+  <div class="main" role="main">
+    <article class="article">
+      
+      
+      <h1 class="article-title">R Optimization</h1>
+      
+      <hr class="article-title-bottom">
+      <ul class="article-meta">
+        
+        <li class="article-meta-categories">
+          <a href="/categories/r-programming/">
+            <i class="fas fa-folder"></i>
+            R PROGRAMMING
+          </a>&nbsp;
+        </li>
+      </ul>
+      
+<aside class="toc">
+  
+</aside>
+      <p><a class="btn btn-success btn-lg" href="/slides/r-opt-slides.html" role="button">SLIDES</a></p>
+<div id="setup" class="section level2">
+<h2>Setup</h2>
+<pre class="r"><code>install.packages(&quot;data.table&quot;)
+install.packages(&quot;readr&quot;)
+install.packages(&quot;profvis&quot;)
+install.packages(&quot;microbenchmark&quot;)
+install.packages(&quot;dplyr&quot;)
+install.packages(&quot;ggplot2&quot;)
+install.packages(&quot;pryr&quot;)
+install.packages(&quot;nycflights13&quot;)</code></pre>
+<pre class="r"><code>library(data.table)
+library(readr)
+library(profvis)
+library(microbenchmark)
+library(dplyr)
+library(ggplot2)
+library(pryr)
+library(nycflights13)</code></pre>
+</div>
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>One could argue that “optimizing” can generally refer to any strategy for improving a programmatic workflow. In terms of code, that could include making your script more legible … or using a more efficient memory footprint … or even making it work with a preferred set of tools or packages. But generally, when people refer to optimization they’re actually interested in improving <em>speed</em> of execution, and that will be the focus of this material.</p>
+<p>What follows will be an overview of some R optimization / preformance observations, which are made in context of data manipulation, IO, visualization, vectorization and memory usage. We will <strong>not</strong> cover any of the following: parallelization, distributed big data methods (mapReduce), performance optimization with Rcpp. These are important topics, and if you’re interested consider reviewing available material<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a><a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a><a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a> devoted to them.</p>
+</div>
+<div id="speed" class="section level2">
+<h2>Speed</h2>
+<p>If you’ve read any material about optimization in R, you might have come across the central dogma: <em>R is slow</em> … and that’s true, though not necessarily a knock on R as a language. There are inherent things about R (AND as it’s open-source implementation) that limit its performance.</p>
+<p>In terms of core language limitations, some of the features intended to make R easy / intuitive for users actually make it slower. For example, the concept of extreme dynamism (i.e. that objects can be overwritten or changed after creation) creates performance overhead. Likewise there’s overhead with lazy evaluation and lexical scoping that generally can’t be avoided. For more detailed descriptions and examples of these (as well as the limitations created by how R is <em>implemented</em>) see Hadley Wickham’s <em>Advanced R</em> chapter on performance<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a>.</p>
+<p>All that said … it’s probably safe to assume that <em>most</em> performance roadblocks don’t stem from how R is designed or implemented in open-source. Rather, they come from how R code is written by users.</p>
+<p>So as an R user / programmer / developer … how do you gauge the speed of your code?</p>
+</div>
+<div id="benchmarking-tools" class="section level2">
+<h2>Benchmarking Tools</h2>
+<p>There are several ways in R to measure the speed of your code.</p>
+<p>To illustrate, let’s create an example function that will 1) generate a distribution of random numbers and 2) plot a histogram of that distribution:</p>
+<pre class="r"><code>distro &lt;- function(size = 1e7, type = &quot;normal&quot;, ...) {
+  
+  x &lt;-
+    switch(type,
+           &quot;normal&quot; = rnorm(size, ...),
+           &quot;uniform&quot; = runif(size, ...),
+           &quot;poisson&quot; = rpois(size, ...)
+           )
+  
+  hist(x)
+  
+}</code></pre>
+<p>With base R, we can perform a crude but perhaps sufficient time test by measuring <code>Sys.time()</code> before and after the execution, then finding the difference between the two:</p>
+<pre class="r"><code># capture time before evaluation
+st &lt;- Sys.time()
+
+# evaluate ...
+distro()
+
+# capture time after evaluation
+et &lt;- Sys.time()
+
+# difference?
+et - st</code></pre>
+<p>Alternatively, we can wrap the function in <code>system.time()</code>:</p>
+<pre class="r"><code># wrap evaluation in system.time()
+system.time({
+  
+  distro()
+
+})</code></pre>
+<p>That will give us the time measurements for “system”, “user” and “elapsed” time. See <code>?proc.time</code> (or go to Google<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a>) for more on the differences between these measurements. Suffice it to say that what we are likely most interested in is the elapsed time.</p>
+<p>The <code>microbenchmark</code> package <a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a> provides an even more robust set of tools for repeated time tests.</p>
+<p>We can wrap the call to our function in <code>microbenchark()</code> to produce a data frame with a summary of the distribution of how long it took for each of the n iterations (“times”) specified:</p>
+<pre class="r"><code>library(microbenchmark)
+microbenchmark(distro(), times = 10)</code></pre>
+<p><code>microbenchmark()</code> can accept an expression or expressions that can be named … this facilitates side-by-side comparison of methods:</p>
+<pre class="r"><code>microbenchmark(
+  normal = distro(size = 1e5, type = &quot;normal&quot;), 
+  unif = distro(size = 1e5, type = &quot;uniform&quot;),
+  pois = distro(size = 1e5, type = &quot;poisson&quot;, lambda = 2)
+  )</code></pre>
+<p>For visualizing overall performance (and granularly at each step of a function) you could consider using the <code>profvis</code> package<a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a>. This generates an interactive plot showing how much time each function and step in the call stack took:</p>
+<pre class="r"><code>library(profvis)
+profvis(distro(size = 1e7, type = &quot;uniform&quot;))</code></pre>
+</div>
+<div id="reminders" class="section level2">
+<h2>Reminders</h2>
+<ul>
+<li>Optimizing code can take a significant amount of energy. And it is <strong>not</strong> always worth doing. Consider the trade-off between having an elegant solution (that, for example, takes a week to write and runs for 1 hour) versus a slower, working solution (might take a day to write but runs for 3 hours) …</li>
+<li>If you’re looking to optimize your code, make sure that the result remains the same! Beware semantic errors and try not to stray too far from your comfort zone in terms of data structures / packages / pipelines that you typically use.</li>
+<li>In most cases, wall clock time will be the most important measure of speed. Take relative benchmarks with a grain of salt, particularly when they’re done on data of a different size as your own.</li>
+</ul>
+</div>
+<div id="data-manipulation" class="section level2">
+<h2>Data Manipulation</h2>
+<p>Data frames are probably the most familiar data structure for many R users. When loading tabular data (rows and columns) into memory, the resulting object is usually a data frame. There are a number of very powerful tabular data manipulation methods in R. In particular, <code>base</code>, <code>data.table</code> and <code>dplyr</code> are packages that provide functions for working with data frames. If you’re interested in performance, it might be worth benchmarking some of these tools against one another.</p>
+<p>We’ll use data from the National Health and Nutrition Examination Survey (NHANES) to motivate the examples that follow.</p>
+<p>First let’s read in the NHANES dataset, which is available for download at <a href="http://bioconnector.org/data/nhanes.csv" class="uri">http://bioconnector.org/data/nhanes.csv</a>:</p>
+<pre class="r"><code># read in NHANES
+nh &lt;- read.csv(&quot;nhanes.csv&quot;)</code></pre>
+<p>We’ll convert and store a copy of the NHANES data frame as a “special” data structure that <code>dplyr</code> uses called a <code>tibble</code>:</p>
+<pre class="r"><code># convert to dplyr tibble (&quot;special&quot; data frame) data structure
+nhtibble &lt;- as_tibble(nh)</code></pre>
+<p>Now let’s start with a simple subsetting operation. We’ll use two base methods, as well as the <code>filter()</code> function from <code>dplyr</code>:</p>
+<pre class="r"><code>bmark &lt;-
+  microbenchmark(
+    bracket = nh[which(nh$SleepHrsNight &gt; 8),],
+    # prefixing with package:: syntax because there is a `subset` in data.table
+    subset = base::subset(nh, SleepHrsNight &gt; 8),
+    filter = filter(nhtibble, SleepHrsNight &gt; 8)
+)
+
+bmark</code></pre>
+<p><code>microbenchmark</code> objects can be plotted with <code>ggplot2</code> using <code>autoplot()</code>, so we can pretty easily visualize the results:</p>
+<pre class="r"><code>autoplot(bmark)</code></pre>
+<p>This might be a good place to emphasize <em>absolute</em> measures of speed. For example: let’s assume the base bracket method takes ~ 400 microseconds on average … and <code>filter()</code> makes ~ 1200 microseconds. You can conclude that using the bracket to subset is relatively 3 times faster than <code>filter()</code>. However, the units here are microseconds … so the absolute difference is 800 microseconds or 0.0008 seconds. Is that significant? It really depends …</p>
+<p><code>data.table</code> is a data manipulation package that is known for being computationally efficient. We can compare base R, <code>dplyr</code> and <code>data.table</code> performance to see which one is fastest with a simple split-apply-combine example.</p>
+<p>We’ll first convert the NHANES data to <code>data.table</code> format so we don’t unfairly include any of the conversion overhead in the benchmarking:</p>
+<pre class="r"><code>nhdt &lt;- data.table(nh)</code></pre>
+<pre class="r"><code>microbenchmark(
+  base = aggregate(nh$Weight, by = list(nh$Race, nh$Gender), mean, na.rm = TRUE),
+  dt = nhdt[, mean(Weight, na.rm = TRUE), by = list(Race, Gender)],
+  dplyr = nhtibble %&gt;% group_by(Race,Gender) %&gt;% summarise(mean(Weight, na.rm = TRUE))
+)</code></pre>
+<p>As it turns out, the <code>data.table</code> method for is significantly faster. It may be more efficient in some cases … particularly if you’re working with a large data frame (&gt; 1 million rows).</p>
+<p>That said, it’s worth returning to a couple things we discussed earlier …</p>
+<p>For one, although we know the results of the aggregations are the same, let’s check if the <code>dplyr</code> and <code>data.table</code> results are equal in terms of how R interprets them:</p>
+<pre class="r"><code>mwdt &lt;- nhdt[, mean(Weight, na.rm = TRUE), by = list(Race, Gender)]
+
+mwdplyr &lt;- nhtibble %&gt;% group_by(Race,Gender) %&gt;% summarise(mean(Weight, na.rm = TRUE))
+
+all.equal(mwdt,mwdplyr)</code></pre>
+<p>No they aren’t. And that may be fine … but if you have a data manipulation pipeline written fully in <code>dplyr</code> or <code>data.table</code> then breaking out of that for just one step (even if it’s more computationally efficient) might be counterproductive.</p>
+<p>It’s also worth considering comfort level with the syntax. There are certainly trade-offs between what might be <em>computationally</em> efficent versus what might be <em>cognitively</em> efficient. There’s a very rich and highly-moderated discussion of this between developers of <code>data.table</code> and <code>dplyr</code> on Stack Overflow<a href="#fn8" class="footnoteRef" id="fnref8"><sup>8</sup></a>.</p>
+<div id="exercises-set-1" class="section level4">
+<h4>Exercises (Set 1)</h4>
+<ol style="list-style-type: decimal">
+<li>Using the <code>flights</code> data (from the <code>nycflights13</code> package) benchmark base bracket / <code>which()</code> subsetting vs <code>dplyr</code>s <code>filter()</code>. Look for flights that experienced departure delays (i.e. dep_delay &gt; 0). What method is faster?</li>
+<li>Try the same benchmark, but on a random sample of just 5000 rows of the <code>flights</code> data (<code>sample_n(flights, 5000)</code>).</li>
+<li>Write a <code>microbenchmark</code> statement that compares the <code>dplyr</code> data conversion (<code>as_tibble()</code>) and the <code>data.table</code> method (<code>data.table()</code>). Use the NHANES data for this.</li>
+</ol>
+</div>
+</div>
+<div id="io" class="section level2">
+<h2>IO</h2>
+<p>In general, IO is relatively heavy in terms of resource consumption. Below is an example of code that does a lot of reading and writing of files to disk:</p>
+<pre class="r"><code>samples &lt;- replicate(200, 
+               sample_n(nh, 100), simplify = FALSE)
+
+dir.create(&quot;samples&quot;)
+
+system.time({
+lapply(samples, 
+       function(x) write.csv(x, 
+                             file = paste0(&quot;samples/&quot;,
+                                               paste0(sample(c(LETTERS,1:10), 7), collapse = &quot;&quot;),
+                                               &quot;.csv&quot;))
+       )
+})</code></pre>
+<p>To speed this up, we could consider consolidating the objects in memory and then usign a single write operation:</p>
+<pre class="r"><code>system.time({
+  samples &lt;- do.call(rbind, samples)
+  write.csv(samples, file = &quot;samples/samples.csv&quot;)
+})</code></pre>
+<p>In terms of IO, a much more common opportunity to shave off time is by switching to a different IO method altogether … or at the very least a different implementation of that method. Base R provides a family of functions for reading and writing text files. The developers of <code>readr</code> and <code>data.table</code> have put in considerable work to optimizing these kinds of operations:</p>
+<pre class="r"><code>microbenchmark(
+  base = read.csv(&quot;nhanes.csv&quot;),
+  readr = read_csv(&quot;nhanes.csv&quot;),
+  data.table = fread(&quot;nhanes.csv&quot;),
+  times = 10
+)</code></pre>
+<div id="exercises-set-2" class="section level4">
+<h4>Exercises (Set 2)</h4>
+<ol style="list-style-type: decimal">
+<li>Instead of downloading the NHANES data, we could have read it directly from the web (<a href="https://bioconnector.org/data/nhanes.csv" class="uri">https://bioconnector.org/data/nhanes.csv</a>). Use <code>microbenchmark()</code> to compare reading the file directly with <code>read.csv()</code>, <code>read_csv()</code> and <code>fread()</code> respectively.</li>
+<li>Can you think of any limitations or issues with the benchmarking exercise above?</li>
+<li>See you if you can find an explanation for why <code>fread</code> is so fast. A Google search of “why is fread is so fast” should put you on the right track …</li>
+</ol>
+</div>
+</div>
+<div id="visualization" class="section level2">
+<h2>Visualization</h2>
+<p>Depending on the size of a dataset, data visualization might be a time-consuming process.</p>
+<p>Let’s use the <code>flights</code> data as an example. We’ll first plot a scatterplot of departure delay by arrival delay using <code>ggplot2</code>:</p>
+<pre class="r"><code># scatterplot of departure delay by arrival delay with ggplot2
+ggplot(flights, aes(dep_delay, arr_delay)) + geom_point()</code></pre>
+<p>Now the same thing with base R <code>plot()</code>:</p>
+<pre class="r"><code># scatterplot of departure delay by arrival delay with base plot
+plot(flights$dep_delay, flights$arr_delay)</code></pre>
+<p>And a benchmark of the two together:</p>
+<pre class="r"><code># benchmark them against each other
+microbenchmark(
+  plot = plot(flights$dep_delay, flights$arr_delay),
+  ggplot = plot(ggplot(flights, aes(dep_delay, arr_delay)) + geom_point()),
+  times = 5
+)</code></pre>
+<p><code>plot()</code> is marginally faster here. It’s worth noting that <code>ggplot2</code> actually has a benchmarking function <code>benchplot()</code> built in:</p>
+<pre class="r"><code>benchplot(
+  ggplot(flights, aes(dep_delay, arr_delay)) + geom_point()
+)</code></pre>
+<p>OK let’s try another example, this time using a plot that involves statistical computation (density estimation):</p>
+<pre class="r"><code>ggplot(flights, aes(air_time)) + geom_density()</code></pre>
+<pre class="r"><code>plot(density(flights$air_time, na.rm = TRUE))</code></pre>
+<pre class="r"><code>microbenchmark(
+  plot = plot(density(flights$air_time, na.rm = TRUE)),
+  ggplot = plot(ggplot(flights, aes(air_time)) + geom_density()),
+  times = 5
+)</code></pre>
+<p>In this case, wrapping the base R <code>density()</code> function with <code>plot()</code> is much faster than using <code>ggplot2</code>. However, keep in mind the value of <em>absolute</em> measures of performance (i.e. wall clock time). The difference in this case might not be significant, especially if you consider other features that <code>ggplot2</code> can offer as compared with base plotting methods:</p>
+<pre class="r"><code>ggplot(flights, aes(air_time)) + geom_density() + facet_wrap(~ origin, ncol = 1)</code></pre>
+<p>If you’d like to explore the discussion of <code>ggplot2</code> optimization, there’s an interesting blog post<a href="#fn9" class="footnoteRef" id="fnref9"><sup>9</sup></a> and response<a href="#fn10" class="footnoteRef" id="fnref10"><sup>10</sup></a> that approach the topic.</p>
+</div>
+<div id="vectorization" class="section level2">
+<h2>Vectorization</h2>
+<p>Loops can facilitate implemention of logic in your code … but they can be challenging in terms of efficiency.</p>
+<p>Let’s set up a simple loop:</p>
+<pre class="r"><code>x &lt;- vector()
+  
+for (i in 1:1e7) {
+  
+  x[i] &lt;- i + i^2
+    
+}</code></pre>
+<p>That seemed to take a while … let’s time it:</p>
+<pre class="r"><code>system.time({
+  
+  x &lt;- vector()
+  
+  for (i in 1:1e7) {
+    
+    x[i] &lt;- i + i^2
+    
+  }
+  
+})</code></pre>
+<p>Let’s try the same thing with <code>sapply()</code>:</p>
+<pre class="r"><code>y &lt;- sapply(1:1e7, function(x) x + x^2)</code></pre>
+<p>That also took a while. How long?</p>
+<pre class="r"><code>system.time({
+  
+  y &lt;- sapply(1:1e7, function(x) x + x^2)
+
+})</code></pre>
+<p>OK … so the <code>for</code> loop and <code>apply</code> function were both about the same speed. What if we try a <em>vectorized</em> approach:</p>
+<pre class="r"><code>z &lt;- 1:1e7 + (1:1e7)^2</code></pre>
+<p>Much faster.</p>
+<pre class="r"><code>system.time({
+  
+  z &lt;- 1:1e7 + (1:1e7)^2
+
+})</code></pre>
+<pre class="r"><code>identical(x,y,z)</code></pre>
+<p>Vectorization can significantly increase the speed of code execution. The function being executed at each element of the vector <em>knows</em> the data type of the given element (because it is a homogenous vector), and can therefore skip any overhead involved with typing<a href="#fn11" class="footnoteRef" id="fnref11"><sup>11</sup></a><a href="#fn12" class="footnoteRef" id="fnref12"><sup>12</sup></a>.</p>
+<p>Futhermore, the kinds of <code>for</code> loops we’ve written above force R to first create a vector … then retrieve it from memory … then add a new element … and repeat for the length of the vector over which we are iterating.</p>
+<p>In some cases you can significantly speed up a loop by predefining a vector <em>with</em> the appropriate type (passed in the <em>mode</em> argument) and length:</p>
+<pre class="r"><code># unallocated
+g &lt;- function() {
+  
+  x &lt;- vector()
+  
+  for (i in 1:1e7) {
+    
+    x[i] &lt;- i + i^2
+    
+  }
+}
+
+# allocated
+f &lt;- function() {
+  
+  x &lt;- vector(mode = &quot;numeric&quot;, length=1e7)
+  
+  for (i in 1:1e7) {
+    
+    x[i] &lt;- i + i^2
+    
+  }
+}
+
+microbenchmark(
+  unallocated = g(),
+  allocated = f(),
+  times = 10
+)</code></pre>
+</div>
+<div id="memory" class="section level2">
+<h2>Memory</h2>
+<p>To work with an object in R, it must be loaded into memory. So in addition to improving time of execution, you could consider optimizing how you work with memory. Usually having</p>
+<p>The <code>object_size()</code> function from <code>pryr</code> gives us a quick way to inspect the size (number of bytes) of on object stored in memory.</p>
+<pre class="r"><code>object_size(nh)</code></pre>
+<p>We’ll just briefly discuss memory usage a little further here … and will do so by way of “promise” objects.</p>
+<p>From the <em>R Language Definition</em><a href="#fn13" class="footnoteRef" id="fnref13"><sup>13</sup></a>:</p>
+<blockquote>
+<p>Promise objects are part of R’s lazy evaluation mechanism. They contain three slots: a value, an expression, and an environment. When a function is called the arguments are matched and then each of the formal arguments is bound to a promise. The expression that was given for that formal argument and a pointer to the environment the function was called from are stored in the promise. Until that argument is accessed there is no value associated with the promise. When the argument is accessed, the stored expression is evaluated in the stored environment, and the result is returned. The result is also saved by the promise.</p>
+</blockquote>
+<p>Ironically, that same document states that there’s “generally no way” to check if an object is a promise. However, the <code>pryr</code> package includes a function to do just that:</p>
+<pre class="r"><code>is_promise(nh)</code></pre>
+<p>We can construct a promise with the base <code>delayedAssign()</code>:</p>
+<pre class="r"><code>delayedAssign(&quot;bigvector&quot;, rnorm(1e7))</code></pre>
+<p>The following will:</p>
+<ol style="list-style-type: decimal">
+<li>Benchmark how much memory is being used</li>
+<li>Check if the object we assigned is in fact a promise</li>
+<li>Do <em>something</em> with the object to evaluate it</li>
+<li>Check if it’s still a promise after being evaluated</li>
+<li>See how much memory is in use after it’s evaluated</li>
+</ol>
+<pre class="r"><code>pre_eval &lt;- mem_used()
+
+# is this is a promise?
+is_promise(bigvector)
+# yes and not yet evaluated
+promise_info(bigvector)$evaled
+
+# &quot;evaluate&quot; it
+max(bigvector)
+
+# still a promise
+is_promise(bigvector)
+# but now evaluated
+promise_info(bigvector)$evaled
+
+post_eval &lt;- mem_used()
+
+post_eval - pre_eval
+  
+object_size(bigvector)</code></pre>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a href="https://cran.r-project.org/web/views/HighPerformanceComputing.html" class="uri">https://cran.r-project.org/web/views/HighPerformanceComputing.html</a><a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p><a href="http://www.bytemining.com/wp-content/uploads/2010/08/r_hpc_II.pdf" class="uri">http://www.bytemining.com/wp-content/uploads/2010/08/r_hpc_II.pdf</a><a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p><a href="https://meekj.github.io/Rprogramming/HighPerfR-UVaR-2017.pdf" class="uri">https://meekj.github.io/Rprogramming/HighPerfR-UVaR-2017.pdf</a><a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p><a href="http://adv-r.had.co.nz/Performance.html" class="uri">http://adv-r.had.co.nz/Performance.html</a><a href="#fnref4">↩</a></p></li>
+<li id="fn5"><p><a href="https://stackoverflow.com/questions/556405/what-do-real-user-and-sys-mean-in-the-output-of-time1?answertab=votes#tab-top" class="uri">https://stackoverflow.com/questions/556405/what-do-real-user-and-sys-mean-in-the-output-of-time1?answertab=votes#tab-top</a><a href="#fnref5">↩</a></p></li>
+<li id="fn6"><p><a href="https://CRAN.R-project.org/package=microbenchmark" class="uri">https://CRAN.R-project.org/package=microbenchmark</a><a href="#fnref6">↩</a></p></li>
+<li id="fn7"><p><a href="https://rstudio.github.io/profvis/" class="uri">https://rstudio.github.io/profvis/</a><a href="#fnref7">↩</a></p></li>
+<li id="fn8"><p><a href="https://stackoverflow.com/questions/21435339/data-table-vs-dplyr-can-one-do-something-well-the-other-cant-or-does-poorly/27840349#27840349" class="uri">https://stackoverflow.com/questions/21435339/data-table-vs-dplyr-can-one-do-something-well-the-other-cant-or-does-poorly/27840349#27840349</a><a href="#fnref8">↩</a></p></li>
+<li id="fn9"><p><a href="https://ikashnitsky.github.io/2017/ggplot2-microbenchmark/" class="uri">https://ikashnitsky.github.io/2017/ggplot2-microbenchmark/</a><a href="#fnref9">↩</a></p></li>
+<li id="fn10"><p><a href="https://www.data-imaginist.com/2017/beneath-the-canvas/" class="uri">https://www.data-imaginist.com/2017/beneath-the-canvas/</a><a href="#fnref10">↩</a></p></li>
+<li id="fn11"><p><a href="http://www.noamross.net/blog/2014/4/16/vectorization-in-r--why.html" class="uri">http://www.noamross.net/blog/2014/4/16/vectorization-in-r--why.html</a><a href="#fnref11">↩</a></p></li>
+<li id="fn12"><p><a href="http://alyssafrazee.com/2014/01/29/vectorization.html" class="uri">http://alyssafrazee.com/2014/01/29/vectorization.html</a><a href="#fnref12">↩</a></p></li>
+<li id="fn13"><p><a href="https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Promise-objects" class="uri">https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Promise-objects</a><a href="#fnref13">↩</a></p></li>
+</ol>
+</div>
+
+    </article>
+  </div>
+
+
+<div class="site-footer">
+  <div class="copyright">&copy; Copyright 2018 UVa School of Medicine Research Computing</div>
+  <ul class="site-footer-items">
+    <li class="site-footer-item-somrc"><a href="https://somrc.virginia.edu/" title="School of Medicine Research Computing">School of Medicine Research Computing</a></li>
+  </ul>
+</div>
+<script src="/js/script.js"></script>
+<script src="/js/custom.js"></script>
+
+
+</body>
+</html>

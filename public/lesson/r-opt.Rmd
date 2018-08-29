@@ -1,0 +1,509 @@
+---
+title: "R Optimization"
+author: "VP Nagraj"
+output:
+  pdf_document: default
+  html_document: default
+categories: ["R Programming"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE, warning = FALSE, message = FALSE, cache = TRUE)
+```
+
+<a class="btn btn-success btn-lg" href="/slides/r-opt-slides.html" role="button">SLIDES</a>
+
+## Setup
+
+```{r, eval = FALSE}
+install.packages("data.table")
+install.packages("readr")
+install.packages("profvis")
+install.packages("microbenchmark")
+install.packages("dplyr")
+install.packages("ggplot2")
+install.packages("pryr")
+install.packages("nycflights13")
+```
+
+```{r}
+library(data.table)
+library(readr)
+library(profvis)
+library(microbenchmark)
+library(dplyr)
+library(ggplot2)
+library(pryr)
+library(nycflights13)
+```
+
+## Overview
+
+One could argue that "optimizing" can generally refer to any strategy for improving a programmatic workflow. In terms of code, that could include making your script more legible ... or using a more efficient memory footprint ...  or even making it work with a preferred set of tools or packages. But generally, when people refer to optimization they're actually interested in improving *speed* of execution, and that will be the focus of this material.
+
+What follows will be an overview of some R optimization / preformance observations, which are made in context of data manipulation, IO, visualization, vectorization and memory usage. We will **not** cover any of the following: parallelization, distributed big data methods (mapReduce), performance optimization with Rcpp. These are important topics, and if you're interested consider reviewing available material[^1][^2][^3] devoted to them.
+
+## Speed
+
+If you've read any material about optimization in R, you might have come across the central dogma: *R is slow* ... and that's true, though not necessarily a knock on R as a language. There are inherent things about R (AND as it's open-source implementation) that limit its performance.
+
+In terms of core language limitations, some of the features intended to make R easy / intuitive for users actually make it slower. For example, the concept of extreme dynamism (i.e. that objects can be overwritten or changed after creation) creates performance overhead. Likewise there's overhead with lazy evaluation and lexical scoping that generally can't be avoided. For more detailed descriptions and examples of these (as well as the limitations created by how R is *implemented*) see Hadley Wickham's *Advanced R* chapter on performance[^4].
+
+All that said ... it's probably safe to assume that *most* performance roadblocks don't stem from how R is designed or implemented in open-source. Rather, they come from how R code is written by users.
+
+So as an R user / programmer / developer ... how do you gauge the speed of your code?
+
+## Benchmarking Tools
+
+There are several ways in R to measure the speed of your code. 
+
+To illustrate, let's create an example function that will 1) generate a distribution of random numbers and 2) plot a histogram of that distribution:
+
+```{r}
+distro <- function(size = 1e7, type = "normal", ...) {
+  
+  x <-
+    switch(type,
+           "normal" = rnorm(size, ...),
+           "uniform" = runif(size, ...),
+           "poisson" = rpois(size, ...)
+           )
+  
+  hist(x)
+  
+}
+```
+
+With base R, we can perform a crude but perhaps sufficient time test by measuring `Sys.time()` before and after the execution, then finding the difference between the two:
+
+```{r}
+# capture time before evaluation
+st <- Sys.time()
+
+# evaluate ...
+distro()
+
+# capture time after evaluation
+et <- Sys.time()
+
+# difference?
+et - st
+```
+
+Alternatively, we can wrap the function in `system.time()`:
+
+```{r}
+# wrap evaluation in system.time()
+system.time({
+  
+  distro()
+
+})
+```
+
+That will give us the time measurements for "system", "user" and "elapsed" time. See `?proc.time` (or go to Google[^5]) for more on the differences between these measurements. Suffice it to say that what we are likely most interested in is the elapsed time.
+
+The `microbenchmark` package [^6] provides an even more robust set of tools for repeated time tests.
+
+We can wrap the call to our function in `microbenchark()` to produce a data frame with a summary of the distribution of how long it took for each of the n iterations ("times") specified:
+
+```{r}
+library(microbenchmark)
+microbenchmark(distro(), times = 10)
+```
+
+`microbenchmark()` can accept an expression or expressions that can be named ... this facilitates side-by-side comparison of methods:
+
+```{r}
+microbenchmark(
+  normal = distro(size = 1e5, type = "normal"), 
+  unif = distro(size = 1e5, type = "uniform"),
+  pois = distro(size = 1e5, type = "poisson", lambda = 2)
+  )
+```
+
+For visualizing overall performance (and granularly at each step of a function) you could consider using the `profvis` package[^7]. This generates an interactive plot showing how much time each function and step in the call stack took:
+
+```{r, eval = FALSE}
+library(profvis)
+profvis(distro(size = 1e7, type = "uniform"))
+```
+
+## Reminders
+
+- Optimizing code can take a significant amount of energy. And it is **not** always worth doing. Consider
+the trade-off between having an elegant solution (that, for example, takes a week to write and runs for 1 hour) versus a slower, working solution (might take a day to write but runs for 3 hours) ... 
+- If you're looking to optimize your code, make sure that the result remains the same! Beware semantic errors and try not to stray too far from your comfort zone in terms of data structures / packages / pipelines that you typically use.
+- In most cases, wall clock time will be the most important measure of speed. Take relative benchmarks with a grain of salt, particularly when they're done on data of a different size as your own.
+
+## Data Manipulation
+
+Data frames are probably the most familiar data structure for many R users. When loading tabular data (rows and columns) into memory, the resulting object is usually a data frame. There are a number of very powerful tabular data manipulation methods in R. In particular, `base`, `data.table` and `dplyr` are packages that provide functions for working with data frames.  If you're interested in performance, it might be worth benchmarking some of these tools against one another.
+
+We'll use data from the National Health and Nutrition Examination Survey (NHANES) to motivate the examples that follow.
+
+First let's read in the NHANES dataset, which is available for download at <http://bioconnector.org/data/nhanes.csv>:
+
+```{r}
+# read in NHANES
+nh <- read.csv("nhanes.csv")
+```
+
+We'll convert and store a copy of the NHANES data frame as a "special" data structure that `dplyr` uses called a `tibble`:
+
+```{r}
+# convert to dplyr tibble ("special" data frame) data structure
+nhtibble <- as_tibble(nh)
+```
+
+Now let's start with a simple subsetting operation. We'll use two base methods, as well as the `filter()` function from `dplyr`:
+
+```{r}
+bmark <-
+  microbenchmark(
+    bracket = nh[which(nh$SleepHrsNight > 8),],
+    # prefixing with package:: syntax because there is a `subset` in data.table
+    subset = base::subset(nh, SleepHrsNight > 8),
+    filter = filter(nhtibble, SleepHrsNight > 8)
+)
+
+bmark
+```
+
+`microbenchmark` objects can be plotted with `ggplot2` using `autoplot()`, so we can pretty easily visualize the results:
+
+```{r}
+autoplot(bmark)
+```
+
+This might be a good place to emphasize *absolute* measures of speed. For example: let's assume the base bracket method takes ~ 400 microseconds on average ... and `filter()` makes ~ 1200 microseconds. You can conclude that using the bracket to subset is relatively 3 times faster than `filter()`. However, the units here are microseconds ... so the absolute difference is 800 microseconds or 0.0008 seconds. Is that significant? It really depends ...
+
+`data.table` is a data manipulation package that is known for being computationally efficient. We can compare base R, `dplyr` and `data.table` performance to see which one is fastest with a simple split-apply-combine example.
+
+We'll first convert the NHANES data to `data.table` format so  we don't unfairly include any of the conversion overhead in the benchmarking:
+
+```{r}
+nhdt <- data.table(nh)
+```
+
+```{r}
+microbenchmark(
+  base = aggregate(nh$Weight, by = list(nh$Race, nh$Gender), mean, na.rm = TRUE),
+  dt = nhdt[, mean(Weight, na.rm = TRUE), by = list(Race, Gender)],
+  dplyr = nhtibble %>% group_by(Race,Gender) %>% summarise(mean(Weight, na.rm = TRUE))
+)
+
+```
+
+As it turns out, the `data.table` method for is significantly faster. It may be more efficient in some cases ... particularly if you're working with a large data frame (> 1 million rows). 
+
+That said, it's worth returning to a couple things we discussed earlier ...
+
+For one, although we know the results of the aggregations are the same, let's check if the `dplyr` and `data.table` results are equal in terms of how R interprets them:
+
+```{r, eval=FALSE}
+mwdt <- nhdt[, mean(Weight, na.rm = TRUE), by = list(Race, Gender)]
+
+mwdplyr <- nhtibble %>% group_by(Race,Gender) %>% summarise(mean(Weight, na.rm = TRUE))
+
+all.equal(mwdt,mwdplyr)
+```
+
+No they aren't. And that may be fine ... but if you have a data manipulation pipeline written fully in `dplyr` or `data.table` then breaking out of that for just one step (even if it's more computationally efficient) might be counterproductive.
+
+It's also worth considering comfort level with the syntax. There are certainly trade-offs between what might be *computationally* efficent versus what might be *cognitively* efficient. There's a very rich and highly-moderated discussion of this between developers of `data.table` and `dplyr` on Stack Overflow[^8].
+
+#### Exercises (Set 1)
+
+1. Using the `flights` data (from the `nycflights13` package) benchmark base bracket / `which()` subsetting vs `dplyr`s `filter()`. Look for flights that experienced departure delays (i.e. dep_delay > 0). What method is faster? 
+2. Try the same benchmark, but on a random sample of just 5000 rows of the `flights` data (`sample_n(flights, 5000)`).
+3. Write a `microbenchmark` statement that compares the `dplyr` data conversion (`as_tibble()`) and the `data.table` method (`data.table()`). Use the NHANES data for this.
+
+## IO 
+
+In general, IO is relatively heavy in terms of resource consumption. Below is an example of code that does a lot of reading and writing of files to disk:
+
+```{r}
+samples <- replicate(200, 
+               sample_n(nh, 100), simplify = FALSE)
+
+dir.create("samples")
+
+system.time({
+lapply(samples, 
+       function(x) write.csv(x, 
+                             file = paste0("samples/",
+                                               paste0(sample(c(LETTERS,1:10), 7), collapse = ""),
+                                               ".csv"))
+       )
+})
+```
+
+To speed this up, we could consider consolidating the objects in memory and then usign a single write operation:
+
+```{r}
+system.time({
+  samples <- do.call(rbind, samples)
+  write.csv(samples, file = "samples/samples.csv")
+})
+```
+
+In terms of IO, a much more common opportunity to shave off time is by switching to a different IO method altogether ... or at the very least a different implementation of that method. Base R provides a family of functions for reading and writing text files. The developers of `readr` and `data.table` have put in considerable work to optimizing these kinds of operations:
+
+```{r}
+microbenchmark(
+  base = read.csv("nhanes.csv"),
+  readr = read_csv("nhanes.csv"),
+  data.table = fread("nhanes.csv"),
+  times = 10
+)
+```
+
+#### Exercises (Set 2)
+
+1. Instead of downloading the NHANES data, we could have read it directly from the web (https://bioconnector.org/data/nhanes.csv). Use `microbenchmark()` to compare reading the file directly with `read.csv()`, `read_csv()` and `fread()` respectively.
+2. Can you think of any limitations or issues with the benchmarking exercise above?
+3. See you if you can find an explanation for why `fread` is so fast. A Google search of "why is fread is so fast" should put you on the right track ...
+
+## Visualization
+
+Depending on the size of a dataset, data visualization might be a time-consuming process. 
+
+Let's use the `flights` data as an example. We'll first plot a scatterplot of departure delay by arrival delay using `ggplot2`:
+
+```{r}
+# scatterplot of departure delay by arrival delay with ggplot2
+ggplot(flights, aes(dep_delay, arr_delay)) + geom_point()
+```
+
+Now the same thing with base R `plot()`:
+
+```{r}
+# scatterplot of departure delay by arrival delay with base plot
+plot(flights$dep_delay, flights$arr_delay)
+```
+
+And a benchmark of the two together:
+
+```{r}
+# benchmark them against each other
+microbenchmark(
+  plot = plot(flights$dep_delay, flights$arr_delay),
+  ggplot = plot(ggplot(flights, aes(dep_delay, arr_delay)) + geom_point()),
+  times = 5
+)
+```
+
+`plot()` is marginally faster here. It's worth noting that `ggplot2` actually has a benchmarking function `benchplot()` built in:
+
+```{r}
+benchplot(
+  ggplot(flights, aes(dep_delay, arr_delay)) + geom_point()
+)
+```
+
+OK let's try another example, this time using a plot that involves statistical computation (density estimation):
+
+```{r}
+ggplot(flights, aes(air_time)) + geom_density()
+```
+
+```{r}
+plot(density(flights$air_time, na.rm = TRUE))
+```
+
+```{r}
+microbenchmark(
+  plot = plot(density(flights$air_time, na.rm = TRUE)),
+  ggplot = plot(ggplot(flights, aes(air_time)) + geom_density()),
+  times = 5
+)
+```
+
+In this case, wrapping the base R `density()` function with `plot()` is much faster than using `ggplot2`. However, keep in mind the value of *absolute* measures of performance (i.e. wall clock time). The difference in this case might not be significant, especially if you consider other features that `ggplot2` can offer as compared with base plotting methods:
+
+```{r}
+ggplot(flights, aes(air_time)) + geom_density() + facet_wrap(~ origin, ncol = 1)
+```
+
+If you'd like to explore the discussion of `ggplot2` optimization, there's an interesting blog post[^9] and response[^10] that approach the topic.
+
+## Vectorization
+
+Loops can facilitate implemention of logic in your code ... but they can be challenging in terms of efficiency.
+
+Let's set up a simple loop:
+
+```{r}
+x <- vector()
+  
+for (i in 1:1e7) {
+  
+  x[i] <- i + i^2
+    
+}
+```
+
+That seemed to take a while ... let's time it:
+
+```{r}
+
+system.time({
+  
+  x <- vector()
+  
+  for (i in 1:1e7) {
+    
+    x[i] <- i + i^2
+    
+  }
+  
+})
+```
+
+Let's try the same thing with `sapply()`:
+
+```{r}
+y <- sapply(1:1e7, function(x) x + x^2)
+```
+
+That also took a while. How long?
+
+```{r}
+system.time({
+  
+  y <- sapply(1:1e7, function(x) x + x^2)
+
+})
+```
+
+OK ... so the `for` loop and `apply` function were both about the same speed. What if we try a *vectorized* approach:
+
+```{r}
+z <- 1:1e7 + (1:1e7)^2
+```
+
+Much faster.
+
+```{r}
+system.time({
+  
+  z <- 1:1e7 + (1:1e7)^2
+
+})
+```
+
+```{r}
+identical(x,y,z)
+```
+
+Vectorization can significantly increase the speed of code execution. The function being executed at each element of the vector *knows* the data type of the given element (because it is a homogenous vector), and can therefore skip any overhead involved with typing[^11][^12].
+
+Futhermore, the kinds of `for` loops we've written above force R to first create a vector ... then retrieve it from memory ... then add a new element ... and repeat for the length of the vector over which we are iterating.
+
+In some cases you can significantly speed up a loop by predefining a vector *with* the appropriate type (passed in the *mode* argument) and length:
+
+```{r}
+# unallocated
+g <- function() {
+  
+  x <- vector()
+  
+  for (i in 1:1e7) {
+    
+    x[i] <- i + i^2
+    
+  }
+}
+
+# allocated
+f <- function() {
+  
+  x <- vector(mode = "numeric", length=1e7)
+  
+  for (i in 1:1e7) {
+    
+    x[i] <- i + i^2
+    
+  }
+}
+
+microbenchmark(
+  unallocated = g(),
+  allocated = f(),
+  times = 10
+)
+```
+
+## Memory
+
+To work with an object in R, it must be loaded into memory. So in addition to improving time of execution, you could consider optimizing how you work with memory. Usually having
+
+The `object_size()` function from `pryr` gives us a quick way to inspect the size (number of bytes) of on object stored in memory.
+
+```{r}
+object_size(nh)
+```
+
+We'll just briefly discuss memory usage a little further here ... and will do so by way of "promise" objects.
+
+From the *R Language Definition*[^13]:
+
+> Promise objects are part of R’s lazy evaluation mechanism. They contain three slots: a value, an expression, and an environment. When a function is called the arguments are matched and then each of the formal arguments is bound to a promise. The expression that was given for that formal argument and a pointer to the environment the function was called from are stored in the promise. Until that argument is accessed there is no value associated with the promise. When the argument is accessed, the stored expression is evaluated in the stored environment, and the result is returned. The result is also saved by the promise.
+
+Ironically, that same document states that there's "generally no way" to check if an object is a promise. However, the `pryr` package includes a function to do just that:
+
+```{r}
+is_promise(nh)
+```
+
+We can construct a promise with the base `delayedAssign()`:
+
+```{r}
+delayedAssign("bigvector", rnorm(1e7))
+```
+
+The following will:
+
+1. Benchmark how much memory is being used
+2. Check if the object we assigned is in fact a promise
+3. Do *something* with the object to evaluate it
+4. Check if it's still a promise after being evaluated
+5. See how much memory is in use after it's evaluated
+
+```{r}
+pre_eval <- mem_used()
+
+# is this is a promise?
+is_promise(bigvector)
+# yes and not yet evaluated
+promise_info(bigvector)$evaled
+
+# "evaluate" it
+max(bigvector)
+
+# still a promise
+is_promise(bigvector)
+# but now evaluated
+promise_info(bigvector)$evaled
+
+post_eval <- mem_used()
+
+post_eval - pre_eval
+  
+object_size(bigvector)
+```
+
+[^1]: https://cran.r-project.org/web/views/HighPerformanceComputing.html
+[^2]: http://www.bytemining.com/wp-content/uploads/2010/08/r_hpc_II.pdf
+[^3]: https://meekj.github.io/Rprogramming/HighPerfR-UVaR-2017.pdf
+[^4]: http://adv-r.had.co.nz/Performance.html
+[^5]: https://stackoverflow.com/questions/556405/what-do-real-user-and-sys-mean-in-the-output-of-time1?answertab=votes#tab-top
+[^6]: https://CRAN.R-project.org/package=microbenchmark
+[^7]: https://rstudio.github.io/profvis/
+[^8]: https://stackoverflow.com/questions/21435339/data-table-vs-dplyr-can-one-do-something-well-the-other-cant-or-does-poorly/27840349#27840349
+[^9]: https://ikashnitsky.github.io/2017/ggplot2-microbenchmark/
+[^10]: https://www.data-imaginist.com/2017/beneath-the-canvas/
+[^11]: http://www.noamross.net/blog/2014/4/16/vectorization-in-r--why.html
+[^12]: http://alyssafrazee.com/2014/01/29/vectorization.html
+[^13]: https://cran.r-project.org/doc/manuals/r-release/R-lang.html#Promise-objects

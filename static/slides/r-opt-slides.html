@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>R Optimizatation</title>
+    <meta charset="utf-8">
+    <meta name="author" content="VP Nagraj" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# R Optimizatation
+### VP Nagraj
+
+---
+
+class: middle, center
+
+
+&gt; ## optimization ##
+ ### noun  op·ti·mi·za·tion  \ ˌäp-tə-mə-ˈzā-shən \
+  an act, process, or methodology of making something (such as a design, system, or decision) as fully perfect, functional, or effective as possible; specifically : the mathematical procedures (such as finding the maximum of a function) involved in this
+  
+  &lt;https://www.merriam-webster.com/dictionary/optimization&gt;
+
+---
+class: center
+
+background-image: url('https://i.kinja-img.com/gawker-media/image/upload/s--wf3Ggk3B--/c_scale,fl_progressive,q_80,w_800/ihp4g9wyvlyrcjintdzr.jpg')
+
+---
+# R is slow ...
+
+.pull-left[
+## language (R)
+- extreme dynamism
+- lexical scoping
+- lazy evaluation
+]
+
+.pull-right[
+
+## implementation (GNU-R)
+
+- in-place conditions vs `ifelse()`
+- extracting single a value from a data frame
+- `for` loops
+
+] 
+
+&lt;http://adv-r.had.co.nz/Performance.html#why-is-r-slow&gt;
+---
+class: middle
+
+&gt; Beyond performance limitations due to design and implementation, it has to be said that a lot of R code is slow simply because it’s poorly written. Few R users have any formal training in programming or software development. Fewer still write R code for a living. Most people use R to understand data: it’s more important to get an answer quickly than to develop a system that will work in a wide variety of situations.
+
+**takeaway:** yes in some regards R is inherently slow(er than other languages) ... but there are still plenty of ways to potentially make *your* code faster
+---
+class: center, middle
+# slow? how do you know?
+---
+class: middle
+
+```r
+distro &lt;- function(size = 1e7, type = "normal", ...) {
+  
+  x &lt;-
+    switch(type,
+           "normal" = rnorm(size, ...),
+           "uniform" = runif(size, ...),
+           "poisson" = rpois(size, ...)
+           )
+  
+  hist(x)
+  
+}
+```
+
+---
+
+## base benchmarking
+
+.pull-left[
+
+```r
+# capture time before evaluation
+st &lt;- Sys.time()
+
+# evaluate ...
+distro()
+
+# capture time after evaluation
+et &lt;- Sys.time()
+
+# difference?
+et - st
+```
+]
+
+.pull-right[
+
+
+```r
+# wrap evaluation in system.time()
+system.time({
+  
+  distro()
+
+})
+```
+
+]
+---
+
+## `mirobenchmark()`
+
+
+```r
+library(microbenchmark)
+microbenchmark(distro(), times = 10)
+```
+
+
+```r
+microbenchmark(
+  normal = distro(size = 1e5, type = "normal"), 
+  unif = distro(size = 1e5, type = "uniform"),
+  pois = distro(size = 1e5, type = "poisson", lambda = 2)
+  )
+```
+
+---
+
+## `profvis()`
+
+
+```r
+library(profvis)
+profvis(distro(size = 1e7, type = "uniform"))
+```
+
+---
+
+# keep in mind ...
+
+- is it worth it? (optimization energy)
+- slow code &gt; broken code (`all.equal`)
+- *absolute* versus *relative* measures of speed (wall clock)
+
+---
+class: center
+background-image: url('https://imgs.xkcd.com/comics/is_it_worth_the_time.png')
+
+## optimization energy: &lt;https://xkcd.com/1205/&gt;
+---
+class: center
+
+background-image: url('https://imgs.xkcd.com/comics/optimization.png')
+
+## optimization energy: &lt;https://xkcd.com/1691/&gt;
+---
+class: center
+
+background-image: url('https://imgs.xkcd.com/comics/automation.png')
+
+## optimization energy: &lt;https://xkcd.com/1319/&gt;
+---
+
+## `all.equal`
+
+
+```r
+l &lt;- replicate(100, 
+               sample(1:500, size = 100), 
+               simplify = FALSE)
+
+microbenchmark({
+  
+  res_loop &lt;- vector()
+  
+  for (i in 1:length(l)) {
+    
+    tmpres &lt;- mean(l[[i]])
+    res_loop &lt;- c(res_loop,tmpres)
+  
+  }
+})
+
+microbenchmark({
+  
+  res_lapply &lt;- lapply(l, mean)
+
+})
+
+all.equal(res_loop, res_lapply)
+```
+
+.pull-left[
+
+
+```r
+microbenchmark({
+  
+  res_loop &lt;- vector()
+  
+  for (i in 1:length(l)) {
+    
+    tmpres &lt;- mean(l[[i]])
+    res_loop &lt;- c(res_loop,tmpres)
+  
+  }
+})
+```
+
+]
+
+.pull-right[
+
+
+```r
+microbenchmark({
+  
+  res_lapply &lt;- lapply(l, mean)
+
+})
+```
+
+]
+
+
+```r
+all.equal(res_loop, res_lapply)
+```
+
+---
+
+## wall clock
+
+
+```r
+x &lt;- runif(1e7)
+
+microbenchmark(
+  method1 = which(x == min(x)),
+  method2 = which.min(x)
+  )
+```
+
+```
+## Unit: milliseconds
+##     expr      min       lq     mean  median       uq       max neval
+##  method1 50.31247 58.31513 66.10069 63.6616 67.50595 108.81889   100
+##  method2 15.94576 17.84453 18.87222 19.0358 19.86046  22.27179   100
+```
+
+---
+
+## wall clock
+
+
+```r
+microbenchmark(
+  method1 = chickwts[49,2],
+  method2 = chickwts$feed[49]
+)
+```
+
+```
+## Unit: microseconds
+##     expr    min      lq     mean  median     uq     max neval
+##  method1 14.870 15.3075 19.22111 15.7100 16.303 333.432   100
+##  method2  9.769 10.1845 10.78758 10.5055 10.996  24.335   100
+```
+
+---
+
+## credits
+
+#### Advanced R Programming (Hadley Wickham)
+&lt;http://adv-r.had.co.nz/Performance.html&gt;
+
+#### Efficient R Programming (Colin Gillespie and Robin Lovelace)
+&lt;https://csgillespie.github.io/efficientR/&gt;
+
+#### Optimizing R Code workshop (Jackie Huband)
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
