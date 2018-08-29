@@ -1,0 +1,51 @@
+
+{{ define "main" }}
+  {{- if eq .Kind "taxonomy" }}
+  <div class="breadcrumb">
+    <a href="{{ "/" | relURL }}{{ .Data.Plural | urlize }}/">Topics</a> / {{ .Data.Term | humanize | upper }}
+  </div>
+  {{- else if eq .Kind "section" }}
+  <div class="breadcrumb">
+    {{ .Title }}
+  </div>
+  {{- end }}
+  <div class="main" role="main">
+    <section class="list {{ .Kind }}-list">
+      {{- $paginator := .Paginator }}
+      {{- range $paginator.Pages }}
+      <div class="card">
+         <div class="card-body">
+          
+          <h5 class="card-title"><a href="{{ .Permalink | relURL }}" class="article-titles">
+          <h2 class="article-title">{{ .Title }}</h2>
+          {{ with .Params.subtitle }}<h3 class="article-subtitle">{{ . }}</h3>{{ end }}
+        </a>
+     </h5>
+    <p class="card-text">   
+    
+        {{ range .Params.categories }}
+        
+        <a href="{{ "/" | relURL }}categories/{{ . | urlize }}/" class="article-subtitle">
+           <h5><i class="fas fa-folder"></i>
+              {{ . | upper}}
+            </h5>
+        </a>
+        {{ end }}
+          
+      </p>
+      
+    <p class="card-text">   
+    
+      <i class="fas fa-clock "> </i><em>  {{ .ReadingTime }} MIN READ</em>
+
+          
+      </p>
+  </div>
+</div>
+      {{- end }}
+      
+    </section>
+    {{ template "_internal/pagination.html" . }}
+  </div>
+
+{{ end }}

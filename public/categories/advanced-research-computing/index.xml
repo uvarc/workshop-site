@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Advanced Research Computing on SOMRC Workshops</title>
+    <link>/categories/advanced-research-computing/</link>
+    <description>Recent content in Advanced Research Computing on SOMRC Workshops</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; Copyright 2018 UVa School of Medicine Research Computing</copyright>
+    <lastBuildDate>Thu, 23 Jul 2015 21:13:14 -0500</lastBuildDate>
+    
+	<atom:link href="/categories/advanced-research-computing/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Version Control with Git/GitHub</title>
+      <link>/lesson/git/</link>
+      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
+      
+      <guid>/lesson/git/</guid>
+      <description>Introduction Version control software provides a systematic way to keep track of changes made to files. There are a number of version control software (VCS) systems &amp;hellip; Git is one of them. It&amp;rsquo;s a powerful tool for tracking and reconciling changes to text files from individual or multiple contributors. The basic unit of Git is the repository. Unlike some other VCS, Git tracks changes by storing snapshots of entire repository at different points in time.</description>
+    </item>
+    
+  </channel>
+</rss>

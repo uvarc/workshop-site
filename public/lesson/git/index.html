@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>Version Control with Git/GitHub - SOMRC Workshops</title>
+  <meta property="og:title" content="Version Control with Git/GitHub - SOMRC Workshops" />
+  <meta name="twitter:title" content="Version Control with Git/GitHub - SOMRC Workshops" />
+  <meta name="description" content="Introduction Version control software provides a systematic way to keep track of changes made to files. There are a number of version control software (VCS) systems &hellip; Git is one of them. It&rsquo;s a powerful tool for tracking and reconciling changes to text files from individual or multiple contributors. The basic unit of Git is the repository. Unlike some other VCS, Git tracks changes by storing snapshots of entire repository at different points in time.">
+  <meta property="og:description" content="Introduction Version control software provides a systematic way to keep track of changes made to files. There are a number of version control software (VCS) systems &hellip; Git is one of them. It&rsquo;s a powerful tool for tracking and reconciling changes to text files from individual or multiple contributors. The basic unit of Git is the repository. Unlike some other VCS, Git tracks changes by storing snapshots of entire repository at different points in time.">
+  <meta name="twitter:description" content="Introduction Version control software provides a systematic way to keep track of changes made to files. There are a number of version control software (VCS) systems &hellip; Git is one of them. …">
+  <meta name="author" content=""/>
+  <meta property="og:site_name" content="SOMRC Workshops" />
+  <meta property="og:url" content="/lesson/git/" />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="generator" content="Hugo 0.37.1" />
+  <link rel="stylesheet" href="/css/style.css" media="all" />
+  <link rel="stylesheet" href="/css/syntax.css" media="all" />
+  <link rel="stylesheet" href="/css/custom.css" media="all" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+<header class="site-header">
+  <nav class="site-navi">
+    <h1 class="site-title"><a href="/">SOMRC Workshops</a></h1>
+    <ul class="site-navi-items">
+      <li class="site-navi-item-categories"><a href="/categories/" title="Topics">Topics</a></li>
+      <li class="site-navi-item-tags"><a href="/lesson/" title="Lessons">Lessons</a></li>
+      <li class="site-navi-item-cadre-academy"><a href="https://education.cadre.virginia.edu/" title="CADRE Academy">CADRE Academy</a></li>
+    </ul>
+  </nav>
+</header>
+<hr class="site-header-bottom">
+
+  <div class="main" role="main">
+    <article class="article">
+      
+      
+      <h1 class="article-title">Version Control with Git/GitHub</h1>
+      
+      <hr class="article-title-bottom">
+      <ul class="article-meta">
+        
+        <li class="article-meta-categories">
+          <a href="/categories/advanced-research-computing/">
+            <i class="fas fa-folder"></i>
+            ADVANCED RESEARCH COMPUTING
+          </a>&nbsp;
+        </li>
+      </ul>
+      
+<aside class="toc">
+  <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#github">GitHub</a></li>
+<li><a href="#git-command-line-interface">Git (Command Line Interface)</a></li>
+</ul></li>
+</ul>
+</nav>
+</aside>
+      
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Version control software provides a systematic way to keep track of changes made to files. There are a number of version control software (VCS) systems &hellip; Git is one of them. It&rsquo;s a powerful tool for tracking and reconciling changes to text files from individual or multiple contributors. The basic unit of Git is the repository. Unlike some other VCS, Git tracks changes by storing <strong>snapshots</strong> of entire repository at different points in time. This is internally different than &ldquo;delta-based&rdquo; system that just keeps track of changes to the files. While Git can be used as a standalone piece of software, many people leverage web hosting platforms that expand the VCS functionality and have project management and collaborative features built in. Several examples of these services include <a href="https://bitbucket.org/">Bitbucket</a>, <a href="https://about.gitlab.com/">GitLab</a> and <a href="https://github.com/">GitHub</a>.</p>
+
+<h2 id="github">GitHub</h2>
+
+<p>As we mentioned in the introduction, GitHub is a web-based platform for hosting Git repositories. The platform includes a web interface to explore files and perform version control operations, as well as a number of collaboration tools for commenting, opening requests for new features, using project management methods, social networking, creating versions of software releases, and many more. GitHub is an extremely popular service, particularly among software developers and scientists who want to share code as part of &ldquo;open source&rdquo; projects.</p>
+
+<p><strong>1. Log into github.com</strong></p>
+
+<p>To begin with we&rsquo;ll log into <a href="https://github.com/">github.com</a></p>
+
+<p>If you haven&rsquo;t already created an account, make sure you follow the steps to do so.</p>
+
+<p><strong>2. Click the <code>+</code> icon and select &ldquo;New repository&rdquo;</strong></p>
+
+<p><img src="/images/newrepository.png" alt="" /></p>
+
+<p><strong>3. Give the repository a name</strong></p>
+
+<p>Like the prompt suggests, repository names should be short and memorable. And they must be unique to your account &hellip; i.e. you can&rsquo;t have two repositories in your account with the same name.</p>
+
+<p><img src="/images/reponame.png" alt="" /></p>
+
+<p><strong>4. Check the box to &ldquo;Initialize this repository with a README&rdquo;</strong></p>
+
+<p>New repositories on GitHub require contents to initialize. To get started, we can initialize with a README file, which are typically included in repositories to provide a description of content, usage and / or any necessary software setup.</p>
+
+<p><img src="/images/initialize.png" alt="" /></p>
+
+<p><strong>5. Create a new file</strong></p>
+
+<p>GitHub provides a file editor in the browser. We&rsquo;re going to make use of that here to demonstrate some of the basic concepts of version control &hellip; but <strong>nb</strong> that editing files this way is not a typical workflow, especially if you&rsquo;re storing versions of your code locally (on your computer) and remotely (on GitHub). More on that later &hellip;</p>
+
+<pre><code>smpl &lt;- rnorm(1000)
+
+xbar &lt;- mean(x)
+s &lt;- sd(x)
+
+hist(smpl)
+</code></pre>
+
+<p><strong>6. Edit the file</strong></p>
+
+<pre><code>smpl &lt;- rnorm(1000)
+
+xbar &lt;- mean(x)
+s &lt;- sd(x)
+
+hist(smpl)
+abline(v = xbar, lwd = 2, col = &quot;red&quot;)
+abline(v = xbar + 2*s, lwd = 2, col = &quot;red&quot;, lty = 3)
+abline(v = xbar - 2*s, lwd = 2, col = &quot;red&quot;, lty = 3)
+</code></pre>
+
+<p><strong>7. Take a look at the commit history and branch explorer</strong></p>
+
+<p><img src="/images/commithistory.png" alt="" /></p>
+
+<p>Each change to the repository (or <strong>commit</strong>) is recorded and tracked separately via a unique combination of characters. This <strong>hash</strong> is abbreviated in the commit history view, which provides an interface to explore the file(s) and line(s) that were changed as part of the commit.</p>
+
+<p>GitHub also provides a view of <strong>branches</strong>, which you can think of as a collection of commits that can represent an entirely different version of the repository. Ultimately, you can perform a <strong>merge</strong> operation to combine changes across branches. This can be particularly helpful for collaborations between multiple individuals or for a single developer who would like to keep the &ldquo;experimental&rdquo; features separate from stable code.</p>
+
+<hr />
+
+<p>As mentioned above, the fundamental unit of Git is the <strong>repository</strong>. The steps we&rsquo;ve completed up until now have introduced the basics of creating, committing and tracking changes within a single repository. However, GitHub allows its users to have multiple repositories. In some cases, rather than creating a repository from scratch you might need to <strong>fork</strong> another user&rsquo;s repository. This workflow can be useful for collaborative projects, as it essentially copies the contents and complete version control history at a single point in time.</p>
+
+<p><strong>8. Fork a repository</strong></p>
+
+<p>To illustrate the idea of <strong>forking</strong>, we&rsquo;ll need to start with an existing repository. For this exercise, we&rsquo;ve created a repository that will include a comma separated value (.csv) file with data on our favorite foods.</p>
+
+<p>Each of us will fork this original repository &hellip; and in doing so create new repositories with all of the files and previous changes in our accounts.</p>
+
+<p>Navigate to <a href="https://github.com/uvasomrc/foods">https://github.com/uvasomrc/foods</a> and click the <code>Fork</code> button in the upper right-hand corner of the page.</p>
+
+<p><img src="/images/fork.png" alt="" /></p>
+
+<p><strong>9. Make a unique change to an existing file</strong></p>
+
+<p>Find the line with your initials in foods.csv, and after the comma enter your favorite food. If you don&rsquo;t find your initials in the list, feel free to add a new line with your initials and favorite food separated by a comma.</p>
+
+<p><strong>10. Submit a Pull Request</strong></p>
+
+<p>The <strong>pull request</strong> mechanism allows contributors to propose changes to the owner of the <strong>upstream</strong> repository. That owner can review these changes, and conditionally accept or reject them. This process may involve ongoing dialogue and review, during which time the proposed changes can be updated by editing the forked repository.</p>
+
+<h2 id="git-command-line-interface">Git (Command Line Interface)</h2>
+
+<p>Thus far we&rsquo;ve managed our version control actitivies using the GitHub platform, which has a Graphical User Interface (GUI). Git as a program also has a commmand line interface (CLI), which can be extremely useful whether you&rsquo;re managing repositories locally or remotely. In this part of the workshop we&rsquo;ll cover some common workflows using the Git CLI.</p>
+
+<p><strong>1. Fork the <code>quality/</code> repository</strong></p>
+
+<p>To motivate the Git CLI material, we&rsquo;ve created a repository with an example python script that creates diagnostic plots of read quality scores for sequence data.</p>
+
+<p>Start by forking this repository on GitHub:</p>
+
+<p><a href="https://github.com/uvasomrc/quality">https://github.com/uvasomrc/quality</a></p>
+
+<p><strong>2. Confirm that <code>git</code> is installed and configured on your computer</strong></p>
+
+<p>Now that you have the repository forked to your GitHub account, we&rsquo;ll <strong>clone</strong> it locally.
+To work with Git on your computer, you&rsquo;ll it installed:</p>
+
+<p><a href="https://git-scm.com/downloads">https://git-scm.com/downloads</a></p>
+
+<p>Mac has the <code>Terminal</code> app, and Windows has <code>Git BASH</code>.</p>
+
+<p>From the command line, confirm that Git is installed by calling it by name followed by the <code>--version</code> flag.</p>
+
+<p><code>git --version</code></p>
+
+<p>If the command above returns the version without error, then you have Git successfully installed.</p>
+
+<p>There&rsquo;s one more step to configure the program post-installation. Each commit is associated with an author and email address. To check if you have a globablly conifgured user name and email address use the following command:</p>
+
+<p><code>git config -l</code></p>
+
+<p>If you don&rsquo;t see anything returned, then you&rsquo;ll need to do the configuration:</p>
+
+<p><code>git config --global user.name &quot;{YOUR_NAME_HERE}&quot;</code></p>
+
+<p><code>git config --global user.email {YOUR_EMAIL_ADDRESS_HERE}</code></p>
+
+<p><strong>3. Clone the repository</strong></p>
+
+<p>With Git installed and configured you are now ready to <strong>clone</strong> the repository contents and commit history to your computer.</p>
+
+<p>Cloning the repository will create a new folder as a subdirectory of your current working directory. If you&rsquo;re not sure where that is, in your terminal you can print the working directory:</p>
+
+<p><code>pwd</code></p>
+
+<p>Navigate back to your repository on GitHub and find the <em>Clone or download</em> button, and click it to expand. Copy and paste the <em>Clone with HTTPS</em> link:</p>
+
+<p><strong><a href="https://github.com/{YOUR_ACCOUNT_NAME_HERE}/quality">https://github.com/{YOUR_ACCOUNT_NAME_HERE}/quality</a></strong></p>
+
+<p><img src="/images/clone.png" alt="" /></p>
+
+<p>Use <code>git clone</code> followed by the link (above):</p>
+
+<p><code>git clone {CLONE_WITH_HTTPS_LINK_HERE}</code></p>
+
+<p><strong>4. View the log of commits</strong></p>
+
+<p>After cloning to your computer, you now have a new folder with all the files and version control history from the remote repository. You can navigate to this directory and list all the contents:</p>
+
+<p><code>cd quality</code></p>
+
+<p><code>ls -la</code></p>
+
+<p>As you can see, on your computer you now have all the files from the remote and something called <code>.git</code>, which is a hidden folder that includes the information that Git uses to track versions of the code.</p>
+
+<p>To access the history of commits (<em>starting at the point in time when you cloned the repository</em>) use the following:</p>
+
+<p><code>git log</code></p>
+
+<p><strong>5. Check the status</strong></p>
+
+<p>As you work with the code it&rsquo;s good practice to keep an eye on the <strong>status</strong> of your code base:</p>
+
+<p><code>git status</code></p>
+
+<p><strong>6. Run <code>qcheck.py</code></strong></p>
+
+<p>As described above this repository contains code written in python (<code>qcheck.py</code>) &hellip; this script loads sequence data stored in <code>.fastq</code> format and produces some simple diagnostic plots. The <code>data/</code> folder includes some example files so you can run the script. Keep in mind you&rsquo;ll need python, as well as the biopython and matplotlib modules installed (see <a href="https://github.com/uvasomrc/quality/blob/master/README.md">README of the <code>quality</code></a>).</p>
+
+<p>With those requirements satisfied you can execute the script as follows:</p>
+
+<p><code>python qcheck.py data/SRR622461_2.fastq data/SRR622461_2.fastq</code></p>
+
+<p><strong>7. Edit the script and re-run it</strong></p>
+
+<p>Now let&rsquo;s edit the script. One parameter we might want to adjust is the number of reads plotted (see <a href="https://github.com/uvasomrc/quality/blob/master/qcheck.py#L19">line 19 of <code>qcheck.py</code></a>) &hellip; let&rsquo;s try changing that from 50 to 60:</p>
+
+<p><code>vim qcheck.py</code></p>
+
+<p>Re-run the script:</p>
+
+<p><code>python qcheck.py data/SRR622461_2.fastq data/SRR622461_2.fastq</code></p>
+
+<p><strong>8. Check the status and view the diff</strong></p>
+
+<p>The status of the repo will show us that we have made changes:</p>
+
+<p><code>git status</code></p>
+
+<p>The <code>diff</code> command is very useful in seeing the actual changes we&rsquo;ve made:</p>
+
+<p><code>git diff</code></p>
+
+<p>The output from <code>diff</code> includes line-by-line additions and subtractions. For more information, refer to the <a href="resources.md">resources</a></p>
+
+<p><strong>9. Stage and commit the change made to <code>qcheck.py</code></strong></p>
+
+<p>Let&rsquo;s presume we want to keep track of the edits to <code>qcheck.py</code>. Before we <strong>commit</strong> the changes, we need to first <strong>add</strong> (or <strong>stage</strong>) them to be committed:</p>
+
+<p><code>git add qcheck.py</code></p>
+
+<p>Check the status again and confirm that the edits are staged:</p>
+
+<p><code>git status</code></p>
+
+<p>Now try using <code>git commit</code> followed by the file name:</p>
+
+<p><code>git commit qcheck.py</code></p>
+
+<p>Oops. That didn&rsquo;t work &hellip; why not?</p>
+
+<p>Every commit requires a message specifying what and <em>why</em> a change was made. You must include a message passed in quotes after the <code>-m</code> flag. While this is technically just a &ldquo;subject line&rdquo; for the commit (you can write more descriptive message &ldquo;bodies&rdquo;), in most cases this is sufficient to annotate the changes:</p>
+
+<p><code>git commit -m &quot;increased number of reads to be plotted and changed plot file name&quot;</code></p>
+
+<p>It is worth noting here that Git users have varied philosophies and practices regarding writing commit messages. For more information, refer to the <a href="resources.md">resources</a>.</p>
+
+<p>The <strong>commit</strong> we just made is associated with a unique <strong>hash</strong>, which is an alphanumeric reference for the code at the exact point time when we committed the change(s). You can refer to this hash (or an abbreviation)  of it with other Git commands, and you&rsquo;ll see it in the log:</p>
+
+<p><code>git log</code></p>
+
+<p><strong>10. Synchronize these changes with the repo on GitHub.com</strong></p>
+
+<p>Given that the repository we are working with was originally cloned from GitHub, there is a <strong>remote</strong> URL associated with the repository:</p>
+
+<p><code>git remote -v</code></p>
+
+<p>We can send our changes to the remote repository with a <strong>push</strong> command followed by the name of the remote (default is <code>origin</code>) and name of branch (default is <code>master</code>):</p>
+
+<p><code>git push origin master</code></p>
+
+<p>Note that sending the commit(s) we&rsquo;ve made up to the remote GitHub repository requires:</p>
+
+<ol>
+<li>An internet connection</li>
+<li>Authentication to GitHub (you need to essentially &ldquo;log in&rdquo; through the command line)</li>
+<li>Verification that the GitHub account you are using has permissions to update the remote repository</li>
+</ol>
+
+<p>If you have a SSH (Secure Shell) key set up, you&rsquo;ll see a message saying that the changes have been synchronized on GitHub. If not you&rsquo;ll need to enter your Github username and password.</p>
+
+<p>You can persistently associate your computer with your GitHub account (so you don&rsquo;t have to enter your user name and password every time) you can set up an SSH key:</p>
+
+<p><a href="https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/">https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/</a></p>
+
+<p>If you visit the remote URL, you should see your the changes you made to <code>qcheck.py</code>, along with the hash / message associated with your commit.</p>
+
+<p>You may have noticed that not all of the files in your <code>quality/</code> folder on your computer appear on GitHub. For example, the if you look in the <code>plots/</code> folder on GitHub you won&rsquo;t see the <code>.png</code> files &hellip; and that&rsquo;s intentional.</p>
+
+<p>One of the files we&rsquo;ve included in our repository is a <code>.gitignore</code> file, which serves as a relay to Git regarding what <em>not</em> to track. You can use wildcards (<code>*</code>) to exclude all files that exist in a certain sub-directory, end in a certain suffix, start with a certain prefix, etc.</p>
+
+<hr />
+
+<p>Let&rsquo;s change gear a bit &hellip; we&rsquo;ll still be working with the Git CLI, but rather than starting by cloning a remote repository we&rsquo;re going to instead initialize a new one locally.</p>
+
+<p><strong>11. Create and initialize a new Git repository</strong></p>
+
+<p>To create a Git repository we first need a new directory (or folder):</p>
+
+<p><code>cd ..</code></p>
+
+<p><code>mkdir clock</code></p>
+
+<p><code>cd clock</code></p>
+
+<p>Once we&rsquo;ve created the <code>clock/</code> folder and have changed down into it, we can run <code>git init</code> to <strong>initialize</strong> the folder as a Git repository:</p>
+
+<p><code>git init</code></p>
+
+<p>From now on, Git will know to look for changes to files inside of <code>clock/</code>.</p>
+
+<p><strong>12. Create, add and commit files for the clock</strong></p>
+
+<p>With the repository initialized, we will create two files (<code>README.md</code> and <code>clock.sh</code>) &hellip; start by making empty files using <code>touch</code>:</p>
+
+<p><code>touch README.md</code></p>
+
+<p><code>touch clock.sh</code></p>
+
+<p>Is Git keeping track?</p>
+
+<p><code>git status</code></p>
+
+<p>Now stage and commit both at once (the <code>.</code> stages <em>all</em> of the files that have been changed):</p>
+
+<p><code>git add .</code></p>
+
+<p><code>git commit -m &quot;adding skeleton of scripts&quot;</code></p>
+
+<p><code>git status</code></p>
+
+<p><strong>13. Edit, add and commit the README file</strong></p>
+
+<p>We have two empty files that we&rsquo;ve committed &hellip; now let&rsquo;s add some content.</p>
+
+<p>Start with the README:</p>
+
+<p><code>vim README.md</code></p>
+
+<pre><code># Clock
+
+This repository contains a script that returns the time when executed.
+
+## Usage
+
+`bash clock.sh`
+</code></pre>
+
+<p>Now stage the changes to <code>README.md</code>:</p>
+
+<p><code>git add README.md</code></p>
+
+<p>And commit them:</p>
+
+<p><code>git commit -m &quot;adding README with description and instructions&quot;</code></p>
+
+<p><strong>14. Edit, add and commit the clock script</strong></p>
+
+<p><code>clock.sh</code> will have the actual code for our BASH program:</p>
+
+<p><code>vim clock.sh</code></p>
+
+<pre><code>#!/bin/bash
+
+d=$(date '+%H:%M:%S');
+printf &quot;the time is ...\n$d\n&quot;
+</code></pre>
+
+<p><code>git add clock.sh</code></p>
+
+<p><code>git commit -m &quot;added the bash clock script&quot;</code></p>
+
+<p><strong>15. Sync the local repository with a GitHub remote</strong></p>
+
+<p>The local Git repository we&rsquo;ve just created is entirely independent of GitHub:</p>
+
+<p><code>git remote -v</code></p>
+
+<p>However, we can associate our local repository with GitHub.</p>
+
+<p>First, we&rsquo;ll need to create a new repository on GitHub. It&rsquo;s probably a good idea to use the same name as your local repo for this.</p>
+
+<p><strong>Make sure none of the boxes to &ldquo;initialize&rdquo; are  checked on GitHub</strong></p>
+
+<p><img src="/images/remoteadd.png" alt="" /></p>
+
+<p>Now from the command line, we can add connect the remote we just created to our local Git repository:</p>
+
+<p><code>git remote add origin https://github.com/{YOURREPONAMEHERE}</code></p>
+
+<p><code>git push -u origin master</code></p>
+
+<hr />
+
+<p>Whether your on a <strong>remote</strong> or <strong>local</strong> &hellip; a <strong>fork</strong> or <strong>upstream</strong> &hellip; you can further organize and track code in Git with a <strong>branch</strong> structure.</p>
+
+<p><strong>16. Create a new branch</strong></p>
+
+<p>A branch is essentially a detour from the code base at a particular commit in history. As it turns out, we&rsquo;ve been actually using a branch already, albeit the default <code>master</code>:</p>
+
+<p><code>git branch -v</code></p>
+
+<p>To create a new branch use <code>git checkout</code> with the <code>-b</code> flag followed by the name for the branch:</p>
+
+<p><code>git checkout -b feature</code></p>
+
+<p>Now if we look at the branches with the <code>-v</code> option, we see that there is now a branch called <code>feature</code>:</p>
+
+<p><code>git branch -v</code></p>
+
+<p>The <code>*</code> indicates that we are &ldquo;on&rdquo; the <code>feature</code> branch, and all of our subsequent commits will be applied until we switch branches again.</p>
+
+<p><strong>17. Edit, add and commit the file on the new branch</strong></p>
+
+<p>Let&rsquo;s modify our clock program, and add and commit those changes <em>to this branch</em>:</p>
+
+<p><code>vim clock.sh</code></p>
+
+<pre><code>#!/bin/bash
+
+d=$(date '+%H:%M:%S');
+printf &quot;the time is ...\n$d\nhave a nice day\n&quot;
+</code></pre>
+
+<p><code>git add clock.sh</code></p>
+
+<p><code>git commit -m &quot;adding new feature to the clock script&quot;</code></p>
+
+<p><strong>18. Checkout<code>master</code> again</strong></p>
+
+<p>Change back to your original branch (<code>master</code>) with the following:</p>
+
+<p><code>git checkout master</code></p>
+
+<p><strong>19. Make a new edit, then add and commit that change</strong></p>
+
+<p>Try modifying the same line on <code>master</code> as we did on <code>feature</code>:</p>
+
+<p><code>vim clock.sh</code></p>
+
+<pre><code>#!/bin/bash
+
+d=$(date '+%H:%M:%S');
+printf &quot;the time is ...\n$d\nhave a nice day!\n&quot;
+</code></pre>
+
+<p>Add and commit the changes:</p>
+
+<p><code>git add clock.sh</code></p>
+
+<p><code>git commit -m &quot;adding 'have a nice day!' to the clock&quot;</code></p>
+
+<p><strong>20. Attempt to merge the changes from the <code>feature</code> branch</strong></p>
+
+<p>Branching is helpful in that ultimately you can <strong>merge</strong> changes from multiple branches into one.</p>
+
+<p>Because we are currently on the <code>master</code> branch, the following will attempt to merge changes from <code>feature</code> into <code>master</code>:</p>
+
+<p><code>git merge feature</code></p>
+
+<p>However, as you see there is a conflict between the two branches. Using a text editor we can view and resolve this conflict:</p>
+
+<p><code>vim clock.sh</code></p>
+
+    </article>
+  </div>
+
+
+<div class="site-footer">
+  <div class="copyright">&copy; Copyright 2018 UVa School of Medicine Research Computing</div>
+  <ul class="site-footer-items">
+    <li class="site-footer-item-somrc"><a href="https://somrc.virginia.edu/" title="School of Medicine Research Computing">School of Medicine Research Computing</a></li>
+  </ul>
+</div>
+<script src="/js/script.js"></script>
+<script src="/js/custom.js"></script>
+
+
+</body>
+</html>

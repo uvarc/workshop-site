@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R on SOMRC Education</title>
+    <link>/categories/r/</link>
+    <description>Recent content in R on SOMRC Education</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; Copyright 2018 UVa School of Medicine Research Computing</copyright>
+    
+	<atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Writing Functions in R</title>
+      <link>/lesson/r-functions/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/lesson/r-functions/</guid>
+      <description>true  
+Overview This session will introduce essentials of writing functions in R. We will discuss methods for passing arguments, establishing return values and handling errors. We’ll also spend time covering R environments, as well as the system of searching for objects from within a function and beyond.
+Introduction R is a statistical computing language that delivers features to users as functions that can be programmatically implemented. Even with just its base installtion, R provides hundreds of these functions:</description>
+    </item>
+    
+  </channel>
+</rss>

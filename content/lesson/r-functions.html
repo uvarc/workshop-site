@@ -1,0 +1,447 @@
+---
+title: "Writing Functions in R"
+output:
+  pdf_document: default
+  html_document: default
+categories: ["R Programming"]
+---
+
+
+
+<p><a href="https://mybinder.org/v2/gh/uvasomrc/courses/master?filepath=workshops%2Fpython%2Fsummer-bootcamp%2FIntro_Python.ipynb"><img src="https://mybinder.org/badge.svg" alt="Binder" /></a></p>
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>This session will introduce essentials of writing functions in R. We will discuss methods for passing arguments, establishing return values and handling errors. We’ll also spend time covering R environments, as well as the system of searching for objects from within a function and beyond.</p>
+<div id="introduction" class="section level3">
+<h3>Introduction</h3>
+<p>R is a statistical computing language that delivers features to users as functions that can be programmatically implemented. Even with just its base installtion, R provides hundreds of these functions:</p>
+<pre class="r"><code>length(lsf.str(&quot;package:base&quot;)) + length(lsf.str(&quot;package:stats&quot;)) + length(lsf.str(&quot;package:utils&quot;))</code></pre>
+<pre><code>## [1] 1862</code></pre>
+<p>Takeaway:</p>
+<blockquote>
+<p><em>Everything that happens is a function call<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>.</em></p>
+</blockquote>
+<p>For example, let’s take a look at some simple math:</p>
+<pre class="r"><code>2 + 2</code></pre>
+<pre><code>## [1] 4</code></pre>
+<p>Many basic math operations are available as functions via <em>infix</em> operators.</p>
+<pre class="r"><code>?`+`</code></pre>
+<p>So <code>2+2</code> is equivalent to:</p>
+<pre class="r"><code>`+`(x = 2, y = 2)</code></pre>
+<pre><code>## [1] 4</code></pre>
+<p>We’ll be using a package called <code>pryr</code> to help dig into how functions behave, so make sure it’s installed and can be loaded.</p>
+<pre class="r"><code>install.packages(&quot;pryr&quot;)</code></pre>
+<pre class="r"><code>library(pryr)</code></pre>
+</div>
+<div id="fundamental-elements-of-a-function" class="section level3">
+<h3>Fundamental Elements of a Function</h3>
+<p>To motivate our introduction to functions in R, let’s begin by looking at a function that comes loaded with the base installation of R.</p>
+<p><code>pbirthday()</code> is a function that comes from the <strong>stats</strong> package, which is attached by default to our R session. This function allows users to generalize the “birthday paradox” problem<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>, with parameters for:</p>
+<ul>
+<li><strong>n</strong> = the sample size</li>
+<li><strong>classes</strong> = the number of distinct categories</li>
+<li><strong>coincident</strong> = the number of individuals who fall in the same category</li>
+</ul>
+<p>So we can use the following to compute the probability that in a given sample of 23 people, 2 of those individuals will have the same birthday:</p>
+<pre class="r"><code>pbirthday(n = 23, classes = 365, coincident = 2)</code></pre>
+<p>So there’s about a <em>50-50</em> chance that 2 of those 20 people would share the same birthday. That might seem high … and that’s the paradox!</p>
+<p>Let’s pry into this function a bit, and in doing so hopefully start to see how functions are constructed in R.</p>
+<p>Any given function typically has three components to consider:</p>
+<ul>
+<li>argument(s)</li>
+<li>content</li>
+<li>environment</li>
+</ul>
+<p>We can investigate each of these in the context of <code>pbirthday()</code>.</p>
+<p><code>formals()</code> returns a <code>pairlist</code> (a special kind of <code>list</code> object) of the arguments that can be passed to the specified function, along with any defaults for those parameters:</p>
+<pre class="r"><code>formals(pbirthday)</code></pre>
+<pre><code>## $n
+## 
+## 
+## $classes
+## [1] 365
+## 
+## $coincident
+## [1] 2</code></pre>
+<p>To inspect the body or content of the function, we can use <code>body()</code>:</p>
+<pre class="r"><code>body(pbirthday)</code></pre>
+<pre><code>## {
+##     k &lt;- coincident
+##     c &lt;- classes
+##     if (k &lt; 2) 
+##         return(1)
+##     if (k == 2) 
+##         return(1 - prod((c:(c - n + 1))/rep(c, n)))
+##     if (k &gt; n) 
+##         return(0)
+##     if (n &gt; c * (k - 1)) 
+##         return(1)
+##     LHS &lt;- n * exp(-n/(c * k))/(1 - n/(c * (k + 1)))^(1/k)
+##     lxx &lt;- k * log(LHS) - (k - 1) * log(c) - lgamma(k + 1)
+##     -expm1(-exp(lxx))
+## }</code></pre>
+<p>Last of all, we can find out where the function “lives” with <code>environment()</code>:</p>
+<pre class="r"><code>environment(pbirthday)</code></pre>
+<pre><code>## &lt;environment: namespace:stats&gt;</code></pre>
+<p>The environment returned is where R needs to look for the function. In the case of a function from a package, the package has to be attached. Packages can be attached with <code>library(packagename)</code> or, as in the case with <strong>stats</strong>, by default when the R session begins. If for some reason <strong>stats</strong> was not attached (or another package was attached that included another function with the same name), we can still access <code>pbirthday()</code> with the following syntax:</p>
+<pre class="r"><code>stats::pbirthday</code></pre>
+<pre><code>## function (n, classes = 365, coincident = 2) 
+## {
+##     k &lt;- coincident
+##     c &lt;- classes
+##     if (k &lt; 2) 
+##         return(1)
+##     if (k == 2) 
+##         return(1 - prod((c:(c - n + 1))/rep(c, n)))
+##     if (k &gt; n) 
+##         return(0)
+##     if (n &gt; c * (k - 1)) 
+##         return(1)
+##     LHS &lt;- n * exp(-n/(c * k))/(1 - n/(c * (k + 1)))^(1/k)
+##     lxx &lt;- k * log(LHS) - (k - 1) * log(c) - lgamma(k + 1)
+##     -expm1(-exp(lxx))
+## }
+## &lt;bytecode: 0x7fcb73e34d80&gt;
+## &lt;environment: namespace:stats&gt;</code></pre>
+<p>But, again, cause <strong>stats</strong> is loaded by default, just typing the function name (without parentheses) also returns the source code for the function.</p>
+<pre class="r"><code>pbirthday</code></pre>
+<pre><code>## function (n, classes = 365, coincident = 2) 
+## {
+##     k &lt;- coincident
+##     c &lt;- classes
+##     if (k &lt; 2) 
+##         return(1)
+##     if (k == 2) 
+##         return(1 - prod((c:(c - n + 1))/rep(c, n)))
+##     if (k &gt; n) 
+##         return(0)
+##     if (n &gt; c * (k - 1)) 
+##         return(1)
+##     LHS &lt;- n * exp(-n/(c * k))/(1 - n/(c * (k + 1)))^(1/k)
+##     lxx &lt;- k * log(LHS) - (k - 1) * log(c) - lgamma(k + 1)
+##     -expm1(-exp(lxx))
+## }
+## &lt;bytecode: 0x7fcb73e34d80&gt;
+## &lt;environment: namespace:stats&gt;</code></pre>
+<p>Note that there are some important exceptions to inspecting functions. Certain functions that are pre-defined (or compiled) are made available through “entry points” including <code>.Primitive</code>, <code>.Call</code>, <code>.Internal</code> and others. The source code for these functions isn’t available through R’s interpreter, so you’d have to dig a little deeper to find it<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a>.</p>
+</div>
+<div id="function-definition" class="section level3">
+<h3>Function Definition</h3>
+<p>Peeking into the guts of functions can be helpful for anyone interested in <em>using</em> R … but understanding how to define new functions is essential for anyone interested in <em>programming</em> with R.</p>
+<p>Functions are defined by users and are typically given a name so that they can be called in subsequent execution. This is done using R’s assignment operation … followed by an invocation of <code>function()</code> … followed by the desired expression:</p>
+<pre class="r"><code>func &lt;- function() 2
+
+func()</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code>twoxtwo &lt;- function() 2*2
+
+twoxtwo()</code></pre>
+<pre><code>## [1] 4</code></pre>
+<p>In many cases that expression will be more complex than the examples above. So more commonly, the definition of the function will place the body in braces:</p>
+<pre class="r"><code>twoxtwo &lt;- function() {
+  
+  2*2
+  
+}
+
+twoxtwo()</code></pre>
+<pre><code>## [1] 4</code></pre>
+<p>Note that all lines will be executed but the <em>last line defines the value to be returned</em>:</p>
+<pre class="r"><code>twoxtwo &lt;- function() {
+  
+  3*3
+  
+  2*2
+  
+}
+
+twoxtwo()</code></pre>
+<pre><code>## [1] 4</code></pre>
+<p>That said, we can explicitly break out of the function to return an object <code>return()</code>:</p>
+<pre class="r"><code>twoxtwo &lt;- function() {
+  
+  return(3*3)
+  
+  2*2
+  
+}
+
+twoxtwo()</code></pre>
+<pre><code>## [1] 9</code></pre>
+<p>But bear in mind that you can only return one object at a time. To return multiple values, however, you can store them in list and then return that list:</p>
+<pre class="r"><code>twoxtwo &lt;- function() {
+  
+  list(3*3,2*2)
+  
+}
+
+twoxtwo()</code></pre>
+<pre><code>## [[1]]
+## [1] 9
+## 
+## [[2]]
+## [1] 4</code></pre>
+<p>None of the examples above require input from the user beyond the function name. However, we typically want to be able to customize a function’s behavior with parameters or <em>arguments</em>:</p>
+<pre class="r"><code>func &lt;- function(x) {
+  
+  x^2 
+  
+}
+
+func(x = 2)</code></pre>
+<pre><code>## [1] 4</code></pre>
+<pre class="r"><code>func(3)</code></pre>
+<pre><code>## [1] 9</code></pre>
+<pre class="r"><code>func() # won&#39;t work!</code></pre>
+<pre><code>## Error in func(): argument &quot;x&quot; is missing, with no default</code></pre>
+<pre class="r"><code>func(x = 2)</code></pre>
+<pre><code>## [1] 4</code></pre>
+<pre class="r"><code>func(3)</code></pre>
+<pre><code>## [1] 9</code></pre>
+<p>The name we’ve chosen for the argument in this case is “x” … that may or may not be meaningful for the user of the function. Ideally whether it is explicitly used (i.e. <code>func(x = 2)</code>) … or implicit (i.e. <code>func(2)</code>) … the name will be meaningful to the function user. This becomes extremely important when packaging functions to be distributed. But it’s also important in the context of functions that can accept multiple arguments.</p>
+</div>
+<div id="handling-arguments" class="section level3">
+<h3>Handling Arguments</h3>
+<p>In our first example (above) <code>func(x)</code> is a function that expects a single parameter, and does not have a default. Let’s look at some other slightly more complex examples.</p>
+<p>We’ll start by adding another argument:</p>
+<pre class="r"><code>func &lt;- function(x,y) {
+  
+  x*y
+  
+}
+
+func(3,10)</code></pre>
+<pre><code>## [1] 30</code></pre>
+<pre class="r"><code>func(x=3,10)</code></pre>
+<pre><code>## [1] 30</code></pre>
+<pre class="r"><code>func(x=3,y=10)</code></pre>
+<pre><code>## [1] 30</code></pre>
+<pre class="r"><code>func(y=10,x=3)</code></pre>
+<pre><code>## [1] 30</code></pre>
+<pre class="r"><code>func(y=10,3)</code></pre>
+<pre><code>## [1] 30</code></pre>
+<p>Next we’ll try giving that argument a default value:</p>
+<pre class="r"><code>func &lt;- function(x,y=10) {
+  
+  x*y
+  
+}
+
+func(3)</code></pre>
+<pre><code>## [1] 30</code></pre>
+<pre class="r"><code>func(x=3,10)</code></pre>
+<pre><code>## [1] 30</code></pre>
+<pre class="r"><code>func(x=3,y=10)</code></pre>
+<pre><code>## [1] 30</code></pre>
+<pre class="r"><code>func(y=10,x=3)</code></pre>
+<pre><code>## [1] 30</code></pre>
+<pre class="r"><code>func(y=10,3)</code></pre>
+<pre><code>## [1] 30</code></pre>
+<p>Up to now, whether the functions we’ve created take single or multiple arguments, all of these parameters have been numeric vectors of length 1 … and we’ve done some simple math with them.</p>
+<p>To progress with more nuances of function definition, we’ll need a more robust example:</p>
+<pre class="r"><code>summit &lt;- function(x, method = &quot;mean&quot;) {
+  
+  switch(method,
+         &quot;mean&quot; = mean(x),
+         &quot;sum&quot; = sum(x),
+         &quot;quantile&quot; = quantile(x)
+         )
+  
+}</code></pre>
+<p>The function above uses a call to <code>switch</code> in its body in order to provide different summary statistics based on the “method” parameter, for which we’ve provided mean as the default.</p>
+<pre class="r"><code>mynums &lt;- 1:10
+summit(mynums)</code></pre>
+<pre><code>## [1] 5.5</code></pre>
+<pre class="r"><code>summit(mynums, &quot;sum&quot;)</code></pre>
+<pre><code>## [1] 55</code></pre>
+<pre class="r"><code>summit(mynums, &quot;quantile&quot;)</code></pre>
+<pre><code>##    0%   25%   50%   75%  100% 
+##  1.00  3.25  5.50  7.75 10.00</code></pre>
+<p>But as we’ve written the function, we’re unable to further parameterize the summary functions we are switching between … and that may introduce failures in our code that we can’t resolve:</p>
+<pre class="r"><code>summit(c(mynums,NA))</code></pre>
+<pre><code>## [1] NA</code></pre>
+<pre class="r"><code>summit(c(mynums,NA), method = &quot;sum&quot;)</code></pre>
+<pre><code>## [1] NA</code></pre>
+<p>Fortunately, we can use the <code>...</code> argument to capture other parameters that can be passed to functions we are using within our function:</p>
+<pre class="r"><code>summit &lt;- function(x, method = &quot;mean&quot;, ...) {
+  
+  switch(method,
+         &quot;mean&quot; = mean(x, ...),
+         &quot;sum&quot; = sum(x, ...),
+         &quot;quantile&quot; = quantile(x, ...)
+         )
+  
+}</code></pre>
+<p>Our implementation of <code>mean()</code>, <code>sum()</code> and <code>quantile()</code> will now inherit any parameters we pass through the function we defined:</p>
+<pre class="r"><code>summit(c(mynums,NA))</code></pre>
+<pre><code>## [1] NA</code></pre>
+<pre class="r"><code>summit(c(mynums,NA), method = &quot;sum&quot;)</code></pre>
+<pre><code>## [1] NA</code></pre>
+<pre class="r"><code>summit(c(mynums,NA), method = &quot;quantile&quot;, probs = c(0.01,0.99), names = FALSE)</code></pre>
+<pre><code>## Error in quantile.default(x, ...): missing values and NaN&#39;s not allowed if &#39;na.rm&#39; is FALSE</code></pre>
+<p>In this case, parameter inheritance allows us to solve the problem introduced by the <code>NA</code>. However, we may want to be more direct in how the function handles arguments to prevent other bugs in its usage.</p>
+<p>To illustrate, we can start by inspecting the vector we’re using for our example:</p>
+<pre class="r"><code>class(c(mynums,NA))</code></pre>
+<pre><code>## [1] &quot;integer&quot;</code></pre>
+<pre class="r"><code>mode(c(mynums,NA))</code></pre>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<p>This is a numeric vector that happens to include a <code>NA</code> (missing) value.</p>
+<p>What would happen if we tried to <code>summit()</code> a character vector?</p>
+<pre class="r"><code>summit(&quot;foo&quot;, method = &quot;mean&quot;)</code></pre>
+<pre><code>## [1] NA</code></pre>
+<pre class="r"><code>summit(&quot;foo&quot;, method = &quot;sum&quot;)</code></pre>
+<pre><code>## Error in sum(x, ...): invalid &#39;type&#39; (character) of argument</code></pre>
+<pre class="r"><code>summit(&quot;foo&quot;, method = &quot;quantile&quot;)</code></pre>
+<pre><code>## Error in (1 - h) * qs[i]: non-numeric argument to binary operator</code></pre>
+<p>As you might expect, <code>mean()</code>, <code>sum()</code> and <code>quantile()</code> each require a numeric vector. So in handling the parameter <code>x</code> we can include some checks for the type of argument entered in the argument. We’ll do this with the help of two functions: <code>inherit()</code> and <code>stopifnot()</code></p>
+<pre class="r"><code>inherits(1, &quot;numeric&quot;)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>inherits(1.7, &quot;numeric&quot;)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>inherits(TRUE, &quot;numeric&quot;)</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<pre class="r"><code>inherits(&quot;foo&quot;, &quot;numeric&quot;)</code></pre>
+<pre><code>## [1] FALSE</code></pre>
+<pre class="r"><code>stopifnot(1 &lt; 2)
+stopifnot(1 &gt; 2)</code></pre>
+<pre><code>## Error: 1 &gt; 2 is not TRUE</code></pre>
+<pre class="r"><code>stopifnot(inherits(&quot;foo&quot;, &quot;numeric&quot;))</code></pre>
+<pre><code>## Error: inherits(&quot;foo&quot;, &quot;numeric&quot;) is not TRUE</code></pre>
+<pre class="r"><code>summit &lt;- function(x, method = &quot;mean&quot;, ...) {
+  
+  stopifnot(inherits(x, &quot;numeric&quot;))
+  
+  switch(method,
+         &quot;mean&quot; = mean(x, ...),
+         &quot;sum&quot; = sum(x, ...),
+         &quot;quantile&quot; = quantile(x, ...)
+         )
+  
+}</code></pre>
+<pre class="r"><code>summit(&quot;foo&quot;, &quot;quantile&quot;)</code></pre>
+<pre><code>## Error: inherits(x, &quot;numeric&quot;) is not TRUE</code></pre>
+<p>It’s worth pointing out that there are other approaches for error handling, including <code>try()</code>, <code>warning()</code> and <code>stop()</code>. These are particularly helpful if you’re looking to output more informative error message than what’s generated by <code>stopifnot()</code><a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a>.</p>
+</div>
+<div id="scoping-and-environments" class="section level3">
+<h3>Scoping and Environments</h3>
+<p>In defining our functions we’ve assigned them using the <code>&lt;-</code> operator. But what we haven’t done is use the assignment operator inside a function that we have defined … <em>yet</em>:</p>
+<pre class="r"><code>func &lt;- function(x) {
+  
+  y &lt;- x^2
+  
+  y
+  
+}</code></pre>
+<pre class="r"><code>func(2)</code></pre>
+<pre><code>## [1] 4</code></pre>
+<p>Our function (<code>func()</code>) seems to be working as expected, and is in our global environment.</p>
+<pre class="r"><code>where(&quot;func&quot;)</code></pre>
+<pre><code>## &lt;environment: R_GlobalEnv&gt;</code></pre>
+<p>But didn’t we assing something called <code>y</code>? Where is that?</p>
+<pre class="r"><code>where(&quot;y&quot;)</code></pre>
+<pre><code>## Error: Can&#39;t find y</code></pre>
+<p>Because <code>y</code> was defined inside the function it will not be visible in the global environment. In fact, <code>y</code> (and <code>x</code> for that matter) is considered a <em>local variable</em>. This means that it’s defined in the environment of the function.</p>
+<pre class="r"><code>func &lt;- function(x) {
+  
+  y &lt;- x^2
+  
+  list(y, where(&quot;y&quot;))
+  
+}</code></pre>
+<pre class="r"><code>func(2)</code></pre>
+<pre><code>## [[1]]
+## [1] 4
+## 
+## [[2]]
+## &lt;environment: 0x7fcb75b1de98&gt;</code></pre>
+<p>The environment returned is <em>ephemeral</em> … in other words it is where <code>y</code> was created inside the function. It’s worth pointing out that’s different from the location of the function, which has been bound to the global environment. In this case, the global environment is scoped one step “up” from the local environment inside the function.</p>
+<pre class="r"><code>func &lt;- function(x) {
+  
+  y &lt;- x^2
+  
+  list(y, where(&quot;y&quot;), parent.env(where(&quot;y&quot;)))
+  
+}</code></pre>
+<pre class="r"><code>func(2)</code></pre>
+<pre><code>## [[1]]
+## [1] 4
+## 
+## [[2]]
+## &lt;environment: 0x7fcb74858498&gt;
+## 
+## [[3]]
+## &lt;environment: R_GlobalEnv&gt;</code></pre>
+<p>So <code>y</code> is bound locally since it’s assigned (with <code>&lt;-</code>) inside the function … as such this object won’t be in our global environment. There is another operator (<code>&lt;&lt;-</code>) that <em>will</em> bind an object to the environment one step up from the local<a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a>.</p>
+<pre class="r"><code>func &lt;- function(x) {
+  
+  y &lt;&lt;- x^2
+  
+  list(y, where(&quot;y&quot;))
+  
+}</code></pre>
+<pre class="r"><code>func(2)</code></pre>
+<pre><code>## [[1]]
+## [1] 4
+## 
+## [[2]]
+## &lt;environment: R_GlobalEnv&gt;</code></pre>
+<p>Alternatively we can use the <code>assign()</code> function to be explicit about the environment to which we want to bind the object:</p>
+<pre class="r"><code>func &lt;- function(x) {
+  
+  assign(&quot;y&quot;, value = {x^2}, envir = globalenv())
+  
+  list(y, where(&quot;y&quot;))
+  
+}</code></pre>
+<pre class="r"><code>func(3)</code></pre>
+<pre><code>## [[1]]
+## [1] 9
+## 
+## [[2]]
+## &lt;environment: R_GlobalEnv&gt;</code></pre>
+<p>Assuming we needed to bind the object from the function’s ephemeral environment to a new environment altogether, we can do that as well.</p>
+<pre class="r"><code>myenv &lt;- new.env()</code></pre>
+<pre class="r"><code>func &lt;- function(x) {
+  
+  assign(&quot;y&quot;, value = {x^2}, envir = myenv)
+  
+  list(y, where(&quot;y&quot;))
+  
+}</code></pre>
+<pre class="r"><code>func(5)</code></pre>
+<pre><code>## [[1]]
+## [1] 9
+## 
+## [[2]]
+## &lt;environment: R_GlobalEnv&gt;</code></pre>
+<pre class="r"><code>myenv$y</code></pre>
+<pre><code>## [1] 25</code></pre>
+</div>
+<div id="further-resources" class="section level3">
+<h3>Further Resources</h3>
+<p>What is covered above is a taste of some of the principal concepts of writing functions in R. There are a number of other approaches / ideas that can be hepful for writing functions:</p>
+<ul>
+<li>Object Oriented Approaches<a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a>,<a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a></li>
+<li>Recursion<a href="#fn8" class="footnoteRef" id="fnref8"><sup>8</sup></a>,<a href="#fn9" class="footnoteRef" id="fnref9"><sup>9</sup></a></li>
+<li>Anonymous Functions and Closures<a href="#fn10" class="footnoteRef" id="fnref10"><sup>10</sup></a>,<a href="#fn11" class="footnoteRef" id="fnref11"><sup>11</sup></a></li>
+<li>All of the above and more …<a href="#fn12" class="footnoteRef" id="fnref12"><sup>12</sup></a></li>
+</ul>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a href="http://user2014.r-project.org/files/chambers.pdf" class="uri">http://user2014.r-project.org/files/chambers.pdf</a>]<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p><a href="https://www.scientificamerican.com/article/bring-science-home-probability-birthday-paradox/" class="uri">https://www.scientificamerican.com/article/bring-science-home-probability-birthday-paradox/</a><a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p><a href="https://stackoverflow.com/questions/14035506/how-to-see-the-source-code-of-r-internal-or-primitive-function" class="uri">https://stackoverflow.com/questions/14035506/how-to-see-the-source-code-of-r-internal-or-primitive-function</a><a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p><a href="https://stackoverflow.com/questions/8343509/better-error-message-for-stopifnot" class="uri">https://stackoverflow.com/questions/8343509/better-error-message-for-stopifnot</a><a href="#fnref4">↩</a></p></li>
+<li id="fn5"><p><a href="https://stackoverflow.com/questions/2628621/how-do-you-use-scoping-assignment-in-r?answertab=votes#tab-top" class="uri">https://stackoverflow.com/questions/2628621/how-do-you-use-scoping-assignment-in-r?answertab=votes#tab-top</a><a href="#fnref5">↩</a></p></li>
+<li id="fn6"><p><a href="https://stackoverflow.com/questions/6450803/class-in-r-s3-vs-s4?answertab=votes#tab-top" class="uri">https://stackoverflow.com/questions/6450803/class-in-r-s3-vs-s4?answertab=votes#tab-top</a><a href="#fnref6">↩</a></p></li>
+<li id="fn7"><p><a href="https://kasperdanielhansen.github.io/genbioconductor/html/R_S4.html" class="uri">https://kasperdanielhansen.github.io/genbioconductor/html/R_S4.html</a><a href="#fnref7">↩</a></p></li>
+<li id="fn8"><p><a href="https://www.datamentor.io/r-programming/recursion" class="uri">https://www.datamentor.io/r-programming/recursion</a><a href="#fnref8">↩</a></p></li>
+<li id="fn9"><p><a href="http://www.jason-french.com/blog/2014/07/26/recursion-in-r/" class="uri">http://www.jason-french.com/blog/2014/07/26/recursion-in-r/</a><a href="#fnref9">↩</a></p></li>
+<li id="fn10"><p><a href="http://www.win-vector.com/blog/2015/03/using-closures-as-objects-in-r/" class="uri">http://www.win-vector.com/blog/2015/03/using-closures-as-objects-in-r/</a><a href="#fnref10">↩</a></p></li>
+<li id="fn11"><p><a href="https://darrenjw.wordpress.com/2011/11/23/lexical-scope-and-function-closures-in-r/" class="uri">https://darrenjw.wordpress.com/2011/11/23/lexical-scope-and-function-closures-in-r/</a><a href="#fnref11">↩</a></p></li>
+<li id="fn12"><p><a href="http://adv-r.had.co.nz/" class="uri">http://adv-r.had.co.nz/</a><a href="#fnref12">↩</a></p></li>
+</ol>
+</div>

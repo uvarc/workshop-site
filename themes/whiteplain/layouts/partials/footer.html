@@ -1,0 +1,12 @@
+
+<div class="site-footer">
+  <div class="copyright">{{ .Site.Copyright | safeHTML }}</div>
+  <ul class="site-footer-items">
+    {{- range .Site.Menus.footer }}
+    <li class="site-footer-item-{{ .Identifier }}"><a href="{{ .URL | safeURL }}" title="{{ .Name }}">{{ .Name }}</a></li>
+    {{- end }}
+  </ul>
+</div>
+<script src="{{ "js/script.js" | relURL }}"></script>
+<script src="{{ "js/custom.js" | relURL }}"></script>
+{{ template "_internal/google_analytics.html" . }}

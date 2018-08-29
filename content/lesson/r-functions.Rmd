@@ -1,0 +1,494 @@
+---
+title: "Writing Functions in R"
+output:
+  pdf_document: default
+  html_document: default
+categories: ["R Programming"]
+---
+
+
+[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/uvasomrc/courses/master?filepath=workshops%2Fpython%2Fsummer-bootcamp%2FIntro_Python.ipynb)
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+## Overview
+
+This session will introduce essentials of writing functions in R. We will discuss methods for passing arguments, establishing return values and handling errors. We'll also spend time covering R environments, as well as the system of searching for objects from within a function and beyond.
+
+### Introduction
+
+R is a statistical computing language that delivers features to users as functions that can be programmatically implemented. Even with just its base installtion, R provides hundreds of these functions:
+
+```{r}
+length(lsf.str("package:base")) + length(lsf.str("package:stats")) + length(lsf.str("package:utils"))
+```
+
+Takeaway:
+
+> *Everything that happens is a function call[^1].*
+
+For example, let's take a look at some simple math:
+
+```{r}
+2 + 2
+```
+
+Many basic math operations are available as functions via *infix* operators.
+
+```{r}
+?`+`
+```
+
+So `2+2` is equivalent to:
+
+```{r}
+`+`(x = 2, y = 2)
+```
+
+We'll be using a package called `pryr` to help dig into how functions behave, so make sure it's installed and can be loaded.
+
+```{r, eval = FALSE}
+install.packages("pryr")
+```
+
+```{r, warning=FALSE, message=FALSE}
+library(pryr)
+```
+
+### Fundamental Elements of a Function
+
+To motivate our introduction to functions in R, let's begin by looking at a function that comes loaded with the base installation of R.
+
+`pbirthday()` is a function that comes from the **stats** package, which is attached by default to our R session. This function allows users to generalize the "birthday paradox" problem[^2], with parameters for:
+
+- **n** = the sample size
+- **classes** = the number of distinct categories
+- **coincident** = the number of individuals who fall in the same category
+
+So we can use the following to compute the probability that in a given sample of 23 people, 2 of those individuals will have the same birthday:
+
+```{r, eval = FALSE}
+pbirthday(n = 23, classes = 365, coincident = 2)
+```
+
+So there's about a *50-50* chance that 2 of those 20 people would share the same birthday. That might seem high ... and that's the paradox!
+
+Let's pry into this function a bit, and in doing so hopefully start to see how functions are constructed in R.
+
+Any given function typically has three components to consider:
+
+- argument(s)
+- content
+- environment
+
+We can investigate each of these in the context of `pbirthday()`.
+
+`formals()` returns a `pairlist` (a special kind of `list` object) of the arguments that can be passed to the specified function, along with any defaults for those parameters:
+
+```{r}
+formals(pbirthday)
+```
+
+To inspect the body or content of the function, we can use `body()`:
+
+```{r}
+body(pbirthday)
+```
+
+Last of all, we can find out where the function "lives" with `environment()`:
+
+```{r}
+environment(pbirthday)
+```
+
+The environment returned is where R needs to look for the function. In the case of a function from a package, the package has to be attached. Packages can be attached with `library(packagename)` or, as in the case with **stats**, by default when the R session begins. If for some reason **stats** was not attached (or another package was attached that included another function with the same name), we can still access `pbirthday()` with the following syntax:
+
+```{r}
+stats::pbirthday
+```
+
+But, again, cause **stats** is loaded by default, just typing the function name (without parentheses) also returns the source code for the function.
+
+```{r}
+pbirthday
+```
+
+Note that there are some important exceptions to inspecting functions. Certain functions that are pre-defined (or compiled) are made available through "entry points" including `.Primitive`, `.Call`, `.Internal` and others. The source code for these functions isn't available through R's interpreter, so you'd have to dig a little deeper to find it[^3].
+
+### Function Definition
+
+Peeking into the guts of functions can be helpful for anyone interested in *using* R ... but understanding how to define new functions is essential for anyone interested in *programming* with R.
+
+Functions are defined by users and are typically given a name so that they can be called in subsequent execution. This is done using R's assignment operation ...  followed by an invocation of `function()` ... followed by the desired expression:
+
+```{r}
+func <- function() 2
+
+func()
+```
+
+```{r}
+twoxtwo <- function() 2*2
+
+twoxtwo()
+```
+
+In many cases that expression will be more complex than the examples above. So more commonly, the definition of the function will place the body in braces:
+
+```{r}
+twoxtwo <- function() {
+  
+  2*2
+  
+}
+
+twoxtwo()
+```
+
+Note that all lines will be executed but the *last line defines the value to be returned*:
+
+```{r}
+twoxtwo <- function() {
+  
+  3*3
+  
+  2*2
+  
+}
+
+twoxtwo()
+```
+
+That said, we can explicitly break out of the function to return an object `return()`:
+
+```{r}
+twoxtwo <- function() {
+  
+  return(3*3)
+  
+  2*2
+  
+}
+
+twoxtwo()
+```
+
+But bear in mind that you can only return one object at a time. To return multiple values, however, you can store them in list and then return that list:
+
+```{r}
+twoxtwo <- function() {
+  
+  list(3*3,2*2)
+  
+}
+
+twoxtwo()
+```
+
+None of the examples above require input from the user beyond the function name. However, we typically want to be able to customize a function's behavior with parameters or *arguments*:
+
+```{r}
+func <- function(x) {
+  
+  x^2 
+  
+}
+
+func(x = 2)
+func(3)
+```
+
+```{r, error = TRUE}
+func() # won't work!
+```
+
+```{r}
+func(x = 2)
+func(3)
+```
+
+The name we've chosen for the argument in this case is "x" ... that may or may not be meaningful for the user of the function. Ideally whether it is explicitly used (i.e. `func(x = 2)`) ... or implicit (i.e. `func(2)`) ... the name will be meaningful to the function user. This becomes extremely important when packaging functions to be distributed. But it's also important in the context of functions that can accept multiple arguments.
+
+### Handling Arguments
+
+In our first example (above) `func(x)` is a function that expects a single parameter, and does not have a default. Let's look at some other slightly more complex examples.
+
+We'll start by adding another argument:
+
+```{r}
+func <- function(x,y) {
+  
+  x*y
+  
+}
+
+func(3,10)
+func(x=3,10)
+func(x=3,y=10)
+func(y=10,x=3)
+func(y=10,3)
+```
+
+Next we'll try giving that argument a default value:
+
+```{r}
+func <- function(x,y=10) {
+  
+  x*y
+  
+}
+
+func(3)
+func(x=3,10)
+func(x=3,y=10)
+func(y=10,x=3)
+func(y=10,3)
+```
+
+Up to now, whether the functions we've created take single or multiple arguments, all of these parameters have been numeric vectors of length 1 ... and we've done some simple math with them. 
+
+To progress with more nuances of function definition, we'll need a more robust example:
+
+```{r}
+summit <- function(x, method = "mean") {
+  
+  switch(method,
+         "mean" = mean(x),
+         "sum" = sum(x),
+         "quantile" = quantile(x)
+         )
+  
+}
+```
+
+The function above uses a call to `switch` in its body in order to provide different summary statistics based on the "method" parameter, for which we've provided mean as the default.
+
+```{r}
+mynums <- 1:10
+summit(mynums)
+summit(mynums, "sum")
+summit(mynums, "quantile")
+```
+
+But as we've written the function, we're unable to further parameterize the summary functions we are switching between ... and that may introduce failures in our code that we can't resolve:
+
+```{r}
+summit(c(mynums,NA))
+summit(c(mynums,NA), method = "sum")
+```
+
+Fortunately, we can use the `...` argument to capture other parameters that can be passed to functions we are using within our function:
+
+```{r}
+summit <- function(x, method = "mean", ...) {
+  
+  switch(method,
+         "mean" = mean(x, ...),
+         "sum" = sum(x, ...),
+         "quantile" = quantile(x, ...)
+         )
+  
+}
+```
+
+Our implementation of `mean()`, `sum()` and `quantile()` will now inherit any parameters we pass through the function we defined:
+
+```{r, error = TRUE}
+summit(c(mynums,NA))
+summit(c(mynums,NA), method = "sum")
+summit(c(mynums,NA), method = "quantile", probs = c(0.01,0.99), names = FALSE)
+```
+
+In this case, parameter inheritance allows us to solve the problem introduced by the `NA`. However, we may want to be more direct in how the function handles arguments to prevent other bugs in its usage.
+
+To illustrate, we can start by inspecting the vector we're using for our example:
+
+```{r}
+class(c(mynums,NA))
+mode(c(mynums,NA))
+```
+
+This is a numeric vector that happens to include a `NA` (missing) value. 
+
+What would happen if we tried to `summit()` a character vector?
+
+```{r, error = TRUE}
+summit("foo", method = "mean")
+summit("foo", method = "sum")
+summit("foo", method = "quantile")
+```
+
+As you might expect, `mean()`, `sum()` and `quantile()` each require a numeric vector. So in handling the parameter `x` we can include some checks for the type of argument entered in the argument. We'll do this with the help of two functions: `inherit()` and `stopifnot()`
+
+
+```{r}
+inherits(1, "numeric")
+inherits(1.7, "numeric")
+inherits(TRUE, "numeric")
+inherits("foo", "numeric")
+```
+
+```{r, error = TRUE}
+stopifnot(1 < 2)
+stopifnot(1 > 2)
+stopifnot(inherits("foo", "numeric"))
+```
+
+```{r}
+summit <- function(x, method = "mean", ...) {
+  
+  stopifnot(inherits(x, "numeric"))
+  
+  switch(method,
+         "mean" = mean(x, ...),
+         "sum" = sum(x, ...),
+         "quantile" = quantile(x, ...)
+         )
+  
+}
+```
+
+```{r, error = TRUE}
+summit("foo", "quantile")
+```
+
+It's worth pointing out that there are other approaches for error handling, including `try()`, `warning()` and `stop()`. These are particularly helpful if you're looking to output more informative error message than what's generated by `stopifnot()`[^4].
+
+### Scoping and Environments
+
+In defining our functions we've assigned them using the `<-` operator. But what we haven't done is use the assignment operator inside a function that we have defined ... *yet*:
+
+```{r}
+func <- function(x) {
+  
+  y <- x^2
+  
+  y
+  
+}
+```
+
+```{r}
+func(2)
+```
+
+Our function (`func()`) seems to be working as expected, and is in our global environment.
+
+```{r}
+where("func")
+```
+
+But didn't we assing something called `y`? Where is that?
+
+```{r, error = TRUE}
+where("y")
+```
+
+Because `y` was defined inside the function it will not be visible in the global environment. In fact, `y` (and `x` for that matter) is considered a *local variable*. This means that it's defined in the environment of the function. 
+
+```{r}
+func <- function(x) {
+  
+  y <- x^2
+  
+  list(y, where("y"))
+  
+}
+```
+
+```{r}
+func(2)
+```
+
+The environment returned is *ephemeral* ... in other words it is where `y` was created inside the function. It's worth pointing out that's different from the location of the function, which has been bound to the global environment. In this case, the global environment is scoped one step "up" from the local environment inside the function.
+
+```{r}
+func <- function(x) {
+  
+  y <- x^2
+  
+  list(y, where("y"), parent.env(where("y")))
+  
+}
+```
+
+```{r}
+func(2)
+```
+
+So `y` is bound locally since it's assigned (with `<-`) inside the function ... as such this object won't be in our global environment. There is another operator (`<<-`) that *will* bind an object to the environment one step up from the local[^5].
+
+```{r}
+func <- function(x) {
+  
+  y <<- x^2
+  
+  list(y, where("y"))
+  
+}
+```
+
+```{r}
+func(2)
+```
+
+Alternatively we can use the `assign()` function to be explicit about the environment to which we want to bind the object:
+
+```{r}
+func <- function(x) {
+  
+  assign("y", value = {x^2}, envir = globalenv())
+  
+  list(y, where("y"))
+  
+}
+```
+
+```{r}
+func(3)
+```
+
+Assuming we needed to bind the object from the function's ephemeral environment to a new environment altogether, we can do that as well.
+
+```{r}
+myenv <- new.env()
+```
+
+```{r}
+func <- function(x) {
+  
+  assign("y", value = {x^2}, envir = myenv)
+  
+  list(y, where("y"))
+  
+}
+```
+
+```{r}
+func(5)
+myenv$y
+```
+
+### Further Resources
+
+What is covered above is a taste of some of the principal concepts of writing functions in R. There are a number of other approaches / ideas that can be hepful for writing functions:
+
+- Object Oriented Approaches[^6],[^7]
+- Recursion[^8],[^9]
+- Anonymous Functions and Closures[^10],[^11]
+- All of the above and more ...[^12]
+
+[^1]: http://user2014.r-project.org/files/chambers.pdf]
+[^2]: https://www.scientificamerican.com/article/bring-science-home-probability-birthday-paradox/
+[^3]: https://stackoverflow.com/questions/14035506/how-to-see-the-source-code-of-r-internal-or-primitive-function
+[^4]: https://stackoverflow.com/questions/8343509/better-error-message-for-stopifnot
+[^5]: https://stackoverflow.com/questions/2628621/how-do-you-use-scoping-assignment-in-r?answertab=votes#tab-top
+[^6]: https://stackoverflow.com/questions/6450803/class-in-r-s3-vs-s4?answertab=votes#tab-top
+[^7]: https://kasperdanielhansen.github.io/genbioconductor/html/R_S4.html
+[^8]: https://www.datamentor.io/r-programming/recursion
+[^9]: http://www.jason-french.com/blog/2014/07/26/recursion-in-r/
+[^10]: http://www.win-vector.com/blog/2015/03/using-closures-as-objects-in-r/
+[^11]: https://darrenjw.wordpress.com/2011/11/23/lexical-scope-and-function-closures-in-r/
+[^12]: http://adv-r.had.co.nz/
