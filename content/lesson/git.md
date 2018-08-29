@@ -27,7 +27,7 @@ If you haven't already created an account, make sure you follow the steps to do 
 
 Like the prompt suggests, repository names should be short and memorable. And they must be unique to your account ... i.e. you can't have two repositories in your account with the same name.
 
-![](/images/reponame.png)
+![](img/reponame.png)
 
 **4. Check the box to "Initialize this repository with a README"**
 
@@ -64,7 +64,7 @@ abline(v = xbar - 2*s, lwd = 2, col = "red", lty = 3)
 
 **7. Take a look at the commit history and branch explorer**
 
-![](/images/commithistory.png)
+![](img/commithistory.png)
 
 Each change to the repository (or **commit**) is recorded and tracked separately via a unique combination of characters. This **hash** is abbreviated in the commit history view, which provides an interface to explore the file(s) and line(s) that were changed as part of the commit.
 
@@ -82,7 +82,7 @@ Each of us will fork this original repository ... and in doing so create new rep
 
 Navigate to https://github.com/uvasomrc/foods and click the `Fork` button in the upper right-hand corner of the page.
 
-![](/images/fork.png)
+![](img/fork.png)
 
 **9. Make a unique change to an existing file**
 
@@ -141,7 +141,7 @@ Navigate back to your repository on GitHub and find the *Clone or download* butt
 
 **https://github.com/{YOUR_ACCOUNT_NAME_HERE}/quality**
 
-![](/images/clone.png)
+![](img/clone.png)
 
 Use `git clone` followed by the link (above):
 
@@ -346,7 +346,7 @@ First, we'll need to create a new repository on GitHub. It's probably a good ide
 
 **Make sure none of the boxes to "initialize" are  checked on GitHub**
 
-![](/images/remoteadd.png)
+![](img/remoteadd.png)
 
 Now from the command line, we can add connect the remote we just created to our local Git repository:
 

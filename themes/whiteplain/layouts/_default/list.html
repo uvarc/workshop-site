@@ -10,42 +10,42 @@
   </div>
   {{- end }}
   <div class="main" role="main">
-    <section class="list {{ .Kind }}-list">
-      {{- $paginator := .Paginator }}
-      {{- range $paginator.Pages }}
-      <div class="card">
-         <div class="card-body">
-          
-          <h5 class="card-title"><a href="{{ .Permalink | relURL }}" class="article-titles">
-          <h2 class="article-title">{{ .Title }}</h2>
-          {{ with .Params.subtitle }}<h3 class="article-subtitle">{{ . }}</h3>{{ end }}
-        </a>
-     </h5>
-    <p class="card-text">   
-    
-        {{ range .Params.categories }}
-        
-        <a href="{{ "/" | relURL }}categories/{{ . | urlize }}/" class="article-subtitle">
+  <section class="list {{ .Kind }}-list">
+  <table class="table">
+    <thead>
+      <tr>
+        <th style = "width:40%;" scope="col"><h3>Lesson</h3></th>
+        <th style="width:40%;" scope="col"><h3>Topic</h3></th>
+        <th style="width:20%;" scope="col"><h3>Length</h3></th>
+      </tr>
+    </thead>
+    <tbody>
+          {{- $paginator := .Paginator }}
+    {{- range $paginator.Pages }}
+      <tr>
+        <td>
+            <h5><a href="{{ .Permalink | relURL }}"> {{ .Title }}</h5>
+        </td>
+        <td>
+          {{ range .Params.categories }}
+          <a href="{{ "/" | relURL }}categories/{{ . | urlize }}/" class="article-subtitle">
            <h5><i class="fas fa-folder"></i>
               {{ . | upper}}
             </h5>
-        </a>
+          </a>
         {{ end }}
-          
-      </p>
-      
-    <p class="card-text">   
-    
-      <i class="fas fa-clock "> </i><em>  {{ .ReadingTime }} MIN READ</em>
-
-          
-      </p>
-  </div>
-</div>
-      {{- end }}
-      
+        </td>
+        <td>
+          <h5>
+          <i class="fas fa-clock "> </i><em>  {{ .ReadingTime }} MIN READ</em>
+          </h5>
+        </td>
+      </tr>
+          </tbody>
+            {{- end }}
+    </table>
     </section>
     {{ template "_internal/pagination.html" . }}
   </div>
-
+  
 {{ end }}
