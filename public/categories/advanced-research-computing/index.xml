@@ -7,7 +7,6 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; Copyright 2018 UVa School of Medicine Research Computing</copyright>
-    <lastBuildDate>Thu, 23 Jul 2015 21:13:14 -0500</lastBuildDate>
     
 	<atom:link href="/categories/advanced-research-computing/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,10 +14,11 @@
     <item>
       <title>Version Control with Git/GitHub</title>
       <link>/lesson/git/</link>
-      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/lesson/git/</guid>
-      <description>Introduction Version control software provides a systematic way to keep track of changes made to files. There are a number of version control software (VCS) systems &amp;hellip; Git is one of them. It&amp;rsquo;s a powerful tool for tracking and reconciling changes to text files from individual or multiple contributors. The basic unit of Git is the repository. Unlike some other VCS, Git tracks changes by storing snapshots of entire repository at different points in time.</description>
+      <description>SLIDES
+Introduction Version control software provides a systematic way to keep track of changes made to files. There are a number of version control software (VCS) systems &amp;hellip; Git is one of them. It&amp;rsquo;s a powerful tool for tracking and reconciling changes to text files from individual or multiple contributors. The basic unit of Git is the repository. Unlike some other VCS, Git tracks changes by storing snapshots of entire repository at different points in time.</description>
     </item>
     
   </channel>

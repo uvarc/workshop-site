@@ -599,3 +599,10 @@ blockquote blockquote blockquote blockquote {
   }
   
 }
+
+.fa-list {    
+font-family: 'FontAwesome';
+content: '\f067';
+margin:0 5px 0 -15px;
+color: #f00;
+}

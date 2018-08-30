@@ -1,9 +1,11 @@
 ---
 title: "Version Control with Git/GitHub"
 author: "VP Nagraj"
-date: 2015-07-23T21:13:14-05:00
+# date: 2015-07-23T21:13:14-05:00
 categories: ["Advanced Research Computing"]
 ---
+
+<a class="btn btn-success btn-lg" href="/slides/git-slides.html" role="button">SLIDES</a>
 
 ## Introduction
 
@@ -27,7 +29,7 @@ If you haven't already created an account, make sure you follow the steps to do 
 
 Like the prompt suggests, repository names should be short and memorable. And they must be unique to your account ... i.e. you can't have two repositories in your account with the same name.
 
-![](img/reponame.png)
+![](/images/reponame.png)
 
 **4. Check the box to "Initialize this repository with a README"**
 
@@ -64,7 +66,7 @@ abline(v = xbar - 2*s, lwd = 2, col = "red", lty = 3)
 
 **7. Take a look at the commit history and branch explorer**
 
-![](img/commithistory.png)
+![](/images/commithistory.png)
 
 Each change to the repository (or **commit**) is recorded and tracked separately via a unique combination of characters. This **hash** is abbreviated in the commit history view, which provides an interface to explore the file(s) and line(s) that were changed as part of the commit.
 
@@ -82,7 +84,7 @@ Each of us will fork this original repository ... and in doing so create new rep
 
 Navigate to https://github.com/uvasomrc/foods and click the `Fork` button in the upper right-hand corner of the page.
 
-![](img/fork.png)
+![](/images/fork.png)
 
 **9. Make a unique change to an existing file**
 
@@ -141,7 +143,7 @@ Navigate back to your repository on GitHub and find the *Clone or download* butt
 
 **https://github.com/{YOUR_ACCOUNT_NAME_HERE}/quality**
 
-![](img/clone.png)
+![](/images/clone.png)
 
 Use `git clone` followed by the link (above):
 
@@ -346,7 +348,7 @@ First, we'll need to create a new repository on GitHub. It's probably a good ide
 
 **Make sure none of the boxes to "initialize" are  checked on GitHub**
 
-![](img/remoteadd.png)
+![](/images/remoteadd.png)
 
 Now from the command line, we can add connect the remote we just created to our local Git repository:
 
@@ -427,3 +429,83 @@ Because we are currently on the `master` branch, the following will attempt to m
 However, as you see there is a conflict between the two branches. Using a text editor we can view and resolve this conflict:
 
 `vim clock.sh`
+
+## Exercises
+
+The afternoon lab component is intended to give you a chance to explore and use the tools discussed in the morning lecture. These exercises introduce new concepts as well, and in doing so point towards various tools and documentation. Feel free to spend as much or as little time with each prompt.
+
+---
+
+**1. Learn Git Branching**
+
+Git branching is an important and sometimes difficult concept to learn. A group of developers have created a very helpful tool for exploring how branches behave.
+
+Go through the **Learn Git Branching** exercises:
+
+<https://learngitbranching.js.org/>
+
+Alternatively, visit the sandbox to interactively make commits, create branches, merge branches, etc.:
+
+<https://learngitbranching.js.org/?NODEMO>
+
+---
+
+**2. Good Commit Messages**
+
+Every `git commit` requires an accompanying message. At minimum this should be a single "subject line" briefly describing the changes made. However, the commit message can include a "body" with more thorough and descriptive notes about how / why the edits were implemented. These comments are particularly useful for a future **maintainer** or **contributor** ... and that person might be you! So you can do yourself a huge favor by creating good commit messages. 
+
+Take some time to read a blog post by developer Chris Beams titled "How to Write a Git Commit Message":
+
+<https://chris.beams.io/posts/git-commit/>
+
+Try making a new commit locally to your `quality/` repository. Use a commit message with a body.
+
+---
+
+**3. Syncing a Fork**
+
+When you fork a repository, you bring along all of the files, commits and associated version control information ... *starting from the point in time when it was forked*.
+
+As you continue to work on your fork, the *upstream* repository (from which you originally forked) may or may not be static. The owner or other contributors might modify the contents, creating commits that depart from the tree structure that you are tracking.
+
+To keep up with these changes you must **sync** the fork:
+
+<https://help.github.com/articles/syncing-a-fork/>
+
+Use the documentation above to sync your fork of the `foods/` repository with the upstream:
+
+<https://github.com/uvasomrc/foods>
+
+---
+
+**4. Create a conflict**
+
+The basic unit of Git is the repository. However, GitHub slightly extends to this concept in its *Gist* service, which essentially allows users to upload snippets of code without having to track an entire repository.
+
+For this exercise, you'll be working from code hosted in a GitHub Gist:
+
+<https://gist.github.com/JonathanMH/397fc427842614dd4803>
+
+Start by cloning the Gist:
+
+<https://help.github.com/articles/forking-and-cloning-gists/>
+
+`create_conflict.sh` is a shell script that demonstrates what happens when there is a conflict in git commits. Try running it on your computer ... and if you're not sure how to do that, Google it!
+
+**Make sure you are running this script relative to a directory location (folder) that you are comfortable making a new folder called `git-repo/` ... feel free to delete this folder after the exercise.**
+
+---
+
+**5. GitHub Pages**
+
+In addition to hosting free public repositories, GitHub also provides a service to host *static* websites called GitHub Pages:
+
+https://pages.github.com/
+
+Follow the 5 steps on the GitHub Pages website to get started.
+
+If you would like a more advanced example, try forking the following repo:
+
+<https://github.com/onlywei/explain-git-with-d3>
+
+Forking remotely copies an **upstream** repository from one account to another. Because it is operating on the repository level, the fork inherits all commits *and* branches. In this case the `explain-git-with-d3` repo includes branch named `gh-pages`. As a service, GitHub.com will host anything that is stored in a `gh-pages` branch. To access the hosted version of the contents, you can go to `https://{USERNAME}.github.io/{REPOSITORYNAME}`

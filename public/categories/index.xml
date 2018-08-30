@@ -7,7 +7,6 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; Copyright 2018 UVa School of Medicine Research Computing</copyright>
-    <lastBuildDate>Thu, 23 Jul 2015 21:13:14 -0500</lastBuildDate>
     
 	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
     
@@ -15,7 +14,7 @@
     <item>
       <title>Advanced Research Computing</title>
       <link>/categories/advanced-research-computing/</link>
-      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/categories/advanced-research-computing/</guid>
       <description></description>

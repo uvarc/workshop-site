@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title> - SOMRC Workshops</title>
+  <meta property="og:title" content=" - SOMRC Workshops" />
+  <meta name="twitter:title" content=" - SOMRC Workshops" />
+  <meta name="description" content="Exercises The afternoon lab component is intended to give you a chance to explore and use the tools discussed in the morning lecture. These exercises introduce new concepts as well, and in doing so point towards various tools and documentation. Feel free to spend as much or as little time with each prompt.
+Learn Git Branching Git branching is an important and sometimes difficult concept to learn. A group of developers have created a very helpful tool for exploring how branches behave.">
+  <meta property="og:description" content="Exercises The afternoon lab component is intended to give you a chance to explore and use the tools discussed in the morning lecture. These exercises introduce new concepts as well, and in doing so point towards various tools and documentation. Feel free to spend as much or as little time with each prompt.
+Learn Git Branching Git branching is an important and sometimes difficult concept to learn. A group of developers have created a very helpful tool for exploring how branches behave.">
+  <meta name="twitter:description" content="Exercises The afternoon lab component is intended to give you a chance to explore and use the tools discussed in the morning lecture. These exercises introduce new concepts as well, and in doing so …">
+  <meta name="author" content=""/>
+  <meta property="og:site_name" content="SOMRC Workshops" />
+  <meta property="og:url" content="/lesson/git/git-exercises/" />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="generator" content="Hugo 0.37.1" />
+  <link rel="stylesheet" href="/css/style.css" media="all" />
+  <link rel="stylesheet" href="/css/syntax.css" media="all" />
+  <link rel="stylesheet" href="/css/custom.css" media="all" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+<header class="site-header">
+  <nav class="site-navi">
+    <h1 class="site-title"><a href="/">SOMRC Workshops</a></h1>
+    <ul class="site-navi-items">
+      <li class="site-navi-item-tags"><a href="/lesson/" title="Lessons">Lessons</a></li>
+      <li class="site-navi-item-data"><a href="/data/" title="Data">Data</a></li>
+      <li class="site-navi-item-cadre-academy"><a href="https://education.cadre.virginia.edu/" title="CADRE Academy">CADRE Academy</a></li>
+    </ul>
+  </nav>
+</header>
+<hr class="site-header-bottom">
+
+  <div class="main" role="main">
+    <article class="article">
+      
+      
+      <h1 class="article-title"></h1>
+      
+      <hr class="article-title-bottom">
+      <ul class="article-meta">
+        
+      </ul>
+      
+<aside class="toc">
+  <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#exercises">Exercises</a>
+<ul>
+<li><a href="#learn-git-branching">Learn Git Branching</a></li>
+<li><a href="#good-commit-messages">Good Commit Messages</a></li>
+<li><a href="#syncing-a-fork">Syncing a Fork</a></li>
+<li><a href="#create-a-conflict">Create a conflict</a></li>
+<li><a href="#github-pages">GitHub Pages</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+</aside>
+      
+
+<h2 id="exercises">Exercises</h2>
+
+<p>The afternoon lab component is intended to give you a chance to explore and use the tools discussed in the morning lecture. These exercises introduce new concepts as well, and in doing so point towards various tools and documentation. Feel free to spend as much or as little time with each prompt.</p>
+
+<hr />
+
+<h3 id="learn-git-branching">Learn Git Branching</h3>
+
+<p>Git branching is an important and sometimes difficult concept to learn. A group of developers have created a very helpful tool for exploring how branches behave.</p>
+
+<p>Go through the <strong>Learn Git Branching</strong> exercises:</p>
+
+<p><a href="https://learngitbranching.js.org/">https://learngitbranching.js.org/</a></p>
+
+<p>Alternatively, visit the sandbox to interactively make commits, create branches, merge branches, etc.:</p>
+
+<p><a href="https://learngitbranching.js.org/?NODEMO">https://learngitbranching.js.org/?NODEMO</a></p>
+
+<hr />
+
+<h3 id="good-commit-messages">Good Commit Messages</h3>
+
+<p>Every <code>git commit</code> requires an accompanying message. At minimum this should be a single &ldquo;subject line&rdquo; briefly describing the changes made. However, the commit message can include a &ldquo;body&rdquo; with more thorough and descriptive notes about how / why the edits were implemented. These comments are particularly useful for a future <strong>maintainer</strong> or <strong>contributor</strong> &hellip; and that person might be you! So you can do yourself a huge favor by creating good commit messages.</p>
+
+<p>Take some time to read a blog post by developer Chris Beams titled &ldquo;How to Write a Git Commit Message&rdquo;:</p>
+
+<p><a href="https://chris.beams.io/posts/git-commit/">https://chris.beams.io/posts/git-commit/</a></p>
+
+<p>Try making a new commit locally to your <code>quality/</code> repository. Use a commit message with a body.</p>
+
+<hr />
+
+<h3 id="syncing-a-fork">Syncing a Fork</h3>
+
+<p>When you fork a repository, you bring along all of the files, commits and associated version control information &hellip; <em>starting from the point in time when it was forked</em>.</p>
+
+<p>As you continue to work on your fork, the <em>upstream</em> repository (from which you originally forked) may or may not be static. The owner or other contributors might modify the contents, creating commits that depart from the tree structure that you are tracking.</p>
+
+<p>To keep up with these changes you must <strong>sync</strong> the fork:</p>
+
+<p><a href="https://help.github.com/articles/syncing-a-fork/">https://help.github.com/articles/syncing-a-fork/</a></p>
+
+<p>Use the documentation above to sync your fork of the <code>foods/</code> repository with the upstream:</p>
+
+<p><a href="https://github.com/uvasomrc/foods">https://github.com/uvasomrc/foods</a></p>
+
+<hr />
+
+<h3 id="create-a-conflict">Create a conflict</h3>
+
+<p>The basic unit of Git is the repository. However, GitHub slightly extends to this concept in its <em>Gist</em> service, which essentially allows users to upload snippets of code without having to track an entire repository.</p>
+
+<p>For this exercise, you&rsquo;ll be working from code hosted in a GitHub Gist:</p>
+
+<p><a href="https://gist.github.com/JonathanMH/397fc427842614dd4803">https://gist.github.com/JonathanMH/397fc427842614dd4803</a></p>
+
+<p>Start by cloning the Gist:</p>
+
+<p><a href="https://help.github.com/articles/forking-and-cloning-gists/">https://help.github.com/articles/forking-and-cloning-gists/</a></p>
+
+<p><code>create_conflict.sh</code> is a shell script that demonstrates what happens when there is a conflict in git commits. Try running it on your computer &hellip; and if you&rsquo;re not sure how to do that, Google it!</p>
+
+<p><strong>Make sure you are running this script relative to a directory location (folder) that you are comfortable making a new folder called <code>git-repo/</code> &hellip; feel free to delete this folder after the exercise.</strong></p>
+
+<hr />
+
+<h3 id="github-pages">GitHub Pages</h3>
+
+<p>In addition to hosting free public repositories, GitHub also provides a service to host <em>static</em> websites called GitHub Pages:</p>
+
+<p><a href="https://pages.github.com/">https://pages.github.com/</a></p>
+
+<p>Follow the 5 steps on the GitHub Pages website to get started.</p>
+
+<p>If you would like a more advanced example, try forking the following repo:</p>
+
+<p><a href="https://github.com/onlywei/explain-git-with-d3">https://github.com/onlywei/explain-git-with-d3</a></p>
+
+<p>Forking remotely copies an <strong>upstream</strong> repository from one account to another. Because it is operating on the repository level, the fork inherits all commits <em>and</em> branches. In this case the <code>explain-git-with-d3</code> repo includes branch named <code>gh-pages</code>. As a service, GitHub.com will host anything that is stored in a <code>gh-pages</code> branch. To access the hosted version of the contents, you can go to <code>https://{USERNAME}.github.io/{REPOSITORYNAME}</code></p>
+
+    </article>
+  </div>
+
+
+<div class="site-footer">
+  <div class="copyright">&copy; Copyright 2018 UVa School of Medicine Research Computing</div>
+  <ul class="site-footer-items">
+    <li class="site-footer-item-somrc"><a href="https://somrc.virginia.edu/" title="School of Medicine Research Computing">School of Medicine Research Computing</a></li>
+  </ul>
+</div>
+<script src="/js/script.js"></script>
+<script src="/js/custom.js"></script>
+
+
+</body>
+</html>

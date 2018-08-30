@@ -63,20 +63,25 @@ copyright = "&copy; Copyright 2018 UVa School of Medicine Research Computing"
   series = "series"
 
 [[menu.main]]
-  name = "Topics"
-  weight = 1
-  identifier = "categories"
-  url = "/categories/"
-[[menu.main]]
   name = "Lessons"
-  weight = 2
+  weight = 1
   identifier = "tags"
   url = "/lesson/"
 [[menu.main]]
-  name = "CADRE Academy"
+  name = "Topics"
+  weight = 2
+  identifier = "topics"
+  url = "/categories/"
+[[menu.main]]
+  name = "Data"
   weight = 3
-  identifier = "cadre-academy"
-  url = "https://education.cadre.virginia.edu/"
+  identifier = "data"
+  url = "/data/"
+[[menu.main]]
+  name = "About"
+  weight = 4
+  identifier = "about"
+  url = "/about/"
 
 [[menu.footer]]
   name = "School of Medicine Research Computing"

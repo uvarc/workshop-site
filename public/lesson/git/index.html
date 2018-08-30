@@ -6,9 +6,12 @@
   <title>Version Control with Git/GitHub - SOMRC Workshops</title>
   <meta property="og:title" content="Version Control with Git/GitHub - SOMRC Workshops" />
   <meta name="twitter:title" content="Version Control with Git/GitHub - SOMRC Workshops" />
-  <meta name="description" content="Introduction Version control software provides a systematic way to keep track of changes made to files. There are a number of version control software (VCS) systems &hellip; Git is one of them. It&rsquo;s a powerful tool for tracking and reconciling changes to text files from individual or multiple contributors. The basic unit of Git is the repository. Unlike some other VCS, Git tracks changes by storing snapshots of entire repository at different points in time.">
-  <meta property="og:description" content="Introduction Version control software provides a systematic way to keep track of changes made to files. There are a number of version control software (VCS) systems &hellip; Git is one of them. It&rsquo;s a powerful tool for tracking and reconciling changes to text files from individual or multiple contributors. The basic unit of Git is the repository. Unlike some other VCS, Git tracks changes by storing snapshots of entire repository at different points in time.">
-  <meta name="twitter:description" content="Introduction Version control software provides a systematic way to keep track of changes made to files. There are a number of version control software (VCS) systems &hellip; Git is one of them. …">
+  <meta name="description" content="SLIDES
+Introduction Version control software provides a systematic way to keep track of changes made to files. There are a number of version control software (VCS) systems &hellip; Git is one of them. It&rsquo;s a powerful tool for tracking and reconciling changes to text files from individual or multiple contributors. The basic unit of Git is the repository. Unlike some other VCS, Git tracks changes by storing snapshots of entire repository at different points in time.">
+  <meta property="og:description" content="SLIDES
+Introduction Version control software provides a systematic way to keep track of changes made to files. There are a number of version control software (VCS) systems &hellip; Git is one of them. It&rsquo;s a powerful tool for tracking and reconciling changes to text files from individual or multiple contributors. The basic unit of Git is the repository. Unlike some other VCS, Git tracks changes by storing snapshots of entire repository at different points in time.">
+  <meta name="twitter:description" content="SLIDES
+Introduction Version control software provides a systematic way to keep track of changes made to files. There are a number of version control software (VCS) systems &hellip; Git is one of them. …">
   <meta name="author" content=""/>
   <meta property="og:site_name" content="SOMRC Workshops" />
   <meta property="og:url" content="/lesson/git/" />
@@ -29,9 +32,10 @@
   <nav class="site-navi">
     <h1 class="site-title"><a href="/">SOMRC Workshops</a></h1>
     <ul class="site-navi-items">
-      <li class="site-navi-item-categories"><a href="/categories/" title="Topics">Topics</a></li>
       <li class="site-navi-item-tags"><a href="/lesson/" title="Lessons">Lessons</a></li>
-      <li class="site-navi-item-cadre-academy"><a href="https://education.cadre.virginia.edu/" title="CADRE Academy">CADRE Academy</a></li>
+      <li class="site-navi-item-topics"><a href="/categories/" title="Topics">Topics</a></li>
+      <li class="site-navi-item-data"><a href="/data/" title="Data">Data</a></li>
+      <li class="site-navi-item-about"><a href="/about/" title="About">About</a></li>
     </ul>
   </nav>
 </header>
@@ -62,11 +66,14 @@
 <li><a href="#introduction">Introduction</a></li>
 <li><a href="#github">GitHub</a></li>
 <li><a href="#git-command-line-interface">Git (Command Line Interface)</a></li>
+<li><a href="#exercises">Exercises</a></li>
 </ul></li>
 </ul>
 </nav>
 </aside>
       
+
+<p><a class="btn btn-success btn-lg" href="/slides/git-slides.html" role="button">SLIDES</a></p>
 
 <h2 id="introduction">Introduction</h2>
 
@@ -90,7 +97,7 @@
 
 <p>Like the prompt suggests, repository names should be short and memorable. And they must be unique to your account &hellip; i.e. you can&rsquo;t have two repositories in your account with the same name.</p>
 
-<p><img src="img/reponame.png" alt="" /></p>
+<p><img src="/images/reponame.png" alt="" /></p>
 
 <p><strong>4. Check the box to &ldquo;Initialize this repository with a README&rdquo;</strong></p>
 
@@ -125,7 +132,7 @@ abline(v = xbar - 2*s, lwd = 2, col = &quot;red&quot;, lty = 3)
 
 <p><strong>7. Take a look at the commit history and branch explorer</strong></p>
 
-<p><img src="img/commithistory.png" alt="" /></p>
+<p><img src="/images/commithistory.png" alt="" /></p>
 
 <p>Each change to the repository (or <strong>commit</strong>) is recorded and tracked separately via a unique combination of characters. This <strong>hash</strong> is abbreviated in the commit history view, which provides an interface to explore the file(s) and line(s) that were changed as part of the commit.</p>
 
@@ -143,7 +150,7 @@ abline(v = xbar - 2*s, lwd = 2, col = &quot;red&quot;, lty = 3)
 
 <p>Navigate to <a href="https://github.com/uvasomrc/foods">https://github.com/uvasomrc/foods</a> and click the <code>Fork</code> button in the upper right-hand corner of the page.</p>
 
-<p><img src="img/fork.png" alt="" /></p>
+<p><img src="/images/fork.png" alt="" /></p>
 
 <p><strong>9. Make a unique change to an existing file</strong></p>
 
@@ -202,7 +209,7 @@ To work with Git on your computer, you&rsquo;ll it installed:</p>
 
 <p><strong><a href="https://github.com/{YOUR_ACCOUNT_NAME_HERE}/quality">https://github.com/{YOUR_ACCOUNT_NAME_HERE}/quality</a></strong></p>
 
-<p><img src="img/clone.png" alt="" /></p>
+<p><img src="/images/clone.png" alt="" /></p>
 
 <p>Use <code>git clone</code> followed by the link (above):</p>
 
@@ -407,7 +414,7 @@ printf &quot;the time is ...\n$d\n&quot;
 
 <p><strong>Make sure none of the boxes to &ldquo;initialize&rdquo; are  checked on GitHub</strong></p>
 
-<p><img src="img/remoteadd.png" alt="" /></p>
+<p><img src="/images/remoteadd.png" alt="" /></p>
 
 <p>Now from the command line, we can add connect the remote we just created to our local Git repository:</p>
 
@@ -486,6 +493,86 @@ printf &quot;the time is ...\n$d\nhave a nice day!\n&quot;
 <p>However, as you see there is a conflict between the two branches. Using a text editor we can view and resolve this conflict:</p>
 
 <p><code>vim clock.sh</code></p>
+
+<h2 id="exercises">Exercises</h2>
+
+<p>The afternoon lab component is intended to give you a chance to explore and use the tools discussed in the morning lecture. These exercises introduce new concepts as well, and in doing so point towards various tools and documentation. Feel free to spend as much or as little time with each prompt.</p>
+
+<hr />
+
+<p><strong>1. Learn Git Branching</strong></p>
+
+<p>Git branching is an important and sometimes difficult concept to learn. A group of developers have created a very helpful tool for exploring how branches behave.</p>
+
+<p>Go through the <strong>Learn Git Branching</strong> exercises:</p>
+
+<p><a href="https://learngitbranching.js.org/">https://learngitbranching.js.org/</a></p>
+
+<p>Alternatively, visit the sandbox to interactively make commits, create branches, merge branches, etc.:</p>
+
+<p><a href="https://learngitbranching.js.org/?NODEMO">https://learngitbranching.js.org/?NODEMO</a></p>
+
+<hr />
+
+<p><strong>2. Good Commit Messages</strong></p>
+
+<p>Every <code>git commit</code> requires an accompanying message. At minimum this should be a single &ldquo;subject line&rdquo; briefly describing the changes made. However, the commit message can include a &ldquo;body&rdquo; with more thorough and descriptive notes about how / why the edits were implemented. These comments are particularly useful for a future <strong>maintainer</strong> or <strong>contributor</strong> &hellip; and that person might be you! So you can do yourself a huge favor by creating good commit messages.</p>
+
+<p>Take some time to read a blog post by developer Chris Beams titled &ldquo;How to Write a Git Commit Message&rdquo;:</p>
+
+<p><a href="https://chris.beams.io/posts/git-commit/">https://chris.beams.io/posts/git-commit/</a></p>
+
+<p>Try making a new commit locally to your <code>quality/</code> repository. Use a commit message with a body.</p>
+
+<hr />
+
+<p><strong>3. Syncing a Fork</strong></p>
+
+<p>When you fork a repository, you bring along all of the files, commits and associated version control information &hellip; <em>starting from the point in time when it was forked</em>.</p>
+
+<p>As you continue to work on your fork, the <em>upstream</em> repository (from which you originally forked) may or may not be static. The owner or other contributors might modify the contents, creating commits that depart from the tree structure that you are tracking.</p>
+
+<p>To keep up with these changes you must <strong>sync</strong> the fork:</p>
+
+<p><a href="https://help.github.com/articles/syncing-a-fork/">https://help.github.com/articles/syncing-a-fork/</a></p>
+
+<p>Use the documentation above to sync your fork of the <code>foods/</code> repository with the upstream:</p>
+
+<p><a href="https://github.com/uvasomrc/foods">https://github.com/uvasomrc/foods</a></p>
+
+<hr />
+
+<p><strong>4. Create a conflict</strong></p>
+
+<p>The basic unit of Git is the repository. However, GitHub slightly extends to this concept in its <em>Gist</em> service, which essentially allows users to upload snippets of code without having to track an entire repository.</p>
+
+<p>For this exercise, you&rsquo;ll be working from code hosted in a GitHub Gist:</p>
+
+<p><a href="https://gist.github.com/JonathanMH/397fc427842614dd4803">https://gist.github.com/JonathanMH/397fc427842614dd4803</a></p>
+
+<p>Start by cloning the Gist:</p>
+
+<p><a href="https://help.github.com/articles/forking-and-cloning-gists/">https://help.github.com/articles/forking-and-cloning-gists/</a></p>
+
+<p><code>create_conflict.sh</code> is a shell script that demonstrates what happens when there is a conflict in git commits. Try running it on your computer &hellip; and if you&rsquo;re not sure how to do that, Google it!</p>
+
+<p><strong>Make sure you are running this script relative to a directory location (folder) that you are comfortable making a new folder called <code>git-repo/</code> &hellip; feel free to delete this folder after the exercise.</strong></p>
+
+<hr />
+
+<p><strong>5. GitHub Pages</strong></p>
+
+<p>In addition to hosting free public repositories, GitHub also provides a service to host <em>static</em> websites called GitHub Pages:</p>
+
+<p><a href="https://pages.github.com/">https://pages.github.com/</a></p>
+
+<p>Follow the 5 steps on the GitHub Pages website to get started.</p>
+
+<p>If you would like a more advanced example, try forking the following repo:</p>
+
+<p><a href="https://github.com/onlywei/explain-git-with-d3">https://github.com/onlywei/explain-git-with-d3</a></p>
+
+<p>Forking remotely copies an <strong>upstream</strong> repository from one account to another. Because it is operating on the repository level, the fork inherits all commits <em>and</em> branches. In this case the <code>explain-git-with-d3</code> repo includes branch named <code>gh-pages</code>. As a service, GitHub.com will host anything that is stored in a <code>gh-pages</code> branch. To access the hosted version of the contents, you can go to <code>https://{USERNAME}.github.io/{REPOSITORYNAME}</code></p>
 
     </article>
   </div>

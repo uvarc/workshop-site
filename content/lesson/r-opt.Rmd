@@ -144,7 +144,7 @@ We'll use data from the National Health and Nutrition Examination Survey (NHANES
 
 First let's read in the NHANES dataset, which is available for download at <http://bioconnector.org/data/nhanes.csv>:
 
-```{r}
+```{r, eval = FALSE}
 # read in NHANES
 nh <- read.csv("nhanes.csv")
 ```
