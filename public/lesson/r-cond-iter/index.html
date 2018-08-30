@@ -18,7 +18,7 @@
   <meta property="og:url" content="/lesson/r-cond-iter/" />
   <meta property="og:type" content="article" />
   <meta name="twitter:card" content="summary" />
-  <meta name="generator" content="Hugo 0.37.1" />
+  <meta name="generator" content="Hugo 0.32.1" />
   <link rel="stylesheet" href="/css/style.css" media="all" />
   <link rel="stylesheet" href="/css/syntax.css" media="all" />
   <link rel="stylesheet" href="/css/custom.css" media="all" />
@@ -480,17 +480,10 @@ while (et &lt; st + 5) {
   }
   
 }</code></pre>
-<pre><code>## [1] 14
+<pre><code>## [1] 5
 ## [1] 13
-## [1] 6
-## [1] 5
-## [1] 4
-## [1] 5
-## [1] 17
-## [1] 4
-## [1] 19
-## [1] 5
-## [1] 1
+## [1] 20
+## [1] 8
 ## [1] &quot;finally!&quot;</code></pre>
 <p>Let’s set up another example, which we’ll use to compare <code>break</code>, <code>stop()</code> and <code>next</code>:</p>
 <pre class="r"><code>for (num in 2:20) {
@@ -675,7 +668,7 @@ for (i in 1:1e7) {
   
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   3.268   0.678   3.953</code></pre>
+##   3.529   0.880   4.459</code></pre>
 <p>Let’s try the same thing with <code>sapply()</code>:</p>
 <pre class="r"><code>y &lt;- sapply(1:1e7, function(x) x + x^2)</code></pre>
 <p>That also took a while. How long?</p>
@@ -685,7 +678,7 @@ for (i in 1:1e7) {
 
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##  10.551   0.396  11.008</code></pre>
+##  10.721   0.369  11.168</code></pre>
 <p>OK … so the <code>for</code> loop and <code>apply</code> function were both about the same speed. What if we try a <em>vectorized</em> approach:</p>
 <pre class="r"><code>z &lt;- 1:1e7 + (1:1e7)^2</code></pre>
 <p>Much faster.</p>
@@ -695,7 +688,7 @@ for (i in 1:1e7) {
 
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.064   0.013   0.077</code></pre>
+##   0.065   0.012   0.078</code></pre>
 <pre class="r"><code>identical(x,y,z)</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>Vectorization can significantly increase the speed of code execution. The function being executed at each element of the vector <em>knows</em> the data type of the given element (because it is a homogenous vector), and can therefore skip any overhead involved with typing<a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a><a href="#fn5" class="footnoteRef" id="fnref5"><sup>5</sup></a>.</p>
@@ -720,7 +713,7 @@ for (i in 1:1e7) {
   
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.570   0.011   0.581</code></pre>
+##   0.549   0.010   0.559</code></pre>
 </div>
 <div id="further-resources" class="section level3">
 <h3>Further Resources</h3>

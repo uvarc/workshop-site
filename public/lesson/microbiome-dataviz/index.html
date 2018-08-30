@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>Microbiome: 16S Data Visualization/Analysis - SOMRC Workshops</title>
+  <meta property="og:title" content="Microbiome: 16S Data Visualization/Analysis - SOMRC Workshops" />
+  <meta name="twitter:title" content="Microbiome: 16S Data Visualization/Analysis - SOMRC Workshops" />
+  <meta name="description" content="This markdown outlines instructions for visualization and analysis of OTU-clustered amplicon sequencing data, primarily using the phyloseq package.
+Prerequisites  R basics Data manipulation with dplyr and %&gt;% Data visualization with ggplot2  R packages CRAN packages
+ tidyverse (readr, dplyr, ggplot2) magrittr reshape2 vegan ape ggpubr RColorBrewer  Bioconductor packages
+ phyloseq DESeq2   Required Data Files We will use the output files generated during the sequence processing steps.">
+  <meta property="og:description" content="This markdown outlines instructions for visualization and analysis of OTU-clustered amplicon sequencing data, primarily using the phyloseq package.
+Prerequisites  R basics Data manipulation with dplyr and %&gt;% Data visualization with ggplot2  R packages CRAN packages
+ tidyverse (readr, dplyr, ggplot2) magrittr reshape2 vegan ape ggpubr RColorBrewer  Bioconductor packages
+ phyloseq DESeq2   Required Data Files We will use the output files generated during the sequence processing steps.">
+  <meta name="twitter:description" content="This markdown outlines instructions for visualization and analysis of OTU-clustered amplicon sequencing data, primarily using the phyloseq package.
+Prerequisites  R basics Data manipulation with dplyr …">
+  <meta name="author" content=""/>
+  <meta property="og:site_name" content="SOMRC Workshops" />
+  <meta property="og:url" content="/lesson/microbiome-dataviz/" />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="generator" content="Hugo 0.32.1" />
+  <link rel="stylesheet" href="/css/style.css" media="all" />
+  <link rel="stylesheet" href="/css/syntax.css" media="all" />
+  <link rel="stylesheet" href="/css/custom.css" media="all" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+<header class="site-header">
+  <nav class="site-navi">
+    <h1 class="site-title"><a href="/">SOMRC Workshops</a></h1>
+    <ul class="site-navi-items">
+      <li class="site-navi-item-tags"><a href="/lesson/" title="Lessons">Lessons</a></li>
+      <li class="site-navi-item-topics"><a href="/categories/" title="Topics">Topics</a></li>
+      <li class="site-navi-item-data"><a href="/data/" title="Data">Data</a></li>
+      <li class="site-navi-item-about"><a href="/about/" title="About">About</a></li>
+    </ul>
+  </nav>
+</header>
+<hr class="site-header-bottom">
+
+  <div class="main" role="main">
+    <article class="article">
+      
+      
+      <h1 class="article-title">Microbiome: 16S Data Visualization/Analysis</h1>
+      
+      <hr class="article-title-bottom">
+      <ul class="article-meta">
+        
+        <li class="article-meta-categories">
+          <a href="/categories/bioinformatics/">
+            <i class="fas fa-folder"></i>
+            BIOINFORMATICS
+          </a>&nbsp;
+        </li>
+      </ul>
+      
+<aside class="toc">
+  
+</aside>
+      <p>This markdown outlines instructions for visualization and analysis of OTU-clustered amplicon sequencing data, primarily using the <em>phyloseq</em> package.</p>
+<div id="prerequisites" class="section level3">
+<h3>Prerequisites</h3>
+<ul>
+<li>R basics</li>
+<li>Data manipulation with dplyr and <code>%&gt;%</code></li>
+<li>Data visualization with ggplot2</li>
+</ul>
+<div id="r-packages" class="section level4">
+<h4>R packages</h4>
+<p><strong><em>CRAN packages</em></strong></p>
+<ul>
+<li><a href="https://www.tidyverse.org/packages/">tidyverse (readr, dplyr, ggplot2)</a></li>
+<li><a href="https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html">magrittr</a></li>
+<li><a href="https://cran.r-project.org/web/packages/reshape2/reshape2.pdf">reshape2</a></li>
+<li><a href="https://cran.r-project.org/web/packages/vegan/vignettes/intro-vegan.pdf">vegan</a></li>
+<li><a href="https://cran.r-project.org/web/packages/ape/ape.pdf">ape</a></li>
+<li><a href="http://www.sthda.com/english/rpkgs/ggpubr/">ggpubr</a></li>
+<li><a href="https://cran.r-project.org/web/packages/RColorBrewer/RColorBrewer.pdf">RColorBrewer</a></li>
+</ul>
+<p><strong><em>Bioconductor packages</em></strong></p>
+<ul>
+<li><a href="https://joey711.github.io/phyloseq/">phyloseq</a></li>
+<li><a href="http://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html">DESeq2</a></li>
+</ul>
+</div>
+<div id="required-data-files" class="section level4">
+<h4>Required Data Files</h4>
+<p>We will use the output files generated during the sequence processing steps.</p>
+<ul>
+<li>OTU table (abundance table) : <code>relman2017_samples.otu_table.txt</code></li>
+<li>Taxonomy table : <code>relman2017_samples.tax_table.txt</code></li>
+<li>Sample metadata : <code>relman2017_samples.sample_data.txt</code></li>
+<li>OTU phylogenetic tree : <code>relman2017_samples.rep_set.tre</code></li>
+</ul>
+</div>
+</div>
+<div id="load-data" class="section level3">
+<h3>Load data</h3>
+<p>Let’s read in the data files using <code>read_tsv()</code> function of <strong>readr</strong> package</p>
+<pre class="r"><code>dataDir = &quot;../../static/data/&quot;
+# import OTU table
+otu &lt;- read_tsv(paste(dataDir, &quot;relman2017_samples.otu_table.txt&quot;, sep=&quot;/&quot;))</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_integer(),
+##   OTUId = col_character()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<pre class="r"><code>otu</code></pre>
+<pre><code>## # A tibble: 1,151 x 101
+##    OTUId SRR5944960 SRR5944971 SRR5944984 SRR5944985 SRR5944986 SRR5944990
+##    &lt;chr&gt;      &lt;int&gt;      &lt;int&gt;      &lt;int&gt;      &lt;int&gt;      &lt;int&gt;      &lt;int&gt;
+##  1 OTU_…      10050          5        110        527          2        102
+##  2 OTU_1      48542      51618         22          3          8         13
+##  3 OTU_…       9091          4         47        123         11         32
+##  4 OTU_…       4330          0          1          0          0          0
+##  5 OTU_…       7501          0          1          1          2          1
+##  6 OTU_…       6794          0          0          0          2          0
+##  7 OTU_…       1572          0          0          0          0          0
+##  8 OTU_…      10450         14       1120        647         58        564
+##  9 OTU_…       4077          0        992        608         55         40
+## 10 OTU_…        514          0          0          0          2          0
+## # ... with 1,141 more rows, and 94 more variables: SRR5944998 &lt;int&gt;,
+## #   SRR5945004 &lt;int&gt;, SRR5945006 &lt;int&gt;, SRR5945007 &lt;int&gt;,
+## #   SRR5945019 &lt;int&gt;, SRR5945036 &lt;int&gt;, SRR5945037 &lt;int&gt;,
+## #   SRR5945040 &lt;int&gt;, SRR5945041 &lt;int&gt;, SRR5945042 &lt;int&gt;,
+## #   SRR5945062 &lt;int&gt;, SRR5945067 &lt;int&gt;, SRR5945072 &lt;int&gt;,
+## #   SRR5945075 &lt;int&gt;, SRR5945093 &lt;int&gt;, SRR5945100 &lt;int&gt;,
+## #   SRR5945101 &lt;int&gt;, SRR5945103 &lt;int&gt;, SRR5945121 &lt;int&gt;,
+## #   SRR5945137 &lt;int&gt;, SRR5945141 &lt;int&gt;, SRR5970594 &lt;int&gt;,
+## #   SRR5970602 &lt;int&gt;, SRR5970613 &lt;int&gt;, SRR5970633 &lt;int&gt;,
+## #   SRR5970696 &lt;int&gt;, SRR5970727 &lt;int&gt;, SRR5970786 &lt;int&gt;,
+## #   SRR5970843 &lt;int&gt;, SRR5970952 &lt;int&gt;, SRR5971020 &lt;int&gt;,
+## #   SRR5971077 &lt;int&gt;, SRR5971094 &lt;int&gt;, SRR5971121 &lt;int&gt;,
+## #   SRR5971134 &lt;int&gt;, SRR5971142 &lt;int&gt;, SRR5971178 &lt;int&gt;,
+## #   SRR5971244 &lt;int&gt;, SRR5971252 &lt;int&gt;, SRR5971253 &lt;int&gt;,
+## #   SRR5971296 &lt;int&gt;, SRR5971310 &lt;int&gt;, SRR5971321 &lt;int&gt;,
+## #   SRR5971331 &lt;int&gt;, SRR5971332 &lt;int&gt;, SRR5971345 &lt;int&gt;,
+## #   SRR5971351 &lt;int&gt;, SRR5971359 &lt;int&gt;, SRR5971376 &lt;int&gt;,
+## #   SRR5971381 &lt;int&gt;, SRR5971392 &lt;int&gt;, SRR5971402 &lt;int&gt;,
+## #   SRR5971406 &lt;int&gt;, SRR5971407 &lt;int&gt;, SRR5971412 &lt;int&gt;,
+## #   SRR5971417 &lt;int&gt;, SRR5971495 &lt;int&gt;, SRR5971651 &lt;int&gt;,
+## #   SRR5971741 &lt;int&gt;, SRR5971848 &lt;int&gt;, SRR5971925 &lt;int&gt;,
+## #   SRR5971970 &lt;int&gt;, SRR5972033 &lt;int&gt;, SRR5972053 &lt;int&gt;,
+## #   SRR5972132 &lt;int&gt;, SRR5972155 &lt;int&gt;, SRR5972183 &lt;int&gt;,
+## #   SRR5972195 &lt;int&gt;, SRR5972207 &lt;int&gt;, SRR5972216 &lt;int&gt;,
+## #   SRR5972221 &lt;int&gt;, SRR5972236 &lt;int&gt;, SRR5972239 &lt;int&gt;,
+## #   SRR5972242 &lt;int&gt;, SRR5972243 &lt;int&gt;, SRR5972254 &lt;int&gt;,
+## #   SRR5972258 &lt;int&gt;, SRR5972274 &lt;int&gt;, SRR5972280 &lt;int&gt;,
+## #   SRR5972285 &lt;int&gt;, SRR5972290 &lt;int&gt;, SRR5972301 &lt;int&gt;,
+## #   SRR5972305 &lt;int&gt;, SRR5972316 &lt;int&gt;, SRR5972337 &lt;int&gt;,
+## #   SRR5972364 &lt;int&gt;, SRR5972387 &lt;int&gt;, SRR5972400 &lt;int&gt;,
+## #   SRR5972417 &lt;int&gt;, SRR5972503 &lt;int&gt;, SRR5972529 &lt;int&gt;,
+## #   SRR5972633 &lt;int&gt;, SRR5972683 &lt;int&gt;, SRR5972686 &lt;int&gt;</code></pre>
+<pre class="r"><code># import Taxonomy table
+taxonomy &lt;- read_tsv(paste(dataDir, &quot;relman2017_samples.tax_table.txt&quot;, sep=&quot;/&quot;))</code></pre>
+<pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1]</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   X1 = col_character(),
+##   domain = col_character(),
+##   phylum = col_character(),
+##   class = col_character(),
+##   order = col_character(),
+##   family = col_character(),
+##   genus = col_character()
+## )</code></pre>
+<pre class="r"><code>taxonomy</code></pre>
+<pre><code>## # A tibble: 1,225 x 7
+##    X1     domain   phylum     class     order       family       genus    
+##    &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;    
+##  1 OTU_1  Bacteria Firmicutes Bacilli   Lactobacil… Lactobacill… Lactobac…
+##  2 OTU_2  Bacteria Firmicutes Bacilli   Lactobacil… Lactobacill… Lactobac…
+##  3 OTU_3  Bacteria Actinobac… Actinoba… Bifidobact… Bifidobacte… Gardnere…
+##  4 OTU_4  Bacteria Firmicutes Bacilli   Lactobacil… Lactobacill… Lactobac…
+##  5 OTU_5  Bacteria Firmicutes Bacilli   Lactobacil… Lactobacill… Lactobac…
+##  6 OTU_6  Bacteria Firmicutes Bacilli   Lactobacil… Lactobacill… Lactobac…
+##  7 OTU_7  Bacteria Actinobac… Actinoba… Bifidobact… Bifidobacte… Gardnere…
+##  8 OTU_8  Bacteria Firmicutes Bacilli   Lactobacil… Lactobacill… Lactobac…
+##  9 OTU_9  Bacteria Firmicutes Negativi… Selenomona… Veillonella… Megaspha…
+## 10 OTU_10 Bacteria Firmicutes Bacilli   Lactobacil… Lactobacill… Lactobac…
+## # ... with 1,215 more rows</code></pre>
+<pre class="r"><code># import Sample metadata
+metadata &lt;- read_tsv(paste(dataDir, &quot;relman2017_samples.sample_data.txt&quot;, sep=&quot;/&quot;))</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   sample = col_character(),
+##   age = col_integer(),
+##   gest_day_collection = col_integer(),
+##   indication_for_PTB = col_character(),
+##   race = col_character(),
+##   term_vs_preterm_delivery = col_character()
+## )</code></pre>
+<pre class="r"><code>metadata</code></pre>
+<pre><code>## # A tibble: 100 x 6
+##    sample    age gest_day_collect… indication_for_… race  term_vs_preterm…
+##    &lt;chr&gt;   &lt;int&gt;             &lt;int&gt; &lt;chr&gt;            &lt;chr&gt; &lt;chr&gt;           
+##  1 SRR594…    38                45 PPROM            White Preterm         
+##  2 SRR597…    35                77 not_applicable   Asian Term            
+##  3 SRR594…    41                79 not_applicable   White Term            
+##  4 SRR597…    31                83 not_applicable   White Term            
+##  5 SRR594…    32                91 Other            White Preterm         
+##  6 SRR597…    35                92 not_applicable   Asian Term            
+##  7 SRR594…    32                98 Other            White Preterm         
+##  8 SRR597…    31               101 not_applicable   White Term            
+##  9 SRR594…    32               107 PPROM            White Preterm         
+## 10 SRR597…    31               116 not_applicable   White Term            
+## # ... with 90 more rows</code></pre>
+<pre class="r"><code># import phylogenetic tree
+phytree &lt;- read.tree(paste(dataDir, &quot;relman2017_samples.rep_set.tre&quot;, sep=&quot;/&quot;))
+phytree</code></pre>
+<pre><code>## 
+## Phylogenetic tree with 1224 tips and 1222 internal nodes.
+## 
+## Tip labels:
+##  OTU_206, OTU_823, OTU_1169, OTU_1146, OTU_701, OTU_1067, ...
+## Node labels:
+##  , 0.919, 0.825, 0.874, 0.771, 0.761, ...
+## 
+## Unrooted; includes branch lengths.</code></pre>
+</div>
+<div id="create-phyloseq-object" class="section level3">
+<h3>Create phyloseq object</h3>
+<p>Read More: <a href="https://joey711.github.io/phyloseq/import-data.html">Importing data into phyloseq</a></p>
+<pre class="r"><code># create OTU table
+otu &lt;- otu %&gt;%
+  as.data.frame() %&gt;%
+  column_to_rownames(&quot;OTUId&quot;)
+OTU &lt;- otu_table(otu, taxa_are_rows = TRUE)  
+
+# create TAX table
+taxonomy &lt;- taxonomy %&gt;%
+  as.data.frame() %&gt;%
+  column_to_rownames(&quot;X1&quot;) %&gt;%
+  as.matrix()
+TAX &lt;- tax_table(taxonomy)
+
+# create sample metadata
+metadata &lt;- metadata %&gt;%
+  as.data.frame() %&gt;%
+  mutate_if(sapply(metadata, is.character), as.factor) %&gt;%
+  column_to_rownames(&quot;sample&quot;) </code></pre>
+<pre><code>## Warning: package &#39;bindrcpp&#39; was built under R version 3.4.4</code></pre>
+<pre class="r"><code>SDATA &lt;- sample_data(metadata)
+
+# create the phyloseq object
+physeq &lt;- phyloseq(OTU, TAX, SDATA, phytree)</code></pre>
+</div>
+<div id="data-pruning" class="section level3">
+<h3>Data pruning</h3>
+<p>Read More: <a href="https://joey711.github.io/phyloseq/preprocess.html">(Pre)Processing Data</a><br />
+<em>Phyloseq</em> package provides a plethora of functions for filtering, subsetting and merging abundance data. It is beyond the scope of this workshop to discuss their usage in detail and downstream implications of chosen threshold. I strongly recommend referring the <em>phyloseq</em> vignette for answers!<br />
+For this tutorial, we will remove taxa that have read count less than 100 in at least 10% of samples. This protects againsts OTUs with small mean and trivially large C.V.<br />
+<em>Do not use these measures to filter your dataset!</em></p>
+<pre class="r"><code># For this tutorial, we will only look into high-abundance/high-prevelance OTUs
+physeq.f &lt;- filter_taxa(physeq, 
+                        function(x) sum(x &gt;= 100) &gt; (0.01*length(x)), 
+                        prune = TRUE)</code></pre>
+</div>
+<div id="stacked-bars" class="section level3">
+<h3>Stacked Bars</h3>
+<p>Read More: <a href="https://joey711.github.io/phyloseq/plot_bar-examples.html">Phyloseq bar plots</a></p>
+<p>Let’s plot phylum-level abundances using the <code>plot_bar()</code> function of <em>phyloseq</em></p>
+<pre class="r"><code>plot_bar(physeq.f, &quot;phylum&quot;, fill=&quot;phylum&quot;, facet_grid = term_vs_preterm_delivery~race) + 
+  geom_bar(aes(color=phylum, fill=phylum), stat=&quot;identity&quot;, position = &quot;stack&quot;) </code></pre>
+<p><img src="/lesson/microbiome-dataviz_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code># Go over the phyloseq tutorials to explore additional features</code></pre>
+<p>Next, we will plot stacked bars by clustering samples on their bray-curtis dissimilarities.</p>
+<pre class="r"><code># transform counts to relative abundance
+physeq.f.ra &lt;- transform_sample_counts(physeq.f, function(x) x*100/sum(x))
+
+# agglomerate counts at genus-level
+physeq.f.ra.genus &lt;- tax_glom(physeq.f.ra, &quot;genus&quot;)
+
+# next get the otu_table
+propData &lt;- as.data.frame(t(otu_table(physeq.f.ra.genus)))
+
+# get melted dataframe
+plotDF &lt;- propData %&gt;%
+  rownames_to_column(var=&quot;sample&quot;) %&gt;%
+  melt() %&gt;%
+  magrittr::set_names(c(&quot;sample&quot;, &quot;taxa&quot;, &quot;relab&quot;))</code></pre>
+<pre><code>## Using sample as id variables</code></pre>
+<pre class="r"><code># add taxonomy to plotting DF
+taxonomy.2 &lt;- taxonomy %&gt;%
+  as.data.frame() %&gt;%
+  rownames_to_column(var=&quot;taxa&quot;)
+plotDF &lt;- left_join(plotDF, taxonomy.2, by=&quot;taxa&quot;) %&gt;%
+  select(sample, taxa, relab, genus)</code></pre>
+<pre><code>## Warning: Column `taxa` joining factor and character vector, coercing into
+## character vector</code></pre>
+<pre class="r"><code># aggregate all unclassified taxa levels
+tot_unc &lt;- plotDF %&gt;%
+  group_by(sample) %&gt;%
+  filter(grepl(&quot;unclassified&quot;, genus)) %&gt;%
+  summarise(relab=sum(relab)) %&gt;%
+  mutate(taxa = &quot;unclassified&quot;, genus = &quot;unclassified&quot;) 
+
+# add the unclassified aggregated rel ab to plotting data frame
+plotDF &lt;- plotDF %&gt;%
+  filter(!grepl(&quot;unclassified&quot;, genus)) %&gt;%
+  rbind(tot_unc)
+
+# add metadata to plotting DF
+metadata.2 &lt;- metadata %&gt;%
+  rownames_to_column(var=&quot;sample&quot;)
+plotDF &lt;- left_join(plotDF, metadata.2, by=&quot;sample&quot;)
+
+# lets plot stacked bars using ggplot2
+mycolors &lt;- rev(colorRampPalette(brewer.pal(10, &quot;Paired&quot;))(length(unique(plotDF$genus))))
+ggplot(plotDF, aes(sample, relab, fill=genus)) + 
+  geom_bar(stat=&quot;identity&quot;, position = &quot;stack&quot;) + 
+  scale_fill_manual(values = mycolors) + 
+  theme(legend.position = &quot;bottom&quot;)</code></pre>
+<p><img src="/lesson/microbiome-dataviz_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre class="r"><code># sort samples on bray-curtis distances
+bcdist &lt;- vegdist(propData, method=&quot;bray&quot;)
+hclustBC &lt;- hclust(bcdist, method=&quot;ward.D2&quot;)
+# set sample factor levels 
+plotDF$sample &lt;- factor(plotDF$sample, levels = hclustBC$labels[c(hclustBC$order)])
+
+# plot again
+ggplot(plotDF, aes(sample, relab, fill=genus, group=relab)) + 
+  geom_bar(stat=&quot;identity&quot;, position = &quot;stack&quot;) + 
+  scale_fill_manual(values = mycolors) + 
+  theme(legend.position = &quot;bottom&quot;)</code></pre>
+<p><img src="/lesson/microbiome-dataviz_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
+</div>
+<div id="alpha-diversity" class="section level3">
+<h3>Alpha Diversity</h3>
+<p>Read More: <a href="https://joey711.github.io/phyloseq/plot_richness-examples.html">Phyloseq Alpha diversity</a></p>
+<p>Alpha diversity refers to community <em>richness</em>, i.e. how many different <em>types</em> of organisms are present, and <em>evenness</em>, i.e. how even/uneven the distribution of species abundance is, in a sample. Alpha-diversity analyses are useful for examining patterns of dominance, rarity and community complexity.</p>
+<p>Plot alpha diversity using the <code>plot_richness()</code> function</p>
+<pre class="r"><code># alpha diversity is measured on count data in phyloseq
+plot_richness(physeq.f,
+              x = &quot;race&quot;,
+              color = &quot;term_vs_preterm_delivery&quot;,
+              measures = c(&quot;Observed&quot;, &quot;Shannon&quot;, &quot;InvSimpson&quot;)) + 
+  geom_boxplot()</code></pre>
+<p><img src="/lesson/microbiome-dataviz_files/figure-html/unnamed-chunk-6-1.png" width="864" /></p>
+<p>In this section, we will calculate the same measures of alpha diversity using the <em>vegan</em> package, followed by comparing means within groups using <em>ggpubr</em> package</p>
+<pre class="r"><code># calculating alpha diversity on proportional data 
+# R package: vegan
+
+propData &lt;- as.data.frame(t(otu_table(physeq.f.ra)))
+
+# calculate shannon index, manipulate data frame for plotting
+adivDF.shannon &lt;- as.data.frame(diversity(propData, index = &quot;shannon&quot;)) %&gt;%
+  rownames_to_column(var=&quot;sample&quot;) %&gt;%
+  magrittr::set_names(c(&quot;sample&quot;, &quot;value&quot;)) %&gt;%
+  mutate(index = &quot;shannon&quot;)
+
+# calculate invsim index, manipulate data frame for plotting
+adivDF.invsim &lt;- as.data.frame(diversity(propData, index = &quot;invsim&quot;)) %&gt;%
+  rownames_to_column(var=&quot;sample&quot;) %&gt;%
+  magrittr::set_names(c(&quot;sample&quot;, &quot;value&quot;)) %&gt;%
+  mutate(index = &quot;invsim&quot;)
+
+# create plotting dataframe
+adivDF &lt;- rbind(adivDF.shannon, adivDF.invsim) %&gt;%
+  left_join(metadata.2, by=&quot;sample&quot;)
+
+# plot using ggpubr
+ggboxplot(adivDF, &quot;term_vs_preterm_delivery&quot;, &quot;value&quot;, 
+          color = &quot;term_vs_preterm_delivery&quot;, palette = &quot;jco&quot;,
+          add = &quot;jitter&quot;, outlier.shape=NA) + 
+  facet_grid(~index+race) + 
+  stat_compare_means(label = &quot;p.format&quot;) </code></pre>
+<p><img src="/lesson/microbiome-dataviz_files/figure-html/unnamed-chunk-7-1.png" width="864" /></p>
+</div>
+<div id="beta-diversity-ordinations" class="section level3">
+<h3>Beta Diversity, Ordinations</h3>
+<p>Read More: <a href="https://joey711.github.io/phyloseq/plot_ordination-examples.html">Ordination Plots</a></p>
+<p>Beta diversity refers to between sample diversity, summerize how similar/dissimilar two samples are. The taxa abundances in each sample gets compared to every other sample in the dataset, generating a distance matrix, which can be visualized using Principal Coordinate Analysis.</p>
+<p><em>Bray-Curtis distances</em></p>
+<pre class="r"><code># first calculate bray-curtis distance
+dist.mat &lt;- t(data.frame(otu_table(physeq.f)))
+physeq.f.distBC &lt;- vegdist(dist.mat, method=&quot;bray&quot;)
+physeq.f.distBC.ord &lt;- ordinate(physeq.f, method = &quot;PCoA&quot;, distance = physeq.f.distBC)
+
+# color by metadata
+plot_ordination(physeq.f, physeq.f.distBC.ord, color=&quot;race&quot;) + geom_point() </code></pre>
+<p><img src="/lesson/microbiome-dataviz_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="r"><code>plot_ordination(physeq.f, physeq.f.distBC.ord, color=&quot;term_vs_preterm_delivery&quot;) + geom_point() </code></pre>
+<p><img src="/lesson/microbiome-dataviz_files/figure-html/unnamed-chunk-8-2.png" width="672" /></p>
+<p><em>UniFrac distances</em></p>
+<pre class="r"><code># first calculate unifrac distance
+physeq.f.distUF &lt;- phyloseq::distance(physeq.f, method=&quot;unifrac&quot;)
+physeq.f.distUF.ord &lt;- ordinate(physeq.f, method = &quot;PCoA&quot;, distance = physeq.f.distUF)
+
+# color by metadata
+plot_ordination(physeq.f, physeq.f.distUF.ord, color=&quot;race&quot;) + geom_point() </code></pre>
+<p><img src="/lesson/microbiome-dataviz_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<pre class="r"><code>plot_ordination(physeq.f, physeq.f.distUF.ord, color=&quot;term_vs_preterm_delivery&quot;) + geom_point() </code></pre>
+<p><img src="/lesson/microbiome-dataviz_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
+</div>
+<div id="deseq2" class="section level3">
+<h3>DESeq2</h3>
+<p><em><strong>Which taxa are important?</strong></em><br />
+The ordination plots reveal microbiome levels shifts within groups-of-interest. A univariate analysis of individual taxa abudances can be performed using DESeq2, to measure <em>significant fold changes</em>.</p>
+<p><code>phyloseq_to_deseq2()</code> function provides a convenient function to convert <code>phyloseq</code> object to <code>DESeq2DataSet</code> class.</p>
+<pre class="r"><code>library(DESeq2)</code></pre>
+<pre><code>## Loading required package: S4Vectors</code></pre>
+<pre><code>## Loading required package: stats4</code></pre>
+<pre><code>## Loading required package: BiocGenerics</code></pre>
+<pre><code>## Loading required package: parallel</code></pre>
+<pre><code>## 
+## Attaching package: &#39;BiocGenerics&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:parallel&#39;:
+## 
+##     clusterApply, clusterApplyLB, clusterCall, clusterEvalQ,
+##     clusterExport, clusterMap, parApply, parCapply, parLapply,
+##     parLapplyLB, parRapply, parSapply, parSapplyLB</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     combine, intersect, setdiff, union</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     IQR, mad, sd, var, xtabs</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     anyDuplicated, append, as.data.frame, cbind, colMeans,
+##     colnames, colSums, do.call, duplicated, eval, evalq, Filter,
+##     Find, get, grep, grepl, intersect, is.unsorted, lapply,
+##     lengths, Map, mapply, match, mget, order, paste, pmax,
+##     pmax.int, pmin, pmin.int, Position, rank, rbind, Reduce,
+##     rowMeans, rownames, rowSums, sapply, setdiff, sort, table,
+##     tapply, union, unique, unsplit, which, which.max, which.min</code></pre>
+<pre><code>## 
+## Attaching package: &#39;S4Vectors&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     first, rename</code></pre>
+<pre><code>## The following object is masked from &#39;package:tidyr&#39;:
+## 
+##     expand</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     expand.grid</code></pre>
+<pre><code>## Loading required package: IRanges</code></pre>
+<pre><code>## 
+## Attaching package: &#39;IRanges&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:phyloseq&#39;:
+## 
+##     distance</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     collapse, desc, slice</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     reduce</code></pre>
+<pre><code>## Loading required package: GenomicRanges</code></pre>
+<pre><code>## Warning: package &#39;GenomicRanges&#39; was built under R version 3.4.3</code></pre>
+<pre><code>## Loading required package: GenomeInfoDb</code></pre>
+<pre><code>## Loading required package: SummarizedExperiment</code></pre>
+<pre><code>## Warning: package &#39;SummarizedExperiment&#39; was built under R version 3.4.3</code></pre>
+<pre><code>## Loading required package: Biobase</code></pre>
+<pre><code>## Welcome to Bioconductor
+## 
+##     Vignettes contain introductory material; view with
+##     &#39;browseVignettes()&#39;. To cite Bioconductor, see
+##     &#39;citation(&quot;Biobase&quot;)&#39;, and for packages &#39;citation(&quot;pkgname&quot;)&#39;.</code></pre>
+<pre><code>## 
+## Attaching package: &#39;Biobase&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:phyloseq&#39;:
+## 
+##     sampleNames</code></pre>
+<pre><code>## Loading required package: DelayedArray</code></pre>
+<pre><code>## Loading required package: matrixStats</code></pre>
+<pre><code>## Warning: package &#39;matrixStats&#39; was built under R version 3.4.4</code></pre>
+<pre><code>## 
+## Attaching package: &#39;matrixStats&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:Biobase&#39;:
+## 
+##     anyMissing, rowMedians</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     count</code></pre>
+<pre><code>## 
+## Attaching package: &#39;DelayedArray&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:matrixStats&#39;:
+## 
+##     colMaxs, colMins, colRanges, rowMaxs, rowMins, rowRanges</code></pre>
+<pre><code>## The following object is masked from &#39;package:base&#39;:
+## 
+##     apply</code></pre>
+<pre class="r"><code># convert to DESeq2&#39;s data class
+diagdds &lt;- phyloseq_to_deseq2(physeq.f, ~ term_vs_preterm_delivery)</code></pre>
+<pre><code>## converting counts to integer mode</code></pre>
+<pre class="r"><code># perform the testing
+diagdds &lt;- DESeq(diagdds, test=&quot;Wald&quot;, fitType=&quot;parametric&quot;)</code></pre>
+<pre><code>## estimating size factors</code></pre>
+<pre><code>## estimating dispersions</code></pre>
+<pre><code>## gene-wise dispersion estimates</code></pre>
+<pre><code>## mean-dispersion relationship</code></pre>
+<pre><code>## -- note: fitType=&#39;parametric&#39;, but the dispersion trend was not well captured by the
+##    function: y = a/x + b, and a local regression fit was automatically substituted.
+##    specify fitType=&#39;local&#39; or &#39;mean&#39; to avoid this message next time.</code></pre>
+<pre><code>## final dispersion estimates</code></pre>
+<pre><code>## fitting model and testing</code></pre>
+<pre><code>## -- replacing outliers and refitting for 112 genes
+## -- DESeq argument &#39;minReplicatesForReplace&#39; = 7 
+## -- original counts are preserved in counts(dds)</code></pre>
+<pre><code>## estimating dispersions</code></pre>
+<pre><code>## fitting model and testing</code></pre>
+<pre class="r"><code># look at the results 
+res &lt;- results(diagdds, cooksCutoff = FALSE)
+sigtab &lt;- res[which(res$padj &lt; 0.01), ]
+sigtab &lt;- cbind(as(sigtab, &quot;data.frame&quot;), as(tax_table(physeq.f)[rownames(sigtab), ], &quot;matrix&quot;))
+head(sigtab, n = 20)</code></pre>
+<pre><code>##              baseMean log2FoldChange     lfcSE       stat       pvalue
+## OTU_111    1767.51244     -11.982176 1.5800953  -7.583198 3.371385e-14
+## OTU_303    1178.45592     -10.742514 1.5008538  -7.157602 8.210050e-13
+## OTU_5    258736.22001      -4.154370 0.9431855  -4.404616 1.059716e-05
+## OTU_302     138.38654      -6.686948 1.2958589  -5.160244 2.466285e-07
+## OTU_541     196.99919     -15.118544 1.2568358 -12.029053 2.500124e-33
+## OTU_91     1354.41348     -14.692651 1.3425713 -10.943665 7.125963e-28
+## OTU_1175    125.14917       6.460472 0.9576249   6.746349 1.516112e-11
+## OTU_48     1026.28441      19.719049 2.9039429   6.790440 1.117924e-11
+## OTU_468     223.81014      -8.622400 1.4992114  -5.751291 8.856463e-09
+## OTU_104    1365.99562     -10.256643 0.9675319 -10.600832 2.953403e-26
+## OTU_38       78.50563       3.883498 1.2676009   3.063660 2.186474e-03
+## OTU_45      799.85893      -2.843298 0.8708630  -3.264920 1.094950e-03
+## OTU_313     172.22250     -12.221676 1.3187338  -9.267735 1.901399e-20
+## OTU_338      79.38121      -4.557586 1.1232006  -4.057677 4.956318e-05
+## OTU_190    1357.30018      -5.415318 0.9902232  -5.468786 4.531297e-08
+## OTU_58     1831.12441      -3.460724 0.9652698  -3.585240 3.367685e-04
+## OTU_619     160.35637     -13.037735 1.4797737  -8.810628 1.244468e-18
+## OTU_83       62.37140      -5.395945 1.3548102  -3.982805 6.810651e-05
+## OTU_941     186.98325     -12.453022 1.1432983 -10.892189 1.255844e-27
+## OTU_131     187.67197      -9.537642 1.0042962  -9.496842 2.163520e-21
+##                  padj   domain                phylum                 class
+## OTU_111  4.015014e-13 Bacteria            Firmicutes               Bacilli
+## OTU_303  8.273204e-12 Bacteria            Firmicutes               Bacilli
+## OTU_5    5.845259e-05 Bacteria            Firmicutes               Bacilli
+## OTU_302  1.615417e-06 Bacteria            Firmicutes               Bacilli
+## OTU_541  1.091721e-31 Bacteria unclassified_Bacteria unclassified_Bacteria
+## OTU_91   2.333753e-26 Bacteria            Firmicutes               Bacilli
+## OTU_1175 1.324071e-10 Bacteria            Firmicutes               Bacilli
+## OTU_48   1.046058e-10 Bacteria            Firmicutes               Bacilli
+## OTU_468  6.824686e-08 Bacteria            Firmicutes            Clostridia
+## OTU_104  6.448262e-25 Bacteria        Actinobacteria        Actinobacteria
+## OTU_38   8.183658e-03 Bacteria        Actinobacteria        Actinobacteria
+## OTU_45   4.218779e-03 Bacteria        Actinobacteria        Actinobacteria
+## OTU_313  2.767592e-19 Bacteria        Actinobacteria        Actinobacteria
+## OTU_338  2.404732e-04 Bacteria        Actinobacteria        Actinobacteria
+## OTU_190  3.297777e-07 Bacteria        Actinobacteria        Actinobacteria
+## OTU_58   1.423119e-03 Bacteria        Actinobacteria        Actinobacteria
+## OTU_619  1.630253e-17 Bacteria        Actinobacteria        Actinobacteria
+## OTU_83   3.076535e-04 Bacteria        Actinobacteria        Actinobacteria
+## OTU_941  3.290310e-26 Bacteria        Actinobacteria        Actinobacteria
+## OTU_131  3.542764e-20 Bacteria        Actinobacteria        Actinobacteria
+##                          order                          family
+## OTU_111        Lactobacillales                Lactobacillaceae
+## OTU_303        Lactobacillales                Lactobacillaceae
+## OTU_5          Lactobacillales                Lactobacillaceae
+## OTU_302        Lactobacillales                Lactobacillaceae
+## OTU_541  unclassified_Bacteria           unclassified_Bacteria
+## OTU_91         Lactobacillales    unclassified_Lactobacillales
+## OTU_1175       Lactobacillales                Lactobacillaceae
+## OTU_48         Lactobacillales                Lactobacillaceae
+## OTU_468          Clostridiales Clostridiales_Incertae Sedis XI
+## OTU_104      Bifidobacteriales              Bifidobacteriaceae
+## OTU_38         Actinomycetales                  Micrococcaceae
+## OTU_45         Actinomycetales    unclassified_Actinomycetales
+## OTU_313        Actinomycetales              Corynebacteriaceae
+## OTU_338        Actinomycetales              Corynebacteriaceae
+## OTU_190        Actinomycetales              Corynebacteriaceae
+## OTU_58         Actinomycetales              Corynebacteriaceae
+## OTU_619        Actinomycetales    unclassified_Actinomycetales
+## OTU_83         Actinomycetales               Brevibacteriaceae
+## OTU_941      Bifidobacteriales              Bifidobacteriaceae
+## OTU_131      Bifidobacteriales              Bifidobacteriaceae
+##                                 genus
+## OTU_111                 Lactobacillus
+## OTU_303                 Lactobacillus
+## OTU_5                   Lactobacillus
+## OTU_302                 Lactobacillus
+## OTU_541         unclassified_Bacteria
+## OTU_91   unclassified_Lactobacillales
+## OTU_1175                Lactobacillus
+## OTU_48                  Lactobacillus
+## OTU_468                    Finegoldia
+## OTU_104                   Gardnerella
+## OTU_38    unclassified_Micrococcaceae
+## OTU_45   unclassified_Actinomycetales
+## OTU_313               Corynebacterium
+## OTU_338               Corynebacterium
+## OTU_190               Corynebacterium
+## OTU_58                Corynebacterium
+## OTU_619  unclassified_Actinomycetales
+## OTU_83                 Brevibacterium
+## OTU_941                   Gardnerella
+## OTU_131                   Gardnerella</code></pre>
+<p>Popular biomarker discovery tools, utilizing multivariate analysis:<br />
+- <a href="https://bitbucket.org/biobakery/biobakery/wiki/lefse">LEfSe</a><br />
+- <a href="https://cran.r-project.org/web/packages/indicspecies/vignettes/indicspeciesTutorial.pdf">Indicator Analysis</a></p>
+</div>
+
+    </article>
+  </div>
+
+
+<div class="site-footer">
+  <div class="copyright">&copy; Copyright 2018 UVa School of Medicine Research Computing</div>
+  <ul class="site-footer-items">
+    <li class="site-footer-item-somrc"><a href="https://somrc.virginia.edu/" title="School of Medicine Research Computing">School of Medicine Research Computing</a></li>
+  </ul>
+</div>
+<script src="/js/script.js"></script>
+<script src="/js/custom.js"></script>
+
+
+</body>
+</html>

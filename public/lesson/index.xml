@@ -32,6 +32,18 @@
     </item>
     
     <item>
+      <title>Microbiome: 16S Data Visualization/Analysis</title>
+      <link>/lesson/microbiome-dataviz/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/lesson/microbiome-dataviz/</guid>
+      <description>This markdown outlines instructions for visualization and analysis of OTU-clustered amplicon sequencing data, primarily using the phyloseq package.
+Prerequisites  R basics Data manipulation with dplyr and %&amp;gt;% Data visualization with ggplot2  R packages CRAN packages
+ tidyverse (readr, dplyr, ggplot2) magrittr reshape2 vegan ape ggpubr RColorBrewer  Bioconductor packages
+ phyloseq DESeq2   Required Data Files We will use the output files generated during the sequence processing steps.</description>
+    </item>
+    
+    <item>
       <title>R Optimization</title>
       <link>/lesson/r-opt/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
