@@ -6,14 +6,15 @@
   <title>Introduction to the Command-Line Interface - SOMRC Workshops</title>
   <meta property="og:title" content="Introduction to the Command-Line Interface - SOMRC Workshops" />
   <meta name="twitter:title" content="Introduction to the Command-Line Interface - SOMRC Workshops" />
-  <meta name="description" content="Introduction to the Command Line Interface (CLI) Requirements:  MacOS / Linux users: Terminal Windows: PuTTY [Download]  Connect: MacOS / Linux users ssh labuser@shell.uvasomrc.io  Windows users, in the &ldquo;Host name&rdquo; field of PuTTY, enter labuser@shell.uvasomrc.io  Navigating the file system Learn your way around without feeling stuck. These commands help you change directories and view their contents.
+  <meta name="description" content="Requirements:  MacOS / Linux users: Terminal Windows: PuTTY [Download]  Connect: MacOS / Linux users ssh labuser@shell.uvasomrc.io  Windows users, in the &ldquo;Host name&rdquo; field of PuTTY, enter labuser@shell.uvasomrc.io  Navigating the file system Learn your way around without feeling stuck. These commands help you change directories and view their contents.
 List files/folders in a directory:
 ls  List all files (even hidden) in a directory, with detailed info:">
-  <meta property="og:description" content="Introduction to the Command Line Interface (CLI) Requirements:  MacOS / Linux users: Terminal Windows: PuTTY [Download]  Connect: MacOS / Linux users ssh labuser@shell.uvasomrc.io  Windows users, in the &ldquo;Host name&rdquo; field of PuTTY, enter labuser@shell.uvasomrc.io  Navigating the file system Learn your way around without feeling stuck. These commands help you change directories and view their contents.
+  <meta property="og:description" content="Requirements:  MacOS / Linux users: Terminal Windows: PuTTY [Download]  Connect: MacOS / Linux users ssh labuser@shell.uvasomrc.io  Windows users, in the &ldquo;Host name&rdquo; field of PuTTY, enter labuser@shell.uvasomrc.io  Navigating the file system Learn your way around without feeling stuck. These commands help you change directories and view their contents.
 List files/folders in a directory:
 ls  List all files (even hidden) in a directory, with detailed info:">
-  <meta name="twitter:description" content="Introduction to the Command Line Interface (CLI) Requirements:  MacOS / Linux users: Terminal Windows: PuTTY [Download]  Connect: MacOS / Linux users ssh labuser@shell.uvasomrc.io  Windows users, in …">
+  <meta name="twitter:description" content="Requirements:  MacOS / Linux users: Terminal Windows: PuTTY [Download]  Connect: MacOS / Linux users ssh labuser@shell.uvasomrc.io  Windows users, in the &ldquo;Host name&rdquo; field of PuTTY, enter …">
   <meta name="author" content=""/>
+  <link rel='icon' type='image/x-icon' href="https://somrc.virginia.edu/images/favicon.ico" />
   <meta property="og:site_name" content="SOMRC Workshops" />
   <meta property="og:url" content="https://example.com/lesson/command-line/" />
   <meta property="og:type" content="article" />
@@ -62,7 +63,7 @@ ls  List all files (even hidden) in a directory, with detailed info:">
 <aside class="toc">
   <nav id="TableOfContents">
 <ul>
-<li><a href="#introduction-to-the-command-line-interface-cli">Introduction to the Command Line Interface (CLI)</a>
+<li>
 <ul>
 <li><a href="#requirements">Requirements:</a></li>
 <li><a href="#connect">Connect:</a>
@@ -98,8 +99,6 @@ ls  List all files (even hidden) in a directory, with detailed info:">
 </nav>
 </aside>
       
-
-<h1 id="introduction-to-the-command-line-interface-cli">Introduction to the Command Line Interface (CLI)</h1>
 
 <h2 id="requirements">Requirements:</h2>
 
@@ -454,11 +453,11 @@ Parameters: (./) this directory; (-name) look for this name in files and dirs
 <p>Set your own variable:</p>
 
 <ul>
-<li>SET it with a name and value</li>
-<li>Use no spaces between characters</li>
-<li>Declare a variable without the <code>$</code> sign</li>
-<li>Then EXPORT it to make it available to other commands</li>
-<li>Retrieve it by using the <code>$</code> reference</li>
+<li>SET it with a name and value.</li>
+<li>Use no spaces between characters, or wrap the value portion in double quotes.</li>
+<li>Declare a variable without the <code>$</code> sign.</li>
+<li>Then EXPORT it to make it available to other commands.</li>
+<li>Retrieve a variable by using the <code>$</code> reference.</li>
 </ul>
 
 <p>Here is an example:</p>
@@ -468,9 +467,9 @@ export FNAME
 echo $FNAME
 </code></pre>
 
-<p>Or you can capture a phrase by wrapping it with <code>''</code> single quotes:</p>
+<p>Or you can capture a phrase by wrapping it with <code>&quot;&quot;</code> double quotes:</p>
 
-<pre><code>FULLNAME='My Full Name'
+<pre><code>FULLNAME=&quot;My Full Name&quot;
 export FULLNAME
 echo $FULLNAME
 </code></pre>
