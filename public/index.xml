@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>SOMRC Workshops</title>
-    <link>/</link>
+    <link>https://example.com/</link>
     <description>Recent content on SOMRC Workshops</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; Copyright 2018 UVa School of Medicine Research Computing</copyright>
     
-	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://example.com/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>About</title>
-      <link>/about/</link>
+      <link>https://example.com/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/about/</guid>
-      <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Upcoming Workshops  DATE WORKSHOP INSTRUCTOR     September 12, 2018 Intro to Research Computing Byoung-Do Kim   February 14, 2018 Introduction to R VP Nagraj   October 11, 2018 Version Control with Git / GitHub VP Nagraj   February 21, 2018 Conditionals and Iteration in R VP Nagraj   March 07, 2018 Writing Functions in R VP Nagraj      FAQ 1.</description>
+      <guid>https://example.com/about/</guid>
+      <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Upcoming Workshops  DATE WORKSHOP INSTRUCTOR     September 12, 2018 Intro to Research Computing Byoung-Do Kim   January 30, 2018 Introduction to Matlab Christina Gancayco   February 01, 2018 Working with the Command-Line Neal Magee   February 14, 2018 Introduction to R VP Nagraj   February 15, 2018 Introduction to Python Christina Gancayco   March 06, 2018 Data Manipulation with Python Christina Gancayco   October 11, 2018 Version Control with Git / GitHub VP Nagraj   February 21, 2018 Conditionals and Iteration in R VP Nagraj   March 07, 2018 Writing Functions in R VP Nagraj      FAQ 1.</description>
     </item>
     
     <item>
       <title>Conditionals and Iteration</title>
-      <link>/lesson/r-cond-iter/</link>
+      <link>https://example.com/lesson/r-cond-iter/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/lesson/r-cond-iter/</guid>
+      <guid>https://example.com/lesson/r-cond-iter/</guid>
       <description>Introduction The ability to use logic to condition execution of a program is fundamental to many languages. These control-flow features are primarily implemented in R through a series of “reserved” words:
 ?reserved We can access the documentation on R’s implementation of control flow statements through any of the relevant reserved words:
 ?`if` ?`else` ?`for` ?`break` ?`while` ?`repeat` Note the back ticks around the names of these statements. The reservation on these names prevents them from being assigned another value.</description>
@@ -33,28 +33,28 @@
     
     <item>
       <title>Data</title>
-      <link>/data/</link>
+      <link>https://example.com/data/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/data/</guid>
+      <guid>https://example.com/data/</guid>
       <description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.   nhanes.</description>
     </item>
     
     <item>
       <title>Introduction to R</title>
-      <link>/lesson/r-intro/</link>
+      <link>https://example.com/lesson/r-intro/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/lesson/r-intro/</guid>
+      <guid>https://example.com/lesson/r-intro/</guid>
       <description>true  This section introduces the R environment and some of the most basic funcionality aspects of R that are used through the remainder of the class. This section assumes little to no experience with statistical computing with R. We will introduce the R statistical computing environment, RStudio, and the dataset that we will work with for the remainder of the lesson. We will cover very basic functionality in R, including variables, functions, and importing/inspecting data frames.</description>
     </item>
     
     <item>
       <title>Microbiome: 16S Data Visualization/Analysis</title>
-      <link>/lesson/microbiome-dataviz/</link>
+      <link>https://example.com/lesson/microbiome-dataviz/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/lesson/microbiome-dataviz/</guid>
+      <guid>https://example.com/lesson/microbiome-dataviz/</guid>
       <description>This markdown outlines instructions for visualization and analysis of OTU-clustered amplicon sequencing data, primarily using the phyloseq package.
 Prerequisites  R basics Data manipulation with dplyr and %&amp;gt;% Data visualization with ggplot2  R packages CRAN packages
  tidyverse (readr, dplyr, ggplot2) magrittr reshape2 vegan ape ggpubr RColorBrewer  Bioconductor packages
@@ -63,30 +63,30 @@ Prerequisites  R basics Data manipulation with dplyr and %&amp;gt;% Data visuali
     
     <item>
       <title>R Optimization</title>
-      <link>/lesson/r-opt/</link>
+      <link>https://example.com/lesson/r-opt/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/lesson/r-opt/</guid>
+      <guid>https://example.com/lesson/r-opt/</guid>
       <description>SLIDES
 Setup install.packages(&amp;quot;data.table&amp;quot;) install.packages(&amp;quot;readr&amp;quot;) install.packages(&amp;quot;profvis&amp;quot;) install.packages(&amp;quot;microbenchmark&amp;quot;) install.packages(&amp;quot;dplyr&amp;quot;) install.packages(&amp;quot;ggplot2&amp;quot;) install.packages(&amp;quot;pryr&amp;quot;) install.packages(&amp;quot;nycflights13&amp;quot;) library(data.table) library(readr) library(profvis) library(microbenchmark) library(dplyr) library(ggplot2) library(pryr) library(nycflights13)  Overview One could argue that “optimizing” can generally refer to any strategy for improving a programmatic workflow. In terms of code, that could include making your script more legible … or using a more efficient memory footprint … or even making it work with a preferred set of tools or packages. But generally, when people refer to optimization they’re actually interested in improving speed of execution, and that will be the focus of this material.</description>
     </item>
     
     <item>
       <title>Version Control with Git/GitHub</title>
-      <link>/lesson/git/</link>
+      <link>https://example.com/lesson/git/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/lesson/git/</guid>
+      <guid>https://example.com/lesson/git/</guid>
       <description>SLIDES
 Introduction Version control software provides a systematic way to keep track of changes made to files. There are a number of version control software (VCS) systems &amp;hellip; Git is one of them. It&amp;rsquo;s a powerful tool for tracking and reconciling changes to text files from individual or multiple contributors. The basic unit of Git is the repository. Unlike some other VCS, Git tracks changes by storing snapshots of entire repository at different points in time.</description>
     </item>
     
     <item>
       <title>Writing Functions in R</title>
-      <link>/lesson/r-functions/</link>
+      <link>https://example.com/lesson/r-functions/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/lesson/r-functions/</guid>
+      <guid>https://example.com/lesson/r-functions/</guid>
       <description>Overview This session will introduce essentials of writing functions in R. We will discuss methods for passing arguments, establishing return values and handling errors. We’ll also spend time covering R environments, as well as the system of searching for objects from within a function and beyond.
 Introduction R is a statistical computing language that delivers features to users as functions that can be programmatically implemented. Even with just its base installtion, R provides hundreds of these functions:</description>
     </item>

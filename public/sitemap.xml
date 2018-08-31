@@ -3,80 +3,80 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/about/</loc>
+    <loc>https://example.com/about/</loc>
   </url>
   
   <url>
-    <loc>/categories/advanced-research-computing/</loc>
+    <loc>https://example.com/categories/advanced-research-computing/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/bioinformatics/</loc>
+    <loc>https://example.com/categories/bioinformatics/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/categories/</loc>
+    <loc>https://example.com/categories/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/lesson/r-cond-iter/</loc>
+    <loc>https://example.com/lesson/r-cond-iter/</loc>
   </url>
   
   <url>
-    <loc>/data/</loc>
+    <loc>https://example.com/data/</loc>
   </url>
   
   <url>
-    <loc>/lesson/r-intro/</loc>
+    <loc>https://example.com/lesson/r-intro/</loc>
   </url>
   
   <url>
-    <loc>/lesson/</loc>
+    <loc>https://example.com/lesson/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/lesson/microbiome-dataviz/</loc>
+    <loc>https://example.com/lesson/microbiome-dataviz/</loc>
   </url>
   
   <url>
-    <loc>/page/</loc>
+    <loc>https://example.com/page/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/lesson/r-opt/</loc>
+    <loc>https://example.com/lesson/r-opt/</loc>
   </url>
   
   <url>
-    <loc>/categories/r-programming/</loc>
+    <loc>https://example.com/categories/r-programming/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/</loc>
+    <loc>https://example.com/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/series/</loc>
+    <loc>https://example.com/series/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/tags/</loc>
+    <loc>https://example.com/tags/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>/lesson/git/</loc>
+    <loc>https://example.com/lesson/git/</loc>
   </url>
   
   <url>
-    <loc>/lesson/r-functions/</loc>
+    <loc>https://example.com/lesson/r-functions/</loc>
   </url>
   
 </urlset>

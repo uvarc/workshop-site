@@ -2,39 +2,39 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Categories on SOMRC Workshops</title>
-    <link>/categories/</link>
+    <link>https://example.com/categories/</link>
     <description>Recent content in Categories on SOMRC Workshops</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>&amp;copy; Copyright 2018 UVa School of Medicine Research Computing</copyright>
     
-	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://example.com/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Advanced Research Computing</title>
-      <link>/categories/advanced-research-computing/</link>
+      <link>https://example.com/categories/advanced-research-computing/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/categories/advanced-research-computing/</guid>
+      <guid>https://example.com/categories/advanced-research-computing/</guid>
       <description></description>
     </item>
     
     <item>
       <title>Bioinformatics</title>
-      <link>/categories/bioinformatics/</link>
+      <link>https://example.com/categories/bioinformatics/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/categories/bioinformatics/</guid>
+      <guid>https://example.com/categories/bioinformatics/</guid>
       <description></description>
     </item>
     
     <item>
       <title>R Programming</title>
-      <link>/categories/r-programming/</link>
+      <link>https://example.com/categories/r-programming/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>/categories/r-programming/</guid>
+      <guid>https://example.com/categories/r-programming/</guid>
       <description></description>
     </item>
     
