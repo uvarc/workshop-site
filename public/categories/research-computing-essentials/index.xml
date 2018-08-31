@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Research Computing Essentials on SOMRC Workshops</title>
+    <link>https://example.com/categories/research-computing-essentials/</link>
+    <description>Recent content in Research Computing Essentials on SOMRC Workshops</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; Copyright 2018 UVa School of Medicine Research Computing</copyright>
+    
+	<atom:link href="https://example.com/categories/research-computing-essentials/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Introduction to the Command-Line Interface</title>
+      <link>https://example.com/lesson/command-line/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://example.com/lesson/command-line/</guid>
+      <description>Introduction to the Command Line Interface (CLI) Requirements:  MacOS / Linux users: Terminal Windows: PuTTY [Download]  Connect: MacOS / Linux users ssh labuser@shell.uvasomrc.io  Windows users, in the &amp;ldquo;Host name&amp;rdquo; field of PuTTY, enter labuser@shell.uvasomrc.io  Navigating the file system Learn your way around without feeling stuck. These commands help you change directories and view their contents.
+List files/folders in a directory:
+ls  List all files (even hidden) in a directory, with detailed info:</description>
+    </item>
+    
+  </channel>
+</rss>

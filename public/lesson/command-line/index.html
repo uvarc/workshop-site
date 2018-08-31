@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <title>Introduction to the Command-Line Interface - SOMRC Workshops</title>
+  <meta property="og:title" content="Introduction to the Command-Line Interface - SOMRC Workshops" />
+  <meta name="twitter:title" content="Introduction to the Command-Line Interface - SOMRC Workshops" />
+  <meta name="description" content="Introduction to the Command Line Interface (CLI) Requirements:  MacOS / Linux users: Terminal Windows: PuTTY [Download]  Connect: MacOS / Linux users ssh labuser@shell.uvasomrc.io  Windows users, in the &ldquo;Host name&rdquo; field of PuTTY, enter labuser@shell.uvasomrc.io  Navigating the file system Learn your way around without feeling stuck. These commands help you change directories and view their contents.
+List files/folders in a directory:
+ls  List all files (even hidden) in a directory, with detailed info:">
+  <meta property="og:description" content="Introduction to the Command Line Interface (CLI) Requirements:  MacOS / Linux users: Terminal Windows: PuTTY [Download]  Connect: MacOS / Linux users ssh labuser@shell.uvasomrc.io  Windows users, in the &ldquo;Host name&rdquo; field of PuTTY, enter labuser@shell.uvasomrc.io  Navigating the file system Learn your way around without feeling stuck. These commands help you change directories and view their contents.
+List files/folders in a directory:
+ls  List all files (even hidden) in a directory, with detailed info:">
+  <meta name="twitter:description" content="Introduction to the Command Line Interface (CLI) Requirements:  MacOS / Linux users: Terminal Windows: PuTTY [Download]  Connect: MacOS / Linux users ssh labuser@shell.uvasomrc.io  Windows users, in …">
+  <meta name="author" content=""/>
+  <meta property="og:site_name" content="SOMRC Workshops" />
+  <meta property="og:url" content="https://example.com/lesson/command-line/" />
+  <meta property="og:type" content="article" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="generator" content="Hugo 0.40.3" />
+  <link rel="stylesheet" href="/css/style.css" media="all" />
+  <link rel="stylesheet" href="/css/syntax.css" media="all" />
+  <link rel="stylesheet" href="/css/custom.css" media="all" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+<header class="site-header">
+  <nav class="site-navi">
+    <h1 class="site-title"><a href="/">SOMRC Workshops</a></h1>
+    <ul class="site-navi-items">
+      <li class="site-navi-item-tags"><a href="/lesson/" title="Lessons">Lessons</a></li>
+      <li class="site-navi-item-topics"><a href="/categories/" title="Topics">Topics</a></li>
+      <li class="site-navi-item-data"><a href="/data/" title="Data">Data</a></li>
+      <li class="site-navi-item-about"><a href="/about/" title="About">About</a></li>
+    </ul>
+  </nav>
+</header>
+<hr class="site-header-bottom">
+
+  <div class="main" role="main">
+    <article class="article">
+      
+      
+      <h1 class="article-title">Introduction to the Command-Line Interface</h1>
+      
+      <hr class="article-title-bottom">
+      <ul class="article-meta">
+        
+        <li class="article-meta-categories">
+          <a href="/categories/research-computing-essentials/">
+            <i class="fas fa-folder"></i>
+            RESEARCH COMPUTING ESSENTIALS
+          </a>&nbsp;
+        </li>
+      </ul>
+      
+<aside class="toc">
+  <nav id="TableOfContents">
+<ul>
+<li><a href="#introduction-to-the-command-line-interface-cli">Introduction to the Command Line Interface (CLI)</a>
+<ul>
+<li><a href="#requirements">Requirements:</a></li>
+<li><a href="#connect">Connect:</a>
+<ul>
+<li><a href="#macos-linux-users">MacOS / Linux users</a></li>
+<li><a href="#windows-users-in-the-host-name-field-of-putty-enter">Windows users, in the &ldquo;Host name&rdquo; field of PuTTY, enter</a></li>
+</ul></li>
+<li><a href="#navigating-the-file-system">Navigating the file system</a></li>
+<li><a href="#change-the-file-system">Change the file system</a>
+<ul>
+<li><a href="#view-things">View Things</a></li>
+<li><a href="#copy-things">Copy Things</a></li>
+<li><a href="#move-things">Move Things</a></li>
+<li><a href="#delete-things">Delete Things</a></li>
+<li><a href="#symbolic-links">Symbolic Links</a></li>
+</ul></li>
+<li><a href="#redirect-input-output">Redirect Input/Output</a></li>
+<li><a href="#archive-unarchive-things">Archive/Unarchive Things</a></li>
+<li><a href="#find-things">Find Things</a></li>
+<li><a href="#manage-your-session">Manage your session</a></li>
+<li><a href="#configure-your-environment">Configure your environment</a>
+<ul>
+<li><a href="#shell-variables">Shell Variables</a></li>
+<li><a href="#environment-variables">Environment Variables</a></li>
+<li><a href="#package-managers">Package Managers</a></li>
+</ul></li>
+<li><a href="#understand-your-environment">Understand your environment</a></li>
+<li><a href="#interact-with-other-systems">Interact with Other Systems</a></li>
+<li><a href="#basic-shell-scripting">Basic Shell Scripting</a></li>
+<li><a href="#more-information">More Information</a></li>
+</ul></li>
+</ul>
+</nav>
+</aside>
+      
+
+<h1 id="introduction-to-the-command-line-interface-cli">Introduction to the Command Line Interface (CLI)</h1>
+
+<h2 id="requirements">Requirements:</h2>
+
+<ul>
+<li>MacOS / Linux users: Terminal</li>
+<li>Windows: PuTTY [<a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html">Download</a>]</li>
+</ul>
+
+<h2 id="connect">Connect:</h2>
+
+<h3 id="macos-linux-users">MacOS / Linux users</h3>
+
+<pre><code>ssh labuser@shell.uvasomrc.io
+</code></pre>
+
+<h3 id="windows-users-in-the-host-name-field-of-putty-enter">Windows users, in the &ldquo;Host name&rdquo; field of PuTTY, enter</h3>
+
+<pre><code>labuser@shell.uvasomrc.io
+</code></pre>
+
+<h2 id="navigating-the-file-system">Navigating the file system</h2>
+
+<p>Learn your way around without feeling stuck. These commands help you change directories and view their contents.</p>
+
+<p>List files/folders in a directory:</p>
+
+<pre><code>ls
+</code></pre>
+
+<p>List all files (even hidden) in a directory, with detailed info:</p>
+
+<pre><code>ls -al
+</code></pre>
+
+<p>List all files sorted by most recent edits:</p>
+
+<pre><code>ls -alt
+</code></pre>
+
+<p>POSIX ownership bits:</p>
+
+<pre><code>-rw-r--r-- 1 root root    60 Sep  1 16:24 data.tsv
+-rw-r--r-- 1 root root 11251 Sep  1 16:23 longfile
+drwxr-xr-x 2 root root  4096 Sep  1 16:24 myfolder
+drwxr-xr-x 2 root root  4096 Sep  5 19:54 scripts
+-rw-r--r-- 1 root root    22 Sep  1 16:23 shortfile
+</code></pre>
+
+<p>Three levels of control:</p>
+
+<ul>
+<li>Owner - <code>rwx</code> (Read / Write / Execute)</li>
+<li>Group - <code>rwx</code></li>
+<li>Other - <code>rwx</code></li>
+</ul>
+
+<p>Return the present working directory (where I am now):</p>
+
+<pre><code>pwd
+</code></pre>
+
+<p>Change directories:</p>
+
+<pre><code>cd &lt;dir&gt;
+</code></pre>
+
+<p>More versions of changing directories:</p>
+
+<pre><code>cd ..
+cd ../../
+cd ../dir
+</code></pre>
+
+<p>Change to my home directory:</p>
+
+<pre><code>cd ~
+</code></pre>
+
+<p>Change to the base directory:</p>
+
+<pre><code>cd /
+</code></pre>
+
+<p>Switch back to the directory I was in before this one:</p>
+
+<pre><code>cd -
+</code></pre>
+
+<h2 id="change-the-file-system">Change the file system</h2>
+
+<h3 id="view-things">View Things</h3>
+
+<p>Show the contents of a file (concatenate):</p>
+
+<pre><code>cat myfile.txt
+</code></pre>
+
+<p>Show only the first 20 lines or so of a file:</p>
+
+<pre><code>head myfile.txt
+</code></pre>
+
+<p>Show only the last few lines of a file:</p>
+
+<pre><code>tail myfile.txt
+</code></pre>
+
+<p>Page through a longer file:</p>
+
+<pre><code>cat myfile.txt | more
+</code></pre>
+
+<p>Create a file without any contents:</p>
+
+<pre><code>touch myfile.txt
+touch &quot;my file with spaces.txt&quot; ( &lt;-- bad form )
+</code></pre>
+
+<p>Use a simple text editor <code>nano</code></p>
+
+<pre><code>nano myfile.txt
+</code></pre>
+
+<p>Make a directory (folder):</p>
+
+<pre><code>mkdir foldername
+mkdir &quot;here is a folder with spaces&quot; ( &lt;-- bad form )
+</code></pre>
+
+<p>Change into that directory:</p>
+
+<pre><code>cd foldername
+</code></pre>
+
+<h3 id="copy-things">Copy Things</h3>
+
+<p>Copy command:</p>
+
+<pre><code>cp myfile.txt newfile.txt
+</code></pre>
+
+<p>Copy something in a folder to another folder:</p>
+
+<pre><code>cp folder/item.txt folder2/
+</code></pre>
+
+<p>Copy everything in this directory to a folder:</p>
+
+<pre><code>cp * folder/
+</code></pre>
+
+<p>Copy just .txt files into a folder:</p>
+
+<pre><code>cp *.txt folder/
+</code></pre>
+
+<p>Copy a folder:</p>
+
+<pre><code>cp -R folder1 folder2
+</code></pre>
+
+<h3 id="move-things">Move Things</h3>
+
+<p>Move (rename) a file:</p>
+
+<pre><code>mv firstfile.txt secondfile.txt
+</code></pre>
+
+<p>Move all .txt files into a folder:</p>
+
+<pre><code>mv *.txt folder/
+</code></pre>
+
+<p>Move all .txt files that start with the letter &ldquo;M&rdquo; into a folder:</p>
+
+<pre><code>mv m*.txt folder1/
+mv M*.txt folder2/
+</code></pre>
+
+<p>Move a folder:</p>
+
+<pre><code>mv folder1 folder2
+</code></pre>
+
+<h3 id="delete-things">Delete Things</h3>
+
+<p>Remove a file</p>
+
+<pre><code>rm myfile.txt
+</code></pre>
+
+<p>Remove a file in a directory</p>
+
+<pre><code>rm directory_name/myfile.txt
+</code></pre>
+
+<p>Remove all files in a directory</p>
+
+<pre><code>rm directory_name/*
+</code></pre>
+
+<p>Remove a directory and everything in it</p>
+
+<pre><code>rm -R directory_name
+</code></pre>
+
+<p>Some systems will then ask you to verify, by file, that you want to delete it. If you&rsquo;d like to skip that, force it with the <code>f</code> flag</p>
+
+<pre><code>rm -Rf directory_name
+</code></pre>
+
+<h3 id="symbolic-links">Symbolic Links</h3>
+
+<p>Create a symbolic link. What is a symbolic link? It&rsquo;s a virtual path to another file or directory in your system.</p>
+
+<pre><code>ln -s realfile.txt symbolic-file.txt
+ln -s directory_one/ sybmolic_directory/
+</code></pre>
+
+<h2 id="redirect-input-output">Redirect Input/Output</h2>
+
+<p>Echo command writes arguments to output (the screen):</p>
+
+<pre><code>echo &quot;I am learning the command line&quot;
+</code></pre>
+
+<p>You can also echo statements into files:</p>
+
+<pre><code>echo &quot;Here is some content for my file&quot; &gt; fileA
+</code></pre>
+
+<p>Note the single &gt; which overwrites all previous contents of that file.</p>
+
+<p>To simply ADD more contents to an existing file, use &gt;&gt;</p>
+
+<pre><code>echo &quot;Here is even more content for my file&quot; &gt;&gt; fileB
+</code></pre>
+
+<p>Similarly, you can cat out the contents of files into other files to overwrite them:</p>
+
+<pre><code>cat myfile.txt &gt; fileC
+</code></pre>
+
+<p>Or you can append a file to another file:</p>
+
+<pre><code>cat myfile.txt &gt;&gt; fileD
+</code></pre>
+
+<p>Overwrite NULL (empty) to an existing file:</p>
+
+<pre><code>cat /dev/null &gt; fileB
+</code></pre>
+
+<p>Find a word in a file</p>
+
+<pre><code>cat myfile.txt | grep &quot;dog&quot;
+</code></pre>
+
+<p>You can also redirect backwards, feeding a file (for example) into a command:</p>
+
+<pre><code>mysql db_name &lt; sql_script.sql
+</code></pre>
+
+<h2 id="archive-unarchive-things">Archive/Unarchive Things</h2>
+
+<p>Zip:</p>
+
+<pre><code>zip new_archive.zip folder_to_zip/
+zip new_archive.zip file1.txt file2.txt file3.txt ...
+</code></pre>
+
+<p>Unzip:</p>
+
+<pre><code>unzip some_archive.zip
+</code></pre>
+
+<p>Tar Compress (with Gzip)</p>
+
+<pre><code>tar -czf new_archive.tar.gz folder_to_tar/
+
+Flags: (c) compress; (z) use gzip; (f) write to file
+</code></pre>
+
+<p>Tar Decompress:</p>
+
+<pre><code>tar -xzf another_archive.tar.gz
+
+Flags: (x) expand; (z) use gzip; (f) read from file
+</code></pre>
+
+<h2 id="find-things">Find Things</h2>
+
+<p>Find a program. Where is <code>bash</code>?</p>
+
+<pre><code>whereis bash
+which bash
+</code></pre>
+
+<p>Find a word somewhere in a stack of files (any type of file)</p>
+
+<pre><code>grep &quot;dog&quot; ./*
+</code></pre>
+
+<p>Find a word somewhere in a stack of text files</p>
+
+<pre><code>grep &quot;dog&quot; /home/myaccount/*.txt
+</code></pre>
+
+<p>Find a word somewhere in a stack of files, possibly within deeper folders (recursively)</p>
+
+<pre><code>grep -r &quot;dog&quot; ./*
+</code></pre>
+
+<p>Find something by name. This looks for files and directories with a specific name</p>
+
+<pre><code>find ./ -name &quot;1.txt&quot;
+
+Parameters: (./) this directory; (-name) look for this name in files and dirs
+</code></pre>
+
+<p>Find a FILE by name (this looks for files with a name)</p>
+
+<pre><code>find ./ -type f -name &quot;1.txt&quot;
+</code></pre>
+
+<p>Find a DIRECTORY by name (recursive by default)</p>
+
+<pre><code>find ./ -type d -name &quot;foo&quot;
+</code></pre>
+
+<h2 id="manage-your-session">Manage your session</h2>
+
+<p>Clear the screen. Get rid of the chaos!:</p>
+
+<pre><code>clear
+</code></pre>
+
+<p>Look at all your previous commands with <code>history</code>:</p>
+
+<pre><code>history
+</code></pre>
+
+<p>Note the line numbers. You can reuse a line by prepending a <code>!</code> to it:</p>
+
+<pre><code>!13  # Executes the same command as line 13 in your history
+</code></pre>
+
+<h2 id="configure-your-environment">Configure your environment</h2>
+
+<h3 id="shell-variables">Shell Variables</h3>
+
+<p>Set your own variable:</p>
+
+<ul>
+<li>SET it with a name and value</li>
+<li>Use no spaces between characters</li>
+<li>Declare a variable without the <code>$</code> sign</li>
+<li>Then EXPORT it to make it available to other commands</li>
+<li>Retrieve it by using the <code>$</code> reference</li>
+</ul>
+
+<p>Here is an example:</p>
+
+<pre><code>FNAME=your-first-name
+export FNAME
+echo $FNAME
+</code></pre>
+
+<p>Or you can capture a phrase by wrapping it with <code>''</code> single quotes:</p>
+
+<pre><code>FULLNAME='My Full Name'
+export FULLNAME
+echo $FULLNAME
+</code></pre>
+
+<p>Now incorporate variables into other commands:</p>
+
+<pre><code>echo &quot;Hello there $FNAME, how are you today?&quot;
+</code></pre>
+
+<p>Or make that look prettier:</p>
+
+<pre><code>echo -e &quot;\n\n Hello there $FNAME, how are you doing today?\n\n&quot;
+</code></pre>
+
+<h3 id="environment-variables">Environment Variables</h3>
+
+<p>Your login session also comes with several &ldquo;environment&rdquo; variables. Here are a few:</p>
+
+<pre><code>echo $HOSTNAME
+echo $PATH
+echo $HOME
+echo $SHELL
+echo $HISTSIZE
+</code></pre>
+
+<p>These are created by the system. But you can also set your own by editing your <code>~/.bashrc</code> file.</p>
+
+<pre><code>export FLAVOR='vanilla'
+</code></pre>
+
+<p>Then, to make use of this variable you could log out and back in again, or run this command:</p>
+
+<pre><code>source ~/.bashrc
+</code></pre>
+
+<p>Now see if the variable is set</p>
+
+<pre><code>echo $FLAVOR    
+</code></pre>
+
+<h3 id="package-managers">Package Managers</h3>
+
+<pre><code>apt install &lt;software-name&gt;
+apt update
+apt upgrade
+
+pip install &lt;package-name&gt;
+pip install &lt;package-name&gt; --upgrade
+</code></pre>
+
+<p>Install a game</p>
+
+<pre><code>apt install bastet            (Tetris)
+apt install pacman4console    (Pacman)
+</code></pre>
+
+<p>Play a game</p>
+
+<pre><code>/usr/games/bastet
+/usr/games/pacman4console
+</code></pre>
+
+<h2 id="understand-your-environment">Understand your environment</h2>
+
+<p>Processes running</p>
+
+<pre><code>top
+htop
+ps -al
+</code></pre>
+
+<p>Current date/time</p>
+
+<pre><code>date
+</code></pre>
+
+<p>Uptime (how long in days/hours/minutes)</p>
+
+<pre><code>uptime
+</code></pre>
+
+<p>Find other users on the system</p>
+
+<pre><code>w
+</code></pre>
+
+<p>See when the last users logged in (interactive users)</p>
+
+<pre><code>last -i
+</code></pre>
+
+<h2 id="interact-with-other-systems">Interact with Other Systems</h2>
+
+<p>You can retrieve web pages, files, data, other remote content using either <code>curl</code> or <code>wget</code></p>
+
+<pre><code>apt install curl wget
+
+curl 'https://api.github.com/repos/stedolan/jq/commits?per_page=5'
+wget 'https://api.github.com/repos/stedolan/jq/commits?per_page=5'
+</code></pre>
+
+<p>Note that <code>curl</code> lets you view the contents, and <code>wget</code> retrieves it as a file.</p>
+
+<p>You can pipe commands together with other tools, so that you can view and filter them (eliminate clutter)</p>
+
+<pre><code>apt install jq
+
+curl 'https://api.github.com/repos/stedolan/jq/commits?per_page=5' | jq '.[0]'    
+</code></pre>
+
+<p>Using <code>jq</code> limited to the first [0] record. Now limit to the first record, but only two fields</p>
+
+<pre><code>curl 'https://api.github.com/repos/stedolan/jq/commits?per_page=5' \
+    | jq '.[0] | {message: .commit.message, name: .commit.committer.name}'
+</code></pre>
+
+<p>The output is now something like this</p>
+
+<pre><code>{
+  &quot;message&quot;: &quot;Merge pull request #162 from stedolan. Closes #161&quot;,
+  &quot;name&quot;: &quot;Stephen Dolan&quot;
+}
+</code></pre>
+
+<p>Or try it again with all records</p>
+
+<pre><code>curl 'https://api.github.com/repos/stedolan/jq/commits?per_page=5' \
+    | jq '.[] | {message: .commit.message, name: .commit.committer.name}'
+</code></pre>
+
+<p>Or grab a different field from the records</p>
+
+<pre><code>curl 'https://api.github.com/repos/stedolan/jq/commits?per_page=5' | jq -r .[].sha
+
+
+7b81a836c31500e685d043729259affa8b670a87
+c538237f4e4c381d35f1c15497c95f659fd55850
+4a6241be0697bbe4ef420c43689c34af59e50330
+1900c7bcac76777782505c89a032c18a65fcc487
+578d536233b62884764b3c5c6cd42077958d6a49
+</code></pre>
+
+<p><a href="https://discuss.rc.virginia.edu/t/jq-a-simple-json-parser/91">Read more</a> about basic usage of <code>jq</code>.</p>
+
+<h2 id="basic-shell-scripting">Basic Shell Scripting</h2>
+
+<p>Scripts are simple ways of bundling up a series of commands to run in order. You can run your script manually, or scheduled to run automatically.</p>
+
+<p>The basics of a shell script:</p>
+
+<ol>
+<li>Create a text file with the path to <code>bash</code> in the first line, with a shebang <code>#!</code> prepended.</li>
+<li>Add shell commands below that, in the order you need and expect them to run.</li>
+<li>Assume the script is running from its current location, so directory paths need to be explicit.</li>
+</ol>
+
+<p>A simple example:</p>
+
+<pre><code>#!/bin/bash
+
+clear
+echo &quot;Let me print something out for you, $FNAME&quot;
+
+sleep 3
+
+clear
+
+echo -e &quot;Here is a quote of the day:\n\n&quot;
+qod=`curl -s http://quotes.rest/qod.json | jq -r .contents.quotes[0].quote`
+echo &quot;  &quot; $qod
+echo &quot;&quot;
+</code></pre>
+
+<h2 id="more-information">More Information</h2>
+
+<ul>
+<li>SOM Research Computing - <a href="https://somrc.virginia.edu/">https://somrc.virginia.edu/</a></li>
+<li>UVA Research Computing FAQ/Knowledgebase - <a href="https://discuss.rc.virginia.edu/">https://discuss.rc.virginia.edu/</a></li>
+<li><a href="https://docs.google.com/presentation/d/1U89TFIxGQli8xOH82bZbVX8R89nzY1kYiAQmXlc3LTc/edit?usp=sharing">Slide Deck</a></li>
+</ul>
+
+    </article>
+  </div>
+
+
+<div class="site-footer">
+  <div class="copyright">&copy; Copyright 2018 UVa School of Medicine Research Computing</div>
+  <ul class="site-footer-items">
+    <li class="site-footer-item-somrc"><a href="https://somrc.virginia.edu/" title="School of Medicine Research Computing">School of Medicine Research Computing</a></li>
+  </ul>
+</div>
+<script src="/js/script.js"></script>
+<script src="/js/custom.js"></script>
+
+
+</body>
+</html>

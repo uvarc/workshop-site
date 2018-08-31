@@ -15,6 +15,7 @@ copyright = "&copy; Copyright 2018 UVa School of Medicine Research Computing"
 [params]
   # Date format
   #dateFormat = "January 2, 2006"
+  favicon = "https://somrc.virginia.edu/images/favicon.ico"
 
 # This is displayer in About page.
 [params.author]

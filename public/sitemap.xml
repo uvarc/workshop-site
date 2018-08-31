@@ -34,6 +34,10 @@
   </url>
   
   <url>
+    <loc>https://example.com/lesson/command-line/</loc>
+  </url>
+  
+  <url>
     <loc>https://example.com/lesson/</loc>
     <priority>0</priority>
   </url>
@@ -53,6 +57,11 @@
   
   <url>
     <loc>https://example.com/categories/r-programming/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://example.com/categories/research-computing-essentials/</loc>
     <priority>0</priority>
   </url>
   

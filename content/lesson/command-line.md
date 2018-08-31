@@ -5,8 +5,6 @@ author: "Neal Magee"
 categories: ["Research Computing Essentials"]
 ---
 
-# Introduction to the Command Line Interface (CLI)
-
 ## Requirements:
 
 * MacOS / Linux users: Terminal
@@ -305,11 +303,11 @@ Note the line numbers. You can reuse a line by prepending a `!` to it:
 
 Set your own variable:
 
-* SET it with a name and value
-* Use no spaces between characters
-* Declare a variable without the `$` sign
-* Then EXPORT it to make it available to other commands
-* Retrieve it by using the `$` reference
+* SET it with a name and value.
+* Use no spaces between characters, or wrap the value portion in double quotes.
+* Declare a variable without the `$` sign.
+* Then EXPORT it to make it available to other commands.
+* Retrieve a variable by using the `$` reference.
 
 Here is an example:
 
@@ -317,9 +315,9 @@ Here is an example:
     export FNAME
     echo $FNAME
 
-Or you can capture a phrase by wrapping it with `''` single quotes:
+Or you can capture a phrase by wrapping it with `""` double quotes:
 
-    FULLNAME='My Full Name'
+    FULLNAME="My Full Name"
     export FULLNAME
     echo $FULLNAME
 
