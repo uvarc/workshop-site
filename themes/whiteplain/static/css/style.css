@@ -402,7 +402,7 @@ blockquote blockquote blockquote blockquote {
   margin-right: auto;
   margin-top: 70px;
   margin-bottom: 20px;
-  font-size: 0.8rem;
+  font-size: 1.2rem;
   display: -webkit-flex;
   display: flex;
   -webkit-align-items: baseline;
@@ -432,7 +432,7 @@ blockquote blockquote blockquote blockquote {
   flex-wrap: wrap;
 }
 .site-footer-items li {
-  font-size: 0.8rem;
+  font-size: 1.2rem;
   margin: 0 4px 0 4px;
   padding: 0;
 }
