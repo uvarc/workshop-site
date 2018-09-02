@@ -731,5 +731,41 @@ system.time({
 [^5]: http://alyssafrazee.com/2014/01/29/vectorization.html
 
 
+```{r, include=FALSE, eval = TRUE}
+# find packages attached during for this Rmd session and their versions
+package <- installed.packages()[names(sessionInfo()$otherPkgs), "Package"]
+version <- installed.packages()[names(sessionInfo()$otherPkgs), "Version"]
+
+thesepkgs <- data.frame(package, version)
+
+# if no non-base packages installed skip
+if(nrow(thesepkgs) == 0) invisible()
+
+# find package csv file
+fp <- "../../packages.csv"
+
+# if it exists find read in contents ... combine with attached pkgs and dedupe
+if(file.exists(fp)) {
+  
+  pkgs <- read.csv(fp)
+  
+  pkgs <- 
+    rbind(pkgs, thesepkgs)
+  
+  pkgs <- pkgs[!duplicated(pkgs),]
+  
+} else{
+  
+  pkgs <- thesepkgs
+  
+}
+
+# write out new package.csv file
+write.table(pkgs, 
+          file = fp,
+          sep = ",",
+          row.names = FALSE)
+```
+
 
 

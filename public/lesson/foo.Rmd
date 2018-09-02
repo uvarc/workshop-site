@@ -1,0 +1,38 @@
+---
+output:
+  html_document: default
+categories: [""]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE, eval = TRUE}
+
+fp <- "../../packages.csv"
+
+attached <- installed.packages()[names(sessionInfo()$otherPkgs), "Version"]
+thesepkgs <- data.frame(package  = names(attached),
+                   version = attached)
+
+if(file.exists(fp)) {
+  
+  pkgs <- read.csv(fp)
+  
+  pkgs <- 
+    rbind(pkgs, thesepkgs)
+  
+  pkgs <- pkgs[!duplicated(pkgs),]
+  
+} else{
+  
+  pkgs <- thesepkgs
+  
+}
+
+write.csv(pkgs, 
+          file = fp,
+          append = TRUE, 
+          row.names = FALSE)
+```

@@ -21,7 +21,7 @@ Prerequisites  R basics Data manipulation with dplyr …">
   <meta property="og:url" content="/lesson/microbiome-dataviz/" />
   <meta property="og:type" content="article" />
   <meta name="twitter:card" content="summary" />
-  <meta name="generator" content="Hugo 0.32.1" />
+  <meta name="generator" content="Hugo 0.37.1" />
   <link rel="stylesheet" href="/css/style.css" media="all" />
   <link rel="stylesheet" href="/css/syntax.css" media="all" />
   <link rel="stylesheet" href="/css/custom.css" media="all" />
@@ -175,18 +175,18 @@ taxonomy &lt;- read_tsv(paste(dataDir, &quot;relman2017_samples.tax_table.txt&qu
 ## )</code></pre>
 <pre class="r"><code>taxonomy</code></pre>
 <pre><code>## # A tibble: 1,225 x 7
-##    X1     domain   phylum     class     order       family       genus    
-##    &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;     &lt;chr&gt;       &lt;chr&gt;        &lt;chr&gt;    
-##  1 OTU_1  Bacteria Firmicutes Bacilli   Lactobacil… Lactobacill… Lactobac…
-##  2 OTU_2  Bacteria Firmicutes Bacilli   Lactobacil… Lactobacill… Lactobac…
-##  3 OTU_3  Bacteria Actinobac… Actinoba… Bifidobact… Bifidobacte… Gardnere…
-##  4 OTU_4  Bacteria Firmicutes Bacilli   Lactobacil… Lactobacill… Lactobac…
-##  5 OTU_5  Bacteria Firmicutes Bacilli   Lactobacil… Lactobacill… Lactobac…
-##  6 OTU_6  Bacteria Firmicutes Bacilli   Lactobacil… Lactobacill… Lactobac…
-##  7 OTU_7  Bacteria Actinobac… Actinoba… Bifidobact… Bifidobacte… Gardnere…
-##  8 OTU_8  Bacteria Firmicutes Bacilli   Lactobacil… Lactobacill… Lactobac…
-##  9 OTU_9  Bacteria Firmicutes Negativi… Selenomona… Veillonella… Megaspha…
-## 10 OTU_10 Bacteria Firmicutes Bacilli   Lactobacil… Lactobacill… Lactobac…
+##    X1     domain   phylum         class          order    family    genus 
+##    &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;          &lt;chr&gt;          &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt; 
+##  1 OTU_1  Bacteria Firmicutes     Bacilli        Lactoba… Lactobac… Lacto…
+##  2 OTU_2  Bacteria Firmicutes     Bacilli        Lactoba… Lactobac… Lacto…
+##  3 OTU_3  Bacteria Actinobacteria Actinobacteria Bifidob… Bifidoba… Gardn…
+##  4 OTU_4  Bacteria Firmicutes     Bacilli        Lactoba… Lactobac… Lacto…
+##  5 OTU_5  Bacteria Firmicutes     Bacilli        Lactoba… Lactobac… Lacto…
+##  6 OTU_6  Bacteria Firmicutes     Bacilli        Lactoba… Lactobac… Lacto…
+##  7 OTU_7  Bacteria Actinobacteria Actinobacteria Bifidob… Bifidoba… Gardn…
+##  8 OTU_8  Bacteria Firmicutes     Bacilli        Lactoba… Lactobac… Lacto…
+##  9 OTU_9  Bacteria Firmicutes     Negativicutes  Selenom… Veillone… Megas…
+## 10 OTU_10 Bacteria Firmicutes     Bacilli        Lactoba… Lactobac… Lacto…
 ## # ... with 1,215 more rows</code></pre>
 <pre class="r"><code># import Sample metadata
 metadata &lt;- read_tsv(paste(dataDir, &quot;relman2017_samples.sample_data.txt&quot;, sep=&quot;/&quot;))</code></pre>
@@ -408,9 +408,12 @@ plot_ordination(physeq.f, physeq.f.distUF.ord, color=&quot;race&quot;) + geom_po
 The ordination plots reveal microbiome levels shifts within groups-of-interest. A univariate analysis of individual taxa abudances can be performed using DESeq2, to measure <em>significant fold changes</em>.</p>
 <p><code>phyloseq_to_deseq2()</code> function provides a convenient function to convert <code>phyloseq</code> object to <code>DESeq2DataSet</code> class.</p>
 <pre class="r"><code>library(DESeq2)</code></pre>
+<pre><code>## Warning: package &#39;DESeq2&#39; was built under R version 3.4.2</code></pre>
 <pre><code>## Loading required package: S4Vectors</code></pre>
+<pre><code>## Warning: package &#39;S4Vectors&#39; was built under R version 3.4.2</code></pre>
 <pre><code>## Loading required package: stats4</code></pre>
 <pre><code>## Loading required package: BiocGenerics</code></pre>
+<pre><code>## Warning: package &#39;BiocGenerics&#39; was built under R version 3.4.2</code></pre>
 <pre><code>## Loading required package: parallel</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;BiocGenerics&#39;</code></pre>
@@ -446,6 +449,7 @@ The ordination plots reveal microbiome levels shifts within groups-of-interest. 
 ## 
 ##     expand.grid</code></pre>
 <pre><code>## Loading required package: IRanges</code></pre>
+<pre><code>## Warning: package &#39;IRanges&#39; was built under R version 3.4.2</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;IRanges&#39;</code></pre>
 <pre><code>## The following object is masked from &#39;package:phyloseq&#39;:
@@ -460,9 +464,11 @@ The ordination plots reveal microbiome levels shifts within groups-of-interest. 
 <pre><code>## Loading required package: GenomicRanges</code></pre>
 <pre><code>## Warning: package &#39;GenomicRanges&#39; was built under R version 3.4.3</code></pre>
 <pre><code>## Loading required package: GenomeInfoDb</code></pre>
+<pre><code>## Warning: package &#39;GenomeInfoDb&#39; was built under R version 3.4.2</code></pre>
 <pre><code>## Loading required package: SummarizedExperiment</code></pre>
 <pre><code>## Warning: package &#39;SummarizedExperiment&#39; was built under R version 3.4.3</code></pre>
 <pre><code>## Loading required package: Biobase</code></pre>
+<pre><code>## Warning: package &#39;Biobase&#39; was built under R version 3.4.2</code></pre>
 <pre><code>## Welcome to Bioconductor
 ## 
 ##     Vignettes contain introductory material; view with
@@ -474,8 +480,8 @@ The ordination plots reveal microbiome levels shifts within groups-of-interest. 
 ## 
 ##     sampleNames</code></pre>
 <pre><code>## Loading required package: DelayedArray</code></pre>
+<pre><code>## Warning: package &#39;DelayedArray&#39; was built under R version 3.4.2</code></pre>
 <pre><code>## Loading required package: matrixStats</code></pre>
-<pre><code>## Warning: package &#39;matrixStats&#39; was built under R version 3.4.4</code></pre>
 <pre><code>## 
 ## Attaching package: &#39;matrixStats&#39;</code></pre>
 <pre><code>## The following objects are masked from &#39;package:Biobase&#39;:

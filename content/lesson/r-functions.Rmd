@@ -492,3 +492,39 @@ What is covered above is a taste of some of the principal concepts of writing fu
 [^10]: http://www.win-vector.com/blog/2015/03/using-closures-as-objects-in-r/
 [^11]: https://darrenjw.wordpress.com/2011/11/23/lexical-scope-and-function-closures-in-r/
 [^12]: http://adv-r.had.co.nz/
+
+```{r, include=FALSE, eval = TRUE}
+# find packages attached during for this Rmd session and their versions
+package <- installed.packages()[names(sessionInfo()$otherPkgs), "Package"]
+version <- installed.packages()[names(sessionInfo()$otherPkgs), "Version"]
+
+thesepkgs <- data.frame(package, version)
+
+# if no non-base packages installed skip
+if(nrow(thesepkgs) == 0) invisible()
+
+# find package csv file
+fp <- "../../packages.csv"
+
+# if it exists find read in contents ... combine with attached pkgs and dedupe
+if(file.exists(fp)) {
+  
+  pkgs <- read.csv(fp)
+  
+  pkgs <- 
+    rbind(pkgs, thesepkgs)
+  
+  pkgs <- pkgs[!duplicated(pkgs),]
+  
+} else{
+  
+  pkgs <- thesepkgs
+  
+}
+
+# write out new package.csv file
+write.table(pkgs, 
+          file = fp,
+          sep = ",",
+          row.names = FALSE)
+```
