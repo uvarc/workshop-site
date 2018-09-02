@@ -22,3 +22,5 @@ ENV/
 env.bak/
 venv.bak/
 
+# ignoring public
+public/
