@@ -1,0 +1,3 @@
+{{ $link_name := .Get 0 }}
+{{ $link_url := .Get 1 }}
+<a href="{{ $link_url }}" target="_new"><button class="btn btn-danger">{{ $link_name }}</button></a>

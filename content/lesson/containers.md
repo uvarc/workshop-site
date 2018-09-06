@@ -5,13 +5,20 @@ author: "Neal Magee"
 categories: ["Advanced Research Computing"]
 ---
 
-<p class="lead">In this workshop you will learn how to create and use Docker containers. Follow the lab instructions below at your own pace. Please raise your hand or get the attention of an instructor if you have any questions.</p>
+<p class="lead">In this workshop you will learn how to create and use containers. Follow the lab instructions below at your own pace. Please raise your hand or get the attention of an instructor if you have any questions.</p>
+
+## Quick History of Containers
+
+> From Wikipedia: Linux containers is a generic term for an implementation of operating system-level virtualization for the Linux operating system. Currently, a number of such implementations exist, and they are all based on the virtualization, isolation, and resource management mechanisms provided by the Linux kernel, notably Linux namespaces and cgroups.
+
+Docker is the most widely-available and user-friendly implementation of containers for users, but LXC has existed as a Linux core project for over ten years. In the realm of HPC, users can use an adapted implementation named Singularity. 
 
 ## Install Docker
 
 Docker is available for Windows, Mac, and Linux. Download the appropriate Docker Edition for your platform directly from Docker. We suggest the CE "Community Edition."
 
-[Download Docker](https://www.docker.com/)
+{{< button "Download Docker" "https://www.docker.com/" >}}
+
 
 ## Docker Commands
 

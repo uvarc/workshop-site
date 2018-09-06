@@ -3,9 +3,12 @@
 set -e
 clear
 
+ls -al
+
 cd public/
-rm -R *
+rm -Rf *
 cd ../
+
 echo "--- Content cleared"
 hugo -v --ignoreCache    # try without cache
 echo "--- Hugo content generated"
