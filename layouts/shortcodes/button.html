@@ -2,10 +2,4 @@
 {{ $link_url := .Get 1 }}
 {{ $link_class := .Get 2 }}
 
-# Syntax for this shortcode is:
-# 
-# 1. specify the name for the button
-# 2. specify the URL for the hyperlink of the button
-# 3. specify the bootstrap class for the button. It will default to btn-default if unspecified
-
 <a href="{{ $link_url }}" target="_new"><button class="btn {{ $link_class }}">{{ $link_name }}</button></a>

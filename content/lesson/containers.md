@@ -17,7 +17,7 @@ Docker is the most widely-available and user-friendly implementation of containe
 
 Docker is available for Windows, Mac, and Linux. Download the appropriate Docker Edition for your platform directly from Docker. We suggest the CE "Community Edition."
 
-{{< button "Download Docker" "https://www.docker.com/" "btn-success" >}}
+{{< button "Download Docker" "https://www.docker.com/" "btn-danger" >}}
 
 
 ## Docker Commands
