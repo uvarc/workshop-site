@@ -46,50 +46,50 @@ categories: ["Cloud Computing"]
 22. Follow the setup instructions, and paste in the AWS Key and AWS Secret Key from the top of this page. Enter `us-west-2` as your default region, and `JSON` as your preferred output type.
 23. Each AWS service has a separate sub-command. To work with S3, use the `aws s3` sub-command. For example, to get help:
 
-```
-aws s3 help
-```
+    ```
+    aws s3 help
+    ```
 
 24. List your buckets
 
-```
-aws s3 ls
-```
+    ```
+    aws s3 ls
+    ```
 
 25. Make another bucket
 
-```
-aws s3 mb s3://my-bucket
-```
+    ```
+    aws s3 mb s3://my-bucket
+    ```
 
 26. List the contents of a bucket
 
-```
-aws s3 ls s3://my-bucket/                     # Displays the base contents of a bucket
-aws s3 ls s3://my-bucket/and-folder/          # Displays the contents of a subdir
-aws s3 ls s3://my-bucket/and-folder/*.png     # Displays all PNG files in the subdir
-```
+    ```
+    aws s3 ls s3://my-bucket/                     # Displays the base contents of a bucket
+    aws s3 ls s3://my-bucket/and-folder/          # Displays the contents of a subdir
+    aws s3 ls s3://my-bucket/and-folder/*.png     # Displays all PNG files in the subdir
+    ```
 
 27. Copy an object into S3
 
-```
-aws s3 cp my-local-file.zip s3://my-bucket/          # Copies a file into a bucket
-aws s3 cp my-local-file.zip s3://my-bucket/subdir/   # Copies a file into a subdir of a bucket
-aws s3 cp s3://my-bucket/file.zip ./                 # Copies a file from a bucket
-```
+    ```
+    aws s3 cp my-local-file.zip s3://my-bucket/          # Copies a file into a bucket
+    aws s3 cp my-local-file.zip s3://my-bucket/subdir/   # Copies a file into a subdir of a bucket
+    aws s3 cp s3://my-bucket/file.zip ./                 # Copies a file from a bucket
+    ```
 
 28. Remove a file from S3
 
-```
-aws s3 rm s3://my-bucket/subdir/my-file.zip   # Removes the file (called a 'key') from S3
-```
+    ```
+    aws s3 rm s3://my-bucket/subdir/my-file.zip   # Removes the file (called a 'key') from S3
+    ```
 
 29. Synchronize a local folder with S3
 
-```
-aws s3 sync myfolder s3://my-bucket/myfolder/   # Syncs local folder's contents up to S3
-aws s3 sync s3://my-bucket/myfolder/ myfolder   # Syncs remote S3 folder down to local folder
-```
+    ```
+    aws s3 sync myfolder s3://my-bucket/myfolder/   # Syncs local folder's contents up to S3
+    aws s3 sync s3://my-bucket/myfolder/ myfolder   # Syncs remote S3 folder down to local folder
+    ```
 
 - - -
 
@@ -97,15 +97,14 @@ BONUS - Presign a S3 URL
 
 If you have a file that is stored privately, you can "presign" it with an expiration time to share with others.
 
-```
-aws s3 presign --expires-in 60 s3://my-bucket/file.pdf   # Presigns a URL that expires in 60 seconds
-```
+    aws s3 presign --expires-in 60 s3://my-bucket/file.pdf   # Presigns a URL that expires in 60 seconds
 
 Try the URL in your browser immediately after creating it, then try it after it should expire.
 
 - - -
 
 ### Create a Public HTML Website in Amazon S3
+
 30. Open the Amazon S3 console in your browser.
 31. Click on the name of a bucket you created in earlier steps. This bucket will hold your public website.
 32. You should see four panel options for your bucket: **Objects**, **Properties**, **Permissions**, and **Management**.
@@ -114,22 +113,23 @@ Try the URL in your browser immediately after creating it, then try it after it 
 35. Select the **Bucket Policy** button near the top.
 36. In the text editor area, paste the following code. Be sure to update **YOUR-BUCKET-NAME** with the actual name of your bucket. (Also, do not update the Version date, as it applies to the policy framework and not your actual policy itself.)
 
-```json
-{
-  "Version":"2012-10-17",
-  "Statement":[
+    ```
     {
-      "Sid":"AddPerm",
-      "Effect":"Allow",
-      "Principal": "*",
-      "Action":["s3:GetObject"],
-      "Resource":["arn:aws:s3:::YOUR-BUCKET-NAME/*"]
+      "Version":"2012-10-17",
+      "Statement":[
+        {
+          "Sid":"AddPerm",
+          "Effect":"Allow",
+          "Principal": "*",
+          "Action":["s3:GetObject"],
+          "Resource":["arn:aws:s3:::YOUR-BUCKET-NAME/*"]
+        }
+      ]
     }
-  ]
-}
-```
-Take a moment to review this JSON policy. Note that the one statement in it adds a permission, allowing any user (*) to get objects within a specific bucket, specified by a resource ARN. (ARN stands for Amazon Resource Name.)
-Click **Save** to save the custom policy.
+    ```
+
+    Take a moment to review this JSON policy. Note that the one statement in it adds a permission, allowing any user (*) to get objects within a specific bucket, specified by a resource ARN. (ARN stands for Amazon Resource Name.)
+    Click **Save** to save the custom policy.
 
 37. Next, go to the **Properties** pane for your bucket. Select the **Static website hosting** option.
 38. Select the radio button indicating you want to use this bucket to host a website. Specify an index document (`index.html` is the usual index document for websites.) Then click **Save**.
@@ -173,23 +173,23 @@ Congratulations! You have successfully done the following in S3:
 ### Bootstrapping your instance
 
 8. Leave the settings as they are configured by default, but take time to note what they are. Scroll down the page and open the "Advanced" portion of the screen.
-9. In the **User Data** field, paste the code below into the text box:
+9. In the **User Data** field, paste the code below into the text box. (Note that `apt-get` commands are specific to Ubuntu. Use `yum` for CentOS/RedHat):
 
-```
-#!/bin/bash
+    ```
+    #!/bin/bash
+    
+    apt-get -y update
+    apt-get -y upgrade
 
-apt-get -y update
-apt-get -y upgrade
+    useradd -m -s /bin/bash rstudio
+    echo 'rstudio:rstudio'|chpasswd
 
-useradd -m -s /bin/bash rstudio
-echo 'rstudio:rstudio'|chpasswd
-
-apt-get -y install r-base
-apt-get -y install gdebi-core
-cd /tmp
-wget https://download2.rstudio.org/rstudio-server-1.0.136-amd64.deb
-gdebi --n rstudio-server-1.0.136-amd64.deb
-```
+    apt-get -y install r-base
+    apt-get -y install gdebi-core
+    cd /tmp
+    wget https://download2.rstudio.org/rstudio-server-1.0.136-amd64.deb
+    gdebi --n rstudio-server-1.0.136-amd64.deb
+    ```
 
 10. Click **Next: Add Storage**. Leave these settings as they are, but note how you can expand the size of the instance hard drive, or add other drives.
 11. Click **Next: Add Tags**. Create a tag for your instance (optional) and give it a simple name. Click the gray button to add a tag. They "key" should be "Name" and the "value" should be whatever you'd like to name your instance.
@@ -209,22 +209,24 @@ gdebi --n rstudio-server-1.0.136-amd64.deb
 22. Find the IPv4 Public IP of your instance. Write that down or copy it to your clipboard.
 23. Using a web browser, go to your instance and specify port 8787:
 
-```
-http://YOUR-INSTANCE-IP:8787/
-```
+    ```
+    http://YOUR-INSTANCE-IP:8787/
+    ```
 
 24. You can log into your RStudio Server using the username "rstudio" and the password "rstudio".
 
 ### Using SSH to log into your instance
 
-25. Now let's SSH into the instance you created.
+Now let's SSH into the instance you created.
 
 Mac / Linux users:
 
 * Open a terminal window.
 * Using the location of the private half of your SSH key and the IPv4 Public IP you copied earlier, enter this command:
 
-```ssh labuser@YOUR-PUBLIC-IP```
+    ```
+    ssh labuser@YOUR-PUBLIC-IP
+    ```
 
 * Press RETURN. Accept the key signature of your instance. You should now be logged in.
 
@@ -232,7 +234,11 @@ Windows users:
 
 * Open PuTTY
 * In the "Host Name" field, log in as "ubuntu" with the IPv4 Public IP of your instance in this format: 
-```labuser@YOUR-PUBLIC-IP```
+
+    ```
+    labuser@YOUR-PUBLIC-IP
+    ```
+
 * Click OPEN.
 * Click YES to accept your instance's key signature. You should now be logged in.
 
@@ -242,15 +248,15 @@ Windows users:
 27. You can now `sudo su` to become root, or run `sudo` commands.
 28. For example, if you were to install a web server, run this command:
 
-```
-sudo apt-get -y install apache2
-```
+    ```
+    sudo apt-get -y install apache2
+    ```
 
 29. Then, visit your new web server's home page:
 
-```
-http://YOUR-INSTANCE-IP/
-```
+    ```
+    http://YOUR-INSTANCE-IP/
+    ```
 
 30. You should see the Apache welcome page.
 
