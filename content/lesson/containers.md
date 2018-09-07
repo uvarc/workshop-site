@@ -9,7 +9,7 @@ categories: ["Advanced Research Computing"]
 
 ## Quick History of Containers
 
-> From Wikipedia: Linux containers is a generic term for an implementation of operating system-level virtualization for the Linux operating system. Currently, a number of such implementations exist, and they are all based on the virtualization, isolation, and resource management mechanisms provided by the Linux kernel, notably Linux namespaces and cgroups.
+> From Wikipedia: "Container" is a generic term for an implementation of operating system-level virtualization for the Linux operating system. Currently, a number of such implementations exist, and they are all based on the virtualization, isolation, and resource management mechanisms provided by the Linux kernel, notably Linux namespaces and cgroups.
 
 Docker is the most widely-available and user-friendly implementation of containers for users, but LXC has existed as a Linux core project for over ten years. In the realm of HPC, users can use an adapted implementation named Singularity. 
 
@@ -17,7 +17,7 @@ Docker is the most widely-available and user-friendly implementation of containe
 
 Docker is available for Windows, Mac, and Linux. Download the appropriate Docker Edition for your platform directly from Docker. We suggest the CE "Community Edition."
 
-{{< button "Download Docker" "https://www.docker.com/" >}}
+{{< button "Download Docker" "https://www.docker.com/" "btn-success" >}}
 
 
 ## Docker Commands
@@ -26,94 +26,93 @@ Docker is available for Windows, Mac, and Linux. Download the appropriate Docker
 2. Open a terminal or command-line prompt for the following steps.
 3. Docker command reference. This will show you all possible commands:
 
-```
-docker
-```
+    ```
+    docker
+    ```
 
 4. List all container images you have downloaded:
 
-```
-docker images
-```
+    ```
+    docker images
+    ```
 
-Chances are that if you just installed Docker, you have no images. Let's pull one down.
+    Chances are that if you just installed Docker, you have no images. Let's pull one down.
 
 5. Let's pull the `nginx` web server container:
 
-```
-docker pull nginx
-```
+    ```
+    docker pull nginx
+    ```
 
 6. Now list the container images you have downloaded. You should see the nginx image:
 
-```
-docker images
-
-REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-nginx               latest              6b914bbcb89e        3 months ago        182 MB
-```
+    ```
+    docker images
+    
+    REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+    nginx               latest              6b914bbcb89e        3 months ago        182 MB
+    ```
 
 7. Run that container image:
 
-```
-docker run -d nginx
-```
+    ```
+    docker run -d nginx
+    ```
 
 8. View all running containers:
 
-```
-docker ps -a
-
-CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                    PORTS                    NAMES
-1d17f542be53        rocker/rstudio      "/init"                  18 hours ago        Up 18 hours               0.0.0.0:8787->8787/tcp   elegant_banach
-```
+    ```
+    docker ps -a
+    
+    CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                    PORTS                    NAMES
+    1d17f542be53        rocker/rstudio      "/init"                  18 hours ago        Up 18 hours               0.0.0.0:8787->8787/tcp   elegant_banach
+    ```
 
 9. Stop a container:
 
-```
-docker stop 1d17f
-```
+    ```
+    docker stop 1d17f
+    ```
 
 10. Remove a container image:
 
-```
-docker rmi nginx
-```
+    ```
+    docker rmi nginx
+    ```
 
 ## Running Containers
 
 11. **Detached and Interactive Modes** - Notice that in the earlier `nginx` example, you ran it with the `-d` flag, which means the container runs independently in detached or daemon mode. The other option is to run it in interactive mode, which is equivalent to logging into the container and working from within it.
 
-Detached mode:
+    Detached mode:
 
-```
-docker run -d nginx
-```
+    ```
+    docker run -d nginx
+    ```
 
-```
-docker run -it nginx /bin/bash
-root@7ee278e39202:/#
-```
+    Interactive mode:
+    ```
+    docker run -it nginx /bin/bash
+    root@7ee278e39202:/#
+    ```
 
-Interactive mode requires that you specify a shell to enter, in this case the common `bash` shell. Note that the command immediately drops you into the shell session. Type `exit` to leave the container.
+    Interactive mode requires that you specify a shell to enter, in this case the common `bash` shell. Note that the command immediately drops you into the shell session. Type `exit` to leave the container.
 
-12. **Ports** - You may want to expose the container to a specific port locally, so that you can interact with it.
-For example, if you wanted to expose nginx locally over port 80, enter this:
+12. **Ports** - You may want to expose the container to a specific port locally, so that you can interact with it. For example, if you wanted to expose nginx locally over port 80, enter this:
 
-```
-docker run -d -p 8080:80 nginx
-```
+    ```
+    docker run -d -p 8080:80 nginx
+    ```
 
-The -p 8080:80 flag maps your local computer's port 8080 with the container's port 80. Browse to http://localhost:8080/ and see the results.
+    The `-p 8080:80` flag maps your local computer's port `8080` with the container's port `80`. Browse to http://localhost:8080/ and see the results.
 
-**BONUS** - Map your container to a different port and test the results. Remember that the `nginx` container will always listen for requests on port 80.
+    **BONUS** - Map your container to a different port and test the results. Remember that the `nginx` container will always listen for requests on port 80.
 
-13. **Volumes** - Another useful flag for runtime is a volume mapping, so that your running container can read or write to portions of your local computer's filesystem.
-So, extending the earlier command:
+13. **Volumes** - Another useful flag for runtime is a volume mapping, so that your running container can read or write to portions of your local computer's filesystem. So, extending the earlier command:
 
-```
-docker run -d -p 8080:80 -v /User/local/dir:/var/www/html nginx
-```
+    ```
+    docker run -d -p 8080:80 -v /User/local/dir:/var/www/html nginx
+    ```
 
 ## Creating Containers
 
@@ -125,109 +124,140 @@ If you cannot find just the right container, you can always build your own. Ther
 
     * Run the container interactively so that you can install packages and code, and customize the image from within.
 
-    * Finally, when you exit the container and stop it, save it using the  [`docker commit`](https://docs.docker.com/engine/reference/commandline/commit/)  command. At this point your updated container is versioned (much like a git repository) and can be pushed to Docker Hub if you want to share or store it.
+    * Finally, when you exit the container and stop it, save it using the  [`docker commit`](https://docs.docker.com/engine/reference/commandline/commit/)  command. At this point your updated container is versioned (much like a git repository) and can be pushed to Docker Hub. (See below for more on sharing containers.)
 
-```
-docker login
-docker tag <IMAGE_ID> <USERNAME>/mycontainer:devel
-docker push <USERNAME>/mycontainer
-```
+    ```
+    docker login
+    docker tag <IMAGE_ID> <USERNAME>/mycontainer:devel
+    docker push <USERNAME>/mycontainer
+    ```
 
 2. **Write your own Dockerfile** - Alternatively, you can write a custom `Dockerfile` and build the container from scratch, using `docker build`. More on Docker files and builds can be found at https://docs.docker.com/engine/getstarted/step_four/. This allows Dockerfiles to be shared as snippets of code rather than as full container images, comparable to a bootstrapping script you might use when instantiating a virtual server instance.
 
-    **Step 1** - Create a text file called `Dockerfile` with contents such as:
+    A. **Step 1** - Create a text file called `Dockerfile` with contents such as:
 
-```
-# Use an official Python runtime as a base image
-FROM python:2.7-slim
+    ```
+    # Use an official Python runtime as a base image
+    FROM python:2.7-slim
+    
+    # Who maintains this image
+    MAINTAINER Mister ThreeKay "mst3k@virginia.edu"
+    
+    # Set the working directory to /app
+    WORKDIR /app
 
-# Who maintains this image
-MAINTAINER Neal Magee "nmagee@virginia.edu"
+    # Copy the current directory contents into the container at /app
+    ADD . /app
 
-# Set the working directory to /app
-WORKDIR /app
+    # or add just a single file from the current directory into /app
+    ADD myscript.sh /app/
 
-# Copy the current directory contents into the container at /app
-ADD . /app
+    # Install any needed packages specified in requirements.txt
+    RUN pip install -r requirements.txt
+    RUN pip install awscli boto3
 
-# or add just a single file from the current directory into /app
-ADD myscript.sh /app/
+    # Make port 80 available to the world outside this container
+    EXPOSE 80
 
-# Install any needed packages specified in requirements.txt
-RUN pip install -r requirements.txt
-RUN pip install awscli boto3
+    # Define environment variables
+    ENV NAME World
+    ENV NEXTID 12345
 
-# Make port 80 available to the world outside this container
-EXPOSE 80
+    # Run app.py when the container launches
+    # Note that each command and parameter must be isolated.
+    CMD ["python", "app.py"]
+    ```
 
-# Define environment variables
-ENV NAME World
-ENV NEXTID 12345
+    B. **Step 2** - Then build your container based on your `Dockerfile` (don't forget the trailing dot . ):
 
-# Run app.py when the container launches
-# Note that each command and parameter must be isolated.
-CMD ["python", "app.py"]
-```
+    ```
+    docker build -t mycontainer .
+    ```
 
-* **Step 2** - Then build your container based on your `Dockerfile`:
+## Sharing Containers
 
-```
-docker build -t mycontainer .
-```
+A wonderful feature of containers is that they can run on any environment that runs Docker -- Windows, Linux, MacOS, and on laptops, workstations, servers, or supercomputers. So their *portability* is an advantage to researchers who may publish a container image as part of an article, or distribute it with colleages to use and contribute to. Here are the steps to sharing a container image:
+
+1. At this point you have created and versioned a container image, much like a git repository. It can now be pushed to Docker Hub if you want to store, share, or distribute it.
+
+2. First, confirm that you are logged into Docker:
+
+    ```
+    docker login
+    ```
+
+3. Next, push your image with its appropriate tag. If you do not specify a tag, Docker will assume you mean "latest" (always the most recent version of your image unless specifically tagged otherwise).
+
+    ```
+    docker push <USERNAME>/mycontainer:latest
+    ```
+
+    or
+
+    ```
+    docker push <USERNAME>/mycontainer:v1.37
+    ```
+
+4. Finally, visit https://hub.docker.com/ and log in. You should see your container(s) there and can share it with others.
+
+5. Alternatively, users can publish their Dockerfiles as code to GitHub or in text files, so that others can download it and build the container for themselves.
 
 
 ## Example: Build your own Cowsay
 
-First, create a new directory and hop into it. Then create a file named `docker.cow` and enter this code:
+1. First, create a new directory and hop into it. Then create a file named `docker.cow` and enter this code:
 
-```
-##
-## Docker Cow
-##
-$the_cow = <<EOC;
-    $thoughts
-     $thoughts
-      $thoughts
-EOC
-$the_cow .= <<'EOC';
-                    ##         .
-              ## ## ##        ==
-           ## ## ## ## ##    ===
-       /"""""""""""""""""\___/ ===
-      {                       /  ===-
-       \______ O           __/
-         \    \         __/
-          \____\_______/
-
-EOC
-```
+    ```
+    ##
+    ## Docker Cow
+    ##
+    $the_cow = <<EOC;
+        $thoughts
+         $thoughts
+          $thoughts
+    EOC
+    $the_cow .= <<'EOC';
+                        ##         .
+                  ## ## ##        ==
+               ## ## ## ## ##    ===
+           /"""""""""""""""""\___/ ===
+          {                       /  ===-
+           \______ O           __/
+             \    \         __/
+              \____\_______/
+    
+    EOC
+    ```
 
 3. Create another file named `Dockerfile` and enter something like this:
 
-```
-FROM ubuntu:14.04
+    ```
+    FROM ubuntu:14.04
 
-# install cowsay, and move the "default.cow" out of the way so we can overwrite it with "docker.cow"
-RUN apt-get update && apt-get install -y cowsay --no-install-recommends && rm -rf /var/lib/apt/lists/* \
-    && mv /usr/share/cowsay/cows/default.cow /usr/share/cowsay/cows/orig-default.cow
+    # install cowsay, and move the "default.cow" out of the way so we can overwrite it with "docker.cow"
+    RUN apt-get update && apt-get install -y cowsay --no-install-recommends && rm -rf /var/lib/apt/lists/* \
+        && mv /usr/share/cowsay/cows/default.cow /usr/share/cowsay/cows/orig-default.cow
 
-# "cowsay" installs to /usr/games
-ENV PATH $PATH:/usr/games
+    # "cowsay" installs to /usr/games
+    ENV PATH $PATH:/usr/games
 
-COPY docker.cow /usr/share/cowsay/cows/
-RUN ln -sv /usr/share/cowsay/cows/docker.cow /usr/share/cowsay/cows/default.cow
+    COPY docker.cow /usr/share/cowsay/cows/
+    RUN ln -sv /usr/share/cowsay/cows/docker.cow /usr/share/cowsay/cows/default.cow
 
-CMD ["cowsay"]
-```
+    CMD ["cowsay"]
+    ```
 
-4. Build the container with a name
-5. Run the container with your command and a parameter:
+4. Build the container image and give it a name.
 
-```
-docker run <image-name> cowsay Hello there!
-```
+5. Run a container from that image with your command and a parameter:
+
+    ```
+    docker run <image-name> cowsay Hello there!
+    ```
 
 ## Reference
+
+As usual, running the `docker` command will prompt you with a reference for all available commands and sub-commands:
 
 ```
 Usage:	docker COMMAND
