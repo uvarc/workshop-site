@@ -21,7 +21,9 @@ Use the "Terminal" application and connect by entering this command:
 
 ### Windows Users
 
-Download [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html). In the "Host name" field of PuTTY, enter
+{{< button "Download PuTTY" "https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html" "btn-danger" >}}
+
+Install and open PuTTY, then in the "Host name" field enter
 
     labuser@shell.uvasomrc.io
 
