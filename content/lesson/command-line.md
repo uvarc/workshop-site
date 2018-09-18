@@ -5,23 +5,28 @@ author: "Neal Magee"
 categories: ["Research Computing Essentials"]
 ---
 
-## Requirements:
+<p class="lead">Without a graphical user interface many users feel lost or unsure how to navigate the file system,
+work with files, or run applications. This workshop offers basic skills for these tasks and more,
+with the hope that users feel comfortable and more empowered to run their tasks in the Linux shell.</p>
 
-* MacOS / Linux users: Terminal
-* Windows: PuTTY [[Download](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)]
+## Connect
 
-## Connect:
+Use a SSH (secure shell) application to connect to a remote system. 
 
-### MacOS / Linux users
+### MacOS / Linux Users
+
+Use the "Terminal" application and connect by entering this command:
 
     ssh labuser@shell.uvasomrc.io
 
-### Windows users, in the "Host name" field of PuTTY, enter
+### Windows Users
+
+Download [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html). In the "Host name" field of PuTTY, enter
 
     labuser@shell.uvasomrc.io
 
 
-## Navigating the file system
+## Navigate the file system
 
 Learn your way around without feeling stuck. These commands help you change directories and view their contents.
 
@@ -36,20 +41,6 @@ List all files (even hidden) in a directory, with detailed info:
 List all files sorted by most recent edits:
 
     ls -alt
-
-POSIX ownership bits:
-
-    -rw-r--r-- 1 root root    60 Sep  1 16:24 data.tsv
-    -rw-r--r-- 1 root root 11251 Sep  1 16:23 longfile
-    drwxr-xr-x 2 root root  4096 Sep  1 16:24 myfolder
-    drwxr-xr-x 2 root root  4096 Sep  5 19:54 scripts
-    -rw-r--r-- 1 root root    22 Sep  1 16:23 shortfile
-
-Three levels of control:
-
-* Owner - `rwx` (Read / Write / Execute)
-* Group - `rwx`
-* Other - `rwx`
 
 Return the present working directory (where I am now):
 
@@ -69,16 +60,33 @@ Change to my home directory:
 
     cd ~
 
+The tilde `~` is a shortcut for your home directory, usually a subfolder of the `/home/` directory.
+
 Change to the base directory:
 
     cd /
 
-Switch back to the directory I was in before this one:
+Switch back to the directory you were in before this one:
 
     cd -
 
+**Paths**
 
-## Change the file system
+Linux system file/folder paths can be described in one of two ways: absolute and relative.
+
+**Absolute paths:** Where you issue the full path of the file or folder, starting with the base directory `/`. Absolute paths
+are useful when you want a command to work regardless of where you currently are in the file system.
+
+**Relative paths:** Where you issue the path to the file or folder based upon your current location in the file system.
+
+Here are two examples of commands to edit an imaginary script in our home directory, one absolute and the other relative:
+
+    nano /home/username/scripts/myscript.sh      # <-- Absolute path that works regardless of our current directory
+
+    nano scripts/myscript.sh                     # <-- Relative path since we are already in our home directory
+
+
+## Modify the file system
 
 ### View Things
 
@@ -106,6 +114,10 @@ Create a file without any contents:
 Use a simple text editor `nano`
 
     nano myfile.txt
+
+Or use a sophisticated text editor `vim`
+
+    vim myfile.txt
 
 Make a directory (folder):
 
@@ -189,6 +201,52 @@ Create a symbolic link. What is a symbolic link? It's a virtual path to another 
     ln -s directory_one/ sybmolic_directory/
 
 
+## File/folder Permissions
+
+Users who run the `ls -al` command in a directory will notice a very busy lefthand portion of the output:
+These are called POSIX ownership bits:
+
+    -rw-r--r-- 1 root root    60 Sep  1 16:24 data.tsv
+    -rw-r--r-- 1 root root 11251 Sep  1 16:23 longfile
+    drwxr-xr-x 2 root root  4096 Sep  1 16:24 myfolder
+    drwxr-xr-x 2 root root  4096 Sep  5 19:54 scripts
+    -rw-r--r-- 1 root root    22 Sep  1 16:23 shortfile
+
+There are three types of permissions for files or folders, and three different groups to control permissions for:
+
+Types of permissions:
+
+1. READ - r
+2. WRITE - w
+3. EXECUTE - x
+
+Three groups to control:
+
+1. OWNER
+2. GROUP
+3. OTHERS
+
+Combine these are you get three sets of three bits that describe permissions:
+
+* Owner - `rwx` (Read / Write / Execute)
+* Group - `rwx`
+* Other - `rwx`
+
+Some useful commands to change permissions:
+
+    chmod 600 myfile       # Gives RW for the owner, but no access to other users
+    chmod 644 myfile       # Gives RW for the owner, and R access to other users
+    chmod 755 myfile       # Gives RWX to the owner, and RX to others
+
+If you have ownership over a file or directory, or if you have root access to the system, you can also change
+who owns the file, or the group that it belongs to:
+
+    chown newuser filename
+    chgrp newgroup filename
+
+This is especially useful if you are collaborating on code or data in a shared system. You can allow all members
+of you group to access and use the same files and directories.
+
 ## Redirect Input/Output
 
 Echo command writes arguments to output (the screen):
@@ -224,6 +282,16 @@ Find a word in a file
 You can also redirect backwards, feeding a file (for example) into a command:
 
     mysql db_name < sql_script.sql
+
+
+## Issue Multiple Commands
+
+String a series of commands together with `&&` between them. 
+
+    date && uptime && w
+
+Note that even though these commands are being triggered from the same command-line, they have 
+no relation to one another. The use of `&&` is simply a convenience.
 
 ## Archive/Unarchive Things
 
@@ -329,6 +397,7 @@ Or make that look prettier:
 
     echo -e "\n\n Hello there $FNAME, how are you doing today?\n\n"
 
+The `\n` characters add line breaks to your echo command. (2 before, 2 after)
 
 ### Environment Variables
 
@@ -339,6 +408,10 @@ Your login session also comes with several "environment" variables. Here are a f
     echo $HOME
     echo $SHELL
     echo $HISTSIZE
+
+Or echo all environment variables with this command:
+
+    echo ENV
 
 These are created by the system. But you can also set your own by editing your `~/.bashrc` file.
 
@@ -355,8 +428,8 @@ Now see if the variable is set
 
 ### Package Managers
 
-    apt install <software-name>
     apt update
+    apt install <software-name>
     apt upgrade
 
     pip install <package-name>
@@ -402,6 +475,7 @@ See when the last users logged in (interactive users)
 
 You can retrieve web pages, files, data, other remote content using either `curl` or `wget`
 
+    apt update
     apt install curl wget
 
     curl 'https://api.github.com/repos/stedolan/jq/commits?per_page=5'
