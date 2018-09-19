@@ -554,6 +554,7 @@ A simple example:
 
 ## More Information
 
+* [CLI Reference Handout](https://workshops.somrc.virginia.edu/files/UVA-SOMRC-Linux-Command-Reference.pdf)
+* [Slide Deck](https://docs.google.com/presentation/d/1U89TFIxGQli8xOH82bZbVX8R89nzY1kYiAQmXlc3LTc/edit?usp=sharing)
 * SOM Research Computing - https://somrc.virginia.edu/
 * UVA Research Computing FAQ/Knowledgebase - https://discuss.rc.virginia.edu/
-* [Slide Deck](https://docs.google.com/presentation/d/1U89TFIxGQli8xOH82bZbVX8R89nzY1kYiAQmXlc3LTc/edit?usp=sharing)
