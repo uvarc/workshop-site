@@ -1,0 +1,4 @@
+# ignore HTML and PDF lesson output
+
+# *.html
+# *.pdf
