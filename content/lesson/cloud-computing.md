@@ -3,6 +3,7 @@ title: "Introduction to Cloud Computing"
 author: "Neal Magee"
 # date: 2015-07-23T21:13:14-05:00
 categories: ["Cloud Computing"]
+toc: true
 ---
 
 <p class="lead">In this workshop you will learn the basic functionality of two of the most foundational services offered by AWS: S3 storage and EC2 compute. Follow the lab instructions below at your own pace. Please raise your hand or get the attention of an instructor if you have any questions.</p>

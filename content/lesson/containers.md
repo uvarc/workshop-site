@@ -3,6 +3,7 @@ title: "Introduction to Containers"
 author: "Neal Magee"
 # date: 2015-07-23T21:13:14-05:00
 categories: ["Advanced Research Computing"]
+toc: true
 ---
 
 <p class="lead">In this workshop you will learn how to create and use containers. Follow the lab instructions below at your own pace. Please raise your hand or get the attention of an instructor if you have any questions.</p>
