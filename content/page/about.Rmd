@@ -19,13 +19,3 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ---
 
-## FAQ
-
-**1. lorem ipsum?**
-
-**2. dolor sit amet?**
-
-**3. consectetur?**
-
---- 
-
