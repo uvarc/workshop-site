@@ -180,8 +180,8 @@ module load bowtie2
 
 ### Align the reads
 bowtie2 -x /project/genomes/Homo_sapiens/UCSC/hg38/Sequence/Bowtie2Index/genome \
-	-1 /scratch/<mst3k>/ngs-aln-workshop/sample/SRR622461_1.fastq \
-	-2 /scratch/<mst3k>/ngs-aln-workshop/sample/SRR622461_1.fastq \
+	-1 /scratch/<mst3k>/ngs-aln-workshop/sample/SRR622461_R1.fastq.gz \
+	-2 /scratch/<mst3k>/ngs-aln-workshop/sample/SRR622461_R2.fastq.gz \
 	-p 20 \
 	-S /scratch/<mst3k>/ngs-aln-workshop/NA12878-hg38.sam	 
 
@@ -300,11 +300,9 @@ samtools flagstat NA12878-hg38.subset.sorted.bam
 ```
 samtools view -bhf 3 NA12878-hg38.subset.sorted.bam chr5 > NA12878-hg38.subset.sorted.flag3-chr5.bam
 	
-samtools sort -no NA12878-hg38.subset.sorted.flag3-chr5.sortedByName.bam NA12878-hg38.subset.sorted.flag3-chr5.bam
-
 samtools fastq -1 NA12878-hg38.subset.sorted.flag3-chr5.R1.fastq \
   -2 NA12878-hg38.subset.sorted.flag3-chr5.R2.fastq \
-  NA12878-hg38.subset.sorted.flag3-chr5.sortedByName.bam
+  NA12878-hg38.subset.sorted.flag3-chr5.bam
 ```
 <br>
 
@@ -324,6 +322,16 @@ samtools view -H NA12878-hg38.subset.sorted.bam | grep -P '^@SQ' | awk '{print s
 genomeCoverageBed -ibam NA12878-hg38.subset.sorted.bam -g genome.bed > coverage.txt
 ```
 <br>
+
+***
+
+### Exercise
+
+1. Convert  NA12878-hg38.sam  to BAM, sort by co-ordinates and generate the index 
+
+2. Calculate  flagstat  for reads mapping to chr15
+
+3. Write proper pairs mapped to chr22 in FASTQ format(*make sure the reads are paired in output files )
 
 
 ***
