@@ -1,4 +1,4 @@
-baseurl = "https://example.com/"
+baseurl = "https://workshops.somrc.virginia.edu/"
 title = "SOMRC Workshops"
 theme = "whiteplain"
 languageCode = "en"
