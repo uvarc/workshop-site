@@ -20,6 +20,7 @@ The goal of this hands-on workshop is to perform a simple NGS data alignment aga
 - [Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml)
 - [SAMtools](http://samtools.sourceforge.net/)
 - [picard](https://broadinstitute.github.io/picard/)
+- [BEDTools](https://bedtools.readthedocs.io/en/latest/)
 - [bcftools](https://samtools.github.io/bcftools/bcftools.html)
 - [IGV](http://software.broadinstitute.org/software/igv/)
 
@@ -50,10 +51,10 @@ Download the sequence data to your scratch directory (replace `<mst3k>` with you
 cd /scratch/<mst3k>
 ```
 ```
-wget 
+wget https://s3.amazonaws.com/somrc-workshop-data/ngs-aln-workshop.tar.gz .
 ```
 ```
-tar -zxvf 
+tar -zxvf ngs-aln-workshop.tar.gz
 ```
 ```
 ls ngs-aln-workshop
@@ -256,26 +257,26 @@ java -jar $EBROOTPICARD/picard.jar SortSam \
 
 By region of interest - 
 ```
-samtools view -h NA12878-hg38.subset.sorted.bam chr20 | less -S
+samtools view -h NA12878-hg38.subset.sorted.bam chr15 | less -S
 
-samtools view -h NA12878_subset.bowtie2.sorted.bam chr20:100000-500000 | less -S
+samtools view -h NA12878-hg38.subset.sorted.bam chr22:10,500,000-10,750,000 | less -S
 
-samtools view -h NA12878_subset.bowtie2.sorted.bam chr20:100000-500000 chr5:10000-15000 | less -S 
+samtools view -h NA12878-hg38.subset.sorted.bam chr22:10,500,000-10,750,000 chr5:10,000-15,000 | less -S 
 ```
 
 By alignment flag - 
 ```
 # filter forward reads that mapped as proper pairs
-samtools view -hf 67 NA12878_subset.bowtie2.sorted.bam | less -S 
+samtools view -hf 67 NA12878-hg38.subset.sorted.bam | less -S 
 
 # filter reverse reads that mapped as proper pairs
-samtools view -hf 131 NA12878_subset.bowtie2.sorted.bam | less -S 
+samtools view -hf 131 NA12878-hg38.subset.sorted.bam | less -S 
 
 # filter all unmapped reads
-samtools view -hf 4 NA12878_subset.bowtie2.sorted.bam | less -S
+samtools view -hf 4 NA12878-hg38.subset.sorted.bam | less -S
 
 # reverse the selection 
-samtools view -hF 4 NA12878_subset.bowtie2.sorted.bam | less -S
+samtools view -hF 4 NA12878-hg38.subset.sorted.bam | less -S
 ```
 
 [Explain SAM Flags](https://broadinstitute.github.io/picard/explain-flags.html)
@@ -288,14 +289,30 @@ samtools flagstat NA12878-hg38.subset.sorted.bam
 
 **BAM to FASTQ**
 ```
-samtools view -bhf 3 NA12878_subset.bowtie2.sorted.bam chr5 > NA12878_subset.bowtie2.sorted.flag3-chr5.bam
+samtools view -bhf 3 NA12878-hg38.subset.sorted.bam chr5 > NA12878-hg38.subset.sorted.flag3-chr5.bam
 	
-samtools index NA12878_subset.bowtie2.sorted.flag3-chr5.bam
+samtools sort -no NA12878-hg38.subset.sorted.flag3-chr5.sortedByName.bam NA12878-hg38.subset.sorted.flag3-chr5.bam
 
-samtools fastq -1 NA12878_subset.bowtie2.sorted.flag3-chr5.R1.fastq \
-  -2 NA12878_subset.bowtie2.sorted.flag3-chr5.R2.fastq \
-  NA12878_subset.bowtie2.sorted.flag3-chr5.bam
+samtools fastq -1 NA12878-hg38.subset.sorted.flag3-chr5.R1.fastq \
+  -2 NA12878-hg38.subset.sorted.flag3-chr5.R2.fastq \
+  NA12878-hg38.subset.sorted.flag3-chr5.sortedByName.bam
 ```
+
+**Genome Coverage**
+
+[BEDTools `genomecov`](https://bedtools.readthedocs.io/en/latest/content/tools/genomecov.html)
+
+```
+# load bedtools module
+module load bedtools
+
+# First lets create a bed file for our mapped region
+samtools view -H NA12878-hg38.subset.sorted.bam | grep -P '^@SQ' | awk '{print substr($2,4,5)"\t"substr($3,4,9)}' > genome.bed
+
+# Compute the genome-wide coverage
+genomeCoverageBed -ibam NA12878-hg38.subset.sorted.bam -g genome.bed > coverage.txt
+```
+
 
 ***
 
@@ -307,11 +324,11 @@ Note: `samtools` collects summary information in the input BAMs, computes the li
 ```
 module load bcftools
 
-samtools mpileup -ut DP -d 8000 -f ../reference/hg19.fa NA12878_subset.bowtie2.sorted.bam > NA12878_subset.bowtie2.sorted.mpileup.bcf
+samtools mpileup -ut DP -d 8000 -f ref/hg38.subset.fa NA12878-hg38.subset.sorted.bam > NA12878-hg38.subset.sorted.mpileup.bcf
 
-bcftools call -cv NA12878_subset.bowtie2.sorted.mpileup.bcf > NA12878_subset.bowtie2.sorted.mpileup.raw.vcf
+bcftools call -cv NA12878-hg38.subset.sorted.mpileup.bcf > NA12878-hg38.subset.sorted.mpileup.raw.vcf
 
-vcfutils.pl varFilter NA12878_subset.bowtie2.sorted.mpileup.raw.vcf > NA12878_subset.bowtie2.sorted.mpileup.flt.vcf
+vcfutils.pl varFilter NA12878-hg38.subset.sorted.mpileup.raw.vcf > NA12878-hg38.subset.sorted.mpileup.flt.vcf
 ```
 	
 **[VCF Specifications](https://samtools.github.io/hts-specs/VCFv4.2.pdf)**  
@@ -325,9 +342,9 @@ Copy the bam file (and the index) to your local computer. <br>
 
 On your laptop - 
 ```
-scp <mst3k>@rivanna.hpc.virginia.edu:/scratch/<mst3k>/ngs-aln/bwtOut/NA12878_subset.bowtie2.sorted.bam ./
-scp <mst3k>@rivanna.hpc.virginia.edu:/scratch/<mst3k>/ngs-aln/bwtOut/NA12878_subset.bowtie2.sorted.bam.bai ./
-scp VCF File
+scp <mst3k>@rivanna.hpc.virginia.edu:/scratch/<mst3k>/ngs-aln-workshop/NA12878-hg38.subset.sorted.bam ./
+scp <mst3k>@rivanna.hpc.virginia.edu:/scratch/<mst3k>/ngs-aln-workshop/NA12878-hg38.subset.sorted.bam.bai ./
+scp <mst3k>@rivanna.hpc.virginia.edu:/scratch/<mst3k>/ngs-aln-workshop/NA12878-hg38.subset.sorted.mpileup.flt.vcf ./
 ```
 
 Lets explore!!!
