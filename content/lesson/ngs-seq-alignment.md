@@ -124,6 +124,8 @@ _*Indexing full human genome takes ~30 mins (using 10CPU cores)._
 The `bowtie2` aligner takes the index (generated in previous step) and a set of sequencing read files and outputs the alignment in SAM format. 
 
 ```
+cd /scratch/<mst3k>/ngs-aln-workshop/
+
 # USAGE: 
 # bowtie2 [options]* -x <bt2_index_basename> -1 <R1.fastq> -2 <R2.fastq> -S <output.sam>
 # 
@@ -240,6 +242,8 @@ samtools sort -o NA12878-hg38.subset.sorted.bam NA12878-hg38.subset.bam
 ```
 samtools index NA12878-hg38.subset.sorted.bam
 ```
+<br>
+
 
 **Picard Tools**  
 The above 3 steps can also be performed using [Picard](https://broadinstitute.github.io/picard/)
@@ -252,6 +256,8 @@ java -jar $EBROOTPICARD/picard.jar SortSam \
   SORT_ORDER=coordinate \
   CREATE_INDEX=true
 ```
+<br>
+
 
 **Filter BAM**  
 
@@ -265,6 +271,7 @@ samtools view -h NA12878-hg38.subset.sorted.bam chr22:10,500,000-10,750,000 chr5
 ```
 
 By alignment flag - 
+[Explain SAM Flags](https://broadinstitute.github.io/picard/explain-flags.html)
 ```
 # filter forward reads that mapped as proper pairs
 samtools view -hf 67 NA12878-hg38.subset.sorted.bam | less -S 
@@ -279,13 +286,15 @@ samtools view -hf 4 NA12878-hg38.subset.sorted.bam | less -S
 samtools view -hF 4 NA12878-hg38.subset.sorted.bam | less -S
 ```
 
-[Explain SAM Flags](https://broadinstitute.github.io/picard/explain-flags.html)
+<br>
 
 
 **Flagstat**  
 ```
 samtools flagstat NA12878-hg38.subset.sorted.bam
 ```
+<br>
+
 
 **BAM to FASTQ**
 ```
@@ -297,6 +306,8 @@ samtools fastq -1 NA12878-hg38.subset.sorted.flag3-chr5.R1.fastq \
   -2 NA12878-hg38.subset.sorted.flag3-chr5.R2.fastq \
   NA12878-hg38.subset.sorted.flag3-chr5.sortedByName.bam
 ```
+<br>
+
 
 **Genome Coverage**
 
@@ -312,6 +323,7 @@ samtools view -H NA12878-hg38.subset.sorted.bam | grep -P '^@SQ' | awk '{print s
 # Compute the genome-wide coverage
 genomeCoverageBed -ibam NA12878-hg38.subset.sorted.bam -g genome.bed > coverage.txt
 ```
+<br>
 
 
 ***
@@ -332,6 +344,8 @@ vcfutils.pl varFilter NA12878-hg38.subset.sorted.mpileup.raw.vcf > NA12878-hg38.
 ```
 	
 **[VCF Specifications](https://samtools.github.io/hts-specs/VCFv4.2.pdf)**  
+
+<br>
 
 ***
 
