@@ -109,7 +109,7 @@ https://github.com/uvasomrc/quality
 **2. Confirm that `git` is installed and configured on your computer**
 
 Now that you have the repository forked to your GitHub account, we'll **clone** it locally. 
-To work with Git on your computer, you'll it installed:
+To work with Git on your computer, you'll need it installed:
 
 <https://git-scm.com/downloads>
 
@@ -432,7 +432,7 @@ However, as you see there is a conflict between the two branches. Using a text e
 
 ## Exercises
 
-The afternoon lab component is intended to give you a chance to explore and use the tools discussed in the morning lecture. These exercises introduce new concepts as well, and in doing so point towards various tools and documentation. Feel free to spend as much or as little time with each prompt.
+The exercises are intended to give you a chance to explore and use the tools discussed in the morning lecture. These exercises introduce new concepts as well, and in doing so point towards various tools and documentation. Feel free to spend as much or as little time with each prompt.
 
 ---
 
