@@ -1,5 +1,5 @@
 ---
-title: "Conditionals and Iteration"
+title: "R Conditionals and Iteration"
 output:
   pdf_document: default
   html_document: default
