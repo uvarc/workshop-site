@@ -11,6 +11,7 @@ pygmentsUseClasses = true
 pygmentsOptions = "linenos=table"
 # Copyright notice. This is displayer in the footer.
 copyright = "&copy; Copyright 2018 UVa School of Medicine Research Computing"
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 
 [params]
   # Date format
