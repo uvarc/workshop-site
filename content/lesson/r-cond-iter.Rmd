@@ -549,13 +549,13 @@ for (num in 2:20) {
 
 As an alternative to looping (and in particular `for` loops), R provides *functionals* for iterating across multiple elements. These are typically referred to as the "apply" family of functions, and they generally allow you to pass arbirtrary functions to each item in a vector or list.
 
-There are a number varieties of apply functions, each which has its own use-case depending on the type of object over which it will be applied and the type of value it will return. We'll look at three of the most commonly used:
+There are a number of different apply functions, each which has its own use-case depending on the type of object over which it will be applied and the type of value it will return. We'll look at three of the most commonly used:
 
 - `apply()` = useful for applying functions across rows or columns of matrices or data frames
 - `lapply()` = passes an abritrary function across a list or vector and returns a list
 - `sapply()` = a "simplified" version of `lapply()` ... returns a vector
 
-For `apply()` we define the matrix or data frame we are working with ("X"), the dimension we want to apply across ("MARGIN"; 1 for rows, 2 for columns) and the function to use ("FUN"):
+For `apply()` we define the matrix or data frame we are working with ("X"), the dimension across which we want to apply a function ("MARGIN"; 1 for rows, 2 for columns) and the function to use ("FUN"):
 
 ```{r}
 apply(X = mtcars, MARGIN = 1, FUN = max)
