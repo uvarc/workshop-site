@@ -270,6 +270,14 @@ less -S relman2017_samples.tax_table.txt
 
 ***
 
+#### Relinquish allocations  
+
+```
+exit
+```
+
+***
+
 ### 4. Phylogenetic Tree
 
 Reconstructing the phylogeny of the OTUs will be helpful in investigating the evolutionary relationship among them. This has already been done! 
