@@ -295,7 +295,7 @@ Our implementation of `mean()`, `sum()` and `quantile()` will now inherit any pa
 ```{r, error = TRUE}
 summit(c(mynums,NA))
 summit(c(mynums,NA), method = "sum")
-summit(c(mynums,NA), method = "quantile", probs = c(0.01,0.99), names = FALSE)
+summit(c(mynums,NA), method = "quantile", probs = c(0.01,0.99), na.rm=TRUE, names = FALSE)
 ```
 
 In this case, parameter inheritance allows us to solve the problem introduced by the `NA`. However, we may want to be more direct in how the function handles arguments to prevent other bugs in its usage.
