@@ -6,9 +6,6 @@ output:
 categories: ["R Programming"]
 ---
 
-
-[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/uvasomrc/courses/master?filepath=workshops%2Fpython%2Fsummer-bootcamp%2FIntro_Python.ipynb)
-
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
