@@ -14,13 +14,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 The ability to use logic to condition execution of a program is fundamental to many languages. These *control-flow* features are primarily implemented in R through a series of "reserved" words:
 
-```{r}
+```{r, eval = FALSE}
 ?reserved
 ```
 
 We can access the documentation on R's implementation of control flow statements through any of the relevant reserved words:
 
-```{r}
+```{r, eval = FALSE}
 ?`if`
 ?`else`
 ?`for`
