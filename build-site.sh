@@ -15,9 +15,6 @@ cd workshop-site
 
 Rscript -e "blogdown::build_site()"
 
-# Prepare for Hugo publish
-# mkdir public
-# hugo -v --ignoreCache
 
 # Push into S3 bucket
 aws s3 sync public s3://$BUCKET_NAME --region=us-east-1 --cache-control public --delete;
