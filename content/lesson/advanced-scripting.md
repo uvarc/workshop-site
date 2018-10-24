@@ -3,7 +3,7 @@ title: "Advanced Scripting with bash"
 author: "Neal Magee"
 # date: 2015-07-23T21:13:14-05:00
 categories: ["Advanced Research Computing"]
-draft: false
+draft: true
 ---
 
 <p class="lead">Scripts are powerful tool for automating regular, recurring tasks. Use them to make repetitive tasks easier, 
