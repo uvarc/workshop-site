@@ -24,3 +24,6 @@ venv.bak/
 
 # ignoring public
 public/*
+blogdown/*
+# rmarkdown chunk images
+*unnamed-chunk*
