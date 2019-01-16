@@ -1,5 +1,5 @@
 ---
-title: "Introduction to Python"
+title: "Data Manipulation with Python"
 author: "Christina Gancayco"
 # date: 2019-01-16T21:13:14-05:00
 categories: ["Python Programming"]
