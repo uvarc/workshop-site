@@ -20,7 +20,8 @@
       </tr>
     </thead>
     <tbody>
-          {{- $paginator := .Paginator }}
+      <!--set to 50 to show all lessons for now -->
+          {{- $paginator := (.Paginator 50) }}
     {{- range $paginator.Pages }}
       <tr>
         <td>
