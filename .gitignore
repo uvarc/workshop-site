@@ -26,4 +26,4 @@ venv.bak/
 public/*
 blogdown/*
 # rmarkdown chunk images
-*unnamed-chunk*
+static/lesson/*
