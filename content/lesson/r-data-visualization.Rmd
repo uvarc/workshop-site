@@ -205,12 +205,20 @@ Re-create this same plot from scratch without saving anything to a variable. Tha
   * Map continent onto the aesthetics of the point
 * Use a log<sub>10</sub> scale for the x-axis.
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, fig.keep="last"}
 ggplot(gm, aes(gdpPercap, lifeExp)) + 
   geom_point(aes(col=continent), size=3) + 
   scale_x_log10()
 ```
 
+<details>
+  <summary>SHOW ANSWER</summary>
+  ```{r, echo = TRUE, warning = FALSE, results = "hide"}
+ggplot(gm, aes(gdpPercap, lifeExp)) + 
+  geom_point(aes(col=continent), size=3) + 
+  scale_x_log10()
+  ```
+</details>
 
 ----
 
@@ -288,11 +296,16 @@ p + geom_point() + geom_smooth() + facet_wrap(~continent)
 
 ```{r spaghetti, echo=FALSE, eval=TRUE, fig.keep="last", fig.width=8}
 p <- ggplot(filter(gm, continent!="Oceania"), aes(year, lifeExp))
-# p + facet_wrap(~continent) + geom_line()
-# p + facet_wrap(~continent) + geom_line(aes(group=country))
 p + facet_wrap(~continent) + geom_line(aes(group=country), alpha=.5) + geom_smooth(lwd=3, se=FALSE)
 ```
 
+<details>
+  <summary>SHOW ANSWER</summary>
+  ```{r, echo = TRUE, warning = FALSE, results = "hide"}
+p <- ggplot(filter(gm, continent!="Oceania"), aes(year, lifeExp))
+p + facet_wrap(~continent) + geom_line(aes(group=country), alpha=.5) + geom_smooth(lwd=3, se=FALSE)
+  ```
+</details>
 
 ----
 
@@ -383,7 +396,7 @@ p + geom_boxplot()
 1. Using a log<sub>10</sub> y-axis scale, overlay semitransparent jittered points on top of box plots, where outlying points are colored. 
 1. **BONUS**: Try to reorder the continents on the x-axis by GDP per capita. Why isn't this working as expected? See `?reorder` for clues.
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, fig.keep="last"}
 p <- ggplot(gm, aes(continent, gdpPercap))
 p + geom_jitter()
 p + geom_boxplot()
@@ -392,14 +405,22 @@ p <- ggplot(gm, aes(reorder(continent, gdpPercap), gdpPercap))
 p <- p + scale_y_log10()
 p + geom_boxplot(outlier.colour="red") + geom_jitter(alpha=1/2)
 
-library(dplyr)
-gm %>% group_by(continent) %>% summarize(mean(gdpPercap))
-gm %>% group_by(continent) %>% summarize(mean(log10(gdpPercap)))
+# library(dplyr)
+# gm %>% group_by(continent) %>% summarize(mean(gdpPercap))
+# gm %>% group_by(continent) %>% summarize(mean(log10(gdpPercap)))
 p <- ggplot(gm, aes(reorder(continent, gdpPercap, FUN=function(x) mean(log10(x))), gdpPercap))
 p <- p + scale_y_log10()
 p + geom_boxplot(outlier.colour="red") + geom_jitter(alpha=1/2)
 ```
 
+<details>
+  <summary>SHOW ANSWER</summary>
+  ```{r, echo = TRUE, warning = FALSE, results = "hide"}
+p <- ggplot(gm, aes(reorder(continent, gdpPercap, FUN=function(x) mean(log10(x))), gdpPercap))
+p <- p + scale_y_log10()
+p + geom_boxplot(outlier.colour="red") + geom_jitter(alpha=1/2)
+  ```
+</details>
 
 ----
 
@@ -482,7 +503,7 @@ p + geom_density(aes(fill=continent), alpha=1/4)
 1. Save this figure to a 6x10 PDF file.
 
 
-```{r, echo=FALSE, eval=FALSE}
+```{r, echo=FALSE, eval=TRUE, fig.keep="last"}
 p <- ggplot(gm, aes(gdpPercap))
 p + geom_histogram()
 
@@ -490,8 +511,17 @@ p <- p + scale_x_log10()
 p + geom_histogram()
 p + geom_density(aes(fill=continent), alpha=1/4)
 p + geom_histogram(aes(fill=continent)) + facet_wrap(~continent, ncol=1)
-ggsave("myplot.pdf", width=6, height=10)
 ```
+
+<details>
+  <summary>SHOW ANSWER</summary>
+  ```{r, echo = TRUE, warning = FALSE, eval = FALSE, results = "hide"}
+p <- ggplot(gm, aes(gdpPercap))
+p <- p + scale_x_log10()
+p + geom_histogram(aes(fill=continent)) + facet_wrap(~continent, ncol=1)
+ggsave("myplot.pdf", width=6, height=10)
+  ```
+</details>
 
 ----
 
