@@ -142,9 +142,9 @@ Data frames are probably the most familiar data structure for many R users. When
 
 We'll use data from the National Health and Nutrition Examination Survey (NHANES) to motivate the examples that follow.
 
-First let's read in the NHANES dataset, which is available for download at <http://bioconnector.org/data/nhanes.csv>:
+First let's read in the NHANES dataset, which is available for <a href = "/data/nhanes.csv">download </a>:
 
-```{r, eval = FALSE}
+```{r}
 # read in NHANES
 nh <- read.csv("nhanes.csv")
 ```
