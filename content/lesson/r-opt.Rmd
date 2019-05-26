@@ -11,7 +11,7 @@ categories: ["R Programming"]
 knitr::opts_chunk$set(echo = TRUE, eval = FALSE, warning = FALSE, message = FALSE, cache = TRUE)
 ```
 
-<a class="btn btn-success btn-lg" href="/slides/r-opt-slides.html" role="button">SLIDES</a>
+<a class="btn btn-success btn-lg" href="/slides/r-opt-slides.pdf" role="button">SLIDES</a>
 
 ## Setup
 
