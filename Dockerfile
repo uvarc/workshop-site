@@ -16,8 +16,8 @@ RUN apt-get update && apt-get install -y \
     libxt-dev
 
 # Install Hugo
-ADD https://github.com/gohugoio/hugo/releases/download/v0.40.3/hugo_0.40.3_Linux-64bit.tar.gz hugo_0.40.3.tar.gz
-RUN tar -xzf hugo_0.40.3.tar.gz
+ADD https://github.com/gohugoio/hugo/releases/download/v0.55.6/hugo_0.55.6_Linux-64bit.tar.gz hugo_0.55.6.tar.gz
+RUN tar -xzf hugo_0.55.6.tar.gz
 RUN mv hugo /usr/local/bin
 
 # Install AWSCLI
