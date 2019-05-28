@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Introduction to R</title>
+    <meta charset="utf-8">
+    <meta name="author" content="VP Nagraj" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Introduction to R
+### VP Nagraj
+
+---
+
+
+
+## Why R?
+
+- R is free
+- R is flexible
+- R is everywhere
+- R is awesome
+
+---
+
+## R is free
+
+|Software |Cost  |
+|---|---|
+|  STATA |  $1,140 - $4,370 + maintenance |
+| SAS  | $8,700 - $140,000 / year  |
+| SPSS  |  $2,390 - $40,600 / year |
+| Matlab  |  $2,150 + $1,000s for modules |
+|  R |  $0 |
+
+&lt;em&gt;estimates ca 2014&lt;sup&gt;1&lt;/sup&gt;&lt;/em&gt;
+
+---
+
+## R is free
+
+*free as in speech, not free as in beer*
+
+- Available under GNU General Public License&lt;sup&gt;2&lt;/sup&gt;
+- Can be modifed, distributed and used for commercial purposes
+
+---
+
+## R is flexible
+
+*R is made to be modified*
+
+
+
+- \&gt; 10000 add-on packages currently available on the Comprehensive R Archive Network (CRAN)&lt;sup&gt;3&lt;/sup&gt;
+- \&gt; 1000 add-on packages for genomic analyses currently available on Bioconductor&lt;sup&gt;4&lt;/sup&gt;
+- New features are being added (almost) daily
+
+---
+
+## R is flexible
+
+*R is a programming language*
+
+- Dialect of the S language
+- Source code written in C and Fortran
+- &lt;https://cran.r-project.org/doc/manuals/r-release/R-lang.html&gt;
+- **TAKEAWAY** R is not "point and click" software, R is a programming language
+
+---
+
+## R is flexible
+
+&gt; Big data is a term for data sets that are so large or complex that traditional data processing applications are inadequate. Challenges include analysis, capture, data curation, search, sharing, storage, transfer, visualization, querying and information privacy. The term often refers simply to the use of predictive analytics or certain other advanced methods to extract value from data, and seldom to a particular size of data set. (Wikipedia)
+
+&gt; When computing the answer takes longer than the cognitive process of designing the model ... (Hadley Wickham)
+
+---
+
+## R is flexible
+
+*R code can be optimized for handling "big data"*
+
+- *sparklyr* (R interface for connecting to Spark instance)
+- *bigmemory* (store large objects in memory and files with external pointer,
+enabling transparent access from R to large objects)
+- *ff* (access datasets too large to fit into memory)
+- *foreach* (iterate over a collection without loop counter)
+- *multicore* (run parallel computation on computers with multiple cores without
+
+---
+
+## R is everywhere
+
+*the R community is huge*
+
+- "becoming ... lingua franca" for data analysts&lt;sup&gt;5&lt;/sup&gt;
+- useRs in just about any field you can imagine
+- &lt;http://www.r-bloggers.com/&gt; features &gt; 500 contributors from a variety of research disciplines
+
+---
+
+## R is everywhere
+
+*R at UVa*
+
+- StatLab [&lt;http://data.library.virginia.edu/statlab/&gt;]
+- Data @ HSL  [&lt;https://guides.hsl.virginia.edu/data/services&gt;]
+- UVa R Users Group [&lt;http://www.meetup.com/UVa-R-Users-Group/&gt;]
+
+---
+
+## R is awesome
+
+*R is capable of high-dimensional visualizations*
+
+- *ggplot2* and the "Grammar of Graphics"&lt;sup&gt;6&lt;/sup&gt;
+
+![](r-intro-slides_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
+
+---
+
+## References
+
+1. &lt;https://speakerdeck.com/stephenturner/introduction-to-r-for-life-scientists&gt;
+2. &lt;https://www.tldrlegal.com/l/gpl2&gt;
+3. &lt;https://cran.r-project.org/&gt;
+4. &lt;https://www.bioconductor.org/&gt;
+5. &lt;http://www.nytimes.com/2009/01/07/technology/business-computing/07program.html&gt;
+6. &lt;http://byrneslab.net/classes/biol607/readings/wickham_layered-grammar.pdf&gt;
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

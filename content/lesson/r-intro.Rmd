@@ -3,6 +3,8 @@ title: 'Introduction to R'
 categories: ["R Programming"]
 ---
 
+<a class="btn btn-success btn-lg" href="/slides/r-intro-slides.pdf" role="button">SLIDES</a>
+
 ```{r, echo=FALSE, message=FALSE, eval=TRUE, warning=FALSE}
 library(knitr)
 opts_chunk$set(message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE, results="show", cache=FALSE)
