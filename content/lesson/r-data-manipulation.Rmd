@@ -2,6 +2,7 @@
 title: "R Data Manipulation"
 date: 2019-04-29T13:01:13-04:00
 draft: false
+weight: 1
 output:
   pdf_document: default
   html_document: default
@@ -428,13 +429,12 @@ Show the limiting nutrient and expression values for the gene ADH2 when the grow
 ydat %>% filter(symbol=="ADH2" & rate==0.05) %>% select(nutrient, expression)
 ```
 
-<details>
-  <summary>SHOW ANSWER</summary>
-  ```{r, echo = TRUE, warning = FALSE, results = "hide"}
+<details><summary>SHOW ANSWER</summary>
+```{r, echo = TRUE, warning = FALSE, results = "hide"}
 ydat %>% 
 filter(symbol=="ADH2" & rate==0.05) %>% 
 select(nutrient, expression)
-  ```
+```
 </details>
 
 <hr>
@@ -449,15 +449,14 @@ ydat %>%
   select(symbol, expression, bp, mf) 
 ```
 
-<details>
-  <summary>SHOW ANSWER</summary>
-  ```{r, echo = TRUE, warning = FALSE, results = "hide"}
+<details><summary>SHOW ANSWER</summary>
+```{r, echo = TRUE, warning = FALSE, results = "hide"}
 ydat %>% 
   filter(nutrient=="Glucose" & rate==.05) %>% 
   arrange(desc(expression)) %>% 
   head(4) %>% 
   select(symbol, expression, bp, mf) 
-  ```
+```
 </details>
 
 <hr>
@@ -477,9 +476,8 @@ ydat %>%
   summarize(meanexp=mean(expression))
 ```
 
-<details>
-  <summary>SHOW ANSWER</summary>
-  ```{r, echo = TRUE, warning = FALSE, results = "hide"}
+<details><summary>SHOW ANSWER</summary>
+```{r, echo = TRUE, warning = FALSE, results = "hide"}
 ydat %>% 
   filter(rate==.05 & bp=="response to stress") %>% 
   group_by(nutrient) %>% 
@@ -489,7 +487,7 @@ ydat %>%
   filter(rate==.05 & bp=="protein biosynthesis") %>% 
   group_by(nutrient) %>% 
   summarize(meanexp=mean(expression))
-  ```
+```
 </details>
 
 <hr>
@@ -520,9 +518,8 @@ ydat %>%
   head(10)
 ```
 
-<details>
-  <summary>SHOW ANSWER</summary>
-  ```{r, echo = TRUE, warning = FALSE, results = "hide"}
+<details><summary>SHOW ANSWER</summary>
+```{r, echo = TRUE, warning = FALSE, results = "hide"}
 ydat %>% 
   group_by(bp) %>% 
   summarize(n=n_distinct(symbol)) %>% 
@@ -534,7 +531,7 @@ ydat %>%
   summarize(n=n_distinct(symbol)) %>% 
   arrange(desc(n)) %>% 
   head(10)
-  ```
+```
 </details>
 
 <hr>
@@ -548,14 +545,13 @@ ydat %>%
   distinct()
 ```
 
-<details>
-  <summary>SHOW ANSWER</summary>
-  ```{r, echo = TRUE, warning = FALSE, results = "hide"}
+<details><summary>SHOW ANSWER</summary>
+```{r, echo = TRUE, warning = FALSE, results = "hide"}
 ydat %>% 
   filter(bp!="biological process unknown" & mf=="molecular function unknown") %>% 
   select(symbol, bp, mf) %>% 
   distinct()
-  ```
+```
 </details>
 
 <hr>
@@ -571,16 +567,15 @@ ydat %>%
   arrange(desc(meanexp))
 ```
 
-<details>
-  <summary>SHOW ANSWER</summary>
-  ```{r, echo = TRUE, warning = FALSE, results = "hide"}
+<details><summary>SHOW ANSWER</summary>
+```{r, echo = TRUE, warning = FALSE, results = "hide"}
 ydat %>% 
   filter(nutrient=="Glucose" & rate==.05) %>% 
   group_by(bp) %>% 
   summarize(meanexp=mean(expression)) %>% 
   mutate(meanexp=round(meanexp, 2)) %>% 
   arrange(desc(meanexp))
-  ```
+```
 </details>
 
 <hr>
@@ -595,15 +590,14 @@ ydat %>%
   arrange(desc(meanexp))
 ```
 
-<details>
-  <summary>SHOW ANSWER</summary>
-  ```{r, echo = TRUE, warning = FALSE, results = "hide"}
+<details><summary>SHOW ANSWER</summary>
+```{r, echo = TRUE, warning = FALSE, results = "hide"}
 ydat %>% 
   filter(rate==0.05) %>% 
   group_by(nutrient, bp) %>% 
   summarize(meanexp=mean(expression)) %>% 
   arrange(desc(meanexp))
-  ```
+```
 </details>
 
 <hr>
@@ -619,16 +613,15 @@ ydat %>%
   filter(row_number()<=3)
 ```
 
-<details>
-  <summary>SHOW ANSWER</summary>
-  ```{r, echo = TRUE, warning = FALSE, results = "hide"}
+<details><summary>SHOW ANSWER</summary>
+```{r, echo = TRUE, warning = FALSE, results = "hide"}
 ydat %>% 
   filter(rate==0.05) %>% 
   group_by(nutrient, bp) %>% 
   summarize(meanexp=mean(expression)) %>% 
   arrange(desc(meanexp)) %>% 
   filter(row_number()<=3)
-  ```
+```
 </details>
 
 <hr>
@@ -653,9 +646,8 @@ ydat %>%
   filter(row_number()==1)
 ```
 
-<details>
-  <summary>SHOW ANSWER</summary>
-  ```{r, echo = TRUE, warning = FALSE, results = "hide"}
+<details><summary>SHOW ANSWER</summary>
+```{r, echo = TRUE, warning = FALSE, results = "hide"}
 ydat %>% 
   group_by(nutrient, bp) %>% 
   summarize(r=round(suppressWarnings(cor(rate, expression)), 2), ngenes=n_distinct(symbol)) %>% 
@@ -663,5 +655,5 @@ ydat %>%
   mutate(absr=abs(r)) %>% 
   arrange(desc(absr)) %>% 
   filter(row_number()==1)
-  ```
+```
 </details>
