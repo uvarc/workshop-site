@@ -20,9 +20,9 @@
       </tr>
     </thead>
     <tbody>
-      <!--set to 50 to show all lessons for now -->
-          {{- $paginator := (.Paginator 50) }}
-    {{- range $paginator.Pages }}
+
+    {{ range (.Paginate (.Pages.ByWeight)).Pages -}}
+
       <tr>
         <td>
             <h5><a href="{{ .Permalink | relURL }}"> {{ .Title }}</h5>

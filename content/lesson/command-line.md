@@ -1,6 +1,7 @@
 ---
 title: "Introduction to the Command-Line Interface"
 author: "Neal Magee"
+weight: 1
 # date: 2015-07-23T21:13:14-05:00
 categories: ["Research Computing Essentials"]
 toc: true

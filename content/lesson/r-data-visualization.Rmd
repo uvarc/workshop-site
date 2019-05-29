@@ -1,6 +1,6 @@
 ---
 title: "R Data Visualization"
-date: 2019-04-29T13:01:13-04:00
+weight: 3
 draft: false
 output:
   pdf_document: default

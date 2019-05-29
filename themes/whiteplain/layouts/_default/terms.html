@@ -9,7 +9,7 @@
 	    <!--<ul id="og-grid" class="og-grid">-->
 			
 			<ul class="list-group">
-		{{- range .Data.Terms.Alphabetical }}
+		{{- range .Data.Terms.ByWeight }}
 		
 		<h3><a href="{{ "/" | relURL }}{{ $data.Plural | urlize }}/{{ .Name | urlize }}/">
 		 <li class="list-group-item d-flex justify-content-between align-items-center"> <i class="fas fa-folder"></i> {{ .Name | humanize | upper}}

@@ -1,6 +1,7 @@
 ---
 title: "Version Control with Git/GitHub"
 author: "VP Nagraj"
+weight: 2
 # date: 2015-07-23T21:13:14-05:00
 categories: ["Advanced Research Computing"]
 ---

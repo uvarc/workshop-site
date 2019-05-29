@@ -1,6 +1,7 @@
 ---
 title: "Introduction to Cloud Computing"
 author: "Neal Magee"
+weight: 3
 # date: 2015-07-23T21:13:14-05:00
 categories: ["Cloud Computing"]
 toc: true

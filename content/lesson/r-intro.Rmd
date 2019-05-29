@@ -1,5 +1,6 @@
 ---
 title: 'Introduction to R'
+weight: 1
 categories: ["R Programming"]
 ---
 

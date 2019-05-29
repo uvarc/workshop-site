@@ -1,5 +1,6 @@
 ---
 title: "R Conditionals and Iteration"
+weight: 4
 output:
   pdf_document: default
   html_document: default

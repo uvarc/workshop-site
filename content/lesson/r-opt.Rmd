@@ -1,6 +1,7 @@
 ---
 title: "R Optimization"
 author: "VP Nagraj"
+weight: 6
 output:
   pdf_document: default
   html_document: default

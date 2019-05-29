@@ -1,8 +1,7 @@
 ---
 title: "R Data Manipulation"
-date: 2019-04-29T13:01:13-04:00
 draft: false
-weight: 1
+weight: 2
 output:
   pdf_document: default
   html_document: default
