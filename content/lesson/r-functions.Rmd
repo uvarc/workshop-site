@@ -11,9 +11,7 @@ categories: ["R Programming"]
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
 ```
 
-## Overview
-
-This session will introduce essentials of writing functions in R. We will discuss methods for passing arguments, establishing return values and handling errors. We'll also spend time covering R environments, as well as the system of searching for objects from within a function and beyond.
+<p class="lead">This session will introduce essentials of writing functions in R. We will discuss methods for passing arguments, establishing return values and handling errors. We'll also spend time covering R environments, as well as the system of searching for objects from within a function and beyond. This lesson assumes a [basic familiarity with R](/lesson/r-intro) and [conditionals and iteration](/lesson/r-cond-iter).</p>
 
 ### Introduction
 
@@ -312,7 +310,7 @@ This is a numeric vector that happens to include a `NA` (missing) value.
 
 What would happen if we tried to `summit()` a character vector?
 
-```{r, error = TRUE}
+```{r, error = TRUE, warning=TRUE}
 summit("foo", method = "mean")
 summit("foo", method = "sum")
 summit("foo", method = "quantile")

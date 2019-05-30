@@ -12,6 +12,10 @@ categories: ["R Programming"]
 knitr::opts_chunk$set(echo = TRUE, eval = FALSE, warning = FALSE, message = FALSE, cache = TRUE)
 ```
 
+<p class="lead">This workshop will introduce strategies to address efficiency in R. We will explore debugging and timing tools, as well as standard methods for optimizing code. This lesson assumes a [basic familiarity with R](/lesson/r-intro), [conditionals and iteration](/lesson/r-cond-iter) and [writing functions](/lesson/r-functions).</p>
+
+- - -
+
 <a class="btn btn-success btn-lg" href="/slides/r-opt-slides.pdf" role="button">SLIDES</a>
 
 ## Setup
@@ -42,11 +46,11 @@ library(nycflights13)
 
 One could argue that "optimizing" can generally refer to any strategy for improving a programmatic workflow. In terms of code, that could include making your script more legible ... or using a more efficient memory footprint ...  or even making it work with a preferred set of tools or packages. But generally, when people refer to optimization they're actually interested in improving *speed* of execution, and that will be the focus of this material.
 
-What follows will be an overview of some R optimization / preformance observations, which are made in context of data manipulation, IO, visualization, vectorization and memory usage. We will **not** cover any of the following: parallelization, distributed big data methods (mapReduce), performance optimization with Rcpp. These are important topics, and if you're interested consider reviewing available material[^1][^2][^3] devoted to them.
+What follows will be an overview of some R optimization / performance observations, which are made in context of data manipulation, IO, visualization, vectorization and memory usage. We will **not** cover any of the following: parallelization, distributed big data methods (mapReduce), performance optimization with Rcpp. These are important topics, and if you're interested in them you should consider reviewing some of the available material[^1][^2][^3].
 
 ## Speed
 
-If you've read any material about optimization in R, you might have come across the central dogma: *R is slow* ... and that's true, though not necessarily a knock on R as a language. There are inherent things about R (AND as it's open-source implementation) that limit its performance.
+If you've read about optimization in R, you might have come across the central dogma: *R is slow* ... and that's true, though it's not necessarily a knock on R as a language. There are inherent things about R (AND as its open-source implementation) that limit its performance.
 
 In terms of core language limitations, some of the features intended to make R easy / intuitive for users actually make it slower. For example, the concept of extreme dynamism (i.e. that objects can be overwritten or changed after creation) creates performance overhead. Likewise there's overhead with lazy evaluation and lexical scoping that generally can't be avoided. For more detailed descriptions and examples of these (as well as the limitations created by how R is *implemented*) see Hadley Wickham's *Advanced R* chapter on performance[^4].
 
@@ -214,7 +218,7 @@ No they aren't. And that may be fine ... but if you have a data manipulation pip
 
 It's also worth considering comfort level with the syntax. There are certainly trade-offs between what might be *computationally* efficent versus what might be *cognitively* efficient. There's a very rich and highly-moderated discussion of this between developers of `data.table` and `dplyr` on Stack Overflow[^8].
 
-#### Exercises (Set 1)
+#### Exercise 1
 
 1. Using the `flights` data (from the `nycflights13` package) benchmark base bracket / `which()` subsetting vs `dplyr`s `filter()`. Look for flights that experienced departure delays (i.e. dep_delay > 0). What method is faster? 
 2. Try the same benchmark, but on a random sample of just 5000 rows of the `flights` data (`sample_n(flights, 5000)`).
@@ -260,11 +264,11 @@ microbenchmark(
 )
 ```
 
-#### Exercises (Set 2)
+#### Exercise 2
 
-1. Instead of downloading the NHANES data, we could have read it directly from the web (https://bioconnector.org/data/nhanes.csv). Use `microbenchmark()` to compare reading the file directly with `read.csv()`, `read_csv()` and `fread()` respectively.
+1. Instead of downloading the NHANES data, we could have read it directly from the web (https://workshops.somrc.virginia.edu/data/nhanes.csv). Use `microbenchmark()` to compare reading the file directly with `read.csv()`, `read_csv()` and `fread()` respectively.
 2. Can you think of any limitations or issues with the benchmarking exercise above?
-3. See you if you can find an explanation for why `fread` is so fast. A Google search of "why is fread is so fast" should put you on the right track ...
+3. See you if you can find an explanation for why `fread` is so fast.
 
 ## Visualization
 
@@ -438,7 +442,7 @@ microbenchmark(
 
 ## Memory
 
-To work with an object in R, it must be loaded into memory. So in addition to improving time of execution, you could consider optimizing how you work with memory. Usually having
+To work with an object in R, it must be loaded into memory. So in addition to improving time of execution, you could consider optimizing how you work with memory.
 
 The `object_size()` function from `pryr` gives us a quick way to inspect the size (number of bytes) of on object stored in memory.
 

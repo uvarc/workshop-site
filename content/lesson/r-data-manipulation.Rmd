@@ -8,8 +8,6 @@ output:
 categories: ["R Programming"]
 ---
 
-# Data Manipulation with `dplyr`
-
 ```{r include=F}
 library(knitr)
 opts_chunk$set(message=FALSE, warning=FALSE, eval=TRUE, echo=TRUE, cache=TRUE)
@@ -22,9 +20,7 @@ library(ggplot2)
 theme_set(theme_bw(base_size=16) + theme(strip.background = element_blank()))
 ```
 
-Data analysis involves a large amount of [janitor work](http://www.nytimes.com/2014/08/18/technology/for-big-data-scientists-hurdle-to-insights-is-janitor-work.html) -- munging and cleaning data to facilitate downstream data analysis. This lesson demonstrates techniques for advanced data manipulation and analysis with the split-apply-combine strategy. We will use the dplyr package in R to effectively manipulate and conditionally compute summary statistics over subsets of a "big" dataset containing many observations.
-
-This lesson assumes a [basic familiarity with R](/lesson/r-intro) and [data frames](/lesson/r-intro#data-frames).
+<p class="lead">Data analysis involves a large amount of [janitor work](http://www.nytimes.com/2014/08/18/technology/for-big-data-scientists-hurdle-to-insights-is-janitor-work.html) -- munging and cleaning data to facilitate downstream data analysis. This lesson demonstrates techniques for advanced data manipulation and analysis with the split-apply-combine strategy. We will use the dplyr package in R to effectively manipulate and conditionally compute summary statistics over subsets of a "big" dataset containing many observations. This lesson assumes a [basic familiarity with R](/lesson/r-intro) and [data frames](/lesson/r-intro#data-frames).</p>
 
 ## Review
 
@@ -36,7 +32,7 @@ We're going to use the yeast gene expression dataset [described in the data fram
 
 2. **Respond differently when different nutrients are being limited**. If you see particular genes that respond very differently when a nutrient is sharply restricted, these genes might be involved in the transport or metabolism of that specific nutrient.
 
-You can download the cleaned up version of the data at [the link above](data.html). The file is called [**brauer2007_tidy.csv**](data/brauer2007_tidy.csv). Later on we'll actually start with the original raw data (minimally processed) and manipulate it so that we can make it more amenable for analysis. 
+Download the [**brauer2007_tidy.csv** data by clicking here](/data/brauer2007_tidy.csv).
 
 ### Reading in data
 

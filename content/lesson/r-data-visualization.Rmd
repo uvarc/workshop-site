@@ -8,6 +8,8 @@ output:
 categories: ["R Programming"]
 ---
 
+<p class="lead">This section will cover fundamental concepts for creating effective data visualization and will introduce tools and techniques for visualizing large, high-dimensional data using R. We will review fundamental concepts for visually displaying quantitative information, such as using series of small multiples, avoiding "chart-junk," and maximizing the data-ink ratio. We will cover the grammar of graphics (geoms, aesthetics, stats, and faceting), and using the ggplot2 package to create plots layer-by-layer. This lesson assumes a  [basic familiarity with R](/lesson/r-intro), [data frames](/lesson/r-intro#data-frames), and [manipulating data with dplyr and `%>%`](/lesson/r-data-manipulation).</p>
+
 ```{r, echo=FALSE, message=FALSE, eval=TRUE}
 # Set eval=TRUE to hide all results and figures.
 # This sets defaults. Can change this manually in individual chunks.
@@ -20,15 +22,13 @@ opts_knit$set(root.dir = "../../static/data/")
 .ex <- 1
 ```
 
-This section will cover fundamental concepts for creating effective data visualization and will introduce tools and techniques for visualizing large, high-dimensional data using R. We will review fundamental concepts for visually displaying quantitative information, such as using series of small multiples, avoiding "chart-junk," and maximizing the data-ink ratio. We will cover the grammar of graphics (geoms, aesthetics, stats, and faceting), and using the ggplot2 package to create plots layer-by-layer. 
-
-This lesson assumes a basic familiarity with R, data frames, and manipulating data with dplyr and `%>%`.
-
 ## Review
 
 ### Gapminder data
 
-We're going to work with a different dataset for this section. It's a [cleaned-up excerpt](https://github.com/jennybc/gapminder) from the [Gapminder data](http://www.gapminder.org/data/). Download the [**gapminder.csv** data by clicking here](/data/gapminder.csv) or using the link above.
+We're going to work with a different dataset for this section. It's a [cleaned-up excerpt](https://github.com/jennybc/gapminder) from the [Gapminder data](http://www.gapminder.org/data/). 
+
+Download the [**gapminder.csv** data by clicking here](/data/gapminder.csv).
 
 Let's read in the data to an object called `gm` and take a look with `View`. Remember, we need to load both the dplyr and readr packages for efficiently reading in and displaying this data. 
 
@@ -126,7 +126,7 @@ Now, let's lay out the plot. If we want to plot a continuous Y variable by a con
 ggplot(gm, aes(x = gdpPercap, y = lifeExp))
 ```
 
-When we do that we get a blank canvas with no data showing (you might get an error if you're using an old version of ggplot2). That's because all we've done is laid out a two-dimensional plot specifying what goes on the x and y axes, but we haven't told it what kind of geometric object to plot. The obvious choice here is a point. Check out [docs.ggplot2.org](http://docs.ggplot2.org/) to see what kind of geoms are available.
+When we do that we get a blank canvas with no data showing (you might get an error if you're using an old version of ggplot2). That's because all we've done is laid out a two-dimensional plot specifying what goes on the x and y axes, but we haven't told it what kind of geometric object to plot. The obvious choice here is a point. Check out [the ggplot2 documentation](https://ggplot2.tidyverse.org/reference/#section-layer-geoms) to see what kind of geoms are available.
 
 ```{r}
 ggplot(gm, aes(x = gdpPercap, y = lifeExp)) + geom_point()
@@ -212,12 +212,12 @@ ggplot(gm, aes(gdpPercap, lifeExp)) +
 ```
 
 <details>
-  <summary>SHOW ANSWER</summary>
-  ```{r, echo = TRUE, warning = FALSE, results = "hide"}
+<summary>SHOW ANSWER</summary>
+```{r, echo = TRUE, warning = FALSE, results = "hide"}
 ggplot(gm, aes(gdpPercap, lifeExp)) + 
   geom_point(aes(col=continent), size=3) + 
   scale_x_log10()
-  ```
+```
 </details>
 
 ----
@@ -300,11 +300,11 @@ p + facet_wrap(~continent) + geom_line(aes(group=country), alpha=.5) + geom_smoo
 ```
 
 <details>
-  <summary>SHOW ANSWER</summary>
-  ```{r, echo = TRUE, warning = FALSE, results = "hide"}
+<summary>SHOW ANSWER</summary>
+```{r, echo = TRUE, warning = FALSE, results = "hide"}
 p <- ggplot(filter(gm, continent!="Oceania"), aes(year, lifeExp))
 p + facet_wrap(~continent) + geom_line(aes(group=country), alpha=.5) + geom_smooth(lwd=3, se=FALSE)
-  ```
+```
 </details>
 
 ----
@@ -414,12 +414,12 @@ p + geom_boxplot(outlier.colour="red") + geom_jitter(alpha=1/2)
 ```
 
 <details>
-  <summary>SHOW ANSWER</summary>
-  ```{r, echo = TRUE, warning = FALSE, results = "hide"}
+<summary>SHOW ANSWER</summary>
+```{r, echo = TRUE, warning = FALSE, results = "hide"}
 p <- ggplot(gm, aes(reorder(continent, gdpPercap, FUN=function(x) mean(log10(x))), gdpPercap))
 p <- p + scale_y_log10()
 p + geom_boxplot(outlier.colour="red") + geom_jitter(alpha=1/2)
-  ```
+```
 </details>
 
 ----
@@ -514,13 +514,13 @@ p + geom_histogram(aes(fill=continent)) + facet_wrap(~continent, ncol=1)
 ```
 
 <details>
-  <summary>SHOW ANSWER</summary>
-  ```{r, echo = TRUE, warning = FALSE, eval = FALSE, results = "hide"}
+<summary>SHOW ANSWER</summary>
+```{r, echo = TRUE, warning = FALSE, eval = FALSE, results = "hide"}
 p <- ggplot(gm, aes(gdpPercap))
 p <- p + scale_x_log10()
 p + geom_histogram(aes(fill=continent)) + facet_wrap(~continent, ncol=1)
 ggsave("myplot.pdf", width=6, height=10)
-  ```
+```
 </details>
 
 ----
@@ -583,7 +583,7 @@ p + theme_tufte()
 
 ## Further Resources
 
-- [The official ggplot2 documentation](http://docs.ggplot2.org/)
+- [The official ggplot2 documentation](https://ggplot2.tidyverse.org/reference/)
 - [The ggplot2 book](http://amzn.to/1akjqsR), edition 1, by the developer, Hadley Wickham
 - [RStudio's ggplot2 cheat sheet](https://www.rstudio.com/wp-content/uploads/2015/05/ggplot2-cheatsheet.pdf)
 - [RStudio Community forum questions tagged with ggplot2](https://community.rstudio.com/search?q=ggplot2)

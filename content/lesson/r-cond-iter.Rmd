@@ -7,11 +7,13 @@ output:
 categories: ["R Programming"]
 ---
 
+<p class="lead">This workshop will explore approaches for implementing logic, testing conditions and iterating over R objects. The material will include comparisons via operators, looping, vectorization, "apply" functions and control flow. This lesson assumes a [basic familiarity with R](/lesson/r-intro).</p>
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Introduction
+### Introduction
 
 The ability to use logic to condition execution of a program is fundamental to many languages. These *control-flow* features are primarily implemented in R through a series of "reserved" words:
 
@@ -49,7 +51,7 @@ We can illustrate how these statements behave as functions with the following:
      alt.expr = "not summer!")
 ```
 
-The syntax above is a bit arcane ... and we'll discuss a more common (and legible) way to formulate an if-else statement below. But the principle that these statements are functions is helpful in understanding how they behave.
+The syntax above is a bit arcane ... and we'll discuss a more common (and legible) way to formulate an if/else statement below. But the principle that these statements are functions is helpful in understanding how they behave.
 
 ### `if` / `else`
 
@@ -139,7 +141,6 @@ if (summer_test) {
 ```
 
 Note that the final `else` is very important, as it closes out the logical possibilities. Without it, the statement wouldn't print anything if both the `if` and `else if` fail.
-
 
 As an aside, we can also make the logical argument to `if` / `else` more complex with boolean operators. For example if we wanted to satisfy two conditions simultaneously we could use `&&`:
 
@@ -237,7 +238,7 @@ Both of the cases above achieve the same result, but there are a couple of funda
 
 > A vector of the same length and attributes (including dimensions and "class") as test and data values from the values of yes or no. 
 
-We can see that the return value is a *vector* ... as such, `ifelse()` has a distinct advantage over the more explicit `if` / `else` syntax in that it is **vectorized**. We'll talk more about vectorization and its advantages in the context of iteration and loops, but we can see some of its benefits already with `ifelse()`.
+We can see that the return value is a *vector* ... `ifelse()` has a distinct advantage over the more explicit `if` / `else` syntax in that it is **vectorized**. We'll talk more about vectorization and its advantages in the context of iteration and loops, but we can see some of its benefits already with `ifelse()`.
 
 For example, say we had a test that evaluated multiple elements:
 

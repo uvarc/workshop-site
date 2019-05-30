@@ -4,6 +4,8 @@ weight: 1
 categories: ["R Programming"]
 ---
 
+<p class="lead">This material introduces the basics of the R statistical computing environment and RStudio. We will introduce the R statistical computing environment as well as RStudio. We will cover very basic functionality, including variables, functions, importing data, and the fundamentals of inspecting data frame objects. This section assumes little to no experience with statistical computing or R.</p>
+
 <a class="btn btn-success btn-lg" href="/slides/r-intro-slides.pdf" role="button">SLIDES</a>
 
 ```{r, echo=FALSE, message=FALSE, eval=TRUE, warning=FALSE}
@@ -14,9 +16,6 @@ options(digits=3)
 options(max.print=200)
 .ex <- 1 # Track ex numbers w/ hidden var. Increment each ex: `r .ex``r .ex=.ex+1`
 ```
-
-
-This section introduces the R environment and some of the most basic funcionality aspects of R that are used through the remainder of the class. This section assumes little to no experience with statistical computing with R. We will introduce the R statistical computing environment as well as RStudio. We will cover very basic functionality in R, including variables, functions, importing data, and the basics of inspecting data frame objects.
 
 ## RStudio
 
