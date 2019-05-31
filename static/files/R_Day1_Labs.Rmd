@@ -1,6 +1,9 @@
 ---
 title: "R Day 1 Exercises"
-output: pdf_document
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
@@ -298,7 +301,7 @@ Re-create this same plot from scratch without saving anything to a variable. Tha
   * Map continent onto the aesthetics of the point
 * Use a log<sub>10</sub> scale for the x-axis.
 
-![](http://workshops.somrc.virginia.edu/files/exercise1.png)\
+![](exercise1.png)
 
 
 ### Exercise 2
@@ -308,7 +311,7 @@ Re-create this same plot from scratch without saving anything to a variable. Tha
 1. Add a fitted curve, smooth or lm, with and without facets.
 1. **Bonus**: using `geom_line()` and and aesthetic mapping `country` to `group=`, make a "spaghetti plot", showing _semitransparent_ lines connected for each country, faceted by continent. Add a smoothed loess curve with a thick (`lwd=3`) line with no standard error stripe. Reduce the opacity (`alpha=`) of the individual black lines. _Don't_ show Oceania countries (that is, `filter()` the data where `continent!="Oceania"` before you plot it).
 
-![](http://workshops.somrc.virginia.edu/files/exercise2.png)
+![](exercise2.png)
 
 
 ### Exercise 3
@@ -318,7 +321,7 @@ Re-create this same plot from scratch without saving anything to a variable. Tha
 1. Using a log<sub>10</sub> y-axis scale, overlay semitransparent jittered points on top of box plots, where outlying points are colored. 
 1. **BONUS**: Try to reorder the continents on the x-axis by GDP per capita. Why isn't this working as expected? See `?reorder` for clues.
 
-![](http://workshops.somrc.virginia.edu/files/exercise3.png)
+![](exercise3.png)
 
 ### Exercise 4
 
@@ -328,5 +331,123 @@ Re-create this same plot from scratch without saving anything to a variable. Tha
 1. Still on the log<sub>10</sub> x-axis scale, make a histogram faceted by continent _and_ filled by continent. Facet with a single column (see `?facet_wrap` for help). 
 1. Save this figure to a 6x10 PDF file.
 
-![](http://workshops.somrc.virginia.edu/files/exercise4.png)
+![](exercise4.png)
+
+## Exploring Multiple Datasets
+
+We'll be doing an in-class exploration of two datasets: 
+
+`movies`: A subset of records from the Internet Movie Database (IMDB) <http://imdb.com/>; Movies were selected for inclusion if they had a known length and had been rated by at least one IMDB user.
+
+`biopics`: The raw data behind the story "'Straight Outta Compton' Is The Rare Biopic Not About White Dudes" <http://fivethirtyeight.com/features/straight-outta-compton-is-the-rare-biopic-not-about-white-dudes/>.
+
+These datasets should be manipulated (combined, filtered, summarized, reshaped, etc.) and visualized using the "tidyverse" approach we've discussed during the first four weeks of class.
+
+The prompts that follow are meant as guidelines. Feel free to explore the data however you'd like in the context of the broader points listed below. Any results could be presented as tables, visualizations or prose with inline results. All work should be included in an R Markdown document with code and results rendered.
+
+### Setup
+
+Both of these datasets are available via "data packages" ... these are packages that can make it possible to load datasets without having to "read" them into your environment. 
+
+Use the following to load the packages / data:
+
+```{r, eval = FALSE}
+install.packages("ggplot2movies")
+library(ggplot2movies)
+data(movies)
+movies
+
+install.packages("fivethirtyeight")
+library(fivethirtyeight)
+data(biopics)
+biopics
+```
+
+### Ratings
+
+The `movies` data includes a number of features (for a complete list see `?movies`). One variable of potential interest is the movie rating. This is a calculated average of user-supplied reviews on a scale of 1-10.  
+
+- What is the distribution of ratings by genre?
+- Is there a difference between ratings of movies with an MPAA designation "R" vs "PG"?
+- What is the highest rated movie (with at least 50 votes) released in 1975?
+
+### Votes
+
+`movies` includes the number of votes (i.e. reviews) each film has received on IMDB. One way to interpret this value is as the "popularity" (or at least scale of viewership) among IMDB users.
+
+- Which movies have the top 10 number of votes?
+- Is there a relationship between the amount of votes and the overall rating for a movie?
+- Does the amount of votes vary by year (or decade) of release?
+
+### `biopics` + `movies`
+
+The `fivethirtyeight` package provides data related to stories published on the media outlet fivethirtyeight (<https://fivethirtyeight.com/>). One of the datasets in the package is `biopics`, which includes multiple features about biographical movies. For more information about the dataset and its variables use `?biopics`. Try combining the features of the `biopics` data set with `movies`, and do some exploration.
+
+- How many biopics are in the `movies` dataset? 
+- Do biopics about men generally receive higher ratings than biopics about women? 
+- What is the balance of representation by subject type in biopics? 
+
+### Hints
+
+- the `cut()` function allows you to create discrete representations (categories) of continuous variables
+- in cases where you have data in your column headers (or vice versa) you made need to "reshape" with `gather()` (wide to long) or `spread()` (long to wide)
+- when using a `dplyr` "join" function, it is sometimes helpful (or necessary) to explicitly state the columns on which you'd like to join; you can even join on columns that don't share the same name (see the help for the "by" argument in `?join`)
+- `geom_bar()` from `ggplot2` defaults to plotting the count of a given variable; when plotting a bar for a continuous y axis, you may need to include the argument `"stat = identity"`
+
+```{r, include = FALSE, echo = FALSE, eval = FALSE}
+# solutions
+
+# distributions of rating by genre
+movies %>%
+  select(-(r1:r10)) %>%
+  gather(genre,val, Action:Romance) %>%
+  filter(val == 1) %>%
+  select(-val) %>%
+  ggplot(aes(rating)) +
+  geom_histogram() +
+  facet_wrap(~ genre, scales = "free_y") +
+  xlab("Rating") +
+  ylab("Count") +
+  theme_minimal()
+
+# boxplot of rating by genre
+longmovies <-
+  movies %>%
+  select(-(r1:r10)) %>%
+  gather(genre,val, Action:Romance) %>%
+  filter(val == 1) %>%
+  select(-val)
+
+ggplot(longmovies, aes(reorder(genre,rating), rating)) +
+  geom_boxplot() +
+  xlab("Genre") +
+  ylab("Rating") +
+  theme_minimal()
+
+
+# visualize the distributions of total IMDB votes for movies by the decade in which the movie was originally released 
+movies %>%
+  mutate(decade = cut(year, breaks = seq(1890, 2010, by = 10), labels = paste0(seq(1890, 2000, by = 10), "s"))) %>% 
+  group_by(decade) %>%
+  summarise(votes = sum(votes), n = n(), voteratio = votes / n) %>%
+  ggplot(aes(decade,voteratio)) +
+  geom_bar(stat = "identity") +
+  xlab("Decade") +
+  ylab("Vote Ratio (Votes Per Movie)") +
+  theme_minimal()
+
+# average rating for biopics by sex 
+movies %>%
+  inner_join(biopics, by = c("title","year" = "year_release")) %>%
+  group_by(subject_sex) %>%
+  summarise(meanrating = mean(rating), n = n())
+
+# top movie in 1975 (more than 50 votes)
+movies %>%
+  filter(votes > 50, year == 1975) %>%
+  arrange(desc(rating)) %>%
+  head(1)
+```
+
+
 
