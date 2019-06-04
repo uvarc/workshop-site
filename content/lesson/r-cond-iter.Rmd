@@ -388,7 +388,7 @@ We saw how to get around this warning by using the vectorized `ifelse()`. But we
 ```{r}
 for (i in x) {
   
-  if (x[i] > 5) {
+  if (i > 5) {
     
     print("large")
     
