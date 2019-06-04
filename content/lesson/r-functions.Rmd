@@ -320,22 +320,22 @@ As you might expect, `mean()`, `sum()` and `quantile()` each require a numeric v
 
 
 ```{r}
-inherits(1, "numeric")
-inherits(1.7, "numeric")
-inherits(TRUE, "numeric")
-inherits("foo", "numeric")
+inherits(1, c("numeric","integer"))
+inherits(1.7, c("numeric","integer"))
+inherits(TRUE, c("numeric","integer"))
+inherits("foo", c("numeric","integer"))
 ```
 
 ```{r, error = TRUE}
 stopifnot(1 < 2)
 stopifnot(1 > 2)
-stopifnot(inherits("foo", "numeric"))
+stopifnot(inherits("foo", c("numeric","integer")))
 ```
 
 ```{r}
 summit <- function(x, method = "mean", ...) {
   
-  stopifnot(inherits(x, "numeric"))
+  stopifnot(inherits(x, c("numeric","integer")))
   
   switch(method,
          "mean" = mean(x, ...),
