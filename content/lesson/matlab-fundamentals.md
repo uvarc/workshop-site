@@ -4,7 +4,7 @@ author: "Christina Gancayco"
 # date: 2019-06-03T21:13:14-05:00
 categories: ["MATLAB Programming"]
 weight: 1
-draft: true
+draft: false
 ---
 
 <p class="lead">MATLAB is mathematical computing software that combines an easy-to-use desktop environment
