@@ -75,7 +75,9 @@ In MATLAB, the following symbols are used for mathematical operations:
 Let's calculate 1 + 2 with MATLAB. In the command window after the **>>**, type `1+2`
 and press the **Enter/Return** key on your keyboard.
 
-`1+2`
+```
+1+2
+```
 
 Feel free to try some other mathematical operations and see what you get!
 
