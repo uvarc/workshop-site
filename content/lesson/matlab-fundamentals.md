@@ -53,6 +53,7 @@ You will also need to download two datasets. If you are using MATLAB online, you
 to your MATLAB Drive.
 
 Edinburgh Marriages: [data](/data/edinburgh_marriages.mat)
+
 Women's 200m Backstroke: [data](/data/backstroke.mat)
 
 ## <a name="command-window">1. The Command Window</a>
@@ -867,14 +868,18 @@ types of data--this is very similar.)
 > Objectives
 
 > 1. Load the data contained in `backstroke.mat`.
+
 2. Concatenate a column of zeros to the beginning of the variable `time`. This will represent 
 each swimmer's starting time (time at "0 meter mark").
+
 3. Create a single plot of each swimmer's times vs. distance. You will need to create a vector 
 containing distances from `0` to `200` in `50` meter increments. This plot should have any style of 
 marker at each data point, with solid lines connecting each point. **Hint**: if your y-axis 
 data contains multiple rows, the `plot` function will treat each row as a separate dataset.
+
 4. Add a legend using the swimmers' names contained in the cell array `name`. Look up how 
 to use the `legend` function to add a legend to your plot.
+
 5. Subtract `time` from the fastest (i.e. minimum) time at each distance. Plot the result vs. 
 distance in a new figure, using a marker at each data point and solid lines. Add a legend to the plot 
 using the country codes in `country`. **Hint**: by default if you use the `plot` function multiple 
@@ -1074,12 +1079,17 @@ Let's create a simple "Price is Right" game.
 > Gameplay
 > 1. MATLAB will randomly generate an integer between 1 and 100. This value will be the 
 `price`.
+
 2. MATLAB will ask the user to `guess` the value of `price`. **Hint**: use the `input` function to 
 assign an interactive user value to a variable.
+
 3. The game will continue until the user's `guess` matches the `price`.
+
 4. If the user's `guess` is lower than the `price`, display a message saying "Too low!" **Hint**: 
 You can use the `disp` function to display strings (words or numbers within single quotes `''`).
+
 5. If the user's `guess` is higher than the `price`, display a message saying "Too high!"
+
 6. If the user's `guess` matches the `price`, display a message saying "You win!"
 
 
