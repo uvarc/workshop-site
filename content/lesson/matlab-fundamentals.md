@@ -48,6 +48,12 @@ To install MATLAB on your personal machine, you can download the MATLAB installe
 [https://www.mathworks.com/downloads/web_downloads/select_release](https://www.mathworks.com/downloads/web_downloads/select_release)
 You will need to create a Mathworks account to access the installation files for download.
 
+### Data
+You will also need to download two datasets. If you are using MATLAB online, you will have to upload them 
+to your MATLAB Drive.
+
+Edinburgh Marriages: [data](/data/edinburgh_marriages.mat)
+Women's 200m Backstroke: [data](/data/backstroke.mat)
 
 ## <a name="command-window">1. The Command Window</a>
 The command window is where you tell MATLAB what to do. Let's try telling MATLAB to do some 
@@ -327,7 +333,7 @@ interval (0,1).
 ## <a name="problem-set-1">Problem Set 1</a>
 
 Try these problems on your own, utilizing the concepts we learned above. The solution script can be 
-downloaded [here][/files/matlab_fundamentals_ps1.m].
+downloaded [here](/files/matlab_fundamentals_ps1.m).
 
 1. Calculate the results of the following:
 
