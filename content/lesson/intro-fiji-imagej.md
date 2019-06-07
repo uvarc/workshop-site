@@ -280,6 +280,15 @@ Image noise is an undesirable by-product of image capture that adds spurious and
 
 <img src=/images/intro-fiji-16.png style="height:60%;width:60%"></img>
 
+### Other Filter Options
+
+| **Filter**        | **Effect**                                          |
+| ------        | ------                                          |
+| Convolve          | Smoothing, noise spills into neighboring pixels |
+| Gaussian Blur | Smoothing, some edge preservation               |
+| Median        | Removes outliers, not linear                    |
+| Unsharp Mask  | Sharpens edges, amplifies noise                 |
+
 ## <a name="image-segmentation">Image Segmentation</a>
 
 ## <a name="image-object-measurements">Image Object Measurements</a>
