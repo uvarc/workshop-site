@@ -1,0 +1,10 @@
+import ij.IJ;							// find the IJ class
+
+imp = IJ.getImage();					// get active Image Window and assign to imp variable
+System.out.println("\nTitle:" + imp.getTitle());	// output image title
+
+// output image dimensions
+System.out.println("Channels: "+ imp.getNChannels());
+System.out.println("Focal Planes (Z): " + imp.getNSlices());
+System.out.println("Timepoints (Frames) " + imp.getNFrames());
+System.out.println("Width x Height: " + imp.getWidth() + "x" + imp.getHeight());

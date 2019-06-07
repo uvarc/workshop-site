@@ -1,0 +1,31 @@
+import ij.IJ;
+import ij.ImagePlus;
+
+imp = IJ.openImage("http://imagej.nih.gov/ij/images/Spindly-GFP.zip");
+
+channel_no = imp.getNChannels();	// last channel
+slice_no = 1 + (int)(imp.getNSlices() / 2);	// center slice
+stack = imp.getStack();
+calibration = imp.getCalibration().copy();
+
+// create output dir if it does not exist
+homedir = System.getProperty("user.home");							// home directory
+outputdir = new File(new File(homedir, "workshop"), "images");		// full dir path
+System.out.println(outputdir);
+if (! outputdir.exists()) {
+    outputdir.mkdirs();
+}    
+
+// iterate over all frames and save central slice of last channel
+for (frame_no=1; frame_no<=imp.getNFrames(); frame_no++) {
+	stack_index = imp.getStackIndex(channel_no, slice_no, frame_no);
+	ip = stack.getProcessor(stack_index);
+	// remove extension from image title and add frame no as suffix; need to escape . for regex pattern 
+	title = imp.getTitle().split("\\.")[0] + "-" + Integer.toString(frame_no);
+	System.out.println(title);
+	single_imp = new ImagePlus(title, ip);
+	single_imp.setCalibration(calibration);
+	// create file name with absolute path (incl directory name) and save
+	outputfile = new File(outputdir, title).getAbsolutePath();
+	IJ.saveAs(single_imp, "Tiff", outputfile);
+}	
