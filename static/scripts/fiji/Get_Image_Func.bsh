@@ -1,0 +1,18 @@
+import ij.IJ;
+
+
+void print_info(imp) {
+	/* This function prints basic image info. */
+	System.out.println("\nTitle: " + imp.getTitle());
+	
+	// output image dimensions
+	System.out.println("Channels: " + imp.getNChannels());
+	System.out.println("Focal Planes (Z): " + imp.getNSlices());
+	System.out.println("Timepoints (Frames): " + imp.getNFrames());
+	System.out.println("Width x Height: " + imp.getWidth() + " x " + imp.getHeight());
+}	
+
+
+// Main code block
+imp = IJ.getImage();
+print_info(imp);
