@@ -2,7 +2,10 @@
 title: "Next-Gen Sequence Alignment"
 author: "Hardik I Parikh"
 categories: ["Bioinformatics"]
+toc: true
 ---
+
+**Content developed by Hardik Parik**
 
 The goal of this hands-on workshop is to perform a simple NGS data alignment against a long reference genome, using the computational resources of [Rivanna](https://arcs.virginia.edu/rivanna), UVA's high-performance computing system. We will use popular short-read aligner Bowtie2, followed by further manipulation of SAM/BAM file formats using SAMTools.  
  
@@ -28,22 +31,38 @@ The goal of this hands-on workshop is to perform a simple NGS data alignment aga
 ### Rivanna Working Environment
 <br>
 
-#### SSH onto Rivanna
-- Open a Terminal
-- Login using ESERVICES credentials
+#### Rivanna Login
+
+Log in to Rivanna as described [here](../hpc-bioinformatics/#login).
 
 <br>
 
 #### Allocations
-For today's workshop, we will use the `somrc-hpc-workshop` allocation to run our jobs on Rivanna.  
+
+In order to use Rivanna, you need to have an allocation that provides you with service units to perform computations. The `allocations` command tells you what allocation account are available to you.
+
+```
+allocations
+```  
+
+Output:
+```
+Allocations available to <YOUR_NAME> (<YOUR_ID>):
+
+ * rivanna-training: less than 50,000 service-units remaining
+
+ for more information about a specific allocation, please run:
+  'allocations -a <allocation name>'
+```
+
+You may see additional allocations listed. For the purpose of this workshop, we will use the `rivanna-training` allocation to run our jobs on Rivanna.  
 **Note:** You will be removed from this _MyGroup_ at the end of today's session.
+
 
 <br>
 
 #### Dataset
 We will work with whole genome sequencing data of _NA12878_, a participant of the [1000 Genomes Project](http://www.internationalgenome.org/home), and align to _hg38_ build of human genome. 
-
-<br>
 
 Download the sequence data to your scratch directory (replace `<mst3k>` with your username) -  
 
@@ -83,15 +102,41 @@ Alignemnt is a two-step process
 <br>
 
 #### Start an interactive session  
-You should **NOT** do your computational processing on the head node.  
+You should **NOT** do your computational processing on the login node. Execute the `hostname` command to check what node you are on and take note of the name.
 
-In many cases, especially when you are testing/developing your analysis pipelines, you may want to perfrom the task interactively on a compute node. This can be achieved by using the `ijob` command and requesting appropriate resources. 
 ```
-ijob -A somrc-hpc-workshop -p standard -c 10 --mem=20gb
+hostname
+```
+
+In many cases, especially when you are testing/developing your analysis pipelines, you may want to perform the task interactively on a compute node. This can be achieved by using the `ijob` command and requesting appropriate resources. Let's request compute resources with the following parameters:
+
+* allocation: rivanna-training
+* partition: standard
+* cpu cores: 4
+* total memory: 20 GB 
+* time limit: 3 hours 
+
+**Note:** For short development work (<= 1 hour), you can request `dev` as the partition and remove the time-limit. 
+
+```
+ijob -A rivanna-training -p standard -c 4 --mem=20gb -t 3:00:00
 ```
 <br>
+The Rivanna scheduler will look for available compute nodes that match your request and place your interactive job on that node.  Since this is an interactive job, a new interactive shell will be opened on that node and you will see a new prompt that looks like this:
 
-#### Load `bowtie2` module
+```
+salloc: Pending job allocation 4849014
+salloc: job 4849014 queued and waiting for resources
+salloc: job 4849014 has been allocated resources
+salloc: Granted job allocation 4849014
+[<mst3k>@udc-ba26-15 <mst3k>]$
+```
+
+Run the `hostname` command again. Notice that the name returned is different than the one for the login node. Any command you type into this shell will be executed on a compute node where you have exclusive access to the requested resources.
+
+<br>
+
+#### Using `bowtie2`
 ```
 module purge
 module load bowtie2
@@ -113,7 +158,7 @@ cd /scratch/<mst3k>/ngs-aln-workshop/ref/
 # For more help:
 # bowtie2-build [ENTER]
 
-bowtie2-build --threads 10 hg38.subset.fa hg38.subset
+bowtie2-build --threads $SLURM_CPUS_PER_TASK hg38.subset.fa hg38.subset
 ```
 _*Indexing full human genome takes ~30 mins (using 10CPU cores)._
 
@@ -132,23 +177,28 @@ cd /scratch/<mst3k>/ngs-aln-workshop/
 # For more help:
 # bowtie2 <ENTER>
 
-bowtie2 -p 10 -x ref/hg38.subset -1 sample/SRR622461_1.fastq -2 sample/SRR622461_2.fastq -S NA12878-hg38.subset.sam
+bowtie2 -p $SLURM_CPUS_PER_TASK -x ref/hg38.subset -1 sample/SRR622461_R1.fastq.gz -2 sample/SRR622461_R2.fastq.gz -S NA12878-hg38.subset.sam
 ```
 This command aligns the forward (R1) and reverse (R2) reads to the indexed hg38 reference genome using _10_ threads and writes the output to `NA12878-hg38.subset.sam` SAM file. This step will take ~3 mins.
 
 <br>
 
-#### Relinquish allocations  
+#### Terminate your interactive job  
 
+After the execution of your commands has completed, you can terminate the interactive job and release the requested resource by typing in this command:
 ```
 exit
 ```
 
+You are now returned to a shell that runs on the login node where you started the interactive job. To confirm this, xecute the `hostname` command again.
+
+<br>
+
 ***
 
-#### Scheduling your job using SLURM
+#### Scheduling non-interactive jobs using SLURM
 
-Alternatively, you can schedule the alignment job using a SLURM script.  
+Running interactive jobs is a great way to prototype an analysis pipeline. Once you have worked out the details, you can schedule the alignment job using a SLURM script which is executed non-interactively. Scheduling non-interactive jobs also allow you to process many distinct data sets in parallel, thereby fully utilizing the computational capacity of Rivanna. 
 
 **Genomes Repository on Rivanna:**<br> 
 Rivanna users have access to a set of ready-to-use reference sequences and annotations for commonly analyzed organisms in a convenient, structured location - 
@@ -164,7 +214,7 @@ For this step, we will align our reads to the complete pre-indexed hg38 genome. 
 ```
 #!/bin/bash
 #SBATCH --job-name=bowtie2-aln      # Job name
-#SBATCH --cpus-per-task=20          # Number of CPU cores per task
+#SBATCH --cpus-per-task=10          # Number of CPU cores per task
 #SBATCH --mem=20gb                  # Job Memory
 #SBATCH --time=05:00:00             # Time limit hrs:min:sec
 #SBATCH --output=bowtie2-aln_%A.out # Standard output log
@@ -172,6 +222,7 @@ For this step, we will align our reads to the complete pre-indexed hg38 genome. 
 #SBATCH -A somrc-hpc-workshop       # allocation groups
 #SBATCH -p standard                 # slurm queue
 
+# output current directory, compute node name, date
 pwd; hostname; date
 
 ### load bowtie2 module
@@ -182,11 +233,12 @@ module load bowtie2
 bowtie2 -x /project/genomes/Homo_sapiens/UCSC/hg38/Sequence/Bowtie2Index/genome \
 	-1 /scratch/<mst3k>/ngs-aln-workshop/sample/SRR622461_R1.fastq.gz \
 	-2 /scratch/<mst3k>/ngs-aln-workshop/sample/SRR622461_R2.fastq.gz \
-	-p 20 \
+	-p $SLURM_CPUS_PER_TASK \
 	-S /scratch/<mst3k>/ngs-aln-workshop/NA12878-hg38.sam	 
 
 date
 ```
+
 Submit your job - 
 ```
 sbatch bowtie2.slurm
