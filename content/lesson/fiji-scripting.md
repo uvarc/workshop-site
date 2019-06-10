@@ -329,7 +329,7 @@ Width x Height: 256 x 254
 
 ## Image Dimensions {#image-dimensions-id}
 
-Fiji and ImageJ can handle multi-dimensional images, e.g. volumetric images or time-lapse series, up to five dimensions. Each image ([ImagePlus](#imageplus) object) has at least two dimensions, i.e. width (x-axis) and height (y-axis). In addition, ImagePlus object can have multiple color channels, z-focal planes (called slices), and/or timepoints (called frames). Lastly, images can have different pixel encodings, e.g. 8-bit, 16-bit, 32-bit, RGB that define an image's dynamic range (e.g. number of distinct intensity values per pixel) and color representation.
+Fiji and ImageJ can handle multi-dimensional images, e.g. volumetric images or time-lapse series, up to five dimensions. Each image ([ImagePlus][#imageplus] object) has at least two dimensions, i.e. width (x-axis) and height (y-axis). In addition, ImagePlus object can have multiple color channels, z-focal planes (called slices), and/or timepoints (called frames). Lastly, images can have different pixel encodings, e.g. 8-bit, 16-bit, 32-bit, RGB that define an image's dynamic range (e.g. number of distinct intensity values per pixel) and color representation.
 
 The ImagePlus class provides convenient methods to get this information.
 
@@ -416,7 +416,7 @@ This script creates four new images, each with 200 x 100 pixels but with differe
 
 ## Duplicating an Image {#image-duplication-id}
 
-The Duplicator class provides a convenient way to create an exact copy of an existing ImagePlus object.
+The [Duplicator][duplicator] class provides a convenient way to create an exact copy of an existing ImagePlus object.
 
 ```
 from ij import IJ
@@ -691,7 +691,8 @@ from java.awt import Color
 roi.setFillColor(Color.YELLOW)
 ```
 
-### Set ROI Position
+### Set ROI Position {#roi-set-id}
+
 The positioning of an ROI object (`roi`) can be set for a specific channel, slice, frame in a given image (`imp`) with multi-dimensional [ImageStack][imagestack].
 
 ```
@@ -1011,7 +1012,7 @@ Go to `File` > `Plugins` and verify that the script is available.  The `_` and f
 
 **Project 5:** Modify the [crop ROI example script](#roi-crop-id) to have it create multiple cropped images of various sizes in a code loop. [Hint: For loops](#loops-id)
 
-**Project 6:** Modify the processing function in [Batch Processing example script](#batch-processing-id) to prompt user for `sigma` value to be used by the Gaussian filter. [Hint: Custom Dialog Windows](#dialog-id). The custom sigma value should be passed from the main code block as an argument to the `process` function. [Hint: Functions](#functions-id)
+**Project 6:** Modify the processing function in [Batch Processing example script](#batch-processing-id) to prompt user for `sigma` value to be used by the Gaussian filter. [Hint: Custom Dialog Windows](#dialogs-id). The custom sigma value should be passed from the main code block as an argument to the `process` function. [Hint: Functions](#functions-id)
 
 **Project 7:** Let's try to improve the [particle analysis](#particle-analysis-id) by implementing the following features:
 
@@ -1099,7 +1100,7 @@ if save_rois:
 
 ## Expert {#expert-ex-id}
 
-**Project 8:**  Modify the processing function in [Batch Processing example script](#batch-processing-id) to apply a median filter to a circular shaped ROI in the center of the image. The ROI diameter should be half of the width or height (whichever is smaller) of the image. The radius of the median filter should be requested from the user. [Hint: Setting ROI](#roi-crop-id), [Hint: Recording filter functions](#macro-recorder-id), [Hint: Custom Dialog Windows](#dialog-id) 
+**Project 8:**  Modify the processing function in [Batch Processing example script](#batch-processing-id) to apply a median filter to a circular shaped ROI in the center of the image. The ROI diameter should be half of the width or height (whichever is smaller) of the image. The radius of the median filter should be requested from the user. [Hint: Setting ROI](#roi-set-id), [Hint: Recording filter functions](#ij-run-id), [Hint: Custom Dialog Windows](#dialogs-id) 
 
 **Project 9:** Let’s create a script that performs the following operations on a multi-dimensional ImageStack:
 
@@ -1108,7 +1109,6 @@ if save_rois:
 * The pixel size calibration of the original image should be retained in each saved image plane.
 
 <br>
-
 ```
 from ij import IJ
 from ij import ImagePlus
@@ -1153,7 +1153,7 @@ for frame_no in range(1, imp.getNFrames() + 1):
 
 ## Download Scripts {#download-id}
 
-[Download examples](/scripts/fiji).
+[Download examples](/scripts/fiji/fiji-example-scripts.zip).
 
 <br>
 
@@ -1163,7 +1163,8 @@ for frame_no in range(1, imp.getNFrames() + 1):
 
 * Tutorial: http://www.ini.uzh.ch/~acardona/fiji-tutorial/index.html
 * Tips for Developers: https://imagej.net/Tips_for_developers
-* API: https://imagej.nih.gov/ij/developer/api/ https://javadoc.scijava.org/Fiji/
+* API: https://imagej.nih.gov/ij/developer/api/ 
+* SciJava: https://javadoc.scijava.org/Fiji/
 
 **General Scripting**
 
