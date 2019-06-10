@@ -41,6 +41,8 @@ from the Fiji website: [https://fiji.sc/](https://fiji.sc/). Fiji is a portable 
 meaning it doesn't require an installer. To use Fiji, simply download and unzip the application, 
 and then you are able to start running it.
 
+To follow along with the exercises, you will also need to download some example images which can be found 
+at [https://workshops.somrc.virginia.edu/data/intro-fiji-images.zip](https://workshops.somrc.virginia.edu/data/intro-fiji-images.zip).
 
 # <a name="image-processing-overview">2) What is the Goal of Image Processing?</a>
 
