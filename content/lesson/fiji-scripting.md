@@ -977,6 +977,7 @@ Once you have completed script development, you can install the script in Fiji. 
 * **Note:** Your script name needs to include at least one underscore (`_`). Example: `Basic_Crop.py`
 
 There are two install options:
+
 * **Option A) Manual process:**
     1. Copy the script to the `plugins` directory in your Fiji install tree. You can create a subdirectory in `plugins` (e.g. plugins/workshop) and place your script there if you like to group related scripts.
 * **Option B) Fiji installer:**
