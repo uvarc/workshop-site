@@ -10,13 +10,42 @@ toc: true
 
 [Rivanna][rivanna] is the University of Virginia's High-Performance Computing (HPC) system. It is open to all faculty, research staff, and graduate students of the University, providing a platform for high-performance parallel jobs, for high-throughput computing chores of up to thousands of jobs, and for large-scale data analysis and image processing.  It also supports accelerator technologies, including general-purpose graphical processing units (GPGPUs) and Intel Many-Integrated Cores Knight's Landing systems. 
 
+![](/images/hpc-bio-rivanna.png)
+
+<br>
+
+## Accounts and Allocations {#allocations}
+
+Access to Rivanna is open to all faculty, researchers and students. In order to use Rivanna, you need to have an allocation that provides you with service units to perform computations. Allocations can be requested [here](https://arcs.virginia.edu/allocations). 
+
+The `allocations` command tells you what allocation accounts are available to you.
+```
+allocations
+```
+Output:
+
+```
+Allocations available to <YOUR_NAME> (<YOUR_ID>):
+
+ * rivanna-training: less than 50,000 service-units remaining
+
+ for more information about a specific allocation, please run:
+  'allocations -a <allocation name>'
+```
+
+The list of allocations available to you may differ.
+
+<br>
+
 ## Login to Rivanna {#login}
 
 In order to use Rivanna, you need a Rivanna [allocation][rivanna-allocation]. For this workshop you have been made a member of the `rivanna-training` allocation. 
 
 **Your login credentials are your UVA computing ID and your Eservices password.**
 
-### SSH Terminal {#ssh}
+<br>
+
+#### SSH Terminal
 
 Rivanna is accessible through ssh (Secure Shell) connections using the hostname `rivanna.hpc.virginia.edu`.  
 
@@ -29,11 +58,11 @@ ssh -Y mst3k@rivanna.hpc.virginia.edu
 Your login credentials are your UVA computing ID and your Eservices password. So in the example above, replace `mst3k` with your computing id.
 
 
-**Note:** Mac users must install XQuartz in order to be able to run graphical (X11) applications.  Keep in mind that graphical X11 applications may be slow through a standard ssh login.  For extensive use of graphical applications you may prefer the [FastX remote desktop environment](#fastx).
+**Note:** Mac users must install XQuartz in order to be able to run graphical (X11) applications.  Keep in mind that graphical X11 applications may be slow through a standard ssh login.  For extensive use of graphical applications you may prefer the [FastX remote desktop environment](https://arcs.virginia.edu/fastx).
 
 <br>
 
-### Remote Desktop Environment: FastX {#fastx}
+#### Remote Desktop Environment: FastX {#fastx}
 
 Users who wish to run X11 graphical applications may prefer the FastX remote desktop web interface.  The FastX web client is accessible at https://rivanna-desktop.hpc.virginia.edu.  Your login credentials are your UVA computing ID and your Eservices password.
 
@@ -41,19 +70,28 @@ Detailed instructions for using FastX Web can be found [here](https://arcs.virgi
 
 <br>
 
-## Linux Commands {#commandline}
+## Compute Environment
 
-An introduction to basic and useful Linux commands can be found [here](../command-line).  Ignore the **Connect** section on that site since we are connecting to Rivanna for this workshop.
+The operating system on Rivanna is Linux CentOS. For effective use of the Rivanna cluster, knowledge of basic Linux commands is recommended. An introduction to basic and useful Linux commands can be found [here](../command-line). 
+**Ignore the `Connect` section on that site since we are connecting to Rivanna for this workshop.**
+
+The Rivanna compute nodes are organized into distinct partitions (or queues) based hardware configuration and computational workflow.
+
+![](/images/hpc-bio-rivanna-partitions.png)
 
 <br>
 
 ## File Transfer Tools {#file-transfer}
 
-### Command Line Tools {#cli}
+**Small files**
 
-<br>
+Small files may be transferred using command line tools like scp (secure copy), rsync (Linux & Mac OSX), or curl, with a connection to the host `rivanna.hpc.virginia.edu`.  
 
-### Web Client: Globus {#globus}
+For Windows users, [MobaXterm](https://mobaxterm.mobatek.net) bundles an ssh client, an sftp/scp client, and an X11 server. To transfer files, start a new session and select sftp. Once you authenticate to Rivanna, two panes will appear. You can drag and drop between them.
+
+**Large files**
+
+Globus is a browser-based file transfer tool optimized for fast, fault-tolerant file transfers that run in the background once started. To use Globus with Rivanna, please follow the instructions at our [Globus documentation](https://arcs.virginia.edu/globus) page.
 
 <br>
 
@@ -61,9 +99,105 @@ An introduction to basic and useful Linux commands can be found [here](../comman
 
 ### Finding and Using Software {#modules}
 
-A complete list of the available software on Rivanna can be found [here][complete-software].
+Software packages are organized as modules that need to be loaded before the software can be used. These are the most commonly used `module` commands:
 
-### Available Software on Rivanna
+**Showlist of all available Modules:**
+```
+module avail
+```
+
+<br>
+
+**Show description of all available modules**
+```
+module spider
+```
+Output (truncated):
+```
+-----------------------------------------------------------------------------------------------------
+The following is a list of the modules currently available:
+-----------------------------------------------------------------------------------------------------
+LAME: LAME/3.99.5
+    LAME is a high quality MPEG Audio Layer III (MP3) encoder licensed under the LGPL.
+
+  OpenBUGS: OpenBUGS/3.2.3
+    OpenBUGS is a software application for the Bayesian analysis of complex statistical models using 
+    Markov chain Monte Carlo (MCMC) methods.
+
+  R: R/3.2.1, R/3.3.0_test, R/3.3.0, R/3.4.0, R/3.4.3, R/3.5.1_test, R/3.5.1, R/3.5.3
+    R is a free software environment for statistical computing and graphics.
+
+  abinit: abinit/8.2.2
+    ABINIT is a package whose main program allows one to find the total energy, charge density and 
+    electronic structure of systems made of electrons and nuclei (molecules and periodic solids) within 
+    Density Functional Theory (DFT), using pseudopotentials and a planewave or wavelet basis.
+
+
+
+```
+<br>
+
+Let's get more detail about `bowtie`:
+```
+module spider bowtie
+```
+```
+-------------------------------------------------------------------------------------------------------
+bowtie2:
+-------------------------------------------------------------------------------------------------------
+    Description:
+      Bowtie 2 is an ultrafast and memory-efficient tool for aligning sequencing reads to long reference 
+      sequences. It is particularly good at aligning reads of about 50 up to 100s or 1,000s of characters, 
+      and particularly good at aligning to relatively long (e.g. mammalian) genomes. Bowtie 2 indexes the 
+      genome with an FM Index to keep its memory footprint small: for the human genome, its memory footprint 
+      is typically around 3.2 GB. Bowtie 2 supports gapped, local, and paired-end alignment modes. 
+
+     Versions:
+        bowtie2/2.1.0
+        bowtie2/2.2.9
+```
+
+<br>
+
+**Find module by keyword**
+```
+module key bio
+```
+
+<br>
+
+**Load a module**
+```
+module load <MODULE_NAME>
+```
+
+<br>
+
+**Unload a module**
+```
+module remove <MODULE_NAME>
+```
+
+<br>
+
+**Unload all modules**
+```
+module purge
+```
+
+<br>
+
+**Show list of all loaded modules**
+```
+module list
+```
+
+<br>
+
+
+### Available Bioinformatics Software on Rivanna
+
+A complete list of the available software on Rivanna can be found [here][complete-software].
 
 **Sequence Manipulation**
 

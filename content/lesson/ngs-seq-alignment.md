@@ -9,68 +9,66 @@ toc: true
 
 The goal of this hands-on workshop is to perform a simple NGS data alignment against a long reference genome, using the computational resources of [Rivanna](https://arcs.virginia.edu/rivanna), UVA's high-performance computing system. We will use popular short-read aligner Bowtie2, followed by further manipulation of SAM/BAM file formats using SAMTools.  
  
-**Note:** Do not use the same command options for you project data. The parameters used in the workshop are only for demonstration purposes, to familiarize yourself with different tools, its syntax and to understand the outputs. 
+**Note:** Do not use the same command options for you project data. The parameters used in the workshop are only for demonstration purposes, to familiarize yourself with different tools, their syntax and to understand the outputs. 
 
 ***
 
-### Pre-requisites
+## Pre-requisites
 - Familiarity with Unix command line
 - Familiarity with terminal-based text editor
 - Familiarity with Rivanna
 - Basic understanding of NGS sequencing data 
 
-### Tools
+## Tools
 - [Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml)
 - [SAMtools](http://samtools.sourceforge.net/)
+- [FastQC](https://www.bioinformatics.babraham.ac.uk/projects/fastqc)
 - [picard](https://broadinstitute.github.io/picard/)
 - [BEDTools](https://bedtools.readthedocs.io/en/latest/)
 - [bcftools](https://samtools.github.io/bcftools/bcftools.html)
 - [IGV](http://software.broadinstitute.org/software/igv/)
 
 ***
-### Rivanna Working Environment
+## Rivanna Working Environment
 <br>
 
-#### Rivanna Login
+### Rivanna Login
 
-Log in to Rivanna as described [here](../hpc-bioinformatics/#login).
+Log in to Rivanna is described [here](../hpc-bioinformatics/#login).
 
 <br>
 
-#### Allocations
+### Allocations
 
-In order to use Rivanna, you need to have an allocation that provides you with service units to perform computations. The `allocations` command tells you what allocation account are available to you.
+In order to use Rivanna, you need to have an allocation that provides you with service units to perform computations. For this workshop, you have been added to the `rivanna-training` allocation.
 
-```
-allocations
-```  
-
-Output:
-```
-Allocations available to <YOUR_NAME> (<YOUR_ID>):
-
- * rivanna-training: less than 50,000 service-units remaining
-
- for more information about a specific allocation, please run:
-  'allocations -a <allocation name>'
-```
-
-You may see additional allocations listed. For the purpose of this workshop, we will use the `rivanna-training` allocation to run our jobs on Rivanna.  
 **Note:** You will be removed from this _MyGroup_ at the end of today's session.
 
+Instructions on how to request an allocation that provides Rivanna access beyond this workshop can be found [here](../hpc-bioinformatics/#allocations).
 
 <br>
 
-#### Dataset
-We will work with whole genome sequencing data of _NA12878_, a participant of the [1000 Genomes Project](http://www.internationalgenome.org/home), and align to _hg38_ build of human genome. 
+### The /home and /scratch Directories
 
-Download the sequence data to your scratch directory (replace `<mst3k>` with your username) -  
+It is good practice to keep job scripts organized in your `/home` directory and to use the `/scratch` directory for staging data (e.g. sequence files, outputs, etc). Let's create a script directory for today's workshop.
 
 ```
-cd /scratch/<mst3k>
+mkdir ~/ws_scripts
+```  
+**Note**: Replace `<mst3k>` with your computing id.
+
+<br>
+
+### Dataset
+We will work with a subset of the whole genome sequencing data of [_NA12878_][na12878-pub], a participant of the [1000 Genomes Project](http://www.internationalgenome.org/home), and align the dataset to the _hg38_ human genome build. 
+
+Change to your scratch directory and download the sequence data. Replace `<mst3k>` with your username. 
+
+```
+cd /scratch/<mst3k
 ```
 ```
-wget https://s3.amazonaws.com/somrc-workshop-data/ngs-aln-workshop.tar.gz .
+cp /share/resources/tutorials/ngs-align-workshop/ngs-aln-workshop.tar.gz .
 ```
 ```
 tar -zxvf ngs-aln-workshop.tar.gz
@@ -85,7 +83,7 @@ gunzip ngs-aln-workshop/ref/hg38.subset.fa.gz
 
 ***
 
-### Alignment
+## Alignment
 
 Bowtie2 uses the Burrows-Wheeler Transform algorithm to index the reference genome. This allows for rapid identification of potential origin of your query sequence within the large genome, with a relatively small memory footprint. I strongly encourage you to read the publication/manual pages for algorithm details.  
 
@@ -94,14 +92,14 @@ Bowtie2 uses the Burrows-Wheeler Transform algorithm to index the reference geno
 
 <br>
 
-Alignemnt is a two-step process
+Alignment is a two-step process
 
-1. indexing the genome (only perform once)
-2. aligning sample reads
+1. Indexing the genome (only performed once)
+2. Aligning sample reads
 
 <br>
 
-#### Start an interactive session  
+### Start an Interactive Session  
 You should **NOT** do your computational processing on the login node. Execute the `hostname` command to check what node you are on and take note of the name.
 
 ```
@@ -136,14 +134,15 @@ Run the `hostname` command again. Notice that the name returned is different tha
 
 <br>
 
-#### Using `bowtie2`
+### Using Bowtie2
+We need to load a specific software module to have access to the Bowtie program.
 ```
 module purge
 module load bowtie2
 ```
 <br>
 
-#### 1. Create the index
+#### 1. Create the Index
 
 Indexing needs to be done only once for a particular _version_ of a genome. <br>
 
@@ -160,11 +159,11 @@ cd /scratch/<mst3k>/ngs-aln-workshop/ref/
 
 bowtie2-build --threads $SLURM_CPUS_PER_TASK hg38.subset.fa hg38.subset
 ```
-_*Indexing full human genome takes ~30 mins (using 10CPU cores)._
+_*Indexing full human genome takes ~30 mins (using 10 CPU cores)._
 
 <br>
 
-#### 2. Align reads
+#### 2. Align Reads
 
 The `bowtie2` aligner takes the index (generated in previous step) and a set of sequencing read files and outputs the alignment in SAM format. 
 
@@ -183,20 +182,20 @@ This command aligns the forward (R1) and reverse (R2) reads to the indexed hg38 
 
 <br>
 
-#### Terminate your interactive job  
+### Terminating Interactive Jobs  
 
 After the execution of your commands has completed, you can terminate the interactive job and release the requested resource by typing in this command:
 ```
 exit
 ```
 
-You are now returned to a shell that runs on the login node where you started the interactive job. To confirm this, xecute the `hostname` command again.
+You are now returned to a shell that runs on the login node where you started the interactive job. To confirm this, execute the `hostname` command again.
 
 <br>
 
 ***
 
-#### Scheduling non-interactive jobs using SLURM
+### Scheduling Non-Interactive Jobs using SLURM
 
 Running interactive jobs is a great way to prototype an analysis pipeline. Once you have worked out the details, you can schedule the alignment job using a SLURM script which is executed non-interactively. Scheduling non-interactive jobs also allow you to process many distinct data sets in parallel, thereby fully utilizing the computational capacity of Rivanna. 
 
@@ -210,7 +209,20 @@ Each organism parent directory contains assembly builds and corresponding annota
 
 <br>
 
-For this step, we will align our reads to the complete pre-indexed hg38 genome. Create an empty file `bowtie2.slurm`, add the following code chunk to the file -
+For this step, we will align our reads to the complete pre-indexed hg38 genome. 
+
+Change to your `ws_scripts` folder in your `home` directory.
+```
+cd ~/ws_scripts
+```
+
+Create a new file `bowtie2.slurm`, add the following code chunk to the file. If you connected to Rivanna via FastX, you can type the following command to start a text editor with graphical user interface:
+```
+pluma bowtie2.slurm &
+```
+
+Alternatively, you can use command line editors like `nano` or `vi`.
+
 ```
 #!/bin/bash
 #SBATCH --job-name=bowtie2-aln      # Job name
@@ -219,28 +231,31 @@ For this step, we will align our reads to the complete pre-indexed hg38 genome. 
 #SBATCH --time=05:00:00             # Time limit hrs:min:sec
 #SBATCH --output=bowtie2-aln_%A.out # Standard output log
 #SBATCH --error=bowtie2-aln_%A.err  # Standard error log
-#SBATCH -A somrc-hpc-workshop       # allocation groups
+#SBATCH -A rivanna-training       # allocation groups
 #SBATCH -p standard                 # slurm queue
 
 # output current directory, compute node name, date
 pwd; hostname; date
 
-### load bowtie2 module
+## load bowtie2 module
 module purge
 module load bowtie2
 
-### Align the reads
+## change to sequence data directory
+cd /scratch/<mst3k>/ngs-aln-workshop/
+
+## Align the reads
 bowtie2 -x /project/genomes/Homo_sapiens/UCSC/hg38/Sequence/Bowtie2Index/genome \
-	-1 /scratch/<mst3k>/ngs-aln-workshop/sample/SRR622461_R1.fastq.gz \
-	-2 /scratch/<mst3k>/ngs-aln-workshop/sample/SRR622461_R2.fastq.gz \
+	-1 sample/SRR622461_R1.fastq.gz \
+	-2 sample/SRR622461_R2.fastq.gz \
 	-p $SLURM_CPUS_PER_TASK \
-	-S /scratch/<mst3k>/ngs-aln-workshop/NA12878-hg38.sam	 
+	-S NA12878-hg38.sam	 
 
 date
 ```
 
-Submit your job - 
-```
+Make sure to replace `<mst3k>` with your own computing id. Submit your job - 
+``` 
 sbatch bowtie2.slurm
 ```
 Monitor the progress - 
@@ -250,22 +265,30 @@ squeue -u <mst3k>
 
 ***
 
-### Sequence Alignment/Map Format (SAM)
+## Sequence Alignment/Map Format (SAM)
 
-**[SAM Format](https://samtools.github.io/hts-specs/SAMv1.pdf)**
+Description of the **[SAM file format](https://samtools.github.io/hts-specs/SAMv1.pdf)**.
 
-Lets explore the outputs from alignmnet step - 
+**Alignment column headers**
+![](/images/ngs-samfile-align-header.png)
+
+Lets explore the outputs from the alignment step - 
 ```
 less -S NA12878-hg38.subset.sam
 ```
 
 <br>
 
-#### **[SAMTools](https://github.com/samtools/samtools)**  
+### SAMTools 
 
-SAMTools provide various utilities for manipulating alignments in the SAM format, including sorting, merging, indexing and generating alignments in a per-position format.
+[SAMTools](https://github.com/samtools/samtools) provide various utilities for manipulating alignments in the SAM format, including sorting, merging, indexing and generating alignments in a per-position format.
 
-**Load `SAMTools` module**
+In order to use the SAMTools package we need to load the `samtools` module. Run the following command to see what versions are available:
+```
+module spider samtools
+```
+
+Then we can either load a specific version or the default one (by omitting any version information), which typically is the most recent one.
 ```
 module load samtools
 ```
@@ -278,63 +301,114 @@ samtools index <ENTER>
 ```
 <br>
 
-**Convert SAM to BAM**
+#### Convert SAM to BAM
 ```
 samtools view -hSb NA12878-hg38.subset.sam > NA12878-hg38.subset.bam
-### OR ###
+```
+* `-h`: include header in SAM output
+* `-S`: input format is autodetected
+* `-b`: output BAM format
+* The `>` character redirects the output to the file `NA12878-hg38.subset.bam`.
+
+Alternatively, we can run this command:
+```
 samtools view -hSbo NA12878-hg38.subset.bam NA12878-hg38.subset.sam 
 ```
+Note the `-hSbo` option and the reversal of the order of the `.sam` (input) and `.bam` (output) files.
 
-**Sort BAM file on coordinates**
+<br>
+
+#### Sort BAM File
 ```
 samtools sort -o NA12878-hg38.subset.sorted.bam NA12878-hg38.subset.bam
 ```
+* This will sort the .bam file on coordinates.
+* The `-o` option specifies the output file, in this case `NA12878-hg38.subset.sorted.bam`.
 
-**Index BAM**
+<br>
+
+#### Index BAM File
+
+The sorted BAM file needs to indexed for the downstream analysis. The `samtools index` command creates a new file with the `bai` extension.
 ```
 samtools index NA12878-hg38.subset.sorted.bam
 ```
 <br>
 
+After executing these commands we should have the following files:
+```
+NA12878-hg38.sam
+NA12878-hg38.subset.bam
+NA12878-hg38.subset.sam
+NA12878-hg38.subset.sorted.bam
+NA12878-hg38.subset.sorted.bam.bai
+```
 
-**Picard Tools**  
-The above 3 steps can also be performed using [Picard](https://broadinstitute.github.io/picard/)
+<br>
+
+**Picard Tools**
+
+The above 3 steps can also be performed using [Picard](https://broadinstitute.github.io/picard/).
 ```
 module load picard
-
+```
+```
 java -jar $EBROOTPICARD/picard.jar SortSam \
   I=NA12878-hg38.subset.sam \
   O=NA12878-hg38.subset.sorted-pct.bam \
   SORT_ORDER=coordinate \
   CREATE_INDEX=true
 ```
+
 <br>
 
+#### Filter BAM File
 
-**Filter BAM**  
+**Filter by Region**  
 
-By region of interest - 
+The following commands can be used to show regions of interest -
+
+Show results for specific chromosome:
 ```
 samtools view -h NA12878-hg38.subset.sorted.bam chr15 | less -S
-
+```
+Show results for specific region on single chromosome:
+```
 samtools view -h NA12878-hg38.subset.sorted.bam chr22:10,500,000-10,750,000 | less -S
-
+```
+Show results for specific regions on multiple chromosomes:
+```
 samtools view -h NA12878-hg38.subset.sorted.bam chr22:10,500,000-10,750,000 chr5:10,000-15,000 | less -S 
 ```
 
-By alignment flag - 
-[Explain SAM Flags](https://broadinstitute.github.io/picard/explain-flags.html)
+Get count of alignments per region:
 ```
-# filter forward reads that mapped as proper pairs
+samtools view -c NA12878-hg38.subset.sorted.bam chr22:10,500,000-10,750,000
+```
+
+<br>
+
+**Filter by Alignment Flag** 
+
+The second column of the SAM file contains information about the alignment status for the particular read in that row. The values in this column are referred to as [SAM Alignment Flags][samflags].
+
+Filter forward reads that mapped as proper pairs
+```
 samtools view -hf 67 NA12878-hg38.subset.sorted.bam | less -S 
+```
 
-# filter reverse reads that mapped as proper pairs
+Filter reverse reads that mapped as proper pairs
+```
 samtools view -hf 131 NA12878-hg38.subset.sorted.bam | less -S 
+```
 
-# filter all unmapped reads
+Filter all unmapped reads
+```
 samtools view -hf 4 NA12878-hg38.subset.sorted.bam | less -S
+```
 
-# reverse the selection 
+Reverse the selection 
+```
 samtools view -hF 4 NA12878-hg38.subset.sorted.bam | less -S
 ```
 
@@ -348,49 +422,95 @@ samtools flagstat NA12878-hg38.subset.sorted.bam
 <br>
 
 
-**BAM to FASTQ**
+#### BAM to FASTQ
+
+Let's filter the correct alignments for chromosome 5 ([flag][samflags] value = 3) and save them to a new .bam file.
 ```
 samtools view -bhf 3 NA12878-hg38.subset.sorted.bam chr5 > NA12878-hg38.subset.sorted.flag3-chr5.bam
-	
-samtools fastq -1 NA12878-hg38.subset.sorted.flag3-chr5.R1.fastq \
+```
+Let's confirm the filtering:
+```
+samtools flagstat NA12878-hg38.subset.sorted.flag3-chr5.bam
+```
+
+Now let's create new FastQ files that describe the quality of the sequence reads ([FastQ file format][fastqformat]).
+```	
+samtools fastq \
+  -1 NA12878-hg38.subset.sorted.flag3-chr5.R1.fastq \
   -2 NA12878-hg38.subset.sorted.flag3-chr5.R2.fastq \
   NA12878-hg38.subset.sorted.flag3-chr5.bam
 ```
+
+You should have obtained two new files:
+```
+NA12878-hg38.subset.sorted.flag3-chr5.R2.fastq
+NA12878-hg38.subset.sorted.flag3-chr5.R1.fastq
+```
+
+<br>
+
+#### FastQC
+
+You can get a quick report that summarizes the quality of the reads using the `FastQC` program. 
+```
+module load fastqc
+fastqc *.fastq
+```
+
+This will generate a report file `NA12878-hg38.subset.sorted.flag3-chr5.R2_fastqc.html` that can be viewed with any web browser.
+
 <br>
 
 
-**Genome Coverage**
+### Genome Coverage
 
-[BEDTools `genomecov`](https://bedtools.readthedocs.io/en/latest/content/tools/genomecov.html)
+BED (Browser Extensible Data) format provides a flexible way to define the data lines that are displayed in an annotation track. BED lines have three required fields and nine additional optional fields. The number of fields per line must be consistent throughout any single set of data in an annotation track. The order of the optional fields is binding: lower-numbered fields must always be populated if higher-numbered fields are used.
 
+**[BED file format][bedformat]**
+
+We are using SAMTools to export data from the sorted `.bam` file to a new `.bed` file. Then we will use [BEDTools' Genome Coverage function](https://bedtools.readthedocs.io/en/latest/content/tools/genomecov.html) to create a text file describing the genome coverage.
+
+**Load the BEDTools module**
 ```
-# load bedtools module
 module load bedtools
-
-# First lets create a bed file for our mapped region
-samtools view -H NA12878-hg38.subset.sorted.bam | grep -P '^@SQ' | awk '{print substr($2,4,5)"\t"substr($3,4,9)}' > genome.bed
-
-# Compute the genome-wide coverage
-genomeCoverageBed -ibam NA12878-hg38.subset.sorted.bam -g genome.bed > coverage.txt
 ```
+
+1. Let's initialize a bed file for our mapped region. For this we extract information all rows that start with `@SQ` in the SAM header.
+    ```
+    samtools view -H NA12878-hg38.subset.sorted.bam | grep -P '^@SQ' | awk '{print substr($2,4,5)"\t"substr($3,4,9)}' > genome.bed
+    ```
+    Take a look:
+    ```
+    less genome.bed
+    ```
+
+2. Compute the genome-wide coverage.
+    ```
+    genomeCoverageBed -ibam NA12878-hg38.subset.sorted.bam -g genome.bed > coverage.txt
+    ```
+
 <br>
 
-***
 
-### Exercise
+## Exercises
 
-1. Convert  NA12878-hg38.sam  to BAM, sort by co-ordinates and generate the index 
+1. Convert  NA12878-hg38.sam  to BAM, sort by co-ordinates and generate the index. 
 
-2. Calculate  flagstat  for reads mapping to chr15
+2. Calculate `flagstat` for reads mapping to chr15.
 
-3. Write proper pairs mapped to chr22 in FASTQ format(*make sure the reads are paired in output files )
+3. Write proper pairs mapped to chr22 in FASTQ format (*make sure the reads are paired in the output files).
 
+4. Write a SLURM job script that executes all post-alignment steps non-interactively.
 
-***
+5. If you are adventurous, you can also try to use the `BWA-MEM` aligner instead of `Bowtie2` for indexing and alignment, see [instructions](https://discuss.rc.virginia.edu/t/ngs-alignment-using-bwa/859). Note that indexing with BWA-MEM can also utilize multiple cpu cores to speed up the process.
 
-### Call Variants 
+<br>
 
-We will now find locations where the reads are different from the genome, using the Bayesian variant caller - `samtools mpileup`, in conjunction with `bcftools`.<br>  
+## Call Variants 
+
+We will now find locations where the reads are different from the genome, using the Bayesian variant caller, `samtools mpileup`, in conjunction with `bcftools`.
+<br>
+  
 Note: `samtools` collects summary information in the input BAMs, computes the likelihood of data given each possible genotype and stores the likelihoods in the BCF format. It does not call variants! `bcftools` takes that information and does the actual calling. 
 	
 ```
@@ -403,22 +523,36 @@ bcftools call -cv NA12878-hg38.subset.sorted.mpileup.bcf > NA12878-hg38.subset.s
 vcfutils.pl varFilter NA12878-hg38.subset.sorted.mpileup.raw.vcf > NA12878-hg38.subset.sorted.mpileup.flt.vcf
 ```
 	
-**[VCF Specifications](https://samtools.github.io/hts-specs/VCFv4.2.pdf)**  
+**[VCF Specifications][vcfformat]**  
 
 <br>
 
-***
-
-### Visualize BAM/VCF  
+## Visualize BAM/VCF  
 
 We will use [IGV](https://software.broadinstitute.org/software/igv/home) to visualize our alignment results. Download from [here](https://software.broadinstitute.org/software/igv/download).  
-Copy the bam file (and the index) to your local computer. <br>
 
-On your laptop - 
+**Copy the bam file (and the index) to your local computer**
+
+On your laptop, open a terminal and execute the following commands (replace `mst3k` with your computing id). 
 ```
 scp <mst3k>@rivanna.hpc.virginia.edu:/scratch/<mst3k>/ngs-aln-workshop/NA12878-hg38.subset.sorted.bam ./
 scp <mst3k>@rivanna.hpc.virginia.edu:/scratch/<mst3k>/ngs-aln-workshop/NA12878-hg38.subset.sorted.bam.bai ./
 scp <mst3k>@rivanna.hpc.virginia.edu:/scratch/<mst3k>/ngs-aln-workshop/NA12878-hg38.subset.sorted.mpileup.flt.vcf ./
 ```
 
+If you are using a Windows computer, we recommend installing MobaXterm to have a access to an ssh terminal client that allows you to execute the copy commands.
+
+**Start IGV**
+
+1. In the top left corner of the IGV application window, select `Human (hg38)`.
+2. Go to `File` > `Load from File...` and open the `NA12878-hg38.subset.sorted.bam` and `NA12878-hg38.subset.sorted.mpileup.flt.vcf` files.
+3. Try to find regions with alignments, note that the reads used do not cover the entire genome but are restricted to regions of a few chromosomes.
+
 Lets explore!!!
+
+[na12878-pub]: https://www.ncbi.nlm.nih.gov/pubmed/21478889
+[samflags]: https://broadinstitute.github.io/picard/explain-flags.html
+[fastqformat]: https://support.illumina.com/bulletins/2016/04/fastq-files-explained.html
+[bedformat]: https://useast.ensembl.org/info/website/upload/bed.html
+[gffformat]: http://gmod.org/wiki/GFF2
+[vcfformat]: https://samtools.github.io/hts-specs/VCFv4.2.pdf
