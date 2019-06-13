@@ -11,7 +11,7 @@ The goal of this hands-on workshop is to perform a simple NGS data alignment aga
  
 **Note:** Do not use the same command options for you project data. The parameters used in the workshop are only for demonstration purposes, to familiarize yourself with different tools, their syntax and to understand the outputs. 
 
-***
+**[Introduction: Next-Gen Sequence Alignment](/files/ngs-align-intro.pdf)**
 
 ## Pre-requisites
 - Familiarity with Unix command line
