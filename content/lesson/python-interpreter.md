@@ -1,13 +1,20 @@
 ---
-title: "Python Interpreter"
+title: "Using the Interpreter"
 date: 2019-04-29T11:06:47-04:00
 draft: false
-categories: ["Python Programming"]
+weight: 1
+categories: ["Programming in Python for Scientists and Engineers"]
 ---
 
-## Episode	1 - Using the Interpreter
+## Episode 1 - Using the Interpreter
 
 {{< youtube 2F7DE0pLa4I >}}
+
+<br>
+<a class="btn btn-success btn-lg" href="/files/Episode-1-Guide.pdf" role="button">Download Episode Guide</a>
+<br>
+<br>
+<a class="btn btn-success btn-lg" href="/files/Episode-1-Exercise.pdf" role="button">Download Exercises</a>
 
 ### Anaconda
 
@@ -180,3 +187,41 @@ which require payment at least for certain features. Popular alternatives to Spy
 ### Further Resources
 
 Spyder contains its own built-in tutorial. It tends to expect some proficiency with Python and discusses concepts we haven’t seen yet; or it may expect users to be beginners at Python but not at programming; however, it is worthwhile to go through at least part of the tutorial. To access it, start from the Help menu and select Spyder tutorial.
+
+<details>
+<summary>VIEW EXERCISE SOLUTION (`Printing.py`)</summary>
+```
+# -*- coding: utf-8 -*-
+"""
+    Spyder Editor
+
+    Author:  A. Programmer
+"""
+x=15.
+print x
+#print(x) for Python 3
+y=11.
+#print(y) for Python 3
+print y
+x+y  #does not print when run as a script
+```
+</details>
+
+<details>
+<summary>VIEW EXERCISE SOLUTION (`CosPlot.py`)</summary>
+```
+# -*- coding: utf-8 -*-
+"""
+    Spyder Editor
+
+    Author:  A. Programmer
+"""
+import matplotlib.pylab as plt
+
+x=plt.linspace(-1.*plt.pi,plt.pi,100)
+y=plt.cos(x)
+
+plt.plot(x,y)   
+```
+</details>
+
