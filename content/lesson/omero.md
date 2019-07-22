@@ -4,7 +4,7 @@ author: "Christina Gancayco"
 # date: 2019-06-17T21:13:14-05:00
 categories: ["Image Processing"]
 toc: true
-draft: true
+draft: false
 ---
 <img src="/images/ome-main-nav.svg" style="width:60%;height:60%"></img>
 
