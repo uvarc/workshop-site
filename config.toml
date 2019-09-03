@@ -1,4 +1,4 @@
-baseurl = "https://workshops.somrc.virginia.edu/"
+baseurl = "https://workshops.rc.virginia.edu/"
 title = "Research Computing Workshops"
 theme = "whiteplain"
 languageCode = "en"
@@ -17,7 +17,7 @@ paginate = 50
 [params]
   # Date format
   #dateFormat = "January 2, 2006"
-  favicon = "https://somrc.virginia.edu/images/favicon.ico"
+  favicon = "https://www.rc.virginia.edu/images/favicon.ico"
 
 # This is displayer in About page.
 [params.author]
@@ -89,5 +89,5 @@ paginate = 50
 [[menu.footer]]
   name = "UVA Research Computing"
   weight = 1
-  identifier = "somrc"
-  url = "https://staging.rc.virginia.edu/"
+  identifier = "rc"
+  url = "https://www.rc.virginia.edu/"
