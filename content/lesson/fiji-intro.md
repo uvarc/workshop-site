@@ -120,13 +120,11 @@ Fiji has built-in tools to manipulate multi-channel composite and RGB images. Fo
 
 4) Switch back to `Composite` mode. Uncheck selected channels and note how the channel overlay changes based on the selected images.
 
-5) Change from Composite** to `Color`, move channel slider.
+5) Change to `Grayscale`. Although the color information has been converted to gray, the **pixel intensity values remain unchanged**.
 
-6) Change to `Grayscale`. Although the color information has been converted to gray, the **pixel intensity values remain unchanged**.
+6) Change back to `Color`, Click `More >>`, select a new color.
 
-7) Change back to `Color`, Click `More >>`, select a new color.
-
-8) Change to `Composite` mode.
+7) Change to `Composite` mode.
 
 <br>
 
@@ -169,15 +167,13 @@ The color representation in 8-bit and 16-bit images is defined by a color Lookup
 
 For **single channel images**, you can change the LUT by running these commands:
 
-1) `Image` > `Color` > `Lookup Tables`.
-
-2) `Image` > `Lookup Tables`.
+1) `Image` > `Lookup Tables`.
 
 For **multi-channel image**, you can change the LUT by running these commands:
 
 1) `Image` > `Color` > `Channels Tools`.
 
-2) Select a channel of interest.
+2) In the **Channels Tools** window, switch to `Color` mode and select a channel of interest.
 
 3) Click `More >>`, select a new color.
 
@@ -188,7 +184,7 @@ For **multi-channel image**, you can change the LUT by running these commands:
 **Making an Image Montage**
 <img src=/images/intro-fiji-8.png style="float:right;width:60%"></img>
 
-Images can be layout in a grid-like fashion, aka a montage. Given the regular arrangement of the images in a grid layout, all image tiles used for the montage have to be of the same x-y dimension and same image type (e.g. all 8-bit, 8-bit, 32-bit, or RGB).
+Images can be layed out in a grid-like fashion, aka a ***montage***. Given the regular arrangement of the images in a grid layout, all image tiles used for the montage have to be of the same x-y dimension and same image type (e.g. all 8-bit, 8-bit, 32-bit, or RGB).
 
 The easiest way to create a montage is to create an image stack that contains all the images for the individual image tiles and then use the Fiji Montage tool. Here is an example:
 
@@ -373,7 +369,7 @@ Periodic noise as shown by the banding pattern observed in this image cannot be 
 
 Edge detection is commonly used to define the outline of objects of interest. It is implemented by applying special convolution kernels.
 
-**Note that edge detection algorithms can be very sensitive to noise. So it is advisable to remove noise with other filters first (e.g. median filter which preserves edges quiteg well) before applying the edge detection filter (see images below).**
+**Note that edge detection algorithms can be very sensitive to noise. So it is generally advised to remove noise with other filters first (e.g. median filter which preserves edges quite well) before applying the edge detection filter (see images below).**
 
 <img src=/images/intro-fiji-18.png style="height:60%;width:60%"></img>
 
@@ -392,7 +388,7 @@ Edge detection is commonly used to define the outline of objects of interest. It
 
 <img src=/images/intro-fiji-19.png style="width:20%;float:right"></img>
 
-To illustrate typical steps in image segmentation and analysis, we are going to process the ***blobs_shaded.tif*** image that is part of the [Tutorial Example Files] (#example-files).
+To illustrate typical steps in image segmentation and analysis, we are going to process the ***blobs-shaded.tif*** image that is part of the [Tutorial Example Files] (#example-files).
 
 **Analysis Goals:**
 
@@ -413,7 +409,7 @@ In order to separate the dark spots from the background we will be using intensi
 <img src=/images/intro-fiji-20.png style="width:50%;float:right"></img>
 
 
-1) Open image file ***blobs_shaded.tif***.
+1) Open image file ***blobs-shaded.tif***.
 
 2) In menu, go to `Image` > `Adjust` > `Threshold…`.
 
@@ -453,7 +449,7 @@ In order to separate the dark spots from the background we will be using intensi
 
 5) Go to `Process` > `Image Calculator…`.
 
-* From the `Image1` drop-down, select the ***blobs_shaded.tif*** image.
+* From the `Image1` drop-down, select the ***blobs-shaded.tif*** image.
 
 * Select the ***Divide*** Operation.
 
@@ -480,7 +476,7 @@ In order to separate the dark spots from the background we will be using intensi
 
 ### Creating a Binary Object Mask
 
-9) Go to `Process` > `Binary` > `Options`. Check the `Black background` box and click `OK`. This controls the display mode of ***thresholded images*** and also the mode that the ***Particle Analyzer*** uses to identify objects (see below). **In our example objects of interest are displayed white on black background.**
+9) Go to `Process` > `Binary` > `Options`. Check the `Black background` box and click `OK`. This controls the display mode of ***thresholded images*** and also the mode that the ***Particle Analyzer*** uses to identify objects (see below). **In our example objects of interest will be displayed white on black background.**
 
 10) Go to `Image` > `Adjust Threshold`.
 
@@ -564,7 +560,7 @@ When we use the Particle Analyzer with the `Add to Manager` option, the ROI for 
 
 **ROI Properties**
 
-Via the `Properties` button, the ROI Manager provides functions to change propoerties of selected ROIs, e.g. name, Z-position, outline color & width, and fill color. Multiple ROIs can be selected by holding the `Ctrl` or `Shift` keys while clicking on the ROIs.
+Via the `Properties` button, the ROI Manager provides functions to change propoerties of selected ROIs, e.g. name, Z-position, outline color & width, and fill color. Multiple ROIs can be selected by holding the `Ctrl` (`command` on a Mac) or `Shift` keys while clicking on the ROIs.
 
 **ROI Import & Export**
 
@@ -574,9 +570,9 @@ The ROI Manager can save selected ROIs to a file or open ROIs from a file. Typic
 
 * `Open`: Import ROIs from ROI file
 
-* The Affects only **selected ROI**.
+* This only affects **selected ROI**.
 
-* If **no ROIs selected**, new properties are be applied to all ROIs in Manager.
+* If **no ROIs are selected**, new properties are be applied to all ROIs in Manager.
 
 <br>
 
@@ -590,6 +586,8 @@ Fiji can measure a variety of parameters for each region-of-interest, or an enti
 
 1) Go to `Analyze` > `Set Measurements...`.
 
+* Adjust settings as shown in screenshot. Click `OK`.
+
 * Settings affect future measurements, not existing ones.
 
 2) For quick measurements, draw a selection on the image and press `Ctrl` + `M`.
@@ -602,13 +600,11 @@ Fiji can measure a variety of parameters for each region-of-interest, or an enti
 
 2) Use `Ctrl` + `M`.
 
-3) Change Set Measurements Settings
+3) Change settings in **Set Measurements** window.
 
 4) Use `Ctrl` + `M`.
 
-5) Select an ROI in ROI Manager
-
-6) Click `Measure` or use `Ctrl` + `M` to create measurements for the currently selected ROI.
+5) Select an ROI in the ROI Manager. Click `Measure` or use `Ctrl` + `M` to create measurements for the currently selected ROI.
 
 <br>
 
@@ -649,23 +645,28 @@ Let's go back and modify the measurement selection.
 3) Click `OK`.
 
 4) Select all ROIs:
+
 * Go to `Window` > `ROI Manager`.
 * Click on first ROI, **hold Shift** key,
 * Scroll down, click last ROI in list.
 
 5) Measure ROIs in the **Mask** image
+
 * Click on black/white **mask** image
 * In **ROI Manager** window, click `Measure`. This adds measurements for all selected ROIs to the **Results** table.
 * Click on the **Results** window, go to `File` > `Rename`, and enter **Mask-Results** as a new name.
 * If you don’t rename the window, the Results will be overwritten by new measurements.
 
 6) Measure ROIs in the **original** image
+
 * Click on **blobs-shaded.tif** image
 * In **ROI Manager** window, click `Measure`. This adds measurements for all selected ROIs to the **Results** table.
 
 <br>
 
-Now we can compare the intensity measurements for the corresponding ROIs in the **Mask** and the **blobs_shaded.tif** images. What do you observe?
+Now we can compare the intensity measurements for the corresponding ROIs in the **Mask** and the **blobs-shaded.tif** images.
+
+* What do you observe?
 
 <img src=/images/intro-fiji-41.png style="height:50%;width:50%"></img>
 
@@ -748,7 +749,7 @@ This will create a new grayscale window with the brain proper that corresponds t
 
 # Exercises
 
-## 1) Saving files in different file formats
+### 1. Saving files in different file formats
 Fiji supports many different file formats.
 
 1) Use **File** > **Open Samples** to open an image of your choosing
@@ -762,9 +763,11 @@ store image annotations as file internal metadata, and can be read by many progr
 File import/export functionality is further extended by the Bio-Formats plugin (Plugins > Bio-Formats).
 See [https://docs.openmicroscopy.org/bio-formats/6.0.0/](https://docs.openmicroscopy.org/bio-formats/6.0.0/)
 
-## 2) Image Channels
+<br>
 
-### 2.1 Splitting and Merging Channels
+### 2. Image Channels
+
+**2.1 Splitting and Merging Channels**
 
 1) Go to **File** > **Open Samples** > **Mitosis** (26MB, 5D stack).
 
@@ -774,7 +777,9 @@ See [https://docs.openmicroscopy.org/bio-formats/6.0.0/](https://docs.openmicros
 
 What happens if you assign one of the images to multiple different colors?
 
-### 2.2 Manipulating Color Lookup Tables
+<br>
+
+**2.2 Manipulating Color Lookup Tables**
 
 Color lookup tables (LUTs) can be used on 8-bit grayscale, 16-bit grayscale, and 8-bit Color images. Note that 8-
 bit color is not the same as RGB color. LUTs for 16-bit grayscale will be resampled to 8-bit (256 colors).
@@ -798,7 +803,9 @@ entries, change the color representation as you wish.
 
 What do you observe?
 
-## 3) Image Montage
+<br>
+
+### 3. Image Montage
 
 For this exercise we are creating a montage of RGB images, each image representing the center focal plane at a
 single timepoint within an x-y-color-t timelapse series. Experiment with creating different image tile sizes and
@@ -820,6 +827,7 @@ timepoints (frames).
 having to go through steps 1-5 again.
 
 7) Go to **Image** > **Stacks** > **Make Montage**. In the dialog box set the following values:
+
 * **Columns**: 10
 * **Rows**: 6
 * **Scale factor**: 0.25
@@ -834,7 +842,9 @@ the Fiji toolbar.
 
 <img src=/images/intro-fiji-45.png style="width:5%;height:5%"></img>
 
-## 4) Image Scale Bars
+<br>
+
+### 4. Image Scale Bars
 
 Scale bars can be added to any image. Before a scale bar can be drawn, the pixel size has to be defined.
 
@@ -870,7 +880,9 @@ Note that the scale has changed for all open images. To remove a scale bar from 
 Scale** and press the **Click to Remove Scale** button. If the **Global box** is checked, it will remove the scale on all
 open images, otherwise the scale will be removed for the current image only.
 
-## 5) Custom Image Filters
+<br>
+
+### 5. Custom Image Filters
 
 To apply a filter to images, a convolution kernel has to be created. The built in filters have standardized
 convolution kernels. You can create your own convolution kernels to create custom filters. In this example we
@@ -924,7 +936,9 @@ What edges are being detected now?
 The resulting image should show a combination of edges detected in steps 7 and 8. Can you create four kernels
 to detect all vertical and horizontal edges?
 
-## 6. Image Segmentation & Object Measurements
+<br>
+
+### 6. Image Segmentation & Object Measurements
 
 For this exercise we assume that we already have a binary mask (thresholded) image, and we will use the
 Particle Analyzer for image segmentation and object measurements.
@@ -958,7 +972,9 @@ image due to the redirect.
 Repeat the measurement results with and without redirect and compare the changes in the results for **Min &
 max gray value** and the **Mean gray value.**
 
-## 7. ROI Manager
+<br>
+
+### 7. ROI Manager
 
 The ROI Manager is very useful to handle multiple ROIs. It allows saving/loading ROIs and also to
 combine simple shaped ROIs into more complex ones.
@@ -973,7 +989,9 @@ Manager.
 
 4) Draw a new region of interest and go to **Selection** > **Edit** > **Add to Manager**.
 
-### 7.1 Saving ROIs to file
+<br>
+
+**7.1 Saving ROIs to file**
 
 The ROI Manager should show two ROIs.
 
@@ -993,7 +1011,9 @@ multiple ROI definitions into a single file.
 
 * If none of the ROIs are selected, the operations in the ROI Manager are applied to all ROIs.
 
-### 7.2 Opening ROIs from file.
+<br>
+
+**7.2 Opening ROIs from file**
 1) In the ROI Manager, select all ROIs and click **Delete**.
 
 2) Click on **More>>** and then click **Open**. Select the ROI file saved under exercise 7.1 step 8 (multiple ROIs).
@@ -1003,7 +1023,9 @@ image.
 
 **Note:** You can open another image and reload saved ROIs to apply them to the new current image.
 
-### 7.3 Changing ROI display properties
+<br>
+
+**7.3 Changing ROI display properties**
 Each ROI has multiple properties, e.g. position, color, etc.
 
 1) In the ROI Manager, select the first ROI (or reload from file).
@@ -1022,7 +1044,9 @@ Each ROI has multiple properties, e.g. position, color, etc.
 
 If you have multiple ROIs selected OR none at all, the properties will be applied to all ROIs.
 
-### 7.4 Combining ROIs
+<br>
+
+**7.4 Combining ROIs**
 
 Simple ROI shapes can be combined into more complex ones.
 
