@@ -28,9 +28,9 @@ and then you are able to start running it.
 * **Windows 7 & 10:** The Fiji application should be installed in the the user’s home directory rather than the default C:\Program Files directory.
 * **Linux:** The Fiji application should be installed in a directory where the user has read, execution, and write permissions, e.g. the user’s home directory.
 
-### Tutorial Example Files {#example-files}
+### Download Example Files {#example-files}
 To follow along with the exercises, you will also need to download some example images which can be found
-at [https://workshops.somrc.virginia.edu/data/intro-fiji-images.zip](https://workshops.somrc.virginia.edu/data/intro-fiji-images.zip).
+[here](/data/intro-fiji-images.zip).
 
 <br>
 
@@ -93,9 +93,9 @@ The enhanced image can then be converted into binary image masks that define gro
 # Basic Operations in ImageJ/Fiji
 
 * [Handling Image Files](#handling-image-files)
-* [Working with Image Channels (splitting, merging, LUTs)](#image-channels)
-* [Inspecting and Manipulating Image File Properties](#inspecting-and-manipulating)
-* [Image Format Operations (cropping, file format conversion...)](#image-format-operations)
+* [Working with Image Channels](#working-with-image-channels)
+* [Image Montage and Cropping](#image-montage-and-cropping)
+* [Image Scale Bars](#image-scale-bars)
 
 
 ### Handling of Image Files
@@ -183,7 +183,7 @@ For **multi-channel image**, you can change the LUT by running these commands:
 
 <br>
 
-### Image Montage & Cropping
+### Image Montage and Cropping
 
 **Making an Image Montage**
 <img src=/images/intro-fiji-8.png style="float:right;width:60%"></img>
@@ -325,7 +325,7 @@ Image noise is an undesirable by-product of image capture that adds spurious and
 
 Fiji provides several standard filters that can be applied to images. Here we are just exploring a few of them.
 
-1) Open image file **noisy_image.tif**.
+1) Open image file **noisy_image.tif** from the [Tutorial Example Files](#example-files).
 
 2) Create three copies of the image file by pressing `Ctrl` + `Shift` + `D` (three times).
 
@@ -336,15 +336,13 @@ Fiji provides several standard filters that can be applied to images. Here we ar
 <img src=/images/intro-fiji-14.png style="width:48%;float:left"></img>
 <img src=/images/intro-fiji-15.png style="width:51%;float:right"></img>
 
-<br>
-
-<br>
+<br><br>
 
 **Comparing Average (Mean) and Median Filters**
 
-**Mean**: Replaces pixel value with average value in kernel region
+* **Mean**: Replaces pixel value with average value in kernel region.
 
-**Median**: Replaces pixel value with median value in kernel region
+* **Median**: Replaces pixel value with median value in kernel region.
 
 <img src=/images/intro-fiji-16.png style="height:60%;width:60%"></img>
 
@@ -362,9 +360,11 @@ Fiji provides several standard filters that can be applied to images. Here we ar
 | Maximum                    | **Largest** value of neighbors, smoothing                                     |
 | Variance                   | **Variance** of neighbors, indicator of image textures, highlight edges       |
 
+<br>
+
 **Removing Periodic Noise (Advanced)**
 
-Periodic noise as shown by the banding pattern overlaying this image cannot be removed with the kernel-based standard filters described above. However applying ***Fast-Fourier Transform (FFT)*** analysis can reveal the periodicity of such noise represented by the high intensity spots in the the FFT image (top middle panel). By masking these hotspots (bottom middle panel) and applying the inverse FFT one can retrieve the original image without the periodic noise (right panel).
+Periodic noise as shown by the banding pattern observed in this image cannot be removed with the kernel-based standard filters described above. However applying ***Fast-Fourier Transform (FFT)*** analysis can reveal the periodicity of such noise represented by the high intensity spots in the the FFT image (top middle panel). By masking these hotspots (bottom middle panel) and applying the inverse FFT one can retrieve the original image without the periodic noise (right panel).
 
 <img src=/images/intro-fiji-17.png style="height:60%;width:60%"></img>
 
@@ -467,9 +467,9 @@ In order to separate the dark spots from the background we will be using intensi
 
 6) Click on the ***resulting*** window that contains the corrected image.
 
-7) Go to `Image` > `Rename...` and enter ***Corr*** as a new name for the corrected image.
-
 <img src=/images/intro-fiji-23.png style="height:30%;width:30%"></img>
+
+7) Go to `Image` > `Rename...` and enter ***Corr*** as a new name for the corrected image.
 
 8) Go to `Image` > `Type` > `8-bit` to change the image from 32-bit float to 8-bit integer encoding.
 
@@ -548,78 +548,124 @@ The option **Show** `Outlines` leads to the creation of a new image that contain
 
 The option `Add to Manager` sends the definition for each identified particle, i.e. dark blob, to the **Region-of-Interest Manager**, (ROI Manager for short).
 
-<img src=/images/intro-fiji-35.png style="height:60%;width:60%"></img>
+<br>
 
-### ROI Import & Export
+### The ROI Manager
 
-* Affects only **selected ROI**.
+<img src=/images/intro-fiji-35.png style="width:50%;float:right"></img>
 
-* If **no ROIs selected**, new properties are be applied to all ROIs in Manager.
+Regions-of-interest (ROIs) define groups of pixels in an image. ROIs can have different shapes, e.g. line, rectangular, ellipsoid, polygonal, text, or irregular. An ROI can be used to
+
+* Measure pixel values in a specific image region.
+* Change pixel values in a specific image region.
+* Mark image regions in non-destructive overlays (without changing pixel values).
+
+When we use the Particle Analyzer with the `Add to Manager` option, the ROI for each blob is sent to the Roi Manager.
+
+**ROI Properties**
+
+Via the `Properties` button, the ROI Manager provides functions to change propoerties of selected ROIs, e.g. name, Z-position, outline color & width, and fill color. Multiple ROIs can be selected by holding the `Ctrl` or `Shift` keys while clicking on the ROIs.
+
+**ROI Import & Export**
+
+The ROI Manager can save selected ROIs to a file or open ROIs from a file. Typically, the ROI files have a .roi or .zip extension. The **Open** & **Save** functions are available after clicking the `More>>` button in the ROI Manager.
 
 * `Save`: Export All Selected ROIs to File
 
 * `Open`: Import ROIs from ROI file
 
+* The Affects only **selected ROI**.
+
+* If **no ROIs selected**, new properties are be applied to all ROIs in Manager.
+
+<br>
+
 # Image Object Measurements
 
-## Set Measurements
+### Set Measurements
+
+<img src=/images/intro-fiji-37.png style="width:30%;float:right"></img>
+
+Fiji can measure a variety of parameters for each region-of-interest, or an entire image. The specific measurements to be calculated by the Particle Analyzer can be set in the **Set Measurements** dialog.
 
 1) Go to `Analyze` > `Set Measurements...`.
 
 * Settings affect future measurements, not existing ones.
 
-* Quick measurement: Press `Ctrl` + `M`.
+2) For quick measurements, draw a selection on the image and press `Ctrl` + `M`.
 
-**Measurements occur for current selected region in current image**
+* Measurements occur for **current selected region in the current image**.
 
-**For example:**
+**Example:**
 
-<img src=/images/intro-fiji-36.png style="height:15%;width:15%"></img>
+1) Draw a selection on image
 
-* Create selection on image
-* Use `Ctrl` + `M`.
-* Change Set Measurements Settings
-* Use `Ctrl` + `M`.
+2) Use `Ctrl` + `M`.
 
-* Select ROI in ROI Manager
-* Use `Ctrl` + `M`.
+3) Change Set Measurements Settings
 
-<img src=/images/intro-fiji-37.png style="height:30%;width:30%"></img>
+4) Use `Ctrl` + `M`.
 
-## Analyze Particles with Custom Parameters
+5) Select an ROI in ROI Manager
 
-1) Go to `Edit` > `Selection` > `Select None` (`Ctrl` + `Shift` + `A`)
+6) Click `Measure` or use `Ctrl` + `M` to create measurements for the currently selected ROI.
 
-2) Go to `Analyze` > `Analyze Particles...`
+<br>
 
-<img src=/images/intro-fiji-38.png style="height:50%;width:50%"></img>
+### Analyze Particles with Custom Parameters
 
-<img src=/images/intro-fiji-39.png style="height:50%;width:50%"></img>
+The Particle Analyzer allows filtering of identified ROIs by size and circularity (range 0.0-1.0). A perfect circle has a circularity of 1.0. Let's filter the identified blobs and discard any ROI that has an area <150 square pixels.
+
+1) Go to `Edit` > `Selection` > `Select None` (`Ctrl` + `Shift` + `A`).
+
+2) Go to `Analyze` > `Analyze Particles...`.
+
+3) In the **Analyze Particles** dialog window, set up the analysis parameters as shown in the screenshot.
+
+4) Click `OK`.
+
+<img src=/images/intro-fiji-38.png style="width:50%"></img>
+
+Based on our selection, the Particle Analyzer creates two results tables, titled **Results** and **Summary**. The type of  measurements computed (e.g. **Mean**, **Median**, etc.) depend on the settings in the **Set Measurements** dialog.
+
+* Each line in the **Results** table reflects measurements for a single ROI.
+
+* The **Summary** table, as the name implies, provides summary statistics for all ROIs.
+
+<img src=/images/intro-fiji-39.png style="width:50%"></img>
+
+<br>
 
 ### Measuring Pixel Intensities
 
-1) **Analyze** > **Set Measurements...***
+Let's go back and modify the measurement selection.
 
-* Update options
+<img src=/images/intro-fiji-40.png style="width:25%;float:right"></img>
 
-* Click **OK.**
+1) Go to `Analyze` > `Set Measurements...`.
 
-<img src=/images/intro-fiji-40.png style="height:30%;width:30%"></img>
+2) In the `Set Measurements` dialog window, set up the analysis parameters as shown in the screenshot.
 
-#### Select all ROIs:
-* **Window** > **Roi-Manager**
+3) Click `OK`.
+
+4) Select all ROIs:
+* Go to `Window` > `ROI Manager`.
 * Click on first ROI, **hold Shift** key,
-* scroll down, click last ROI in list.
+* Scroll down, click last ROI in list.
 
-#### Measure **mask** image
+5) Measure ROIs in the **Mask** image
 * Click on black/white **mask** image
-* In **Roi-Manager**, click **Measure** -> **Results** window
-* **File** > **Rename**: **Results** window -> **Mask-Results**
+* In **ROI Manager** window, click `Measure`. This adds measurements for all selected ROIs to the **Results** table.
+* Click on the **Results** window, go to `File` > `Rename`, and enter **Mask-Results** as a new name.
 * If you don’t rename the window, the Results will be overwritten by new measurements.
 
-#### Measure **original** image
+6) Measure ROIs in the **original** image
 * Click on **blobs-shaded.tif** image
-* In **Roi-Manager**, select all ROIs, click **Measure** -> **Results** window
+* In **ROI Manager** window, click `Measure`. This adds measurements for all selected ROIs to the **Results** table.
+
+<br>
+
+Now we can compare the intensity measurements for the corresponding ROIs in the **Mask** and the **blobs_shaded.tif** images. What do you observe?
 
 <img src=/images/intro-fiji-41.png style="height:50%;width:50%"></img>
 
@@ -631,10 +677,11 @@ The option `Add to Manager` sends the definition for each identified particle, i
 * ROIs can be renamed and colored.
 * ROIs can be combined to create ROIs with complex shapes.
 
--> See PDF with additional exercises.
+Go to the [Exercises](#exercises) section for ideas to explore ROI-Manager functionality.
 
+<br>
 
-## 3D Image Reconstruction
+# 3D Image Reconstruction
 
 <img src=/images/intro-fiji-42.png style="height:50%;width:50%"></img>
 
@@ -654,27 +701,34 @@ The option `Add to Manager` sends the definition for each identified particle, i
 
 5) Save brain segmentation mask as TIF image stack.
 
+These steps have been executed for you. The resulting brain segmentation mask is saved as **brain-mask.tif** in the [Tutorials Example Files](#example-files).
+
 ### Creating the Composite 3D Rendering
 
-1) Go to **File** > **Open Samples** > **T1-Head**
+1) Go to `File` > `Open Samples` > `T1-Head`.
 
-2) Go to **Image** > **Type** > **8-bit**
+2) Go to `Image` > `Type` > `8-bit`.
 
-3) Go to **File** > **Open** > brain-mask.tif
+3) Go to `File` > `Open` and select **brain-mask.tif** [see Tutorials Example Files](#example-files).
 
-4) Go to **Process** > **Image Calculator:** t1-head.tif **AND** brain-mask.tif -> brain
+4) Go to `Process` > `Image Calculator`:
 
-5) Go to **Image** > **Color** > **Merge Channels:** t1-head.tif (gray), brain (magenta)
+* Select **t1-head.tif** as Image 1.
+* Select the **AND** operation.
+* Select **brain-mask.tif** as Image 2.
+* Check the `Create new window` box.
 
-6) Go to **Plugins** > **3D Viewer**
+This will create a new grayscale window with the brain proper that corresponds to the mask.
 
-7) Select **Display as Volume**
+5) Go to `Image` > `Color` > `Merge Channels`: t1-head.tif (gray), brain (magenta)
 
-8) In 3D Viewer, go to **Edit > Change Transparency:** Change skull transparency to 75%
+6) Go to `Plugins` > `3D Viewer`.
 
-9) Go to **View > Create 360 degree animation**
+* Select `Display as Volume`. Leave the other default settings.
 
-### 3D Rendering of Brain in Skull
+8) In 3D Viewer, go to `Edit` > `Change Transparency`: Change skull transparency to 75%.
+
+9) Go to `View` > `Create 360 degree animation` to view a rotating animation of the rendered head volume.
 
 <img src=/images/3d-brain-rendering.gif style="height:50%;width:50%"></img>
 
