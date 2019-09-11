@@ -5,56 +5,45 @@ author: "Christina Gancayco"
 categories: ["Image Processing"]
 weight: 1
 draft: false
+toc: True
 ---
 
-<p class="lead">This tutorial is an introduction to using Fiji, an open-source and enhanced 
-version of the popular ImageJ program used for scientific image processing. Participants 
-will be introduced to image processing filters, strategies for image background correction, 
+<img src=/images/fiji.png style="float:left;width=100%;border:10px solid white"</img>
+
+<p class="lead">This tutorial is an introduction to using Fiji, an open-source and enhanced
+version of the popular ImageJ program used for scientific image processing. Participants
+will be introduced to image processing filters, strategies for image background correction,
 as well as identification and analysis of image objects of interest using segmentation masks.</p>
 
-# Table of Contents
-* [**1) Fiji Installation**](#fiji-installation)
-* [**2) What is Image Processing?**](#image-processing-overview)
-* [What is the Goal of Image Processing?](#goals)
-* [Image Processing Applications](#applications)
-* [The Digital Representation of an Image](#digital-representation)
-* [Types of Digital Images](#types-digital-images)
-* [Image Processing & Image Analysis](#image-processing-analysis)
-* [**3) Basic Operations in ImageJ/Fiji**](#basic-operations)
-* [Handling Image Files](#handling-image-files)
-* [Working with Image Channels](#image-channels)
-* [Inspecting and Manipulating Image File Properties](#inspecting-and-manipulating)
-* [Image Format Operations](#image-format-operations)
-* [Useful ImageJ/Fiji Keyboard Shortcuts](#keyboard-shortcuts)
-* [**4) Image Processing and Analysis in ImageJ/Fiji**](#image-processing-analysis-imagej-fiji)
-* [Image Filtering/Enhancement](#image-filtering-enhancement)
-* [Image Segmentation](#image-segmentation)
-* [Image Object Measurements](#image-object-measurements)
-* [3D Image Reconstruction](#3d-image-reconstruction)
-* [**5) Fiji/ImageJ Tutorials and Resources**](#fiji-imagej-tutorials-resources)
-* [**6) Exercises**](#exercises)
+<br>
 
-# <a name="fiji-installation">1) Fiji Installation</a>
+# Fiji Installation</a>
 
-Fiji is available on Windows, Mac, and Linux platforms and can be downloaded directly 
-from the Fiji website: [https://fiji.sc/](https://fiji.sc/). Fiji is a portable application, 
-meaning it doesn't require an installer. To use Fiji, simply download and unzip the application, 
+Fiji is available on Windows, Mac, and Linux platforms and can be downloaded directly
+from the Fiji website: [https://fiji.sc/](https://fiji.sc/). Fiji is a portable application,
+meaning it doesn't require an installer. To use Fiji, simply download and unzip the application,
 and then you are able to start running it.
 
-To follow along with the exercises, you will also need to download some example images which can be found 
+* **MacOS X:** The Fiji application should be installed in the the user’s home directory rather than the default Applications folder.
+* **Windows 7 & 10:** The Fiji application should be installed in the the user’s home directory rather than the default C:\Program Files directory.
+* **Linux:** The Fiji application should be installed in a directory where the user has read, execution, and write permissions, e.g. the user’s home directory.
+
+### Tutorial Example Files {#example-files}
+To follow along with the exercises, you will also need to download some example images which can be found
 at [https://workshops.somrc.virginia.edu/data/intro-fiji-images.zip](https://workshops.somrc.virginia.edu/data/intro-fiji-images.zip).
 
-# <a name="image-processing-overview">2) What is the Goal of Image Processing?</a>
+<br>
 
+# Introduction
 
-## <a name="goals">What is the Goal of Image Processing?</a>
+### Image Processing & Analysis
 
 * Image Filtering (removal of noise and artifacts)
 * Image Enhancement (highlight features of interest)
 * Image Segmentation (object recognition)
 * Quantitative Image Feature Description (object measurements)
 
-## <a name="applications">Image Processing Applications</a>
+**Image Processing Applications**
 
 * Photography & cinematography
 * Digitization of non-digital documents -> text mining
@@ -65,23 +54,43 @@ at [https://workshops.somrc.virginia.edu/data/intro-fiji-images.zip](https://wor
 * Autonomously operating machinery (cars, etc.)
 * Automatic cataloging of pictures on the web
 
-## <a name="digital-representation">The Digital Representation of an Image</a>
+### The Digital Representation of an Image
 
 * 2D images are 2D arrays of numbers organized in rows and columns
 * The intersection of row and column is a pixel
 * Each pixel is represented as an intensity value (e.g. between 0-255)
 
-<img src=/images/intro-fiji-1.png style="height:75%;width:75%"></img>
+<img src=/images/intro-fiji-1.png style="width:50%"></img>
 
-## <a name="types-digital-images">Types of Digital Images</a>
+<br>
 
-<img src=/images/intro-fiji-2.png style="height:75%;width:75%"></img>
+<img src=/images/intro-fiji-2.png style="width:50%;float:right"></img>
 
-## <a name="image-processing-analysis">Image Processing & Analysis</a>
+Fiji can handle image files in various file formats and pixel encodings, e.g. color images (RGB, HSB, etc.), grayscale images, and binary images.
 
-<img src=/images/intro-fiji-3.png style="height:75%;width:75%"></img>
+***Color images*** use 8-bit encoding for each channel (e.g. RGB: 256 intensity values for red, green, and blue).
 
-# <a name="basic-operations">3) Basic Operations in ImageJ/Fiji</a>
+Pixels in ***grayscale images*** may be encoded as 8-bit integer (256 intensity levels), 16-bit integer (65536 intensity levels), or 32-bit float (decimal number) values.
+
+***Binary images*** are a special type of 8-bit grayscale images that only contain the pixel values 0 (black) or 255 (white). They are used for masking and segmentation of object areas of interest in an image.
+
+<br>
+
+### Image Processing & Analysis
+
+<img src=/images/intro-fiji-3.png style="width:50%;float:right"></img>
+
+Image processing and analysis procedures often share a common workflow as shown here.
+
+The original image (or raw data) that serves as input for the image processing pipeline may contain background noise that may need to be removed by applying specifc image filters.
+
+The cleaned-up image may then be processed to enhance certain features, e.g. highlight object edges.
+
+The enhanced image can then be converted into binary image masks that define groups of pixels as objects. Based on these masks, objects of interest can be classified and analyzed for size, geometry, pixel intensities, etc..
+
+<br>
+
+# Basic Operations in ImageJ/Fiji
 
 * [Handling Image Files](#handling-image-files)
 * [Working with Image Channels (splitting, merging, LUTs)](#image-channels)
@@ -89,119 +98,189 @@ at [https://workshops.somrc.virginia.edu/data/intro-fiji-images.zip](https://wor
 * [Image Format Operations (cropping, file format conversion...)](#image-format-operations)
 
 
-## <a name="handling-image-files">Handling Image Files</a>
+### Handling of Image Files
 
-### Images and Image Stacks in Fiji
+**Images and Image Stacks in Fiji**
 
 <img src=/images/intro-fiji-4.png style="height:75%;width:75%"></img>
 
-## <a name="image-channels">Working with Image Channels</a>
+<br>
 
-### Manipulating Image Channel Colors
+### Working with Image Channels
 
-1) **File** > **Open Samples** > **Mitosis (26MB, 5D stack)**
+Fiji has built-in tools to manipulate multi-channel composite and RGB images. For this example, open the 5-dimensional (x, y, z, color, time) image stack.
 
-2) **Image** > **Color** > **Channels Tool…**
+<img src=/images/intro-fiji-5.png style="float:right;width:40%"></img>
 
-3) Change from **Composite** to **Color**, move channel slider
+1) Go to `File` > `Open Samples` > `Mitosis (26MB, 5D stack)`. An image window should open as shown here.
 
-4) Uncheck selected channels
+2) Open the Channels Tool dialog with `Image` > `Color` > `Channels Tool…`.
 
-5) Change from **Composite** to **Color**, move channel slider
+3) In the Channels Tool dialog window, change from `Composite` to `Color`. Move the channel slider and note how the display updates based on the selected channel.
 
-6) Change to “**Grayscale**”
+4) Switch back to `Composite` mode. Uncheck selected channels and note how the channel overlay changes based on the selected images.
 
-7) Change back to **Color**, Click **More >>**, select new color
+5) Change from Composite** to `Color`, move channel slider.
 
-8) Change to **Composite** mode
+6) Change to `Grayscale`. Although the color information has been converted to gray, the **pixel intensity values remain unchanged**.
 
-<img src=/images/intro-fiji-5.png style="height:40%;width:40%"></img>
+7) Change back to `Color`, Click `More >>`, select a new color.
 
-### Manipulating multi-channel Composite and RGB Images: Splitting Channels
+8) Change to `Composite` mode.
 
-1) **File** > **Open Samples** > **Mitosis (26MB, 5D stack)**
+<br>
 
-2) Go to: **Image** > **Color** > **Split Channels**
 
-<img src=/images/intro-fiji-6.png style="height:40%;width:40%"></img>
+**Splitting Channels**
 
-### Merging Channels
+<img src=/images/intro-fiji-6.png style="float:right;width:40%"></img>
 
-1) Go to **File** > **Open Samples** > **Fluorescent Cells**.
+1) Go to `File` > `Open Samples` > `Mitosis (26MB, 5D stack)`.
 
-2) Go to **Image** > **Color** > **Split Channels**.
+2) Go to `Image` > `Color` > `Split Channels`.
 
-3) Go to **Image** > **Color** > **Merge Channels**.
+Individual image channels are displayed in separate windows. This operation only works on multi-channel image stacks or RGB images.
 
-4) Select channels as shown, click **OK**.
+<br>
 
-<img src=/images/intro-fiji-7.png style="height:75%;width:75%"></img>
 
-### Changing Image Color Assignment and Merging Channels into Composite Images
+**Merging Channels**
 
-The color representation in 8-bit and 16-bit images is defined by a color Lookup Table (LUT)
+<img src=/images/intro-fiji-7.png style="float:right;width:60%"></img>
 
-**Single channel image**:
+Images displayed in separate windows can be ***merged*** into multi-channel composite images. The input ***images need to be of the same type*** (either 8-bit or 16-bit pixel encoding). You can merge up to 7 different images into a single multi-channel image.
 
-* **Image** > **Color** > **Lookup Tables** 
+1) Go to `File` > `Open Samples` > `Fluorescent Cells`.
 
-* **Image** > **Lookup Tables**
+2) Go to `Image` > `Color` > `Split Channels`.
 
-**Multi-channel image**: 
+3) Go to `Image` > `Color` > `Merge Channels`.
 
-* **Image** > **Color** > **Channels Tools**
+4) Set the green channel to `None` and leave the other default settings. Click `OK`.
 
-Images displayed in different images can be ***merged*** into multi-channel composite images.  The input ***images need to be of the same type*** (either 8-bit or 16-bit pixel encoding).
+The resulting image should contain a merge of the red and blue channels without the green channel component.
 
-## <a name="inspecting-and-manipulating">Inspecting and Manipulating Image File Properties</a>
+<br>
 
-### Extracting Channels and Creating a Montage
 
-1) Close All Image Windows: **File** > **Close All**.
+**Changing Image Color Assignment**
 
-2) **File** > **Open Samples** > **Fluorescent Cells.**
+The color representation in 8-bit and 16-bit images is defined by a color Lookup Table (LUT).
 
-3) **Image** > **Color** > **Split Channels.**
+For **single channel images**, you can change the LUT by running these commands:
 
-4) Close **Blue** Image.
+1) `Image` > `Color` > `Lookup Tables`.
 
-5) Select **Red** Image.
+2) `Image` > `Lookup Tables`.
 
-6) **Image** > **Lookup Tables** > **Grays**.
+For **multi-channel image**, you can change the LUT by running these commands:
 
-7) Select **Green** Image.
+1) `Image` > `Color` > `Channels Tools`.
 
-8) **Image** > **Lookup Tables** > **Grays**.
+2) Select a channel of interest.
 
-9) **Image** > **Color** > **Merge Channels** (green and red channel) select **Keep Sources**.
+3) Click `More >>`, select a new color.
 
-10) For each of the three images: a) Select first grayscale image, b) **Image** > **Type** > **RGB Color**
+<br>
 
-11) **Image** > **Stacks** > **Images to Stack**.
+### Image Montage & Cropping
 
-12) **Image** > **Stacks** > **Make Montage**.(Columns: 3, Scale factor: 1.0)
+**Making an Image Montage**
+<img src=/images/intro-fiji-8.png style="float:right;width:60%"></img>
 
-<img src=/images/intro-fiji-8.png style="height:75%;width:75%"></img>
+Images can be layout in a grid-like fashion, aka a montage. Given the regular arrangement of the images in a grid layout, all image tiles used for the montage have to be of the same x-y dimension and same image type (e.g. all 8-bit, 8-bit, 32-bit, or RGB).
 
-## <a name="image-format-operations">Image Format Operations</a>
+The easiest way to create a montage is to create an image stack that contains all the images for the individual image tiles and then use the Fiji Montage tool. Here is an example:
 
-### Image Size: Cropping
+1) Close All Image Windows: `File` > `Close All`.
 
-1) Click **Rectangular selection icon**, then draw rectangular box in image.
+2) `File` > `Open Samples` > `Fluorescent Cells`.
 
-2) Menu: **Image** -> **Crop** (This crops image to size of rectangular selection box)
+3) `Image` > `Color` > `Split Channels`.
 
-<img src=/images/intro-fiji-8.png style="height:75%;width:75%"></img>
+4) Close `Blue` Image.
 
-### Defining Image Scale
+5) Select `Red` Image.
 
-1) Go to **Analyze** > **Set Scale...**
+6) Go to `Image` > `Lookup Tables` > `Grays`.
 
-* If **Global** is checked, the new scale (or scale removal) operation is **applied to all open images**.
+7) Select `Green` Image.
 
-<img src=/images/intro-fiji-10.png style="height:75%;width:75%"></img>
+8) Go to `Image` > `Lookup Tables` > `Grays`.
 
-### Adding a Scale Bar
+9) `Image` > `Color` > `Merge Channels` (green and red channel); select `Keep Sources`.
+
+10) For each of the three images:
+  a) Click on grayscale image window to make it the active window,
+  b) then go to `Image` > `Type` > `RGB Color`.
+
+11) Go to `Image` > `Stacks` > `Images to Stack`.
+
+12) Go to `Image` > `Stacks` > `Make Montage`.(Columns: 3, Scale factor: 1.0)
+
+<br>
+
+**Image Size: Cropping**
+
+<img src=/images/intro-fiji-select-tools.png style="float:right;width:50" /img>
+
+Images can be cropped around regions-of-interest (ROIs) that can be drawn with the selection tools in the Fiji Toolbar.
+
+1) Go to `File` > `Open Samples` and select any image.
+
+2) Click **Rectangular selection icon**, then draw rectangular box in image.
+
+3) Go to `Image` > `Crop`. This crops image to size of rectangular selection box.
+
+Note that the image will be cropped for all z-focal planes, all channels, and all timepoints.
+
+
+
+
+<br>
+
+
+### Image Scale Bars
+
+<img src=/images/intro-fiji-10.png style="width:50%;float:right"></img>
+
+Many scientific instruments used for image acquisition store additional metadata in the image files that contain calibrations defining the size of a pixel (or 3D voxel) for that image or image stack in physical units (e.g. mm, nm, etc.). These values define the scale of an image.
+
+Taking a look at the image window right below the image title indicates whether the image scale (e.g. pixel/voxel size) has been set or not.
+
+* If the ***scale is not set***, the image dimensions are displayed as ***NNN x NNN pixels***, see top left panel.
+* If the ***scale is set***, the image dimensions are displayed as ***NNN x NNN <physical unit>***, see bottom left panel.
+
+<br>
+
+**Defining an Image Scale**
+
+You can set or modify an image's scale following these steps:
+
+1) Go to `Analyze` > `Set Scale...`.
+
+2) In the top box of the dialog window, enter the number of pixels that correspond to a known physical distance.
+
+3) In the second box, enter the physical distance represented by the pixel distance.
+
+4) Enter the physical units label, e.g. ***mm***, ***nm***, etc.. The label ***um*** is interpreted as micrometer.
+* If `Global` is checked, the new scale (or scale removal) operation is **applied to all open images**.
+
+5) Click `OK`.
+
+<br>
+
+**Adding a Scale Bar**
+
+<img src=/images/intro-fiji-11.png style="width:50%;float:right"></img>
+
+For presentation purposes it is frequently desired to display a scale bar in the image. This can be done following these steps:
+
+1) Go to `Analyze` > `Tools` > `Scale Bar...`.
+
+2) Define positioning of the scale bar and its size. Check the `Overlay` box and click `OK`.
+
+2) Go to `Image` > `Overlay` > `Show Overlay/Hide Overlay` to toggle between showing and hiding the scale bar.
 
 * The **Overlay** ***will not affect the pixel values*** of the image region under the scale bar.  It is **non-destructive**.
 
@@ -209,13 +288,9 @@ Images displayed in different images can be ***merged*** into multi-channel comp
 
 * Saving the image in JPG format burns the overlay into the image.
 
-1) Go to **Analyze** > **Tools** > **Scale Bar...**
+<br>
 
-2) Go to **Image** > **Overlay** > **Show Overlay/Hide Overlay**
-
-<img src=/images/intro-fiji-11.png style="height:75%;width:75%"></img>
-
-## <a name="keyboard-shortcuts">Useful ImageJ/Fiji Keyboard Shortcuts</a>
+### Useful ImageJ/Fiji Keyboard Shortcuts
 
 | Shortcut             | Operation                    |
 | --------             |  --------                    |
@@ -230,19 +305,13 @@ Images displayed in different images can be ***merged*** into multi-channel comp
 
 \*On a Mac, use the Command key instead of the Ctrl key.
 
-# <a name="image-processing-analysis-imagej-fiji">4) Image Processing and Analysis in ImageJ/Fiji</a>
+<br>
 
-* [Image Filtering/Enhancement](#image-filtering-enchancement)
-
-* [Image Segmentation](#image-segmentation)
-
-* [Image Object Measurements](#image-object-measurements)
-
-* [3D Image Reconstruction](#3d-image-reconstruction)
+# Image Filtering & Enhancement
 
 <img src=/images/intro-fiji-12.png style="height:75%;width:75%"></img>
 
-## <a name="image-filtering-enhancement">Image Filtering/Enhancement</a>
+<br>
 
 ### Applying Filters: Noise Removal
 
@@ -250,64 +319,66 @@ Image noise is an undesirable by-product of image capture that adds spurious and
 
 <img src=/images/intro-fiji-13.png style="height:60%;width:60%"></img>
 
-### Comparing Average, Median, Gaussian, and Unsharp Filters
-
-1) Open image file **noisy_image.tif**.
-
-2) Create three copies of the image file: **(Ctrl + Shift + D)**
-
-3) Apply a different filter on each image: 	**(Process -> Filters)**
-
-4) Experiment with settings and click **Preview**.
-
-<img src=/images/intro-fiji-14.png style="height:30%;width:30%"></img>
-
-<img src=/images/intro-fiji-15.png style="height:60%;width:60%"></img>
-
-
-| Filter        | Effect                                          |
-| ------        | ------                                          |
-| Mean          | Smoothing, noise spills into neighboring pixels |
-| Gaussian Blur | Smoothing, some edge preservation               |
-| Median        | Removes outliers, not linear                    |
-| Unsharp Mask  | Sharpens edges, amplifies noise                 |
-
+<br>
 
 ### How Do Filters Work?
 
-#### Comparing Average (Mean) and Median Filters
+Fiji provides several standard filters that can be applied to images. Here we are just exploring a few of them.
+
+1) Open image file **noisy_image.tif**.
+
+2) Create three copies of the image file by pressing `Ctrl` + `Shift` + `D` (three times).
+
+3) Go to `Process` > `Filters` and experiment with the `Mean`, `Median`, `Gaussian`, and `Unsharp Mask` filters on the four images.
+
+4) Experiment with settings and click `Preview`.
+
+<img src=/images/intro-fiji-14.png style="width:48%;float:left"></img>
+<img src=/images/intro-fiji-15.png style="width:51%;float:right"></img>
+
+<br>
+
+<br>
+
+**Comparing Average (Mean) and Median Filters**
+
 **Mean**: Replaces pixel value with average value in kernel region
 
 **Median**: Replaces pixel value with median value in kernel region
 
 <img src=/images/intro-fiji-16.png style="height:60%;width:60%"></img>
 
-### Other Filter Options
+<br>
+
+**Other Commonly Used Filters**
 
 | **Filter**                 | **Effect**                                                                    |
 | ------                     | ------                                                                        |
 | Convolve                   | Convolution with **custom** filter                                            |
 | Gaussian Blur              | **Gaussian** filter, reasonable edge preservation                             |
-| **Replace each pixel:**    |                                                                               |
 | Median                     | **Median** of neighbors, non-linear, good for salt-and-pepper noise reduction |
 | Mean                       | **Average** of neighbors, smoothing                                           |
 | Minimum                    | **Smallest** value of neighbors, smoothing                                    |
 | Maximum                    | **Largest** value of neighbors, smoothing                                     |
 | Variance                   | **Variance** of neighbors, indicator of image textures, highlight edges       |
 
-### Removing Periodic Noise (Advanced)
+**Removing Periodic Noise (Advanced)**
+
+Periodic noise as shown by the banding pattern overlaying this image cannot be removed with the kernel-based standard filters described above. However applying ***Fast-Fourier Transform (FFT)*** analysis can reveal the periodicity of such noise represented by the high intensity spots in the the FFT image (top middle panel). By masking these hotspots (bottom middle panel) and applying the inverse FFT one can retrieve the original image without the periodic noise (right panel).
 
 <img src=/images/intro-fiji-17.png style="height:60%;width:60%"></img>
 
+
 ### Applying Filters: Edge Detection
 
-* Implemented by applying special convolution kernels
+Edge detection is commonly used to define the outline of objects of interest. It is implemented by applying special convolution kernels.
 
-* Sensitive to noise, remove noise with filter first
+**Note that edge detection algorithms can be very sensitive to noise. So it is advisable to remove noise with other filters first (e.g. median filter which preserves edges quiteg well) before applying the edge detection filter (see images below).**
 
 <img src=/images/intro-fiji-18.png style="height:60%;width:60%"></img>
 
-## <a name="image-segmentation">Image Segmentation</a>
+
+# Image Segmentation</a>
 
 * Image Segmentation is the process that groups individual image pixels that represent specific objects.
 
@@ -315,212 +386,190 @@ Image noise is an undesirable by-product of image capture that adds spurious and
 
 * It requires binary (black and white) image masks and object shape descriptors (*morphometric* parameters).
 
-### Blob Analysis: *Quantification of the Number and Properties of Objects*
+<br>
 
-* Dark large spots resemble cells to be counted
+### Example: Blob Analysis
 
-* Dark small spots resemble debris that should be ignored
+<img src=/images/intro-fiji-19.png style="width:20%;float:right"></img>
 
-<img src=/images/intro-fiji-19.png style="height:20%;width:20%"></img>
+To illustrate typical steps in image segmentation and analysis, we are going to process the ***blobs_shaded.tif*** image that is part of the [Tutorial Example Files] (#example-files).
 
-#### Approach:
+**Analysis Goals:**
 
-* Separate dark spots as individual objects from background
+* Separate dark spots as individual objects from background.
 
-* Reject small objects (debris) by size exclusion
+* Reject small objects (debris) by size exclusion.
 
-* Count total number of objects and compute average object size
+* Count total number of objects and compute average object size.
 
-* Measure size (2D surface area) of each object
+* Measure size (2D surface area) of each object.
 
-### Segmentation: *Separating "Blobs" from Background*
+<br>
 
-1) Open image file **blobs_shaded.tif**
+### Separating "Blobs" from Background
 
-2) In menu, go to **Image** > **Adjust** > **Threshold…**
+In order to separate the dark spots from the background we will be using intensity thresholding. The idea is that all pixels with an intensity below (or equal) the threshold go in one bin, all other pixels go into another bin. Pixels in one bin are considered to belong to objects of interest while those in the other bin are considered background. This is the principal method to create binary images.
 
-3) Click on image window, then click on **Auto** button in **Threshold** window.
+<img src=/images/intro-fiji-20.png style="width:50%;float:right"></img>
 
-4) Uncheck the **Dark Background** box.  In the drop-down boxes select **“Default”** and **“Red”**.
 
-5) Move the sliders and observe the change of the red pattern overlaying the image. Click **Reset** to remove the overlay. ***Don’t click Apply yet!***
+1) Open image file ***blobs_shaded.tif***.
+
+2) In menu, go to `Image` > `Adjust` > `Threshold…`.
+
+3) Click on image window, then click on `Auto` button in **Threshold** window. If you lost track of the Threshold window, goto `Windows` and select it from the list.
+
+4) In the Threshold dialog window, uncheck the `Dark Background` box.  In the drop-down boxes select `Default` and `Red`.
+
+5) Move the sliders and observe the change of the red pattern overlaying the image. Click `Reset` to remove the overlay. ***Don’t click Apply yet!***
 
 * What is the problem?
 
-### Segmentation: Thresholding Separates *"Blobs" from Background*
+<br>
 
-**Thresholding:** Group all image pixels by intensity value into two bins.
+### Correction of Uneven Background Signal
 
-<img src=/images/intro-fiji-20.png style="height:60%;width:60%"></img>
+<img src=/images/intro-fiji-21.png style="width:45%;float:right"></img>
 
-### Correction of Uneven Background Signal, Steps 1 and 2
+**A Background Correction Image**
 
-#### Approach
+1) Go to `Image` > `Duplicate`, in the `Title` box enter: **Bg**.
 
-1) **Image** > **Duplicate**, Title: **“Bg”**
+2) Go to `Process` > `Filters` > `Gaussian Blur…`.
 
-2) **Process** > **Filters** > **Gaussian Blur…**
+* Check the `Preview` box.
 
-* Check **Preview** box.
+* Try different `Sigma Radius` values: e.g. **1**, **20**, **100**.
 
-* Try different **Sigma Radius** values: e.g. 1, 20, 100
+3) Finally, set `Sigma Radius` to **60**.
 
-* Finally, set **Sigma Radius** = 60.
+4) Click `OK`.
 
-* Click **OK**.
+<br>
 
-<img src=/images/intro-fiji-21.png style="height:60%;width:60%"></img>
+**Performing the Background Correction**
 
-### Correction of Uneven Background Signal, Step 3
+<img src=/images/intro-fiji-22.png style="width:20%; float:right"></img>
 
-#### Approach
+5) Go to `Process` > `Image Calculator…`.
 
-1) **Image** > **Duplicate**, Title: **“Bg”**
+* From the `Image1` drop-down, select the ***blobs_shaded.tif*** image.
 
-2) **Process** > **Filters** > **Gaussian Blur…**
+* Select the ***Divide*** Operation.
 
-3) **Process** > **Image Calculator…**
+* From the `Image2` drop-down, select the ***Bg*** image.
 
-* Set up options as shown
+* Check the `Create new window` box.
 
-* Click OK
+* Check the `32-bit (float) result` box.
 
-<img src=/images/intro-fiji-22.png style="height:30%;width:30%"></img>
+* Click `OK`.
 
-### Correction of Uneven Background Signal, Steps 4 and 5
+6) Click on the ***resulting*** window that contains the corrected image.
 
-#### Approach
-
-1) **Image** > **Duplicate**, Title: **“Bg”**
-
-2) **Process** > **Filters** > **Gaussian Blur…**
-
-3) **Process** > **Image Calculator…**
-
-4) Click on the **resulting** window
-
-5) **Image** > **Rename...**; enter **“Corr”**
+7) Go to `Image` > `Rename...` and enter ***Corr*** as a new name for the corrected image.
 
 <img src=/images/intro-fiji-23.png style="height:30%;width:30%"></img>
 
-### Correction of Uneven Background Signal, Step 6
-
-#### Approach
-
-1) **Image** > **Duplicate**, Title: **“Bg”**
-
-2) **Process** > **Filters** > **Gaussian Blur…**
-
-3) **Process** > **Image Calculator…**
-
-4) Click on the **resulting** window
-
-5) **Image** > **Rename...**; enter **“Corr”**
-
-6) **Image** > **Type** > **8-bit**
+8) Go to `Image` > `Type` > `8-bit` to change the image from 32-bit float to 8-bit integer encoding.
 
 <img src=/images/intro-fiji-24.png style="height:50%;width:50%"></img>
 
-### Correction of Uneven Background Signal, Preparation
+<br>
 
-* Go to **Process** > **Binary** > **Options**
 
-* Check the **Black background** box.
+### Creating a Binary Object Mask
 
-This controls the display mode of **thresholded** images and also the mode that the **Particle Analyzer** uses to identify objects.
+9) Go to `Process` > `Binary` > `Options`. Check the `Black background` box and click `OK`. This controls the display mode of ***thresholded images*** and also the mode that the ***Particle Analyzer*** uses to identify objects (see below). **In our example objects of interest are displayed white on black background.**
 
-**In this case: objects of interest are displayed white on black background.**
+10) Go to `Image` > `Adjust Threshold`.
 
-<img src=/images/intro-fiji-25.png style="height:20%;width:20%"></img>
+* In the Threshold dialog window, choose the ***Default*** algorithm.
 
-### Correction of Uneven Background Signal, Summary
+* Choose the ***Red*** overlay.
 
-#### Approach Summary
+* Deselect `Dark Background` and deselect `Stack histogram`.
 
-1) Duplicate **blobs-shaded.tif -> Bg**
+* Click on the ***Corr*** image window and click `Auto` in the Threshold window. Note the uniform detection of dark spots indicated by the red overlay. Note the bimodal distribution of the pixel intensity values in the thresholding histogram. Compare this thresholding to the one obtained for the original image ***blobs-shaded.tif***.
 
-2) Bg: apply **Gaussian Blur** (s=60)
+<img src=/images/intro-fiji-25.png style="width:21%;float:left"></img>
+<img src=/images/intro-fiji-27.png style="width:42%;float:center"></img>
+<img src=/images/intro-fiji-28.png style="width:37%;float:right"></img>
 
-3) Corr = **blob-shaded.tif / Bg**
+<br>
 
-4) Convert Corr to **8-bit**
+<img src=/images/intro-fiji-29.png style="width:42%; float:right"></img>
 
-5) Mask = Corr, apply **Threshold** (default)
+11) In the Threshold dialog window, click `Apply`.
 
-<img src=/images/intro-fiji-26.png style="height:30%;width:30%"></img>
+* If you see a message like: **“Convert to 8-bit mask or set background pixels to NaN”**, it means that you are running the thresholding on a 32-bit image.  Convert the ***Corr*** image to 8-bit first (see step 8).
 
-### Background Correction Improves Automatic "Blob" Segmentation
-
-<img src=/images/intro-fiji-27.png style="height:60%;width:60%"></img>
-
-### Binary Object Mask
-
-<img src=/images/intro-fiji-28.png style="height:30%;width:30%"></img>
-
-* If you see a message like: **“Convert to 8-bit mask or set background pixels to NaN”**, it means that you are running the thresholding on a 32-bit image.  Convert the Corr image to 8-bit first.
-
-<img src=/images/intro-fiji-29.png style="height:60%;width:60%"></img>
-
-* If you see black objects on white background, check **Process** > **Binary** > **Options**
+* If you see black objects on white background, check `Process` > `Binary` > `Options` (step 9).
 
 * Redo the thresholding on **“Corr”** image.
 
-<img src=/images/intro-fiji-30.png style="height:30%;width:30%"></img>
+12) Go to `Image` > `Rename` and enter ***Mask*** as a new image title.
 
-### Analyze Particles, Step 1
+The result after steps 1-12 should be a binary mask image that shows white bobs on a black background.
 
-1) Go to **Image** > **Rename**: "Mask"
+<br>
 
-<img src=/images/intro-fiji-31.png style="height:40%;width:40%"></img>
+### Splitting Joined Objects
 
-#### Mask Refinement: Splitting Joined Objects
+The previous steps produced a binary mask, but closer inspection reveals that some blob objects are fused. These appear as peanut-shaped objects. We will apply a watershed algorithm to separate these fused objects.
 
-1) **Process** > **Binary** > **Watershed**
+<img src=/images/intro-fiji-32.png style="width:40%;float:right"></img>
 
-2) Save the image obtained after the watershed operation as **blobs-watershed.tif**.
+13) Click on the ***Mask*** image window and go to `Process` > `Binary` > `Watershed`.
 
-* This only works on binary images, e.g. the black and white “blob” mask.
+14) Save the image obtained after the watershed operation as **blobs-watershed.tif**.
+
+* The watershed algorithm only works on binary images, e.g. the black and white “blob” mask.
 
 * It only works for objects that show significant opposing convex-to-concave curvature (neck regions).
 
-<img src=/images/intro-fiji-32.png style="height:50%;width:50%"></img>
 
-### Analyze Particles, Step 2
+<br>
 
-1) Go to **Image** > **Rename**: "Mask"
 
-2) Go to **Analyze** > **Analyze Particles...**
+### Analyze Particles
 
-<img src=/images/intro-fiji-33.png style="height:30%;width:30%"></img>
+Now we are ready to identify and extract information from each blob.
 
-<img src=/images/intro-fiji-34.png style="height:60%;width:60%"></img>
+<img src=/images/intro-fiji-34.png style="width:40%;float:right"></img>
+<img src=/images/intro-fiji-33.png style="width:21%;float:right"></img>
+15) Go to `Analyze` > `Analyze Particles...`.
 
-### Analyze Particles: The ROI Manager
+* In the **Analyze Particles** dialog, set up the analysis parameters as shown.
+
+* Click `OK`.
+
+The option **Show** `Outlines` leads to the creation of a new image that contains the outline and object ID (red numbers).
+
+The option `Add to Manager` sends the definition for each identified particle, i.e. dark blob, to the **Region-of-Interest Manager**, (ROI Manager for short).
 
 <img src=/images/intro-fiji-35.png style="height:60%;width:60%"></img>
 
-#### ROI Import & Export
+### ROI Import & Export
 
-* Affects only **selected ROI**
+* Affects only **selected ROI**.
 
-* If **no ROIs selected**, new properties can be applied to all ROIs in Manager
+* If **no ROIs selected**, new properties are be applied to all ROIs in Manager.
 
-#### More...
+* `Save`: Export All Selected ROIs to File
 
-* **Save**: Export All Selected ROIs to File
+* `Open`: Import ROIs from ROI file
 
-* **Open**: Import ROIs from ROI file
+# Image Object Measurements
 
-## <a name="image-object-measurements">Image Object Measurements</a>
+## Set Measurements
 
-### Set Measurements
-
-1) **Analyze** > **Set Measurements...**
+1) Go to `Analyze` > `Set Measurements...`.
 
 * Settings affect future measurements, not existing ones.
 
-* Quick measurement: **Ctrl + M**
-      
+* Quick measurement: Press `Ctrl` + `M`.
+
 **Measurements occur for current selected region in current image**
 
 **For example:**
@@ -528,20 +577,20 @@ This controls the display mode of **thresholded** images and also the mode that 
 <img src=/images/intro-fiji-36.png style="height:15%;width:15%"></img>
 
 * Create selection on image
-* Use **Ctrl + M**
+* Use `Ctrl` + `M`.
 * Change Set Measurements Settings
-* Use **Ctrl + M**
+* Use `Ctrl` + `M`.
 
 * Select ROI in ROI Manager
-* Use **Ctrl + M**
+* Use `Ctrl` + `M`.
 
 <img src=/images/intro-fiji-37.png style="height:30%;width:30%"></img>
 
-### Analyze Particles: Customize Particle Parameters and Measure All Particles
+## Analyze Particles with Custom Parameters
 
-1) **Edit** > **Selection** > **Select None** (Ctrl + Shift + A)
+1) Go to `Edit` > `Selection` > `Select None` (`Ctrl` + `Shift` + `A`)
 
-2) **Analyze** > **Analyze Particles…**
+2) Go to `Analyze` > `Analyze Particles...`
 
 <img src=/images/intro-fiji-38.png style="height:50%;width:50%"></img>
 
@@ -554,12 +603,12 @@ This controls the display mode of **thresholded** images and also the mode that 
 * Update options
 
 * Click **OK.**
- 
+
 <img src=/images/intro-fiji-40.png style="height:30%;width:30%"></img>
 
 #### Select all ROIs:
 * **Window** > **Roi-Manager**
-* Click on first ROI, **hold Shift** key, 
+* Click on first ROI, **hold Shift** key,
 * scroll down, click last ROI in list.
 
 #### Measure **mask** image
@@ -578,14 +627,14 @@ This controls the display mode of **thresholded** images and also the mode that 
 
 * ROIs that are listed in the ROI Manager window can be saved to a file (single ROI or multiple ROIs).
 * Conversely, ROIs can be loaded from file into the ROI Manager and (re-)applied to an image.
-* Hand-drawn ROIs created with the ROI tools can be added to the ROI-Manager. 
+* Hand-drawn ROIs created with the ROI tools can be added to the ROI-Manager.
 * ROIs can be renamed and colored.
 * ROIs can be combined to create ROIs with complex shapes.
 
--> See PDF with additional exercises. 
+-> See PDF with additional exercises.
 
 
-## <a name="3d-image-reconstruction">3D Image Reconstruction</a>
+## 3D Image Reconstruction
 
 <img src=/images/intro-fiji-42.png style="height:50%;width:50%"></img>
 
@@ -611,7 +660,7 @@ This controls the display mode of **thresholded** images and also the mode that 
 
 2) Go to **Image** > **Type** > **8-bit**
 
-3) Go to **File** > **Open** > brain-mask.tif 
+3) Go to **File** > **Open** > brain-mask.tif
 
 4) Go to **Process** > **Image Calculator:** t1-head.tif **AND** brain-mask.tif -> brain
 
@@ -622,7 +671,7 @@ This controls the display mode of **thresholded** images and also the mode that 
 7) Select **Display as Volume**
 
 8) In 3D Viewer, go to **Edit > Change Transparency:** Change skull transparency to 75%
-	
+
 9) Go to **View > Create 360 degree animation**
 
 ### 3D Rendering of Brain in Skull
@@ -633,13 +682,17 @@ This controls the display mode of **thresholded** images and also the mode that 
 
 * Process .stl surfaces for high quality rendering in other software, e.g. Paraview, Blender, etc..
 
-# <a name="fiji-image-j-tutorials-resources">5) Fiji/ImageJ Tutorials and Resources</a>
+<br>
+
+# Fiji/ImageJ Tutorials and Resources
 
 [https://imagej.nih.gov/ij/docs/examples/](https://imagej.nih.gov/ij/docs/examples/)
 
 <img src=/images/intro-fiji-44.png style="height:50%;width:50%"></img>
 
-# <a name="exercises">6) Exercises</a>
+<br>
+
+# Exercises
 
 ## 1) Saving files in different file formats
 Fiji supports many different file formats.
@@ -915,7 +968,7 @@ Each ROI has multiple properties, e.g. position, color, etc.
 
 If you have multiple ROIs selected OR none at all, the properties will be applied to all ROIs.
 
-### 7.3 Combining ROIs
+### 7.4 Combining ROIs
 
 Simple ROI shapes can be combined into more complex ones.
 
@@ -937,7 +990,3 @@ the first and third ROI.
 operation produces a new ROI that contains only the overlapping region of the selected ROIs,
 while the **XOR** operation creates a combined ROI that excludes any overlap between the
 selected ROIs.
-
-
-
-

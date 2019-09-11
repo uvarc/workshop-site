@@ -10,7 +10,7 @@ toc: True
 
 ![](/images/fiji.png)
 
-This tutorial is an introduction to the scripting interface of the [Fiji](https://fiji.sc) application, an open-source and enhanced version of the popular ImageJ program used for scientific image processing.  Here you will learn how to write scripts for automated execution of image processing pipelines and batch processing of multiple image files in Fiji. 
+This tutorial is an introduction to the scripting interface of the [Fiji](https://fiji.sc) application, an open-source and enhanced version of the popular ImageJ program used for scientific image processing.  Here you will learn how to write scripts for automated execution of image processing pipelines and batch processing of multiple image files in Fiji.
 
 Step-by-step instructions are provided for developing scripts in Jython, an implementation of the popular Python language for Java platforms. Example scripts are provided for the Jython and BeanShell languages.
 
@@ -120,7 +120,7 @@ my_list = [2,3,5,7,11]
 
 ## Conditionals: if Statements {#conditionals-id}
 
-Often different blocks of code need to be executed depending on a specific condition.  This is achieved by using `if`, `elif`, `else` code blocks. 
+Often different blocks of code need to be executed depending on a specific condition.  This is achieved by using `if`, `elif`, `else` code blocks.
 
 ```
 if <Boolean expression1>:
@@ -164,7 +164,7 @@ Like most languages, Python and Python offer loop constructs to repeatedly execu
 `for` loops are executed a fixed number of iterations. It is possible to exit early but this must be added to the code.
 
 ```
-for <item> in <iterator>: 
+for <item> in <iterator>:
     statement(s)
 else:  # optional
     statement(s)
@@ -189,9 +189,9 @@ for i in range(20):
 `while` loops do not have a predetermined number of iterations. They terminate when some condition is evaluated as `False`.
 
 ```
-while <Boolean expression>: 
+while <Boolean expression>:
     statement(s)
-else: # optional 
+else: # optional
     statement(s)
 ```
 
@@ -201,10 +201,10 @@ x = -20
 y = -5
 while (x<0 and y<0):
     print "x=", x, "y=", y
-    x = x - y 
+    x = x - y
     y = y + 1
 else:
-    print "Exited loop with: x:", x, ", y:", y 
+    print "Exited loop with: x:", x, ", y:", y
 ```
 
 * The `else` clause is optional and executed when the loop completes the iterator.
@@ -345,7 +345,7 @@ frame_no = imp.getNFrames()       # get number of frames
 
 bitdepth = imp.getBitDepth()      # bits per pixel
 bpp = imp.getBytesPerPixel()      # bytes per pixel (there are 8 bits in a byte)    
-``` 
+```
 
 <br>
 
@@ -353,7 +353,7 @@ bpp = imp.getBytesPerPixel()      # bytes per pixel (there are 8 bits in a byte)
 
 Many image formats allow inclusion of image annotations (metadata) in addition to the pixel data. An important piece of information is the spatial pixel calibration, e.g. the definition of pixel size in real-world physical units. For example, a pixel may correspond to 200 nanometer in x-y dimension.
 
-Let's assume that we have a variable `imp` as reference to an [ImagePlus][imageplus] object. We can get and set an image's calibration with the following ImagePlus class methods:
+Let's assume that we have a variable `imp` as reference to an [ImagePlus][#imageplus] object. We can get and set an image's calibration with the following ImagePlus class methods:
 
 **Get copy of image calibration**
 ```
@@ -538,7 +538,7 @@ The [Macro Recorder](#macro-recorder-id) is an excellent tool to convert a funct
 8. In the Recorder window, click `Create`. This should bring up the [Script Editor](#script-editor-id) window with a new script file containing the code copied from the Recorder. **If you see more than three lines of code, remove everything that starts before `imp = IJ.openImage(….`.**
 
 **Convert to Jython script**
-  
+
 1. In the [Script Editor](#script-editor-id) , go to `Language`, and select `Python`.
 2. Insert an `from ij import IJ` statement at the top of the script.
 3. Remove semicolons (`;`) at the end of the last three lines so your script looks like this (ignore the file path; yours will be different):
@@ -676,7 +676,7 @@ The appearance of an [ROI][roi] object (`roi`) can be changed.
 
 **Border [Color][color]**
 ```
-from java.awt import Color 
+from java.awt import Color
 roi.setStrokeColor(Color.RED)
 ```
 
@@ -1005,7 +1005,7 @@ Go to `File` > `Plugins` and verify that the script is available.  The `_` and f
 
 **Project 3:** Implement the [crop ROI example script](#roi-crop-id) with functions.
 
-**Project 4:** Modify the processing function in [Batch Processing example script](#batch-processing-id) to apply a different image filter. [Hint: IJ.run](#ij-run-id) 
+**Project 4:** Modify the processing function in [Batch Processing example script](#batch-processing-id) to apply a different image filter. [Hint: IJ.run](#ij-run-id)
 
 <br>
 
@@ -1029,13 +1029,13 @@ Go to `File` > `Plugins` and verify that the script is available.  The `_` and f
 # @ Float (label="Min particle size", value=50) min_size
 # @ Float (label="Max particle size", value=200) max_size
 # @ Boolean (label="Save ROIs", value=false) save_rois
-# @ File (label="Output directory", style="directory") outputdir 
+# @ File (label="Output directory", style="directory") outputdir
 
 from ij import IJ
 from ij.plugin import Duplicator
 from ij.plugin.frame import RoiManager
 from ij.measure import ResultsTable
-from ij.process import ImageStatistics as IS 
+from ij.process import ImageStatistics as IS
 from os import path
 
 # open image and create copy
@@ -1101,7 +1101,7 @@ if save_rois:
 
 ## Expert {#expert-ex-id}
 
-**Project 8:**  Modify the processing function in [Batch Processing example script](#batch-processing-id) to apply a median filter to a circular shaped ROI in the center of the image. The ROI diameter should be half of the width or height (whichever is smaller) of the image. The radius of the median filter should be requested from the user. [Hint: Setting ROI](#roi-set-id), [Hint: Recording filter functions](#ij-run-id), [Hint: Custom Dialog Windows](#dialogs-id) 
+**Project 8:**  Modify the processing function in [Batch Processing example script](#batch-processing-id) to apply a median filter to a circular shaped ROI in the center of the image. The ROI diameter should be half of the width or height (whichever is smaller) of the image. The radius of the median filter should be requested from the user. [Hint: Setting ROI](#roi-set-id), [Hint: Recording filter functions](#ij-run-id), [Hint: Custom Dialog Windows](#dialogs-id)
 
 **Project 9:** Let’s create a script that performs the following operations on a multi-dimensional ImageStack:
 
@@ -1164,7 +1164,7 @@ for frame_no in range(1, imp.getNFrames() + 1):
 
 * Tutorial: http://www.ini.uzh.ch/~acardona/fiji-tutorial/index.html
 * Tips for Developers: https://imagej.net/Tips_for_developers
-* API: https://imagej.nih.gov/ij/developer/api/ 
+* API: https://imagej.nih.gov/ij/developer/api/
 * SciJava: https://javadoc.scijava.org/Fiji/
 
 **General Scripting**
