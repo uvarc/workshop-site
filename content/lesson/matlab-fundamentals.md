@@ -249,6 +249,7 @@ row and `13`, `14`, `15` in the second row.
 ```
 [10 11 12; 13 14 15]
 ```
+####   [Matlab Academy: Practice Creating Matrices](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=4&lesson=2&section=2)
 
 ### Creating Evenly-Spaced Vectors
 
@@ -281,6 +282,8 @@ elements.
 ```
 v = linspace(1,300,100)
 ```
+
+####   [Matlab Academy: Use Colon Operator and Linspace](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=4&lesson=3&section=4)
 
 ### Concatenating Arrays
 We can combine arrays using the same syntax that we use for creating row/column vectors and
@@ -330,6 +333,7 @@ Y = [y1 y2]
 ```
 Z = [X Y]
 ```
+####   [Matlab Academy: Creating and Concatenating Arrays](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=4&lesson=4&section=9)
 
 
 ### Array Creation Functions
@@ -342,6 +346,9 @@ There are several functions we can use to create arrays so we don't have to do s
 
 3. `rand(m,n)`: creates an m-by-n array of uniformly distributed random numbers within the
 interval (0,1).
+
+####   [Matlab Academy: Array Creation Functions](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=4&lesson=5&section=2)
+####   [Matlab Academy: Creating Arrays of Random Numbers](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=4&lesson=5&section=5)
 
 ## <a name="problem-set-1">Problem Set 1</a>
 
@@ -403,6 +410,7 @@ Try accessing the tenth value in `x` and save the result in a variable `x10`.
 ```
 x10 = x(10)
 ```
+####   [Matlab Academy: Accessing and Modifying Vector Values](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=5&lesson=2&section=2)
 
 ### Accessing Multiple Elements in a Vector
 
@@ -420,6 +428,7 @@ variable `y`.
 ```
 y = x(10:15)
 ```
+####   [Matlab Academy: Modify Multiple Elements](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=5&lesson=3&section=4)
 
 ### Modifying a Single Value in a Vector
 
@@ -435,6 +444,7 @@ Try changing the second value of `x` to have a value `1`.
 ```
 x(2) = 1;
 ```
+####   [Matlab Academy: Accessing and Modifying Vector Values](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=5&lesson=2&section=2)
 
 ### Indexing Using Variables and Keywords
 
@@ -462,6 +472,9 @@ Let's retrieve the last element of `x` and save the result to a variable `xn`.
 ```
 xn = x(end)
 ```
+####   [Matlab Academy: Index Using Variables and Keywords](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=5&lesson=2&section=3)
+
+####   [Matlab Academy: Index with Vectors](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=5&lesson=3&section=3)
 
 ## <a name="logical-arrays">8. Logical Arrays</a>
 
@@ -498,6 +511,7 @@ Let's combine check that `pi` is less than `4` and greater than `3`.
 ```
 t = pi < 4 & pi > 3
 ```
+####   [Matlab Academy: Logical Operations](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=8&lesson=2&section=2)
 
 ### Logical Arrays with Multiple Elements
 
@@ -522,6 +536,8 @@ y = rand(2)
 z = x > y
 ```
 
+
+####   [Matlab Academy: Logical Operations with Arrays](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=8&lesson=2&section=3)
 
 ### Counting True Values in a Logical Array
 
@@ -568,6 +584,8 @@ Assign the result to the variable `idx`.
 idx = find(v_gt15)
 ```
 
+####   [Matlab Academy: Count true Values in a Logical Vector](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=8&lesson=3&section=2)
+####   [Matlab Academy: Identify Locations of true Values](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=8&lesson=3&section=3)
 
 ### Logical Indexing
 
@@ -601,6 +619,7 @@ that are less than or equal to `13` with a value of `0`.
 v(v <= 13) = 0
 ```
 
+####   [Matlab Academy: Logical Indexing](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=8&lesson=4&section=3)
 
 
 ## <a name="array-calculations">9. Array Calculations</a>
@@ -653,7 +672,8 @@ We can raise each element of `M6` to the power of `4` by applying the dot expone
 ```
 M6 .^ 4
 ```
-
+####   [Matlab Academy: Basic Array Arithmetic & Functions](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=6&lesson=2&section=1)
+####   [Matlab Academy: Element-wise Arithmetic](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=6&lesson=2&section=4)
 
 ### Matrix Multiplication
 
@@ -669,6 +689,8 @@ A = rand(3,2);
 B = rand(2,4);
 C = A * B
 ```
+####   [Matlab Academy: Matrix Operations](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=6&lesson=3&section=3)
+
 
 ### Calculating Statistics on Vectors
 
@@ -705,7 +727,7 @@ value within the vector.
 ```
 [d_max, idx] = max(d)
 ```
-
+####   [Matlab Academy: Calculating Statistics of Vectors](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=6&lesson=4&section=2)
 
 ### Calculating Statistics on Matrices
 
@@ -755,6 +777,9 @@ M_TotMean = mean(M(:))
 
 Using a single `:` as our index, we are telling MATLAB we want to access all the values.
 
+####   [Matlab Academy: Rolling Calculations](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=6&lesson=5&section=5)
+
+####   [Matlab Academy: Statistics for Each Row](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=6&lesson=5&section=6)
 
 ## <a name="plotting">10. Plotting</a>
 
@@ -813,6 +838,9 @@ a string, and not a variable called Edinburgh Marriages. Strings are a type of d
 are typically not meant to be analyzed numerically. We will discuss different data types more in the
 MATLAB Programming Techniques tutorial.
 
+####   [Matlab Academy: Plot Options](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=2&lesson=2&section=6)
+####   [Matlab Academy: Axis Labels and Title](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=2&lesson=3&section=2)
+
 ## <a name="writing-scripts-and-version-control">11. Writing a Script and Version Control</a>
 
 Scripts are ways we can record our lines of code so that we can reliably reproduce our
@@ -854,7 +882,7 @@ you will see older versions of our current script. You can click the **Restore a
 to revert back to an older version of your current script (this does not get rid of any versions
 you may have created). You can copy code from older versions as well.
 
-
+####   [Matlab Documentation: Source Control Integration](https://www.mathworks.com/help/matlab/source-control.html)
 
 ## <a name="review-project-1">Review Project 1</a>
 
@@ -952,6 +980,8 @@ end
 Try running the script using different values for `A`. Check your workspace to see how the
 value of `B` changes.
 
+####   [Matlab academy: Using if-else](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=14&lesson=3&section=4)
+
 ### `if`-`elseif`-`else` statement
 
 What if there is code we want to run if an alternative condition is met? We can continue to
@@ -977,6 +1007,8 @@ end
 
 Try running the script again using different values for `A`. Check your workspace to see how the
 value of `B` changes.
+
+####   [Matlab academy: Using if-elseif-else](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=14&lesson=3&section=6)
 
 ## <a name="for-loops">13. For Loops</a>
 
@@ -1032,7 +1064,8 @@ for idx = 1:length(x)
     disp(x(idx))
 end
 ```
-
+####   [Matlab academy: Using length](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=14&lesson=4&section=3)
+####   [Matlab academy: Looping Through a Vector](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=14&lesson=5&section=6)
 
 ## <a name="while-loops">14. While Loops</a>
 
@@ -1078,6 +1111,9 @@ If we don't add anything to `x`, its value remains `0`. `0` is always less than 
 
 If you ever encounter an infinite loop, you can press **Ctrl + C** on your keyboard to stop
 it. In fact, you can use **Ctrl + C** to stop the execution of any code--not just `while` loops!
+
+####   [Matlab academy: Using a While Loop](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=14&lesson=6&section=6)
+####   [Matlab academy: Finding eps](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=14&lesson=6&section=7)
 
 ## <a name="review-project-2">Review Project 2</a>
 
@@ -1198,6 +1234,9 @@ z = zeros(50,1);
 What would have taken 9 lines of code to write (3 average calculations for each of the 3
 vectors) is now reduced to 3 lines of code!
 
+####   [Matlab academy: Create and Call a Function](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=15&lesson=2&section=4)
+####   [Matlab academy: Compare Using a Tolerance](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=15&lesson=3&section=5)
+
 ## <a name="troubleshooting-errors">16. Troubleshooting Errors</a>
 
 Oftentimes we accidentally include a typo, or bug, in our code that causes our code to break.
@@ -1220,7 +1259,8 @@ window will appear containing more information about your error.
 
 <img src="/images/matlab-img19.png" style="height:50%;width:50%"></img>
 
-
+####   [Matlab academy: Using Code Analyzer](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=16&lesson=2&section=2)
+####   [Matlab academy: Debugging Run-Time Errors](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=16&lesson=3&section=2)
 ## <a name="more-practice">More Practice</a>
 
 All of this tutorial's lessons were drawn from the MATLAB Fundamentals Course available on the
