@@ -406,6 +406,11 @@ To use a for loop, you need to know in advance how many iterations are required.
 ## Developing and Maintaining Code
 <img src="/images/devTools1.png" style="height:90%;width:90%"></img>
 
+## Folder Reports
+
+<br/>
+**[Slide: Folder Reports](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=8&lesson=2&section=2)**
+
 ## Errors and Debugging
 
 <br/>
