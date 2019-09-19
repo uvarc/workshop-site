@@ -34,8 +34,10 @@ This workshop provides hands-on experience using the features in the MATLAB lang
 - Structuring data
 - Managing data efficiently
 
-This workhop uses selected topics from the online self-paced course from the MathWorks in the link below.
-   **[Matlab Academy: Matlab Programming Techniques](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr)**
+This workhop uses selected topics from the online self-paced course from the MathWorks in the link below. Participants should have a Mathworks account in order to access the links in this document.
+
+**[Matlab Academy: Matlab Programming Techniques](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr)**
+
 
 <br/>
 <br/>
@@ -206,9 +208,9 @@ To use a for loop, you need to know in advance how many iterations are required.
 <br/>
 **[Slide: Converting Data Types](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=3&lesson=5&section=1)**
 
-**[Matlab Academy: Numeric to Cell Array](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=3&lesson=5&section=2)**
+**[Exercise: Numeric to Cell Array](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=3&lesson=5&section=2)**
 
-**[Matlab Academy: Converting Strings](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=3&lesson=5&section=5)**
+**[Exercise: Converting Strings](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=3&lesson=5&section=5)**
 
 # Managing Data Efficiently
 <br/>
@@ -232,10 +234,12 @@ To use a for loop, you need to know in advance how many iterations are required.
 
 ## Copy-on-write with Function Parameters
 
+<br/>
 **[Slide: Copy-on-write Behavior](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=4&lesson=6&section=1)**
 
 ## In-place Optimizations
 
+<br/>
 **[Slide: In-place Optimizations](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=4&lesson=7&section=1)**
 
 ## Nested Functions
@@ -249,20 +253,24 @@ To use a for loop, you need to know in advance how many iterations are required.
 
 # Creating Flexible functions
 
+<br/>
 **[Video: Creating Flexible Function Interfaces](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=5&lesson=1&section=1)**
 
 ## Creating Multiple Interfaces with Wrapper Functions
 
+<br/>
 **[Slide: Separating the Interface from the Algorithm](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=5&lesson=2&section=1)**
 
 **[Exercise: Create a Wrapper Function with a Fixed Interface](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=5&lesson=2&section=3)**
 
 ## Setting Default Input Values
 
+<br/>
 **[Slide: Setting Default Input Values](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=5&lesson=5&section=1)**
 
 ##  Missing Input Arguments
 
+<br/>
 **[Slide: Missing Input Arguments](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=5&lesson=5&section=2)**
 
 **[Slide: Empty Input Arguments](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=5&lesson=5&section=6)**
@@ -271,6 +279,7 @@ To use a for loop, you need to know in advance how many iterations are required.
 
 ## Allowing Any Number of Inputs
 
+<br/>
 **[Slide: Functions with a Variable Number of Inputs](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=5&lesson=6&section=1)**
 
 **[Slide: Variable Length Input Argument List](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=5&lesson=6&section=2)**
@@ -279,12 +288,14 @@ To use a for loop, you need to know in advance how many iterations are required.
 
 ## Allowing a Variable Number of outputs
 
+<br/>
 **[Slide: Defining Different Behaviors Based on Outputs](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=5&lesson=8&section=1)**
 
 **[Exercise: Matrix or Vector Output](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=5&lesson=8&section=2)**
 
 ## Changing the Function Interface with Anonymous Functions
 
+<br/>
 **[Slide: Modifying Function Interfaces](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=5&lesson=9&section=1)**
 
 **[Slide: Wrapping Functions with Anonymous Functions](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=5&lesson=9&section=2)**
