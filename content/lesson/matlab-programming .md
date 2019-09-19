@@ -76,6 +76,8 @@ The section is a review of the basic programming constructs presented in the
 ## Logical operations
 
 <br/>
+**[Documentation: if,elseif,else](https://www.mathworks.com/help/matlab/ref/if.html)**
+
 **[Exercise: Logical Operations](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=8&lesson=2&section=2)**
 
 ## Decision Branching
