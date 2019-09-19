@@ -73,6 +73,11 @@ This workhop uses selected topics from the online self-paced course from the Mat
 The section is a review of the basic programming constructs presented in the
 **Matlab Fundamentals** workshop.
 
+## Logical operations
+
+<br/>
+**[Exercise: Logical Operations](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=8&lesson=2&section=2)**
+
 ## Decision Branching
 
 <img src="/images/branching1.png" style="height:90%;width:90%"></img>
@@ -88,6 +93,7 @@ The section is a review of the basic programming constructs presented in the
 
 **[Video: For Loops](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=14&lesson=5&section=2)**
 
+<br/>
 <img src="/images/forLoop1.png" style="height:90%;width:90%"></img>
 <br/>
 <br/>
@@ -139,7 +145,10 @@ To use a for loop, you need to know in advance how many iterations are required.
 **[Exercise: Creating Variables of a Specific Data Type](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=2&lesson=1&section=3)**
 
 ## Table Basics
+
 <br/>
+**[Documentation: Tables](https://www.mathworks.com/help/matlab/ref/table.html)**
+
 **[Exercise: Create a Table from Workspace Variables](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=2&lesson=2&section=1)**
 
 ## Extracting Data from a Table
@@ -149,14 +158,20 @@ To use a for loop, you need to know in advance how many iterations are required.
 **[Exercise: Extracting Data from a Table: Curly Braces](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=2&lesson=5&section=2)**
 
 ## Cell Array Basics
+
 <br/>
+**[Documentation: Cell Arrays](https://www.mathworks.com/help/matlab/ref/cell.html)**
+
 **[Exercise: Creating and Concatenating Cell Arrays](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=2&lesson=6&section=1)**
 
 **[Exercise: Cell Array Extraction](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=2&lesson=7&section=1)**
 
 
 ## Structures
+
 <br/>
+**[Documentation: Structures](https://www.mathworks.com/help/matlab/ref/struct.html)**
+
 **[Exercise: Create a Structure and Access Fields](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=2&lesson=8&section=1)**
 
 **[Exercise: Create a Structure Array](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlpr#chapter=2&lesson=9&section=1)**
