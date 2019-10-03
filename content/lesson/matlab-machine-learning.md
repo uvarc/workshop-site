@@ -576,8 +576,23 @@ To effectively visualize the data containing more than three predictors, you can
 
 # Additional Resources
 
+
+**<a href="https://www.mathworks.com/videos/series/introduction-to-machine-learning.html" target="_blank">Videos: Introduction to Machine Learning</a>**
+
+- **<a href="/images/88174_92991v00_machine_learning_section1_ebook.pdf" target="_blank">E-book: Introducing Machine Learning</a>**
+
+- **<a href="/images/88655_93014v00_machine_learning_section2_ebook.pdf" target="_blank">E-book: Getting Started Machine Learning</a>**
+
+- **<a href="/images/80823v00_machine_learning_section3_ebook_v05.pdf" target="_blank">E-book: Applying Unsupervised Learning</a>**
+
+- **<a href="/images/90221_80827v00_machine_learning_section4_ebook_v03.pdf" target="_blank">E-book: Applying Supervised Learning</a>**
+
+**<a href="https://www.mathworks.com/videos/series/applied-machine-learning.html" target="_blank">Videos: Applied Machine Learning</a>**
+
 **<a href="/images/machine-learning-quick-start-guide.pdf" target="_blank">Machine Learning Quick Start Guide</a>**
 
 **<a href="/images/machine-learning-workflow-ebook.pdf" target="_blank">Machine Learning Workflow E-Book</a>**
+
+**<a href="https://www.mathworks.com/help/stats/index.html" target="_blank">Statistics and Machine Learning Toolbox</a>**
 
 **<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlml#chapter=8&lesson=1&section=1" target="_blank">MathWorks Resources</a>**
