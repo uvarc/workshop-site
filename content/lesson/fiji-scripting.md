@@ -979,14 +979,29 @@ else:
 
 # Image Management with OMERO
 
-OMERO is image management software that allows you to organize, view, annotate, analyze, and
+OMERO is an image management software package that allows you to organize, view, annotate, analyze, and
 share your data from a single centralized database. With OMERO, you and your collaborators
 can access your images from any computer without having to download the images directly to
 your machine.
 
-Images in OMERO can be manipulated and viewed interactively through desktop and web clients, or through scripting interfaces for Python, Java, Matlab, and Fiji/ImageJ.
+Images in OMERO can be manipulated and viewed interactively through desktop and web clients, or through scripting interfaces for Python, Java, shell scripts, Matlab, and Fiji/ImageJ.
 
 For more details, review the [OMERO tutorial](/lesson/omero).
+
+**Installation of the OMERO Plugin in Fiji**
+
+1. In Fiji, go to `Help` > `Update`. This starts the updater which looks for plugin updates online.
+
+2. In the `ImageJ Updater` dialog window, click on `Manage Update Sites`. Ensure that the boxes for the following plugins are checked:
+
+    * Java-8
+    * OMERO 5.4
+
+3. Click `Close`. This will take you back to the `ImageJ Updater` window.
+
+4. Click `Apply Changes`.
+
+5. Restart Fiji.
 
 **Setting up an example Dataset in OMERO**
 
@@ -995,19 +1010,19 @@ For more details, review the [OMERO tutorial](/lesson/omero).
     * Username: your computing ID
     * Password: your computing ID (you can change this after your first login)
 
-2. Let's create a new empty dataset. Click on the green folder icon in the top left corner right below your Name. Name it `Mitosis`. After the dataset is generated, your user interface should look like this:
+2. Let's create a new empty dataset. Click on the green folder icon in the top left corner right below your Name. Name it `<YOUR_UID>_workshop`, for example `mst3k_workshop`. After the dataset is generated, your user interface should look like this:
     ![](/images/fiji-omero-dataset.png)
 
-4. Click on the `Mitosis` dataset icon and take note of the `Dataset ID` shown in the sidebar on the right side of the window. We need this ID when we run our scripts.
+4. Click on the green icon for your new dataset and take note of the `Dataset ID` shown in the sidebar on the right side of the window. We need this ID when we run our scripts.
 
 
 ## Saving Images to the OMERO database
 
-Let's try to export an Image from Fiji to OMERO.
+Let's try to export an image from Fiji to OMERO.
 
 ### Single Images
 
-1. Go back to Fiji and then to `File` --> `Open Samples` --> `Blobs`.
+1. Go back to Fiji and then to `File` > `Open Samples` > `Blobs`.
 
 2. Go back to the Fiji Script Editor and open the `Omero_Open.py file`.
 ```
@@ -1017,26 +1032,26 @@ imp = IJ.getImage()
 IJ.run(imp, "OMERO... ", "")
 ```
 
-3. Run the script. The **Eport to OMERO** dialog window will open. Enter the following values:
+3. Run the script. The **Export to OMERO** dialog window will open. Enter the following values:
 
     * **Server**: omero.hpc.virginia.edu.
     * **Port:** 4064
     * **User:** Your computing ID
     * **Password:** Your OMERO password
-    * **OMERO Dataset ID:** Enter the ID for the `Mitosis` dataset that you created in the OMERO web interface.
+    * **OMERO Dataset ID:** Enter the ___ID___ for the `xxx_workshop` dataset that you created in the OMERO web interface.
     * Check the **Upload new image** box.
 
     Click `OK`.
 
     If you see an error, make sure you entered the correct password and Dataset ID.
 
-4. Go to the OMERO website and refresh the page. Double click on the `Mitosis` dataset icon to expand it. Yo should see the blob.gif image.
+4. Go to the OMERO website and refresh the page. Double click on your `xxx_workshop` dataset icon to expand it. You should see the blobs.gif image.
 
 ### Batch Processing
 
 Scripting provides a convenient way to automatically export many images at once. For this exercise we utilize the output produced by the `Split_Stack.py` script.  We will take the `Simple_Batch` script as a template and modify it so that the create TIF image files are directly exported to OMERO instead of saving them to our local disk.
 
-The modified script can be found as `Omero_batch_save.py` in the downloaded example folder.
+The modified script can be found as `Omero_Batch_Save.py` in the downloaded example folder.
 
 ```
 # @ File (label="Input directory", style="directory") inputdir
@@ -1086,44 +1101,45 @@ else:
         #save_as_tif(outputdir, imp)
 print "Done.\n"
 ```
-
-The key changes to the script are:
+<br>
+**The key changes to the script are:**
 
 * Lines 1-7: collect OMERO connection info and Gaussian Blur parameter.
-* Removal of the `save_as_tif` function
-* creation of the `basecommand` string variable that defines the OMERO connection image export parameters.
-* `IJ.run(imp, "OMERO... ", basecommand+"image=%s" % imp.getTitle())` to export a single image to OMERO.
+* Removal of the `save_as_tif` function.
+* Creation of the `basecommand` string variable that defines the OMERO connection image export parameters.
+* Insertion of `IJ.run(imp, "OMERO... ", basecommand+"image=%s" % imp.getTitle())` to export a single image to OMERO.
+
 <br>
 
-1. Run the `Omero_batch_save.py` file.
+1. Run the `Omero_Batch_Save.py` file.
 
 2. A dialog window will appear. Enter the following values:
 
-    * **Input directory:** Browse to the directory that has the mitosis_xx..tif images produced by the `Split_stack.py` script.
+    * **Input directory:** Browse to the directory that has the mitosis_xx.tif images produced by the `Split_Stack.py` script.
     * **Gaussian Blur:** Enter a number between 1.0 and 5.0.
     * **Omero User:** Your computing ID
     * **Omero Password:** Your OMERO Password
     * **Omero Server:** omero.hpc.virginia.edu
     * **Omero Port:** 4064
-    * **Omero Dataset:** Enter the ID for the `Mitosis` dataset that you created in the OMERO web interface.
+    * **Omero Dataset:** Enter the ID for the `xxx_workshop` dataset that you created in the OMERO web interface.
 
     Click `OK`.
 
 4. The images should open and close one after another. If you receive any error messages, make sure that you entered the correct password and dataset ID.
 
-5. Go the OMERO web interface and refresh the page. Expand the `Mitosis` dataset icon and view the new content of your dataset.
+5. Go to the OMERO web interface and refresh the page. Expand the `xxx_workshop` dataset icon and view the new content of your dataset.
 
-6. In the top left area of the browser window, click on your name next to the `omero-demo` field. In the `MyGroups` drop-down go to `omer-demo` and select `All members`. Now you should be able to see the datasets and image uploaded by your peers.
+6. In the top left area of the browser window, click on your name next to the `omero-demo` field. In the `MyGroups` drop-down go to `omero-demo` and select `All Members`. Now you should be able to see the datasets and image uploaded by your peers.
 
-**Note that you can see datasets and images of other members in the `omero-demo` group but you can only manipulate (i.e. delete) your own datasets and images.**
+**Note: You can see datasets and images of other members in the `omero-demo` group, but you can only manipulate (e.g. delete) your own datasets and images.**
 
-### Retrieving Images from the OMERO database
+## Retrieving Images from the OMERO database
 
 After exporting images to OMERO, let's try to download images from the database.
 
-1. In the OMERO web interface, click on any image in your `Mitosis` dataset and note the Image ID displayed in the sidebar on the right side. **Image retrieval relies on these unique image identifiers**.
+1. In the OMERO web interface, click on any image in your `xxx_workshop` dataset and note the Image ID displayed in the sidebar on the right side. **Image retrieval relies on these unique image identifiers**.
 
-2. Go back to the Fiji Script Editor and open the `Omero_open.py` script.
+2. Go back to the Fiji Script Editor and open the `Omero_Open.py` script.
 
 3. Run the script. A dialog window will open; enter these values:
 
@@ -1132,7 +1148,7 @@ After exporting images to OMERO, let's try to download images from the database.
     * **Omero Server:** omero.hpc.virginia.edu
     * **Omero Port:** 4064
     * **Omero Group ID:** This is the ID for the `omero-demo` group.
-    * **Image ID:** Enter the ID for an image that is part of your `Mitosis` dataset.
+    * **Image ID:** Enter the ID for an image that is part of your `xxx_workshop` dataset.
 
 The script consists of the these core blocks:
 
