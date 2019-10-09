@@ -159,7 +159,7 @@ else:
 
 ## Code Loops {#loops-id}
 
-Like most languages, Python and Python offer loop constructs to repeatedly execute the same code block.
+Like most languages, Python and Jython offer loop constructs to repeatedly execute the same code block.
 
 **For loops**:
 
@@ -463,20 +463,20 @@ Fiji can also save image files in various common formats, including TIF, OME-TIF
 
 <br>
 
-**Interactive Image Opening and Saving (with Dialog)**
+### Interactive Image Opening and Saving (with Dialog)
 ```
 from ij import IJ
 from ij.io import FileSaver
 ```
 
-# Open file (interactive dialog)
+### Open file (interactive dialog)
 ```
 imp = IJ.open()
 imp = IJ.getImage()
 imp.setTitle("copy.tif")
 ```
 
-# Save file in original format (interactive dialog)
+### Save file in original format (interactive dialog)
 ```
 fs = FileSaver(imp)
 fs.save()        # could also use fs.saveAsTiff(), fs.saveAsPng(), etc.
@@ -484,7 +484,7 @@ fs.save()        # could also use fs.saveAsTiff(), fs.saveAsPng(), etc.
 
 <br>
 
-**Non-interactive Image Opening and Saving (without Dialog)**
+### Non-interactive Image Opening and Saving (without Dialog)**
 ```
 from ij import IJ
 import os
