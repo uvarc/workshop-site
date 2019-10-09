@@ -24,6 +24,8 @@ Fiji is a stand-alone application that can be downloaded from the [Fiji website]
 + **Windows 7 & 10:** The Fiji application should be installed in the the user's home directory rather than the default `C:\Program Files` directory.
 + **Linux:** The Fiji application should be installed in a directory where the user has read, execution, and write permissions, e.g. the user's `home` directory.
 
+**Example Scripts**
+[Download examples](/scripts/fiji/fiji-example-scripts.zip).
 <br>
 
 
@@ -178,7 +180,7 @@ for i in range(20):
 
 * The `else` clause is optional and only executed when the loop completes the iterator.
 * The `for` and `else` keywords need to start at the same indentation levels. Each of these lines end with a `:`.
-* The statement(s) to be executed need to be indented by at least a single space relative to the `for` and `else keywords.
+* The statement(s) to be executed need to be indented by at least a single space relative to the `for` and `else` keywords.
 
 
 <br>
@@ -235,6 +237,7 @@ Example for invocation of the function `add_values`:
 sum = add_values(2.3, 4.1)
 print sum
 ```
+
 * In this example we are calling the function `add_values`, passing the numbers `2.3` and `4.0` as arguments.
 * The function performs the operation on the passed arguments and the result is stored in our custom variable `sum`.
 
@@ -464,13 +467,17 @@ Fiji can also save image files in various common formats, including TIF, OME-TIF
 ```
 from ij import IJ
 from ij.io import FileSaver
+```
 
 # Open file (interactive dialog)
+```
 imp = IJ.open()
 imp = IJ.getImage()
 imp.setTitle("copy.tif")
+```
 
 # Save file in original format (interactive dialog)
+```
 fs = FileSaver(imp)
 fs.save()        # could also use fs.saveAsTiff(), fs.saveAsPng(), etc.
 ```
@@ -969,6 +976,190 @@ else:
 ```
 
 <br>
+
+# Image Management with OMERO
+
+OMERO is image management software that allows you to organize, view, annotate, analyze, and
+share your data from a single centralized database. With OMERO, you and your collaborators
+can access your images from any computer without having to download the images directly to
+your machine.
+
+Images in OMERO can be manipulated and viewed interactively through desktop and web clients, or through scripting interfaces for Python, Java, Matlab, and Fiji/ImageJ.
+
+For more details, review the [OMERO tutorial](/omero).
+
+**Setting up an example Dataset in OMERO**
+
+1. Open a webbrowser and go to http://omero.hpc.virginia.edu. Login to the OMERO web interface as described [here](omero/#logging-in-with-omero-web).
+
+    * Username: your computing ID
+    * Password: your computing ID (you can change this after your first login)
+
+2. Let's create a new empty dataset. Click on the green folder icon in the top left corner right below your Name. Name it `Mitosis`. After the dataset is generated, your user interface should look like this:
+    ![](/images/fiji-omero-dataset.png)
+
+4. Click on the `Mitosis` dataset icon and take note of the `Dataset ID` shown in the sidebar on the right side of the window. We need this ID when we run our scripts.
+
+
+## Saving Images to the OMERO database
+
+Let's try to export an Image from Fiji to OMERO.
+
+### Single Images
+
+1. Go back to Fiji and then to `File` --> `Open Samples` --> `Blobs`.
+
+2. Go back to the Fiji Script Editor and open the `Omero_Open.py file`.
+```
+from ij import IJ
+
+imp = IJ.getImage()
+IJ.run(imp, "OMERO... ", "")
+```
+
+3. Run the script. The **Eport to OMERO** dialog window will open. Enter the following values:
+
+    * **Server**: omero.hpc.virginia.edu.
+    * **Port:** 4064
+    * **User:** Your computing ID
+    * **Password:** Your OMERO password
+    * **OMERO Dataset ID:** Enter the ID for the `Mitosis` dataset that you created in the OMERO web interface.
+    * Check the **Upload new image** box.
+
+    Click `OK`.
+
+    If you see an error, make sure you entered the correct password and Dataset ID.
+
+4. Go to the OMERO website and refresh the page. Double click on the `Mitosis` dataset icon to expand it. Yo should see the blob.gif image.
+
+### Batch Processing
+
+Scripting provides a convenient way to automatically export many images at once. For this exercise we utilize the output produced by the `Split_Stack.py` script.  We will take the `Simple_Batch` script as a template and modify it so that the create TIF image files are directly exported to OMERO instead of saving them to our local disk.
+
+The modified script can be found as `Omero_batch_save.py` in the downloaded example folder.
+
+```
+# @ File (label="Input directory", style="directory") inputdir
+# @ Float (label="Gaussian blur radius", value=2.0) radius
+# @ String (label="Omero User") user_id
+# @ String (label="Omero Password", style="password") password
+# @ String (label="Omero Server", value="omero.hpc.virginia.edu") host
+# @ Integer (label="Omero Port", value=4064) server_port
+# @ Integer (label="Omero Dataset ID", value=69) data_id
+
+from ij import IJ
+import os
+from os import path
+
+def process_file(f, radius):
+    """Opens a file and applies a Gaussian filter."""
+    print "Processing", f
+    imp = IJ.openImage(f)
+    IJ.run(imp, "Gaussian Blur...", "sigma=%s" % str(radius));
+    return imp
+
+
+# Main code
+basecommand = "server=%s " % host
+basecommand+= "port=%s " % server_port
+basecommand+= "user=%s " % user_id
+basecommand+= "password=%s " % password
+basecommand+= "datasetid=%d " % data_id
+basecommand+= "uploadimage=true uploadtables=false uploadrois=false updaterois=false tablenames= "
+
+inputdir = str(inputdir)
+if not path.isdir(inputdir):
+    print inputdir, " does not exist or is not a directory."
+else:
+    filenames = os.listdir(inputdir)
+    tif_files = [f for f in filenames if f.split(".")[-1] == "tif"]		# only .tif files
+    for tif_file in tif_files:
+        fullpath = path.join(inputdir, tif_file)
+        imp = process_file(fullpath, radius)
+        # need to show image for OMERO to pick it up
+        imp.show()
+        # export to OMERO
+        IJ.run(imp, "OMERO... ", basecommand+"image=%s" % imp.getTitle())
+        #ignore changes & close
+        imp.changes=False
+        imp.close()
+        #save_as_tif(outputdir, imp)
+print "Done.\n"
+```
+
+The key changes to the script are:
+
+* Lines 1-7: collect OMERO connection info and Gaussian Blur parameter.
+* Removal of the `save_as_tif` function
+* creation of the `basecommand` string variable that defines the OMERO connection image export parameters.
+* `IJ.run(imp, "OMERO... ", basecommand+"image=%s" % imp.getTitle())` to export a single image to OMERO.
+<br>
+
+1. Run the `Omero_batch_save.py` file.
+
+2. A dialog window will appear. Enter the following values:
+
+    * **Input directory:** Browse to the directory that has the mitosis_xx..tif images produced by the `Split_stack.py` script.
+    * **Gaussian Blur:** Enter a number between 1.0 and 5.0.
+    * **Omero User:** Your computing ID
+    * **Omero Password:** Your OMERO Password
+    * **Omero Server:** omero.hpc.virginia.edu
+    * **Omero Port:** 4064
+    * **Omero Dataset:** Enter the ID for the `Mitosis` dataset that you created in the OMERO web interface.
+
+    Click `OK`.
+
+4. The images should open and close one after another. If you receive any error messages, make sure that you entered the correct password and dataset ID.
+
+5. Go the OMERO web interface and refresh the page. Expand the `Mitosis` dataset icon and view the new content of your dataset.
+
+6. In the top left area of the browser window, click on your name next to the `omero-demo` field. In the `MyGroups` drop-down go to `omer-demo` and select `All members`. Now you should be able to see the datasets and image uploaded by your peers.
+
+**Note that you can see datasets and images of other members in the `omero-demo` group but you can only manipulate (i.e. delete) your own datasets and images.**
+
+### Retrieving Images from the OMERO database
+
+After exporting images to OMERO, let's try to download images from the database.
+
+1. In the OMERO web interface, click on any image in your `Mitosis` dataset and note the Image ID displayed in the sidebar on the right side. **Image retrieval relies on these unique image identifiers**.
+
+2. Go back to the Fiji Script Editor and open the `Omero_open.py` script.
+
+3. Run the script. A dialog window will open; enter these values:
+
+    * **Omero User:** Your computing ID
+    * **Omero Password:** Your OMERO Password
+    * **Omero Server:** omero.hpc.virginia.edu
+    * **Omero Port:** 4064
+    * **Omero Group ID:** This is the ID for the `omero-demo` group.
+    * **Image ID:** Enter the ID for an image that is part of your `Mitosis` dataset.
+
+The script consists of the these core blocks:
+
+* Lines 1-6 define user input to connect to OMERO.
+* Lines 11-17 define a `command` variable that specifies OMERO connection and image parameters.
+* Line 18 executes the OMERO importer plugin that retrieves the image.
+
+```
+# @ String (label="Omero User") user
+# @ String (label="Omero Password", style="password") pwd
+# @ String (label="Omero Server", value="omero.hpc.virginia.edu") server
+# @ Integer (label="Omero Port", value=4064) server_port
+# @ Integer (label="Omero Group ID", value=53) omero_group_id
+# @ Integer (label="Image ID", value=2014) image_id
+
+from ij import IJ
+
+# Main code
+command="location=[OMERO] open=[omero:"
+command+="server=%s\n" % server
+command+="user=%s\n" % user
+command+="port=%s\n" % server_port
+command+="pass=%s\n" % pwd
+command+="groupID=%s\n" % omero_group_id
+command+="iid=%s]" % image_id
+IJ.runPlugIn("loci.plugins.LociImporter", command)
+```
 
 # Installing Scripts as Plugins {#install-plugins-id}
 
