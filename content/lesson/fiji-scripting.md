@@ -986,11 +986,11 @@ your machine.
 
 Images in OMERO can be manipulated and viewed interactively through desktop and web clients, or through scripting interfaces for Python, Java, Matlab, and Fiji/ImageJ.
 
-For more details, review the [OMERO tutorial](/omero).
+For more details, review the [OMERO tutorial](/lesson/omero).
 
 **Setting up an example Dataset in OMERO**
 
-1. Open a webbrowser and go to http://omero.hpc.virginia.edu. Login to the OMERO web interface as described [here](omero/#logging-in-with-omero-web).
+1. Open a webbrowser and go to http://omero.hpc.virginia.edu. Login to the OMERO web interface as described [here](/lesson/omero/#using-omero-web).
 
     * Username: your computing ID
     * Password: your computing ID (you can change this after your first login)
