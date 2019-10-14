@@ -23,7 +23,7 @@ The security awareness training is located at [https://www.myworkday.com/uva/d/i
 \* If you are a student without a Workday account, please send an email to it-policy@virginia.edu to receive an alternate link to the security training.
 
 
-### 2. Send a screenshot of your completed training to accounts@virginia.edu and ivy-support@virginia.edu.
+### 2. Send a screenshot of your completed training.
 
 Once you have completed the training, take a screenshot of your completed training and send a copy to 
 accounts@virginia.edu and ivy-support@virginia.edu.
