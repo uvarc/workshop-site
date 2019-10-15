@@ -18,9 +18,9 @@ August 1, 2019, users can now log in with Duo 2-Step Login.</b>
 
 ### 1. Log into Workday to complete the ISAT.
 
-The security awareness training is located at [https://www.myworkday.com/uva/d/inst/1$17816/17816$202.htmld](https://www.myworkday.com/uva/d/inst/1$17816/17816$202.htmld). The training takes approximately ten minutes to complete.
+The security awareness training is located at [https://www.myworkday.com/uva/d/inst/1$17816\/17816$202.htmld](https://www.myworkday.com/uva/d/inst/1$17816/17816$202.htmld). The training takes approximately ten minutes to complete.
 
-\* If you are a student without a Workday account, please send an email to it-policy@virginia.edu to receive an alternate link to the security training.
+\* If you are a student without a Workday account, please send an email to ivy-support@virginia.edu to receive an alternate link to the security training.
 
 
 ### 2. Send a screenshot of your completed training.
