@@ -14,7 +14,21 @@ Previously, logging in to Ivy required users to have a JointVPN identity token. 
 August 1, 2019, users can now log in with Duo 2-Step Login.</b>
 </p>
 
-# 1. Installing/Updating the VPN Client
+# 1. Complete the Information Security Awareness Training (ISAT).
+
+### 1. Log into Workday to complete the ISAT.
+
+The security awareness training is located in [Workday](https://www.myworkday.com/uva/d/inst/1$17816/17816$202.htmld). The training takes approximately ten minutes to complete.
+
+\* If you are a student without a Workday account, please send an email to ivy-support@virginia.edu to receive an alternate link to the security training.
+
+
+### 2. Send a screenshot of your completed training.
+
+Once you have completed the training, take a screenshot of your completed training and send a copy to 
+accounts@virginia.edu and ivy-support@virginia.edu.
+
+# 2. Installing/Updating the VPN Client
 
 To connect to your Ivy VM, you first need to connect to the High Security Virtual Private 
 Network (HSVPN). You can connect to the HSVPN using the Cisco AnyConnect Secure Mobility Client, 
@@ -66,7 +80,7 @@ If you have never installed the client you can skip this step.
 3. A dialog box may open saying **Cisco System Extension Blocked**. If so, click the **Open Preferences** button to open the Security Preferences menu. Toward the bottom of the screen you will see a message saying **System software from developer "Cisco" was blocked from loading**. Click the **Allow** button to allow the VPN client to run on your computer.
 
 
-# 2. Connecting to the High Security VPN
+# 3. Connecting to the High Security VPN
 
 1. Open the Cisco AnyConnect Secure Mobility Client.
 
@@ -79,13 +93,13 @@ If you have never installed the client you can skip this step.
 5. Accept the Terms of Use in the pop-up window that appears.
 
 
-# 3. Meeting the High Security VPN Requirements
+# 4. Meeting the High Security VPN Requirements
 
 In order to connect to the HSVPN, your computer must meet certain security requirements. 
 
 Instructions for making your device compliant can be found on the <a href="https://virginia.service-now.com/its?id=itsweb_kb_article&sys_id=471fc126db16ebc0a6ddc19115961991" target="_blank">UVa ITS website</a>.
 
-# 4. Logging into Your VM
+# 5. Logging into Your VM
 
 Once you have installed the VPN Client and your computer is compliant, you can log in to your 
 Ivy VM. You will need Microsoft Remote Desktop Client, which is available for both Windows and Mac (available in the App Store).
