@@ -1016,11 +1016,179 @@ For more details, review the [OMERO tutorial](/lesson/omero).
 4. Click on the green icon for your new dataset and take note of the `Dataset ID` shown in the sidebar on the right side of the window. We need this ID when we run our scripts.
 
 
+## Getting the Basic OMERO dataset Info
+
+OMERO organizes users in groups. Each user can be a member of multiple groups. Images are organized in Projects and Datasets, or in Screens and Plates. The following script, `Omero_Info.py`, connects a user to a remote OMERO instance and shows a list of:
+
+* the groups that the user belongs to and the associated group ID. This ID is important when you want to access images stored for a particular group;
+* the projects and datasets for a particular group (specified via unique grpup ID);
+* and a list of images, organized by project and dataset, that the user has access to in a particular group.
+
+```
+#@ String (label="Omero User") username
+#@ String (label="Omero Password", style="password") password
+#@ String (label="Omero Server", value="omero.hpc.virginia.edu") server
+#@ Integer (label="Omero Port", value=4064) server_port
+#@ Integer (label="Omero Group ID", min=-1, value=-1) group_id
+
+
+# Basic Java and ImageJ dependencies
+from ij.measure import ResultsTable
+from java.lang import Long
+from java.lang import String
+from java.util import ArrayList
+
+# Omero dependencies
+import omero
+from omero.gateway import Gateway
+from omero.gateway import LoginCredentials
+from omero.gateway import SecurityContext
+from omero.gateway.exception import DSAccessException
+from omero.gateway.exception import DSOutOfServiceException
+from omero.gateway.facility import BrowseFacility
+from omero.log import SimpleLogger
+
+
+
+def connect(group_id, username, password, host, port):    
+    '''Omero Connect with credentials and simpleLogger'''
+    cred = LoginCredentials()
+    if group_id != -1:
+    	cred.setGroupID(group_id)
+    cred.getServer().setHostname(host)
+    cred.getServer().setPort(port)
+    cred.getUser().setUsername(username)
+    cred.getUser().setPassword(password)
+    simpleLogger = SimpleLogger()
+    gateway = Gateway(simpleLogger)
+    e = gateway.connect(cred)
+    return gateway
+
+
+def get_groups(gateway):
+	currentGroupId = gateway.getLoggedInUser().getGroupId()
+	ctx = SecurityContext(currentGroupId)
+	adminService = gateway.getAdminService(ctx, True)
+	uid = adminService.lookupExperimenter(username)
+	groups = []
+	for g in sorted(adminService.getMemberOfGroupIds(uid)):
+		groupname = str(adminService.getGroup(g).getName().getValue())
+		groups.append({
+		    'Id': g,
+		    'Name': groupname,
+		})
+		if g == currentGroupId:
+			currentGroup = groupname     
+	return groups, currentGroup
+
+
+def get_projects_datasets(gateway):
+	results = []
+	proj_dict = {}
+	ds_dict = {}
+	groupid = gateway.getLoggedInUser().getGroupId()
+	ctx = SecurityContext(groupid)
+	containerService = gateway.getPojosService(ctx)
+
+	# Read datasets in all projects
+	projects = containerService.loadContainerHierarchy("Project", None, None) # allowed: 'Project", "Dataset", "Screen", "Plate"
+	for p in projects:                # omero.model.ProjectI
+		p_id = p.getId().getValue()
+		p_name = p.getName().getValue()
+		proj_dict[p_id] = p_name
+		for d in p.linkedDatasetList():
+			ds_id = d.getId().getValue()
+			ds_name = d.getName().getValue()
+			results.append({
+				'Project Id': p_id,
+				'Project Name': p_name,
+				'Dataset Id': ds_id,
+				'Dataset Name': ds_name,
+				'Group Id': groupid,
+			})
+			ds_dict[ds_id] = ds_name     
+
+	# read datasets not linked to any project
+	ds_in_proj = [p['Dataset Id'] for p in results]
+	ds = containerService.loadContainerHierarchy("Dataset", None, None)
+	for d in ds:                # omero.model.ProjectI
+		ds_id = d.getId().getValue()
+		ds_name = d.getName().getValue()
+		if ds_id not in ds_in_proj:
+			ds_dict[ds_id] = ds_name
+			results.append({
+				'Project Id': '--',
+				'Project Name': '--',
+				'Dataset Id': ds_id,
+				'Dataset Name': ds_name,
+				'Group Id': groupid,
+			})
+	return results, proj_dict, ds_dict         
+
+
+def get_images(gateway, datasets, orphaned=True):
+	'''Return all image ids and image names for provided dataset ids'''
+	browse = gateway.getFacility(BrowseFacility)
+	experimenter = gateway.getLoggedInUser()
+	ctx = SecurityContext(experimenter.getGroupId())
+	images = []
+	for dataset_id in datasets:
+		ids = ArrayList(1)
+		ids.add(Long(dataset_id))
+		j = browse.getImagesForDatasets(ctx, ids).iterator()
+		while j.hasNext():
+		    image = j.next()
+		    images.append({
+		        'Image Id': String.valueOf(image.getId()),
+		        'Image Name': image.getName(),
+		        'Dataset Id': dataset_id,
+		        'Dataset Name': datasets[dataset_id],
+		    })
+	if orphaned:
+		orphans = browse.getOrphanedImages(ctx, ctx.getExperimenter()) # need to pass user id (long)
+		for image in orphans:
+			images.append({
+				'Image Id': String.valueOf(image.getId()),
+				'Image Name': image.getName(),
+				'Dataset Id': -1,
+		        'Dataset Name': '<Orphaned>',
+			})
+	return images
+
+
+def show_as_table(title, data, order=[]):
+    table = ResultsTable()
+    for d in data:
+        table.incrementCounter()
+        order = [k for k in order]
+        order.extend([k for k in d.keys() if not d in order])
+        for k in order:
+        	table.addValue(k, d[k])
+    table.show(title)
+
+
+# Main code
+
+gateway = connect(group_id, username, password, server, server_port)
+
+groups, current_group = get_groups(gateway)
+show_as_table("My Groups", groups, order=['Id', 'Name'])
+
+all_data,_,datasets = get_projects_datasets(gateway)
+show_as_table("Projects and Datasets - Group: %s" % current_group, all_data, order=['Group Id', 'Dataset Id', 'Dataset Name', 'Project Name', 'Project Id'])
+
+# created sorted list of unique dataset ids
+image_ids = get_images(gateway, datasets, orphaned=True)
+show_as_table("Images - Group: %s" % current_group, image_ids, order=['Dataset Id', 'Dataset Name', 'Image Id', 'Image Name'])
+
+gateway.disconnect()
+```
+
 ## Saving Images to the OMERO database
 
 Let's try to export an image from Fiji to OMERO.
 
-### Single Images
+### Single Image
 
 1. Go back to Fiji and then to `File` > `Open Samples` > `Blobs`.
 
@@ -1047,7 +1215,7 @@ IJ.run(imp, "OMERO... ", "")
 
 4. Go to the OMERO website and refresh the page. Double click on your `xxx_workshop` dataset icon to expand it. You should see the blobs.gif image.
 
-### Batch Processing
+### Multiple Images
 
 Scripting provides a convenient way to automatically export many images at once. For this exercise we utilize the output produced by the `Split_Stack.py` script.  We will take the `Simple_Batch` script as a template and modify it so that the create TIF image files are directly exported to OMERO instead of saving them to our local disk.
 
@@ -1176,6 +1344,183 @@ command+="groupID=%s\n" % omero_group_id
 command+="iid=%s]" % image_id
 IJ.runPlugIn("loci.plugins.LociImporter", command)
 ```
+
+## Local Processing of an entire OMERO datasets
+
+The previous examples demonstrated how to export local images to OMERO, or how to import OMERO images to a local workstation. Let's explore how an entire dataset comprised of many images can be downloaded from the remote OMERO instance, processed locally with the processed images getting uploaded to the original dataset again.
+
+The example script, `Omero_Processing.py`, consists of five key functions:
+
+* **connect:** Establishes a connection to the OMERO server with specific user credentials. It returns an instance of the OMERO  `Gateway` class that is used later to upload processed images to the same OMERO server instance.
+* **get_image_ids:** Gets a list of unique image IDs for a given dataset managed by the remote OMERO instance.
+* **open_image:** Downloads the image associated with an image ID and shows it in Fiji.
+* **process:** Applies a custom image processing routine to a given image.
+* **upload_image:** Uploads an Image to a specific dataset managed by the remote OMERO instance.
+
+**Remember that the gateway connection needs to be closed at the end of the script**.
+
+```
+#@ String (label="Omero User") username
+#@ String (label="Omero Password", style="password") password
+#@ String (label="Omero Server", value="omero.hpc.virginia.edu") server
+#@ Integer (label="Omero Port", value=4064) server_port
+#@ Integer (label="Omero Group ID", min=-1, value=-1) omero_group_id
+#@ Integer (label="Omero Dataset ID", min=-1, value=-1) dataset_id
+
+import os
+from os import path
+
+from java.lang import Long
+from java.lang import String
+from java.lang.Long import longValue
+from java.util import ArrayList
+from jarray import array
+from java.lang.reflect import Array
+import java
+
+# Omero Dependencies
+import omero
+from omero.gateway import Gateway
+from omero.gateway import LoginCredentials
+from omero.gateway import SecurityContext
+from omero.gateway.facility import BrowseFacility
+from omero.log import Logger
+from omero.log import SimpleLogger
+from omero.model import Pixels
+
+from ome.formats.importer import ImportConfig
+from ome.formats.importer import OMEROWrapper
+from ome.formats.importer import ImportLibrary
+from ome.formats.importer import ImportCandidates
+from ome.formats.importer.cli import ErrorHandler
+from ome.formats.importer.cli import LoggingImportMonitor
+import loci.common
+from loci.formats.in import DefaultMetadataOptions
+from loci.formats.in import MetadataLevel
+from loci.plugins.in import ImporterOptions
+from ij import IJ
+
+
+def connect(group_id, username, password, host, port):    
+    """Omero Connect with credentials and simpleLogger."""
+    cred = LoginCredentials()
+    if group_id != -1:
+        cred.setGroupID(group_id)
+    cred.getServer().setHostname(host)
+    cred.getServer().setPort(port)
+    cred.getUser().setUsername(username)
+    cred.getUser().setPassword(password)
+    simpleLogger = SimpleLogger()
+    gateway = Gateway(simpleLogger)
+    gateway.connect(cred)
+    group_id = cred.getGroupID()
+    return gateway
+
+
+def get_image_ids(gateway, dataset_id):
+    """Return all image ids for given dataset"""
+    browse = gateway.getFacility(BrowseFacility)
+    experimenter = gateway.getLoggedInUser()
+    ctx = SecurityContext(experimenter.getGroupId())
+    images = []
+    ids = ArrayList(1)
+    ids.add(Long(dataset_id))
+    j = browse.getImagesForDatasets(ctx, ids).iterator()
+    while j.hasNext():
+        image = j.next()
+        images.append({
+            'Image Id': String.valueOf(image.getId()),
+            'Image Name': image.getName(),
+            'Dataset Id': dataset_id,
+        })
+    return images
+
+
+def open_image(username, password, host, server_port, group_id, image_id):
+    """Downloads an image from the OMERO server"""
+    command="location=[OMERO] open=[omero:"
+    command+="server=%s\n" % server
+    command+="user=%s\n" % username
+    command+="port=%s\n" % server_port
+    command+="pass=%s\n" % password
+    if group_id > -1:
+		command+="groupID=%s\n" % group_id
+    command+="iid=%s] " % image_id
+    command+="windowless=true view=\'%s\' " % ImporterOptions.VIEW_HYPERSTACK
+    print "Opening image: id", image_id
+    IJ.runPlugIn("loci.plugins.LociImporter", command)
+    imp = IJ.getImage()
+    return imp
+
+
+def process_image(imp):
+    """Invert pixels."""
+    print "Processing", imp.getTitle()
+    IJ.run(imp, "Invert", "");
+    return imp
+
+
+def upload_image(gateway, server, dataset_id, filepath):    
+    """Uploads an image to a specific remote OMERO dataset."""
+    user = gateway.getLoggedInUser()
+    ctx = SecurityContext(user.getGroupId())
+    sessionKey = gateway.getSessionId(user)
+
+    config = ImportConfig()
+    config.email.set("")
+    config.sendFiles.set('true')
+    config.sendReport.set('false')
+    config.contOnError.set('false')
+    config.debug.set('false')
+    config.hostname.set(server)
+    config.sessionKey.set(sessionKey)
+    config.targetClass.set("omero.model.Dataset")
+    config.targetId.set(dataset_id)
+    loci.common.DebugTools.enableLogging("DEBUG")
+
+    store = config.createStore()
+    reader = OMEROWrapper(config)
+    library = ImportLibrary(store,reader)
+    errorHandler = ErrorHandler(config)
+
+    library.addObserver(LoggingImportMonitor())
+    candidates = ImportCandidates (reader, filepath, errorHandler)
+    reader.setMetadataOptions(DefaultMetadataOptions(MetadataLevel.ALL))
+    success = library.importCandidates(config, candidates)
+    return success
+
+
+# Main code
+
+gateway = connect(omero_group_id, username, password, server, server_port)
+image_info = get_image_ids(gateway, dataset_id)
+tmp_dir = os.path.join(os.path.expanduser('~'), 'omero_tmp')
+if not os.path.exists(tmp_dir):
+    os.makedirs(tmp_dir)
+
+for info in image_info:
+    imp = open_image(username, password, server, server_port, omero_group_id, info['Image Id'])
+    imp = process_image(imp)
+
+    # Save processed image locally in omero_tmp dir
+    title = imp.getTitle().split('.')[:-1]
+    title = '.'.join(title) + "_inverted.ome.tiff"
+    filepath = os.path.join(tmp_dir, title)
+    options = "save=" + filepath + " export compression=Uncompressed"
+    IJ.run(imp, "Bio-Formats Exporter", options)
+
+    #ignore changes & close
+    imp.changes=False
+    imp.close()
+
+    # export to OMERO
+    upload_image(gateway, server, dataset_id, [filepath])
+
+gateway.disconnect()
+
+print "Done.\n"
+```
+<br>
 
 # Installing Scripts as Plugins {#install-plugins-id}
 
