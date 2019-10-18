@@ -1,10 +1,21 @@
----
-title: "Machine Learning with Python"
-author: "J. Huband"
-# date: 2019-10-16T00:07:00-00:00
-categories: ["Python Programming"]
-toc: false
----
++++
+type = "rivanna"
+categories = [
+  "HPC",
+  "software",
+  "workshop",
+  "Python Programming"
+]
+date = "2019-10-18T08:37:46-05:00"
+tags = [
+  "lang",
+]
+draft = false
+shorttitle = "Machine Learning with Python"
+title = "Machine Learning with Python"
+description = "Machine Learning with Python Workshop"
+author = "J. Huband"
++++
 
 
 <img style="float: left;" src="Images/Slide1.JPG">
