@@ -1,3 +1,10 @@
+---
+title: "Machine Learning with Python"
+author: "J. Huband"
+# date: 2019-10-16T00:07:00-00:00
+categories: ["Python Programming"]
+toc: false
+---
 
 
 <img style="float: left;" src="Images/Slide1.JPG">
