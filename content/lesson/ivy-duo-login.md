@@ -23,11 +23,6 @@ The security awareness training is located in [Workday](https://www.myworkday.co
 \* If you are a student without a Workday account, please send an email to ivy-support@virginia.edu to receive an alternate link to the security training.
 
 
-### 2. Send a screenshot of your completed training.
-
-Once you have completed the training, take a screenshot of your completed training and send a copy to 
-accounts@virginia.edu and ivy-support@virginia.edu.
-
 # 2. Installing/Updating the VPN Client
 
 To connect to your Ivy VM, you first need to connect to the High Security Virtual Private 
