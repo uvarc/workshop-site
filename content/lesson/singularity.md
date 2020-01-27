@@ -24,7 +24,7 @@ You can build an image on one machine and run it on another.
 #### **Reproducible** 
 Versioning and freezing of containers enable data reproducibility.
 
-### Why use Singularity?
+## Why use Singularity?
 It is designed for **HPC environments**:
 
 - Does not require sudo privilege to run (unlike Docker)
@@ -34,7 +34,7 @@ It is designed for **HPC environments**:
 
 ---
 # Rivanna Crash Course
-It is assumed that students of this workshop:
+It is assumed that participants of this workshop:
 
 - are comfortable with the Linux command line
 - have access to Rivanna
@@ -137,6 +137,8 @@ singularity pull [<SIF>] <URI>
 singularity build <SIF> <URI>
 ```
 
+<br>
+
 #### Unified resource identifiers (URIs) supported by Singularity
 
 | Repository | URI prefix |
@@ -147,15 +149,19 @@ singularity build <SIF> <URI>
 
 <br>
 
-The syntax for `<URI>` is
+Syntax for `<URI>`:
 ```
-<library|docker|shub>://<user>/<repo-name>[:<tag>]
+<library|docker|shub>://<user>/<container>[:<tag>]
 ```
+
+<br>
 
 #### Singularity Image Format (SIF)
 
 - Singularity images use the `*.sif` suffix
 - Earlier versions use the `*.simg` suffix
+
+<br>
 
 #### Differences between `pull` and `build`
 
@@ -164,7 +170,10 @@ The syntax for `<URI>` is
 | downloads a pre-built image | converts image to the latest Singularity image format after downloading it |
 | does not require output image name <SIF> | requires output image name <SIF> |
 
+<br>
+
 ### Your first container
+
 ```
 $ singularity pull library://godlovedc/demo/lolcow
 INFO:    Downloading library image
@@ -439,6 +448,8 @@ Singularity> ls /home/$USER
 Singularity>
 ```
 
+<br>
+
 # Hands-On 4: Executing custom commands
 
 ---
@@ -470,6 +481,47 @@ You can gather a list of commands into a "script" and pass that to the container
 singularity exec <SIF> /bin/bash my_bash_script.sh
 singularity exec <SIF> python my_python_script.py
 ```
+
+**Exercise:** The `fortune` command prints a random message. Here are two ways to run `fortune` 5 times via the container.
+
+Method 1: Put the for loop within the script executed by the container.
+```
+$ singularity exec lolcow_latest.sif my_bash_script.sh
+```
+```
+#!/bin/bash
+for i in {1..5}; do
+    fortune
+done
+```
+
+Method 2: Put the for loop outside the singularity command.
+```
+$ for i in {1..5}; do singularity exec lolcow_latest.sif fortune; done
+```
+
+Which method is better? Check by using the `time` command to time the total duration. Can you explain why?
+
+<details><summary>Show command </summary>
+<p>
+```
+$ time singularity exec lolcow_latest.sif my_bash_script.sh
+...
+real	0m0.189s
+user	0m0.057s
+sys	0m0.103s
+```
+
+```
+$ time for i in {1..5}; do singularity exec lolcow_latest.sif fortune; done
+...
+real	0m0.804s
+user	0m0.263s
+sys	0m0.424s
+```
+</p>
+</details>
+
 
 <br>
 
@@ -589,7 +641,7 @@ Text to be displayed upon `singularity run-help`.
 
 ---
 
-The `lolcow` container that we used before was created using this Dockerfile ([source](https://github.com/GodloveD/lolcow/blob/master/Dockerfile)):
+The `lolcow` container that we used before was prepared using this Dockerfile ([source](https://github.com/GodloveD/lolcow/blob/master/Dockerfile)):
 
 ```
 FROM ubuntu:16.04
@@ -606,11 +658,14 @@ ENTRYPOINT fortune | cowsay | lolcat
 
 Hints:
 
+- Refer to the [skeleton](#advanced-the-definition-file) of a Singularity definition file.
 - Use `docker` as the bootstrap agent.
 - `RUN` commands are installation commands.
 - `ENV` commands set environment variables. You'll need to use `export <env>=...`.
 - `ENTRYPOINT` commands are executed at runtime.
 - You will not be able to build this on Rivanna!
+
+(Demo)
 
 # Hands-On 6: Run a container on a GPU node
 
@@ -749,12 +804,12 @@ $ squeue -u $USER
            8388125       gpu   tftest    rs7wz  R       0:01      1 udc-ba25-28
 ```
 
-`tftest-8388125.out`:
+`tftest-<JOBID>.out`:
 ```
 tf.Tensor(b'Testing Tensorflow', shape=(), dtype=string)
 ```
 
-`tftest-8388125.err`:
+`tftest-<JOBID>.err`:
 
 <details><summary>Show content</summary>
 <p>
@@ -806,7 +861,7 @@ pciBusID: 0000:89:00.0
 - [Request an allocation](https://www.rc.virginia.edu/userinfo/rivanna/allocations/) (students must do so through PI or staff)
 - Search containers on repositories
 - Ask us to prepare a container ([submit a ticket](https://www.rc.virginia.edu/support/))
-
+- Start doing your research!
 
 # References
 
