@@ -121,6 +121,8 @@ singularity run --nv /home/$USER/tensorflow-2.0.0-py36.sif
 2. Run a shell interactively within the container: `shell`
 3. Run a command within the container: `exec`
 
+<br>
+
 # Hands-On 1: Create and run image from Container Library
 ---
 *Objectives:*
@@ -631,6 +633,8 @@ Add metadata in the form of key-value pairs. Example:
 
 Text to be displayed upon `singularity run-help`.
 
+<br>
+
 # Hands-On 5: Convert a Dockerfile
 
 ---
@@ -638,6 +642,7 @@ Text to be displayed upon `singularity run-help`.
 
 - Practice writing a basic definition file
 - Convert a Dockerfile into a definition file
+- Build a container from scratch
 
 ---
 
@@ -665,7 +670,9 @@ Hints:
 - `ENTRYPOINT` commands are executed at runtime.
 - You will not be able to build this on Rivanna!
 
-(Demo)
+(Demo: Build container from scratch)
+
+<br>
 
 # Hands-On 6: Run a container on a GPU node
 
@@ -851,6 +858,8 @@ pciBusID: 0000:89:00.0
 ```
 </p>
 </details>
+
+(Demo: Go over definition file for this container)
 
 **Congratulations - you have completed this workshop!**
 
