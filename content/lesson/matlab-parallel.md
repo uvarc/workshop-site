@@ -52,6 +52,9 @@ MATLAB experience or basic programming or coding experience is suggested.  Clust
 
 **<a href="/files/Parallel Computing with MATLAB.pptx" target="_blank">Parallel Computing with MATLAB.pptx</a>**
 
+## Parallel Computing Workshop Exercises
+ (in unzipped workshop folder)
+
 ## Matlab Parallel Computing on Rivanna
 
  **<a href="https://www.rc.virginia.edu/userinfo/rivanna/software/matlab/" target="_blank">https://www.rc.virginia.edu/userinfo/rivanna/software/matlab/</a>**
