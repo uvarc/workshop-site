@@ -37,7 +37,7 @@ It is designed for **HPC environments**:
 It is assumed that participants of this workshop:
 
 - are comfortable with the Linux command line
-- have access to Rivanna
+- have access to Rivanna (in order to use `singularity` and the `rivanna-training` allocation)
 
 ## Access
 (Demo if needed)
