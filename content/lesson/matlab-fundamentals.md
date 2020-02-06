@@ -1,1270 +1,453 @@
----
-title: "MATLAB Fundamentals"
-author: "Christina Gancayco"
-# date: 2019-06-03T21:13:14-05:00
-categories: ["MATLAB Programming"]
-weight: 1
-draft: false
----
++++
+type = "rivanna"
+images = [
+  "/2016/10/image.jpg",
+]
+categories = [
+  "HPC",
+  "software",
+  "workshop",
+  "MATLAB Programming"
+]
+date = "2019-06-23T08:37:46-05:00"
+tags = [
+  "lang",
+]
+draft = false
+shorttitle = "Matlab Fundamentals"
+title = "Matlab Fundamentals"
+description = "Fundamentals of Matlab Workshop"
+author = "RC Staff"
+toc = true
++++
 
-<p class="lead">MATLAB is mathematical computing software that combines an easy-to-use desktop environment
-with a powerful programming language. MATLAB can be used for data analytics and visualization,
-signal and image processing, and a wide variety of other numerical applications.</p>
+## Workshop Overview
 
+MATLAB is an integrated technical computing environment from the MathWorks that combines array-based numeric computation, advanced graphics and visualization, and a high-level programming language. Separately licensed toolboxes provide additional domain-specific functionality.
 
-## Table of Contents
-* [Getting Started](#getting-started)
-* [1. The Command Window](#command-window)
-* [2. Variables and the MATLAB Workspace](#variables-and-matlab-workspace)
-* [3. Scripts and the MATLAB Editor](#scripts-and-matlab-editor)
-* [4. Clearing the Workspace and Command Window](#clearing-workspace-and-command-window)
-* [5. Getting Help in MATLAB](#getting-help)
-* [6. Vectors and Matrices](#vectors-and-matrices)
-* [**Problem Set 1**](#problem-set-1)
-* [7. Indexing into and Modifying Arrays](#indexing-and-modifying-arrays)
-* [8. Logical Arrays](#logical-arrays)
-* [9. Array Calculations](#array-calculations)
-* [10. Plotting](#plotting)
-* [11. Writing a Script and Version Control](#writing-scripts-and-version-control)
-* [**Review Project 1**](#review-project-1)
-* [12. Decision Trees (If Statements)](#decision-trees)
-* [13. For Loops](#for-loops)
-* [14. While Loops](#while-loops)
-* [**Problem Set 2**](#problem-set-2)
-* [15. Writing Functions](#writing-functions)
-* [16. Troubleshooting Errors](#troubleshooting-errors)
-* [More Practice](#more-practice)
+This workshop provides a comprehensive introduction to the MATLAB® technical computing environment. No prior programming experience or knowledge of MATLAB is assumed. Themes of data analysis, visualization, modeling, and programming are explored throughout the course. Topics include:
 
+  - Working with the MATLAB user interface
+  - Entering commands and creating variables
+  - Analyzing vectors and matrices
+  - Visualizing vector and matrix data
+  - Working with data files
+  - Working with data types
+  - Automating commands with scripts
+  - Writing programs with branching and loops
+  - Writing functions
 
-## <a name="getting-started">Getting Started</a>
+This workhop uses selected topics from the online self-paced course from the MathWorks in the link below. Participants should have a Mathworks account in order to access the links in this document.
 
-### Using MATLAB Online
-The easiest way to get started is to jump right in! With a current UVa email address,
-you can start using MATLAB online at the following link: [https://matlab.mathworks.com/](https://matlab.mathworks.com/).
-You may need to create a Mathworks account using your UVa email before you are able to log in.
-You will be able to save all of your work online and download your files to your computer for future use.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=sched_leaf_spot" target="_blank">Matlab Academy:Fundamentals of Matlab</a>**
 
-### Install MATLAB on Your Computer
-To install MATLAB on your personal machine, you can download the MATLAB installer here:
-[https://www.mathworks.com/downloads/web_downloads/select_release](https://www.mathworks.com/downloads/web_downloads/select_release)
-You will need to create a Mathworks account to access the installation files for download.
 
-### Data
-You will also need to download two datasets. If you are using MATLAB online, you will have to upload them
-to your MATLAB Drive.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=sched_leaf_spot#chapter=1&lesson=1&section=1"target="_blank">Video: Fundamentals of  Matlab</a>**
 
-Edinburgh Marriages: [data](/data/edinburgh_marriages.mat)
+**<a href="https://matlabacademy.mathworks.com/artifacts/quick-reference.html?course=mlbe&release=R2019a&language=en"target="_blank">Quick Reference Guide (used for presentation)</a>**
 
-Women's 200m Backstroke: [data](/data/backstroke.mat)
 
-## <a name="command-window">1. The Command Window</a>
-The command window is where you tell MATLAB what to do. Let's try telling MATLAB to do some
-basic math.
+## Getting Started
 
-In MATLAB, the following symbols are used for mathematical operations:
+### Entering Commands
 
-| Symbol | Operation      |
-| :----: | :---           |
-| +      | Addition       |
-| -      | Subtraction    |
-| *      | Multiplication |
-| /      | Division       |
-| ^      | Exponent       |
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=sched_leaf_spot#chapter=1&lesson=2&section=4" target="_blank">Exercise: Order of Operations</a>**
 
-**Note**: MATLAB follows the order of operations!
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=sched_leaf_spot#chapter=1&lesson=2&section=6" target="_blank">Exercise: Valid Variable Names and Cleaning Up</a>**
 
-Let's calculate 1 + 2 with MATLAB. In the command window after the **>>**, type `1+2`
-and press the **Enter/Return** key on your keyboard.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=sched_leaf_spot#chapter=1&lesson=2&section=9" target="_blank">Exercise: Change Output Display</a>**
 
-```
-1+2
-```
-Feel free to try some other mathematical operations and see what you get!
+### Getting Data into Matlab
 
-####   [Matlab Academy: Practice Entering Commands](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=1&lesson=2&section=1)
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=sched_leaf_spot#chapter=1&lesson=3&section=2"target="_blank">Video: Import Tool</a>**
 
-## <a name="variables-and-matlab-workspace">2. Variables and the MATLAB Workspace</a>
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=sched_leaf_spot#chapter=1&lesson=3&section=4" target="_blank">Exercise: Using the Variable Editor</a>**
 
-You'll notice that each time you run a command, the output is preceded by `ans = `.
-In this case, `ans` is a variable in which MATLAB is storing the answer to your calculation.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=sched_leaf_spot#chapter=1&lesson=3&section=5" target="_blank">Exercise: Saving Modifications</a>**
 
+### Obtaing Help
 
-Every time you run a new command, `ans` gets overwritten with the new output. To preserve
-outputs, we can assign them to new variables.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=sched_leaf_spot#chapter=1&lesson=4&section=2"target="_blank">Video: Using MATLAB's Documentation</a>**
 
-Try running `x = 5` in the command window.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=sched_leaf_spot#chapter=1&lesson=4&section=3" target="_blank">Exercise: Open and Use Function Documentation</a>**
 
 
-Instead of `ans = `, `5` is now preceded by `x = `. If you look in your workspace you will
-now see two variables, `ans` and `x`. The MATLAB workspace is where you can keep track of all
-the variables that currently exist in the MATLAB environment.
 
-####   [Matlab Academy: Order of Operations](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=1&lesson=2&section=4)
+## Plotting and Common Modifications
 
-> **Variable Name Rules**
+### Plotting
 
-> 1. Must start with a letter
-2. Can only contain letters, numbers, and underscores.
-3. Variable names are case-sensitive (myVar is not the same as myvar).
-4. Variable names take precedence over function names.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=mlac_mlbe_bod#chapter=2&lesson=2&section=2" target="_blank">Exercise: Plotting Gasoline Prices</a>**
 
-In MATLAB, the equals sign `=` does not truly mean "equals". `=` means you are assigning
-the value on the right to the variable name on left.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=mlac_mlbe_bod#chapter=2&lesson=2&section=6" target="_blank">Exercise: Plot Options</a>**
 
-####   [Matlab Academy: Valid Variable Names and Cleaning Up](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=1&lesson=2&section=6)
+### Annotating Plots
 
-## <a name="scripts-and-matlab-editor">3. Scripts and the MATLAB Editor</a>
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=mlac_mlbe_bod#chapter=2&lesson=3&section=2" target="_blank">Exercise: Axis Labels and Title</a>**
 
-When running commands in the command window, you can typically only execute one line of code
-at a time. Scripts are files where we can write multiple lines of code that can be executed
-all at once. Scripts are great for reproducibility and sharing code.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=mlac_mlbe_bod#chapter=2&lesson=3&section=3" target="_blank">Exercise: More Plot Annotation Options</a>**
 
-To start writing a script, click the **New Script** button in the top left corner of your
-toolbar. This will open a new blank script in the MATLAB Editor.
+### Axis Control
 
-When writing scripts, it can be helpful to include comments. These are lines in our script
-that are not executed as code. Comments in MATLAB are preceded by the percent sign `%`.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=mlac_mlbe_bod#chapter=2&lesson=4&section=2" target="_blank">Exercise: Modify Axis Properties</a>**
 
-Here we can begin writing our code. Let's write a script that assigns the value of `2+3` to
-the variable `X`, the value of `2` to the variable `Y`, and the sum of `X` and `Y` to the
-variable `Z`.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=mlac_mlbe_bod#chapter=2&lesson=4&section=4" target="_blank">Exercise: Modify Gasoline Price Plot Axes</a>**
 
-```
-X = 2+3
-Y = 2
-Z = X + Y
-```
 
-Now we need to save our script. Click the **floppy disk** icon and you will be prompted to
-give your script a name. MATLAB scripts have a **.m** file extension.
+## Working with Live scripts
 
-Now let's run our script! There are two ways we can do this:
+### Create and Run a Script
 
-1. Click the **green play button** in the toolbar.
-2. Type the name of your script (without the **.m** extension) in the Command Window and
-press the **Enter/Return** key.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=mlac_mlbe_bod#chapter=3&lesson=2&section=1" target="_blank">Exercise: Modifying and Running Scripts</a>**
 
-You should see all your new variables, `X`, `Y`, and `Z` in the workspace now, as well as all
-our old variables.
+### Code Sections
 
-####   [Matlab Academy: The Matlab Editor](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=1&lesson=5&section=2)
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=mlac_mlbe_bod#chapter=3&lesson=3&section=3" target="_blank">Exercise: International Gasoline Prices</a>**
 
-## <a name="clearing-workspace-and-command-window">4. Clearing the Workspace and Command Window</a>
+### Comments and Text
 
-You'll notice after we run our script that all of our variables, new and old, now exist in
-the workspace. To remove everything from our workspace, we can use the `clear` command. Go ahead
-and try it now.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=mlac_mlbe_bod#chapter=3&lesson=3&section=3" target="_blank">Exercise: International Gasoline Prices</a>**
 
-Even though all our variables have been cleared, we can still see all of the commands we previously
-ran in the command window. To clear the command window, we can use the `clc` command.
 
+## Creating and Manipulating Arrays
 
+### Manually Entering Arrays
 
-## <a name="getting-help">5. Getting Help in MATLAB</a>
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=mlac_mlbe_bod#chapter=4&lesson=2&section=1" target="_blank">Exercise: Creating Vectors</a>**
 
-One of the awesome things about MATLAB is that they have thorough documentation for all their
-functions and features. There are multiple ways you can learn more about a command. Let's find
-out more about MATLAB's `pi` command.
-
-1. Type `help pi` in the command window.
-2. Type `doc pi` in the command window.
-3. Type `pi` in the **Search Documentation** bar in the top right corner of the toolbar.
-
-All of these are valid methods for getting help with MATLAB.
-####   [Matlab Academy: Open and Use Function Documentation](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=1&lesson=4&section=3)
-
-## <a name="vectors-and-matrices">6. Vectors and Matrices</a>
-
-**Arrays** are variables that hold one or more values. Depending on the dimensions of your
-array, it could fall into one of three categories.
-
-<img src="/images/matlab-img1.png" style="height:50%;width:50%"></img>
-
-We have already worked with scalars, so let's try working with vectors.
-
-### Creating Vectors
-
-To manually create a vector, we can put the values we want in square brackets.
-
-Here is an example of a row vector with 4 elements.
-
-```
-myRow = [2 4 6 8]
-```
-
-
-Try creating a row vector called `x` containing the elements `1`, `5`, `11`, and `97`.
-
-```
-x = [1 5 11 97]
-```
-
-To create a column vector, we simply separate the elements of our array with semicolons `;`.
-
-```
-myCol = [1; 3; 5; 7]
-```
-
-Try creating a column vector called `y` containing the values `4`, `9`, and `8`.
-
-```
-y = [4; 9; 8]
-```
-
-We can also perform calculations directly within our array.
-
-```
-myCalcs = [0*3 1*3 2*3 3*3]
-```
-
-
-Try creating a row vector containing the values `2^2`, `3^3`, and `4^4`.
-
-```
-[2^2 3^3 4^4]
-```
-
-If you want to transpose your row vector to convert it to a column vector (or vice versa),
-simply add an apostrophe `'` to the end of your vector.
-
-```
-v = [1 2 3 4]
-vT = v'
-```
-
-
-Try transposing one of the vectors we already created!
-
-### Creating Matrices
-To create a matrix, we combine the syntax for row and column vectors.
-
-```
-myMat = [1 2; 3 4; 5 6]
-```
-
-
-Try creating a 2 x 3 matrix (2 rows, 3 columns) that contains `10`, `11`, `12` in the first
-row and `13`, `14`, `15` in the second row.
-
-```
-[10 11 12; 13 14 15]
-```
-####   [Matlab Academy: Practice Creating Matrices](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=4&lesson=2&section=2)
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=mlac_mlbe_bod#chapter=4&lesson=2&section=2" target="_blank">Exercise: Creating Matrices</a>**
 
 ### Creating Evenly-Spaced Vectors
 
-If we wanted a row vector containing the values `1` through `25`, that would be very tedious
-to enter by hand. There are two methods by which we can create evenly-spaced vectors.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe#chapter=4&lesson=3&section=4" target="_blank">Exercise: Use Colon Operator and Linspace</a>**
 
-**1. Colon Operator `:`**
-
-We can use the colon operator when we know the starting value, the end value, and the
-increments by which we want to space our vector.
-
-**2. `linspace`**
-
-We can use `linspace` command when we know the start and end values, and we know how many
-elements we want in the vector.
-
-<img src="/images/matlab-img2.png" style="height:75%;width:75%"></img>
-
-Let's try a couple examples.
-
-First, let's create a vector `u` that starts at `0`, ends at `48`, by increments of `4`.
-
-```
-u = 0:4:48
-```
-
-Now, let's create a vector `v` that starts at `1`, ends at `300`, with 100 evenly-spaced
-elements.
-
-```
-v = linspace(1,300,100)
-```
-
-####   [Matlab Academy: Use Colon Operator and Linspace](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=4&lesson=3&section=4)
 
 ### Concatenating Arrays
-We can combine arrays using the same syntax that we use for creating row/column vectors and
-matrices.
 
-**Horizontal Concatenation**
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe#chapter=4&lesson=4&section=6" target="_blank">Exercise: Concatenating Arrays</a>**
 
-<img src="/images/matlab-img3.png" style="height:50%;width:50%"></img>
-
-
-**Vertical Concatenation**
-
-<img src="/images/matlab-img4.png" style="height:50%;width:50%"></img>
-
-Let's try a couple examples of concatenating vectors and matrices.
-
-1. Create 2 row vectors: `x1` which contains the values `1` through `5` evenly-spaced by
-increments of 1; and `x2` which contains 5 evenly-spaced values from `100` to `101`.
-
-```
-x1 = 1:5
-x2 = linspace(100,101,5)
-```
-
-2. Vertically concatenate `x1` and `x2` and assign the result to the variable `X`.
-
-```
-X = [x1; x2]
-```
-
-3. Create 2 column vectors: `y1` which contains the values `10` and `11`; and `y2` which
-contains the values `14` and `15`.
-
-```
-y1 = [10; 11]
-y2 = [14; 15]
-```
-
-4. Horizontally concatenate `y1` and `y2` and assign the result to the variable `Y`.
-
-```
-Y = [y1 y2]
-```
-
-5. Horizontally concatenate `X` and `Y` and assign the result to the variable `Z`.
-
-```
-Z = [X Y]
-```
-####   [Matlab Academy: Creating and Concatenating Arrays](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=4&lesson=4&section=9)
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe#chapter=4&lesson=4&section=9" target="_blank">Exercise: Creating and Concatenating Arrays</a>**
 
 
 ### Array Creation Functions
-There are several functions we can use to create arrays so we don't have to do so manually.
 
-1. `ones(m,n)`: creates an m-by-n array where each element has a value of `1`.
-(Note: `m` is the number of rows; `n` is the number of columns)
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe#chapter=4&lesson=5&section=2" target="_blank">Exercise: Creating Arrays</a>**
 
-2. `zeros(m,n)`: creates an m-by-n array where each element has a value of `0`.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe#chapter=4&lesson=5&section=5" target="_blank">Exercise: Creating Arrays of Random Numbers</a>**
 
-3. `rand(m,n)`: creates an m-by-n array of uniformly distributed random numbers within the
-interval (0,1).
 
-####   [Matlab Academy: Array Creation Functions](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=4&lesson=5&section=2)
-####   [Matlab Academy: Creating Arrays of Random Numbers](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=4&lesson=5&section=5)
 
-## <a name="problem-set-1">Problem Set 1</a>
+### Reshaping Arrays
 
-Try these problems on your own, utilizing the concepts we learned above. The solution script can be
-downloaded [here](/files/matlab_fundamentals_ps1.m).
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe#chapter=4&lesson=6&section=3" target="_blank">Exercise: Reshaping a Matrix</a>**
 
-1. Calculate the results of the following:
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe#chapter=4&lesson=6&section=8" target="_blank">Exercise: Overall Average Electricity Revenue</a>**
 
-<img src="/images/OrderOfOps.png"></img>
 
-2. Create a row vector named `odds` containing odd values from `1` to `15`.
+## Accessing Data in Arrays
 
-3. Create a row vector containing values from `20` to `10` in increments of `-1`.
+### Indexing into Vectors
 
-4. Create a column vector containing 20 evenly spaced values between `100` and `105`.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=mlac_mlbe_bod#chapter=5&lesson=2&section=2" target="_blank">Exercise: Accessing and Modifying Vector Values</a>**
 
-5. Create a 3-by-4 matrix `m1` containing ones.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=mlac_mlbe_bod#chapter=5&lesson=2&section=3" target="_blank">Exercise: Index Using Variables and Keywords</a>**
 
-6. Create a 3-by-2 matrix `m2` containing zeros.
 
-7. Create a row vector `m3` containing 6 random numbers between 0 and 1.
+### Accessing Multiple Elements
 
-8. Horizontally concatenate `m1` and `m2`, and vertically concatenate the result with `m3`.
-Assign the final result to the variable `M`.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=mlac_mlbe_bod#chapter=5&lesson=3&section=3" target="_blank">Exercise: Index with Vectors</a>**
 
-## <a name="indexing-and-modifying-arrays">7. Indexing into and Modifying Arrays</a>
-Arrays can be quite large, and sometimes we only want to work with a subset of the data.
-We can use indexing to extract the data we want.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=mlac_mlbe_bod#chapter=5&lesson=3&section=4" target="_blank">Exercise: Modify Multiple Elements</a>**
 
-An **index** refers to the location of an element in an array. For example, the index of the
-first element in an array is `1`.
 
-### Accessing a Single Element in a Vector
+### Accessing Data in Matrices
 
-Let's create a vector `x` containing 30 linearly spaced values between 0 and 1. We can stop MATLAB
-from printing the output of this command to the Command Window by adding a semicolon `;` to
-the end. We can still see the output of this command in the workspace, but it helps keep our
-Command Window tidy.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=mlac_mlbe_bod#chapter=5&lesson=4&section=2" target="_blank">Exercise: Row,Column Indexing</a>**
 
-```
-x = linspace(0,1,30);
-```
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=mlac_mlbe_bod#chapter=5&lesson=4&section=7" target="_blank">Exercise: Extract a Single Element</a>**
 
-If we double-click `x` in our workspace, MATLAB will open `x` in the Variable Editor so we
-can see all the values.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=mlac_mlbe_bod#chapter=5&lesson=4&section=8" target="_blank">Exercise: Matrix Indexing with Vectors</a>**
 
-Now let's access the third value in `x` and assign the result to the variable `x3`.
-We can access a particular element by listing the index within parentheses after the
-variable name.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=mlac_mlbe_bod#chapter=5&lesson=4&section=10" target="_blank">Exercise: Extract Multiple Elements</a>**
 
-```
-x3 = x(3)
-```
 
-We can double-check our result by looking at `x` in the Variable Editor.
+## Mathematical and Statistical Operations with Arrays
 
-Try accessing the tenth value in `x` and save the result in a variable `x10`.
+### Performing Operations on Arrays
 
-```
-x10 = x(10)
-```
-####   [Matlab Academy: Accessing and Modifying Vector Values](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=5&lesson=2&section=2)
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=mlac_mlbe_bod#chapter=6&lesson=2&section=1" target="_blank">Exercise: Basic Array Arithmetic & Functionss</a>**
 
-### Accessing Multiple Elements in a Vector
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=mlac_mlbe_bod#chapter=6&lesson=2&section=3" target="_blank">Video: Element-wise vs. Matrix Operations</a>**
 
-We can access a range or slice of values in a vector using the color operator `:`.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=mlac_mlbe_bod#chapter=6&lesson=2&section=4" target="_blank">Exercise: Element-wise Arithmetic</a>**
 
-We can access the first three elements of `x` using the following command:
-
-```
-z = x(1:3)
-```
-
-Try accessing the tenth through fifteenth elements of `x` and save the result to the
-variable `y`.
-
-```
-y = x(10:15)
-```
-####   [Matlab Academy: Modify Multiple Elements](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=5&lesson=3&section=4)
-
-### Modifying a Single Value in a Vector
-
-We can modify a single value in our vector using the same syntax we use to access a single
-element.
-
-```
-x(1) = 3
-```
-
-Try changing the second value of `x` to have a value `1`.
-
-```
-x(2) = 1;
-```
-####   [Matlab Academy: Accessing and Modifying Vector Values](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=5&lesson=2&section=2)
-
-### Indexing Using Variables and Keywords
-
-Instead of using a number as an index, we can index using a variable that contains a
-number.
-
-```
-a = 5
-xa = x(a)
-```
-
-Try creating a variable `idx` that has a value of `5*4`. Use `idx` to index into the vector
-`x`. Assign the result to the variable `xi`.
-
-```
-idx = 5*4
-xi = x(idx)
-```
-
-Suppose we don't know how many elements our array has, but we **do** know that we want to
-extract the last element of the array. We can use the keyword `end` to index into our array.
-
-Let's retrieve the last element of `x` and save the result to a variable `xn`.
-
-```
-xn = x(end)
-```
-####   [Matlab Academy: Index Using Variables and Keywords](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=5&lesson=2&section=3)
-
-####   [Matlab Academy: Index with Vectors](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=5&lesson=3&section=3)
-
-## <a name="logical-arrays">8. Logical Arrays</a>
-
-In MATLAB, we can use **relational operators** such as `>`, `<`, `>=`, `<=`, `==` (is equal to),
-and `~=` (does not equal) to compare two values. The result of a comparison is a logical array.
-
-**Logical arrays** are arrays that contain values of `true` and `false`, which can be represented
-numerically as `1` and `0` respectively.
-
-Let's try a couple examples.
-
-Let's see if `pi` is greater than `3`.
-
-```
-pi > 3
-```
-
-
-Now let's see if `pi` is greater than `4`, and save the result to the variable `test`.
-
-```
-test = pi > 4
-```
-
-
-Reminder: We are able to assign the result of `pi > 4` because `=` does not mean "equal to"!
-`=` is an assignment operator.
-
-We can also use **logical operators** such as `&` (AND) and `|` (OR) to combine
-relational operations.
-
-Let's combine check that `pi` is less than `4` and greater than `3`.
-
-```
-t = pi < 4 & pi > 3
-```
-####   [Matlab Academy: Logical Operations](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=8&lesson=2&section=2)
-
-### Logical Arrays with Multiple Elements
-
-We can also use relational operators to compare each element of a vector or matrix with a
-scalar.
-
-```
-v = [-5 0 5];
-vPos = v > 0
-```
-
-
-We can also do an element-by-element comparison of two arrays. The result will be a logical
-array the same size as the input arrays.
-
-Let's create two 2-by-2 matrices `x` and `y` that contain random numbers between `0` and `1`.
-Let's see which values of `x` are greater than `y` and save the result to the variable `z`.
-
-```
-x = rand(2)
-y = rand(2)
-z = x > y
-```
-
-
-####   [Matlab Academy: Logical Operations with Arrays](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=8&lesson=2&section=3)
-
-### Counting True Values in a Logical Array
-
-We can use the functions `any` or `nnz` (**N**umber of **N**on-**Z**ero elements) to count
-the number of `true` or `1` values in our logical arrays.
-
-Let's see how many ones are in our logical array `z` from the previous example.
-
-```
-any(z)
-```
-
-`nnz` yields the same result.
-
-```
-nnz(z)
-```
-
-We can use the `all` function to determine if all of the values in a logical array are true.
-
-```
-all(z)
-```
-
-We can use the `find` function to get the indices (locations) of the true values in a logical array.
-
-Let's create a vector `v` that contains 20 evenly-spaced values from `10` to `20`.
-
-```
-v = 10:20
-```
-
-Let's create a logical vector `v_gt15` that is the result of the comparison `v` greater
-than `15`.
-
-```
-v_gt15 = v > 15;
-```
-
-Now let's use the `find` function to get the indices of the true elements in `v_gt15`.
-Assign the result to the variable `idx`.
-
-```
-idx = find(v_gt15)
-```
-
-####   [Matlab Academy: Count true Values in a Logical Vector](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=8&lesson=3&section=2)
-####   [Matlab Academy: Identify Locations of true Values](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=8&lesson=3&section=3)
-
-### Logical Indexing
-
-Like when we indexed using a range of values, we can also index using logical arrays. When
-we index an array `A` with a logical array `b`, we get the values from `A` that have corresponding
-values of `true` in `b`.
-
-Let's use our vector `v` and logical vector `v_gt15` from the previous example to play with
-logical indexing.
-
-Let's extract all the values of `v` that are greater than `15` and save the resulting values
-to the variable `v_big`.
-
-```
-v_big = v(v_gt15)
-```
-
-
-If we didn't have `v_gt15`, we could also put our relational operation directly in the
-parentheses.
-
-```
-v_big = v(v > 15)
-```
-
-
-We can also use logical indexing to modify an array. Let's replace all the values of `v`
-that are less than or equal to `13` with a value of `0`.
-
-```
-v(v <= 13) = 0
-```
-
-####   [Matlab Academy: Logical Indexing](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=8&lesson=4&section=3)
-
-
-## <a name="array-calculations">9. Array Calculations</a>
-
-### Element-wise Addition and Subtraction
-
-Just like with scalars, we can perform mathematical operations on arrays containing multiple
-elements.
-
-Let's create a 3-by-2 matrix `M` containing only values of `1`.
-
-```
-M = ones(3,2)
-```
-
-Now let's add `1` to each of the values in `M` so that we have a matrix containing only
-values of `2`. Assign this matrix to a variable `M2`.
-
-```
-M2 = M + 1
-```
-
-
-If we have two arrays of the same size, we can do element-wise addition and subtraction.
-
-Let's add `M` and `M2` together and assign the result to the variable `M3`.
-
-```
-M3 = M + M2
-```
-
-
-### Element-wise Multiplication, Division, and Powers
-
-MATLAB stands for **MAT**rix **LAB**orabory, and is particularly great at matrix operations
-such as matrix multiplication and division. However, sometimes we merely want to perform
-these operations on an element-wise level. To do so, we add `.` in front of the mathematical
-operator we want to use.
-
-Let's create a matrix `M6` that is the product of `M2` and `M3`.
-
-```
-M6 = M2 .* M3
-```
-
-
-We can raise each element of `M6` to the power of `4` by applying the dot exponent operator
-`.^`.
-
-```
-M6 .^ 4
-```
-####   [Matlab Academy: Basic Array Arithmetic & Functions](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=6&lesson=2&section=1)
-####   [Matlab Academy: Element-wise Arithmetic](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=6&lesson=2&section=4)
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=mlac_mlbe_bod#chapter=6&lesson=2&section=9" target="_blank">Exercise: Operating on Compatibly-Sized Arrays</a>**
 
 ### Matrix Multiplication
 
-We can perform true matrix multiplication by using the `*`, `/`, and `^` operators without
-the dot operator `.` in front of them.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=mlac_mlbe_bod#chapter=6&lesson=3&section=3" target="_blank">Exercise: Matrix Operations</a>**
 
-Let's create two matrices: `A`, a 3x2 matrix containing random values between `0` and `1`, and
-`B`, a 2x4 matrix containing random values between `0` and `1`. Multiply `A` and `B` and
-assign the result to the variable `C`.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=mlac_mlbe_bod#chapter=5&lesson=4&section=10" target="_blank">Exercise: Extract Multiple Elements</a>**
 
-```
-A = rand(3,2);
-B = rand(2,4);
-C = A * B
-```
-####   [Matlab Academy: Matrix Operations](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=6&lesson=3&section=3)
+### Calculating Statistics of Vectors
 
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=6&lesson=4&section=2" target="_blank">Exercise: Basic Statistics</a>**
 
-### Calculating Statistics on Vectors
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=6&lesson=4&section=5" target="_blank">Exercise: Average Gasoline Prices</a>**
 
-MATLAB provides many functions for calculating statistics on array data. Some of the most
-common functions include `min`, `max`, `mean`, and `median`.
+### Using Statistical Operations on Matrices
 
-Let's create a row vector `d` that contains `20` random integers between `1` and `100`. You
-can use the `randi` function to generate this vector. (Use the MATLAB help functions to learn
-more about `randi`)
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=6&lesson=5&section=3" target="_blank">Exercise: Descriptive Statistics</a>**
 
-```
-d = randi(100, 1, 20)
-```
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=6&lesson=5&section=6" target="_blank">Exercise: Statistics for Each Row</a>**
 
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=6&lesson=5&section=9" target="_blank">Exercise: Correlation</a>**
 
-Now let's calculate the mean of the values in `d` using the `mean` function. Assign the
-result to the variable `d_mean`.
+## Visualizing Data in 2D and 3D
 
-```
-d_mean = mean(d)
-```
+### Identifying Available Vector Plot Types
 
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=7&lesson=1&section=3" target="_blank">Exercise: stairs, stem, and area</a>**
 
-We can determine the smallest value in our vector by using the `min` command.
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=7&lesson=1&section=4" target="_blank">Exercise: Gasoline Prices Scatter Plot</a>**
 
-```
-d_min = min(d)
-```
 
+### Creating Arrays of Text
 
-We can determine the minimum or maximum value of a vector AND also get the location of that
-value within the vector.
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=7&lesson=2&section=2" target="_blank">Exercise: Creating Character Arrays</a>**
 
-```
-[d_max, idx] = max(d)
-```
-####   [Matlab Academy: Calculating Statistics of Vectors](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=6&lesson=4&section=2)
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=7&lesson=2&section=3" target="_blank">Exercise: Creating Multiline Annotations</a>**
 
-### Calculating Statistics on Matrices
+### Customizing Plot Properties
 
-We can also calculate these same statistics on matrices. Let's create a 6-by-3 matrix `M`
-containing random integers between `1` and `30`.
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=7&lesson=3&section=2" target="_blank">Exercise: Customizing Plot Properties</a>**
 
-```
-M = randi(30, 6, 3)
-```
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=7&lesson=3&section=6" target="_blank">Exercise: Specifying Color</a>**
 
-Now let's apply the `mean` function to `M` and save the result to the variable `M_mean`.
+### Plotting Multiple Columns
 
-```
-M_mean = mean(M)
-```
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=7&lesson=4&section=2" target="_blank">Exercise: Plotting Matrix Columns</a>**
 
-The resulting `M_mean` is a 1x3 row vector containing the means for each column of `M`. By
-default, the statistics functions calculate the stat for each column of a 2-dimensional matrix.
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=7&lesson=4&section=4" target="_blank">Exercise: Plotting Matrix Columns Against a Vector</a>**
 
-Try finding the `median` of each column of `M` and assign the result to the variable `M_median`.
+### Visualizing Matrices
 
-```
-M_median = median(M)
-```
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=7&lesson=5&section=2" target="_blank">Exercise: Surface, Mesh, and Contour</a>**
 
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=7&lesson=5&section=4" target="_blank">Exercise: Visualize Electricity Data</a>**
 
-If you want to calculate statistics across rows, you can use the optional second argument
-`dim` of these functions. By default, MATLAB calculates stats across columns so typically
-you don't not need to set `dim` to `1` if you want this type of results.
 
-<img src="/images/matlab-img5.png" style="height:50%;width:50%"></img>
 
-Let's try calculating the mean value for each row of `M` and save it to the variable `M_Rmean`.
+## Conditional Data Selection
 
-```
-M_Rmean = mean(M,2)
-```
+### Logical Operations and Variables
 
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=8&lesson=2&section=2" target="_blank">Exercise: Logical Operations</a>**
 
-If we want the mean of all values of `M` we can use the `colon` operator to specify we want
-to include all values.
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=8&lesson=2&section=3" target="_blank">Exercise: Logical Operations with Arrays</a>**
 
-```
-M_TotMean = mean(M(:))
-```
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=8&lesson=2&section=7" target="_blank">Exercise: Finding Winning Team Records</a>**
 
 
-Using a single `:` as our index, we are telling MATLAB we want to access all the values.
+### Counting Elements
 
-####   [Matlab Academy: Rolling Calculations](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=6&lesson=5&section=5)
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=8&lesson=3&section=2" target="_blank">Exercise: Count true Values in a Logical Vector</a>**
 
-####   [Matlab Academy: Statistics for Each Row](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=6&lesson=5&section=6)
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=8&lesson=3&section=3" target="_blank">Exercise: Identify Locations of true Values</a>**
 
-## <a name="plotting">10. Plotting</a>
+### Logical Indexing
 
-MATLAB provides several simple functions for visualizing our data. In this tutorial we will
-go over how to use the `plot` command.
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=8&lesson=4&section=2" target="_blank">Video: Logical Indexing</a>**
 
-Let's `clear` our workspace and use `clc` to clear our command window.
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=8&lesson=4&section=3" target="_blank">Exercise: Logical Indexing</a>**
 
-MATLAB has a lot of built-in datasets that we can play with. Let's import the `edinburgh_marriages`
-dataset into MATLAB now.
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=8&lesson=4&section=7" target="_blank">Exercise: Selecting Teams with Winning Home Record</a>**
 
-```
-load edinburgh_marriages
-```
+## Tables of Data
 
-(Note: `edinburgh_marriages` is a MAT-file. The full filename is `edinburgh_marriages.mat`.
-MAT-files are a MATLAB filetype that can save your variables and other data types together
-in a single file)
+### Storing Data in a Table
 
-Let's take a look at our Variable Explorer. We should now have two variables, `Year` and `M`.
-Both variables are column vectors with 111 elements each.
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=10&lesson=2&section=2" target="_blank">Exercise:  Import Table Data</a>**
 
-We can plot the number of marriages `M` per `Year` using the `plot` command. The first
-argument of `plot` is our x-axis data, and the second argument is our y-axis data.
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=10&lesson=2&section=4" target="_blank">Exercise: Create a Table from Workspace Variables</a>**
 
-```
-plot(Year, M)
-```
+### Sorting Table Data
 
-<img src="/images/matlab-img6.png" style="height:50%;width:50%"></img>
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=10&lesson=3&section=2" target="_blank">Exercise: Using sortrows</a>**
 
-We can customize our plot by adding inputs to the third argument of our `plot` command.
 
-<img src="/images/matlab-img7.png" style="height:50%;width:50%"></img>
-<img src="/images/matlab-img8.png" style="height:50%;width:50%"></img>
-<img src="/images/matlab-img9.png" style="height:50%;width:50%"></img>
+### Extracting Portions of a Table
 
-Let's plot `M` vs. `Year` using red point markers.
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=10&lesson=4&section=3" target="_blank">Exercise: Numeric Indexing</a>**
 
-```
-plot(Year, M, 'r.')
-```
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=10&lesson=4&section=4" target="_blank">Exercise: Variable Name Indexing</a>**
 
-<img src="/images/matlab-img10.png" style="height:50%;width:50%"></img>
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=10&lesson=4&section=6" target="_blank">Exercise: Table Indexing</a>**
 
-We can also add a title to our plot using the `title` function.
+### Extracting Data from a Table
 
-```
-title('Edinburgh Marriages')
-```
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=10&lesson=5&section=3" target="_blank">Exercise: Indexing with Dot Notation</a>**
 
-<img src="/images/matlab-img11.png" style="height:50%;width:50%"></img>
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=10&lesson=5&section=7" target="_blank">Exercise: Indexing with Curly Braces</a>**
 
-We place our desired title within single quotation marks `'`. This denotes that our title is
-a string, and not a variable called Edinburgh Marriages. Strings are a type of data and
-are typically not meant to be analyzed numerically. We will discuss different data types more in the
-MATLAB Programming Techniques tutorial.
+### Exporting Tables
 
-####   [Matlab Academy: Plot Options](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=2&lesson=2&section=6)
-####   [Matlab Academy: Axis Labels and Title](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=2&lesson=3&section=2)
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=10&lesson=6&section=3" target="_blank">Exercise: Using writetable</a>**
 
-## <a name="writing-scripts-and-version-control">11. Writing a Script and Version Control</a>
+## Organizing Data
 
-Scripts are ways we can record our lines of code so that we can reliably reproduce our
-analyses. Scripts also allow us to edit our code interactively without having to run it
-every time.
+### Combining Tables
 
-Often we make numerous changes to a script, and these changes are often made over several
-sessions and different saved versions of our file. What if we want to access code that we
-wrote in an earlier version of our file? We can use MATLAB's built-in Version Control features
-to accomplish this.
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=11&lesson=2&section=2" target="_blank">Exercise: Concatenating Tables</a>**
 
-1. Let's create a new script called `testScript.m` and add a line that assigns the value of
-`10` to the variable `x`. Make sure you save this file!
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=11&lesson=2&section=3" target="_blank">Exercise: Join Tables</a>**
 
-```
-x = 10
-```
+### Table Properties
 
-2. Now let's add a line that assigns the value of `29` to `y`. After doing this, save your
-script again.
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=11&lesson=3&section=2" target="_blank">Exercise: Table Properties</a>**
 
-```
-x = 10
-y = 29
-```
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=11&lesson=3&section=3" target="_blank">Exercise: Accessing Table Properties</a>**
 
-3. Now change the value of `x` to `5`. Save your script one last time.
+### Indexing into Cell Arrays
 
-```
-x = 5
-y = 29
-```
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=11&lesson=4&section=3" target="_blank">Exercise: Indexing Into Cell Arrays</a>**
 
-4. Click the **File Versions** tab in your MATLAB toolbar. It should be the right-most tab.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe&s_tid=mlac_mlbe_bod#chapter=5&lesson=4&section=10" target="_blank">Exercise: Extract Multiple Elements</a>**
 
+### Working with Dates and Times
 
-5. Click the **Older** button in the top-left corner. As you continue to click the button,
-you will see older versions of our current script. You can click the **Restore as Latest**
-to revert back to an older version of your current script (this does not get rid of any versions
-you may have created). You can copy code from older versions as well.
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=11&lesson=5&section=2" target="_blank">Video: Data Types for Dates and Times</a>**
 
-####   [Matlab Documentation: Source Control Integration](https://www.mathworks.com/help/matlab/source-control.html)
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=11&lesson=5&section=3" target="_blank">Exercise: Applying Functions to Datetimes</a>**
 
-## <a name="review-project-1">Review Project 1</a>
+### Operating on Dates and Times
 
-### Women's 200m Backstroke
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=11&lesson=6&section=2" target="_blank">Exercise: Operating on Dates and Times</a>**
 
-We are going to write a script that performs end-to-end data analysis and visualization
-using times from the 2016 Olympic women's backstroke finals. The solution script to this review
-project can be downloaded [here](/files/matlab_fundamentals_rp1.m).
-We will be working with three variables:
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=11&lesson=6&section=4" target="_blank">Exercise: Working with Durations</a>**
 
-* `time`: an 8x4 matrix containing the times of eight swimmers (rows) at 50, 100, 150, and
-200 meter marks (columns)
+### Representing Discrete Categories
 
-* `name`: an 8x1 cell array containing the last swimmers' last names
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=11&lesson=7&section=3" target="_blank">Exercise: Converting to and Operating on Categoricals</a>**
 
-* `country`: an 8x1 cell array containing each swimmer's country code
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=11&lesson=7&section=6" target="_blank">Exercise: Category Names and Ordinals</a>**
 
-We will touch more on cell arrays in the MATLAB Programming Techniques tutorial. **Cell arrays** are
-a type of array where each element corresponds to a cell. Each cell can contain a scalar, string,
-or even another array of multiple elements! (Think of how cells in Excel can contain different
-types of data--this is very similar.)
 
-> Objectives
+## Preprocessing Data
 
-> 1. Load the data contained in `backstroke.mat`.
+### Normalizing Data
 
-2. Concatenate a column of zeros to the beginning of the variable `time`. This will represent
-each swimmer's starting time (time at "0 meter mark").
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=12&lesson=2&section=2" target="_blank">Exercise: Normalize Matrices</a>**
 
-3. Create a single plot of each swimmer's times vs. distance. You will need to create a vector
-containing distances from `0` to `200` in `50` meter increments. This plot should have any style of
-marker at each data point, with solid lines connecting each point. **Hint**: if your y-axis
-data contains multiple rows, the `plot` function will treat each row as a separate dataset.
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=12&lesson=2&section=3" target="_blank">Exercise: Calculate Average Daily Electricity Usage</a>**
 
-4. Add a legend using the swimmers' names contained in the cell array `name`. Look up how
-to use the `legend` function to add a legend to your plot.
+### Working with Missing Data
 
-5. Subtract `time` from the fastest (i.e. minimum) time at each distance. Plot the result vs.
-distance in a new figure, using a marker at each data point and solid lines. Add a legend to the plot
-using the country codes in `country`. **Hint**: by default if you use the `plot` function multiple
-times, your figure will be overwritten each time. Use the `figure` command to open a new figure
-window for your new plot.
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=12&lesson=3&section=2" target="_blank">Exercise:  Ignoring NaNs in calculations</a>**
 
-You may find it helpful to use comments `%` in your script so you can keep track of what each
-line does. You can also you comments to outline the various steps you need to complete.
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=12&lesson=3&section=4" target="_blank">Exercise: Locating Missing Data</a>**
 
-## <a name="decision-trees">12. Decision Trees (If/ElseIf/Else Statements)</a>
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=12&lesson=3&section=5" target="_blank">Exercise: Removing Rows with Missing Data</a>**
 
-**Decision trees** are a programming construct we can use to execute particular lines of
-code when a certain condition is met.
+### Interpolating Missing Data
 
-Let's start off with basic `if` statements.
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=12&lesson=4&section=2" target="_blank">Exercise: Filling Missing Values</a>**
 
-### `if` statement
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=12&lesson=4&section=4" target="_blank">Exercise: Interpolating Irregularly-Spaced Data</a>**
 
-<img src="/images/matlab-img12.png" style="height:30%;width:30%"></img>
 
-Let's create a script that assigns the value `3` to a variable `B` if `A` is positive.
+## Common Data Analysis Techniques
 
-```
-clear
+### Moving Window Operations
 
-A = 1;
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=13&lesson=2&section=3" target="_blank">Exercise: Moving Average</a>**
 
-if A > 0
-    B = 3;
-end
-```
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=13&lesson=2&section=4" target="_blank">Exercise: Smoothing Electricity Data</a>**
 
-Try running the script using different values for `A`. Check your workspace to see whether
-`B` has been created!
+### Linear Correlation
 
-### `if`-`else` statement
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=13&lesson=3&section=3" target="_blank">Exercise: Plotting Electricity Usage</a>**
 
-What if we want to run one line of code if our initial condition is met, but a different
-line of code if that condition is false? We can build upon our `if` statement and add an
-`else` statement.
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=13&lesson=3&section=8" target="_blank">Exercise: Correlations in Electricity Usage</a>**
 
-<img src="/images/matlab-img13.png" style="height:50%;width:50%"></img>
+### Polynomial Fitting
 
-Let's modify our script so that if `A` is NOT positive, we give `B` a value of `-99`.
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=13&lesson=4&section=4" target="_blank">Exercise: Fit a Line</a>**
 
-```
-clear
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=13&lesson=4&section=6" target="_blank">Exercise: Fit a Polynomial to Electricity Usage</a>**
 
-A = 1;
 
-if A > 0
-    B = 3;
-else
-    B = -99;
-end
-```
+## Programming Constructs
 
-Try running the script using different values for `A`. Check your workspace to see how the
-value of `B` changes.
+### User Interaction
 
-####   [Matlab academy: Using if-else](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=14&lesson=3&section=4)
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=14&lesson=2&section=2" target="_blank">Exercise: Gathering Input</a>**
 
-### `if`-`elseif`-`else` statement
+**<a href="https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=14&lesson=2&section=6" target="_blank">Exercise: Dialog Box Output</a>**
 
-What if there is code we want to run if an alternative condition is met? We can continue to
-build upon a our current decision tree and add an `elseif` statement.
+### Decision Branching
 
-<img src="/images/matlab-img14.png" style="height:50%;width:50%"></img>
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe#chapter=14&lesson=3&section=4" target="_blank">Exercise: Using if-else</a>**
 
-Let's modify our script so that if `A` equals `0`, `B` will be assigned a value of `0`.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe#chapter=14&lesson=3&section=6" target="_blank">Exercise: Using if-elseif-else</a>**
 
-```
-clear
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe#chapter=14&lesson=3&section=10" target="_blank">Exercise: Using switch-case</a>**
 
-A = 1;
+### Determining Size
 
-if A > 0
-    B = 3;
-elseif A == 0
-    B = 0;
-else
-    B = -99;
-end
-```
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe#chapter=14&lesson=4&section=2" target="_blank">Exercise: Using size and numel</a>**
 
-Try running the script again using different values for `A`. Check your workspace to see how the
-value of `B` changes.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe#chapter=14&lesson=4&section=3" target="_blank">Exercise: Using length</a>**
 
-####   [Matlab academy: Using if-elseif-else](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=14&lesson=3&section=6)
+### For Loops
 
-## <a name="for-loops">13. For Loops</a>
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe#chapter=14&lesson=5&section=6" target="_blank">Exercise: Looping Through a Vector</a>**
 
-Suppose we have some code that we want to execute using a bunch of different values. Rather
-than writing out extremely similar blocks of code for each of these different values, we
-can write a single block of code and use a `for` loop to **iterate** over the different input
-values.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe#chapter=14&lesson=5&section=7" target="_blank">Exercise: Finding the Fibonacci Sequence</a>**
 
-<img src="/images/matlab-img15.png" style="height:50%;width:50%"></img>
+### While Loops
 
-Let's start with a simple example of where a `for` loop could come in handy. Let's create
-a script that will display all the values of the vector `x` (at indices `1`, `2`, `3`, and `4`).
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe#chapter=14&lesson=6&section=6" target="_blank">Exercise: Using a While Loop</a>**
 
-```
-clear
-clc
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe#chapter=14&lesson=6&section=7" target="_blank">Exercise: Finding eps</a>**
 
-x = 10:10:40;
 
+## Increasing Automation with Functions
 
-disp(x(1))
-disp(x(2))
-disp(x(3))
-disp(x(4))
-```
+### Creating and Calling Functions
 
-This code isn't too tedious to write because `x` only has four elements--but what if `x` contained
-100 values? That would be a lot of lines of code. We can use the `for` loop so that we only
-have to write the `disp` command once, but still have it execute for each of the indices.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe#chapter=15&lesson=2&section=4" target="_blank">Exercise: Create and Call a Function</a>**
 
-```
-clear
-clc
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe#chapter=15&lesson=2&section=5" target="_blank">Exercise: Electricity Usage Analysis Function</a>**
 
-x = 10:10:40;
+### Function Files
 
-for idx = 1:4
-    disp(x(idx))
-end
-```
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe#chapter=15&lesson=3&section=5" target="_blank">Exercise: Compare Using a Tolerance</a>**
 
-What if we didn't know how many elements are in `x`? What would we use as the last index
-in our iterator? We could use the `length` or `numel` functions, which tell us how many
-elements are in a vector.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe#chapter=15&lesson=3&section=6" target="_blank">Exercise: Custom Statistics</a>**
 
-```
-clear
-clc
+### Function Workspaces
 
-x = 2:2:30;
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe#chapter=15&lesson=4&section=4" target="_blank">Quiz: Function workspaces</a>**
 
-for idx = 1:length(x)
-    disp(x(idx))
-end
-```
-####   [Matlab academy: Using length](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=14&lesson=4&section=3)
-####   [Matlab academy: Looping Through a Vector](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=14&lesson=5&section=6)
 
-## <a name="while-loops">14. While Loops</a>
+### MATLAB Path and Calling Precedence
 
-**While loops** are combine the conditionals of `if` statements with the iterativeness of
-`for` loops. Code within `while` loops is executed until a condition is no longer met.
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe#chapter=15&lesson=5&section=7" target="_blank">Exercise: MATLAB Calling Precedence</a>**
 
-<img src="/images/matlab-img16.png" style="height:50%;width:50%"></img>
 
-Let's create a while loop that will continue to add 1 to the variable `x` until `x` is greater
-than or equal to `10`. Let's also display the value of `x` during each iteration of the `for` loop.
+## Troubleshooting Code
 
-```
-clear
-clc
+### Code Analyzer
 
-x = 0;
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe#chapter=16&lesson=2&section=4" target="_blank">Exercise: Remove Code Analyzer Warnings</a>**
 
-while x < 10
-    disp(x)
-    x = x + 1;
-end
-```
 
-When we run this script, the values 0 through 9 are displayed in our command window. 10 is
-not printed to the command window because the `while` loop stops when `x` is no longer less
-than 10.
+### Debugging Run-Time Errors
 
-What if we forgot to add `1` to `x` during each iteration of the `while` loop?
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe#chapter=16&lesson=3&section=3" target="_blank">Quiz: Matrix Indexing with Vectors</a>**
 
-```
-clear
-clc
 
-x = 0;
+## Additional Resources
 
-while x < 10
-    disp(x)
-end
-```
-
-If we don't add anything to `x`, its value remains `0`. `0` is always less than `10`, so
-`while` loop would run forever!
-
-If you ever encounter an infinite loop, you can press **Ctrl + C** on your keyboard to stop
-it. In fact, you can use **Ctrl + C** to stop the execution of any code--not just `while` loops!
-
-####   [Matlab academy: Using a While Loop](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=14&lesson=6&section=6)
-####   [Matlab academy: Finding eps](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=14&lesson=6&section=7)
-
-## <a name="review-project-2">Review Project 2</a>
-
-### The Price is Right!
-
-Let's do an exercise to practice using common programming constructs. The solution script to
-this problem can be downloaded [here](/files/matlab_fundamentals_rp2.m).
-
-Let's create a simple "Price is Right" game.
-
-> Gameplay
-> 1. MATLAB will randomly generate an integer between 1 and 100. This value will be the
-`price`.
-
-2. MATLAB will ask the user to `guess` the value of `price`. **Hint**: use the `input` function to
-assign an interactive user value to a variable.
-
-3. The game will continue until the user's `guess` matches the `price`.
-
-4. If the user's `guess` is lower than the `price`, display a message saying "Too low!" **Hint**:
-You can use the `disp` function to display strings (words or numbers within single quotes `''`).
-
-5. If the user's `guess` is higher than the `price`, display a message saying "Too high!"
-
-6. If the user's `guess` matches the `price`, display a message saying "You win!"
-
-
-## <a name="writing-functions">15. Writing Functions</a>
-
-Suppose there are several functions or lines of code that we want to run repeatedly but with
-different inputs? We could have a script in which we edit the input variable every time we
-want to run it, but opening, modifying, and saving the script can be time-consuming--especially
-for more complex code.
-
-Functions are tools we can use to take input(s), execute code, and produce output(s). When we
-create a function, this is referred to as **defining** the function. If we use a function, this is
-referred to as **calling** the function.
-
-<img src="/images/matlab-img17.png" style="height:50%;width:50%"></img>
-
-### Defining a Function
-
-Let's try defining our own function. This function will take an input vector and output the
-mean, median, and mode.
-
-First let's start by creating a new script. The only code in this script will be the code
-defining our function.
-
-We will start off by defining our function and its name. We will call this function `avgCalc`.
-
-```
-function avgCalc
-```
-
-The input to `avgCalc` is a vector. We will call this vector `myVec`.
-
-```
-function avgCalc(myVec)
-```
-
-Now let's define our desired outputs. We will call them `myMean`, `myMedian`, and `myMode`.
-
-```
-function [myMean, myMedian, myMode] = avgCalc(myVec)
-```
-
-Let's save our function so far to a file. Like scripts, MATLAB function files have a .m
-extension. **IMPORTANT: function files must have the same name as the function they define!**
-We will save our function as `avgCalc.m`.
-
-Now we will add the code we want `avgCalc` to execute. We want the function to calculate the
-three different types of averages for our input vector `myVec`.
-
-```
-function [myMean, myMedian, myMode] = avgCalc(myVec)
-
-    myMean = mean(myVec);
-    myMedian = median(myVec);
-    myMode = mode(myVec);
-```
-Once you've added these lines, go ahead and save the changes to your function.
-
-
-### Calling a Function
-
-Now let's try calling our function to quickly calculate these averages for a variety of vectors.
-We can call our function in the command line or in a script.
-
-Let's open a new script and create a bunch of vectors of varying sizes containing different values.
-
-```
-clear
-clc
-
-x = rand(10,1);
-y = randi(100, 20, 1);
-z = zeros(50,1);
-```
-
-Now let's use `avgCalc` to calculate the mean, median, and mode for each of them. When we
-call our function, we replace the names of the function's input and output variables
-with the variable names we actually want to use.
-
-
-```
-clear
-clc
-
-x = rand(10,1);
-y = randi(100, 20, 1);
-z = zeros(50,1);
-
-[x_mean, x_median, x_mode] = avgCalc(x);
-[y_mean, y_median, y_mode] = avgCalc(y);
-[z_mean, z_median, z_mode] = avgCalc(z);
-```
-
-What would have taken 9 lines of code to write (3 average calculations for each of the 3
-vectors) is now reduced to 3 lines of code!
-
-####   [Matlab academy: Create and Call a Function](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=15&lesson=2&section=4)
-####   [Matlab academy: Compare Using a Tolerance](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=15&lesson=3&section=5)
-
-## <a name="troubleshooting-errors">16. Troubleshooting Errors</a>
-
-Oftentimes we accidentally include a typo, or bug, in our code that causes our code to break.
-When we try to run buggy code, MATLAB will print an error to the command window.
-
-<img src="/images/matlab-img18.png" style="height:50%;width:50%"></img>
-
-Never fear! Error messages are our friends--they can help us find our mistake. Error messages
-can sometimes tell us the exact line where our error lies, and they can also sometimes tell us how
-to fix it. However, if you are unsure of what your error message is telling you, you can typically post
-questions about it to discussion forums such as [MATLAB Central](https://www.mathworks.com/matlabcentral/) or
-[Stack Overflow](https://stackoverflow.com/questions/tagged/matlab) and receive an answer within a few
-hours. Sometimes you don't even have to post your question--a lot of times someone has asked it
-before and you can find the answer just by entering your error message in a search engine!
-
-The MATLAB Editor is very intelligent and can detect common bugs such as unmatched brackets
-or parentheses in your code before you even run it. Buggy lines in your script will be marked
-with a red line in the side bar. When you hover your mouse pointer over that red line, a pop-up
-window will appear containing more information about your error.
-
-<img src="/images/matlab-img19.png" style="height:50%;width:50%"></img>
-
-####   [Matlab academy: Using Code Analyzer](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=16&lesson=2&section=2)
-####   [Matlab academy: Debugging Run-Time Errors](https://matlabacademy.mathworks.com/R2019a/portal.html?course=mlbe#chapter=16&lesson=3&section=2)
-## <a name="more-practice">More Practice</a>
-
-All of this tutorial's lessons were drawn from the MATLAB Fundamentals Course available on the
-[MATLAB academy](https://matlabacademy.mathworks.com/) website. This course typically takes
-3 days to complete and contains much more material and provides more exercises than this
-tutorial. Feel free to learn and practice more of the topics that apply to you, and UVaRC
-will be here to help!
+**<a href="https://matlabacademy.mathworks.com/R2019b/portal.html?course=mlbe#chapter=18&lesson=1&section=1" target="_blank">Resources available through the MathWorks</a>**
