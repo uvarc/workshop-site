@@ -28,7 +28,7 @@ MATLAB is an integrated technical computing environment from the MathWorks that 
 
 During this hands-on workshop, you will be introduced to parallel and distributed computing in MATLAB for speeding up your application and offloading work.  By working through common scenarios and workflows, you will gain an understanding of the parallel constructs in MATLAB, their capabilities, and some of the typical issues that arise when using them.
 
-Workshop examples will vary in difficulty, starting from simple parallel usage concepts to more advanced techniques.  Attendees will be able to ask questions and receive feedback regarding workshop exercises.  Users will also have the opportunity to run MATLAB code on the cluster, if one is available and accessible.  After the session, one on one sessions can be held, if scheduled ahead of time.
+Workshop examples will vary in difficulty, starting from simple parallel usage concepts to more advanced techniques.  Attendees will be able to ask questions and receive feedback regarding workshop exercises.  Users will also have the opportunity to run MATLAB code on the Rivanna cluster if they have login accounts.
 
 Highlights include:
 
