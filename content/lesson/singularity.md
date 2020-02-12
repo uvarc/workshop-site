@@ -32,7 +32,22 @@ It is designed for **HPC environments**:
 - Easily makes use of GPUs, high speed networks, parallel filesystems on a cluster or server by default
 - Able to convert Docker images into Singularity
 
+## How do containers work?
+
+![Docker-vs-VM](https://www.docker.com/sites/default/files/d8/2018-11/docker-containerized-and-vm-transparent-bg.png)
+
+(Taken from <cite>["What is a Container?"](https://www.docker.com/resources/what-container)</cite> by Docker)
+
+A container:
+
+- shares the OS kernel of the host
+- virtualizes the OS instead of hardware
+- has much less overhead and faster deployment than a VM
+
 ---
+
+<br>
+
 # Rivanna Crash Course
 It is assumed that participants of this workshop:
 
@@ -50,6 +65,21 @@ See [here](https://www.rc.virginia.edu/userinfo/rivanna/login/) for more informa
 
 ## Commands
 
+### Quota
+
+Please make sure you have a few GB of disk space.
+
+```
+$ hdquota
+Type             Location         Name                   Size Used Avail Use%
+===============================================================================
+home             /home            rs7wz                   50G   45G  5.7G  89%
+
+Location        Age_Limit(Days)       Disk_Limit(GB)         Use(GB)             File_Limit          Use
+=============================================================================================================
+/scratch/rs7wz         90                  10240                529                 350000          122383
+```
+
 ### SLURM allocation
 For workshop allocations, use **rivanna-training**.
 
@@ -61,7 +91,7 @@ Allocations available to Ruoshi_Sun (rs7wz):
  * arcs_admin: less than 500 service-units remaining
  * ds5559: less than 25,000 service-units remaining
  * hpc_build: less than 203,417 service-units remaining
- * rivanna-training: less than 10,000 service-units remaining
+ * rivanna-training: less than 20,000 service-units remaining
 ```
 
 ### Module
@@ -87,10 +117,10 @@ Earlier versions will be decommissioned, so please use Singularity **version 3.5
 $ module load singularity/3.5.2
 $ module avail
 
---------------------------- /apps/modulefiles/standard/container/singularity/3.5.2 ---------------------------
-   cellprofiler/2.2.0        danpos/2.2.2       patric/1.026              tensorflow/2.0.0-py36 (D)
-   cellprofiler/3.1.8 (D)    hydrator/0.0.2     tensorflow/1.12.0-py27
-   cp-analyst/2.2.1          inkscape/0.92.3    tensorflow/1.12.0-py36
+------------------------ /apps/modulefiles/standard/container/singularity/3.5.2 -------------------------
+   caffe2/0.8.0              cp-analyst/2.2.1    inkscape/0.92.3           tensorflow/1.12.0-py36
+   cellprofiler/2.2.0        danpos/2.2.2        patric/1.026              tensorflow/2.0.0-py36
+   cellprofiler/3.1.8 (D)    hydrator/0.0.2      tensorflow/1.12.0-py27    tensorflow/2.1.0-py37  (D)
 ```
 
 The above modules can now be loaded. For example:
@@ -104,6 +134,9 @@ singularity run --nv /home/$USER/tensorflow-2.0.0-py36.sif
 ```
 
 ---
+
+<br>
+
 # Singularity Overview
 
 ### Create
@@ -123,12 +156,12 @@ singularity run --nv /home/$USER/tensorflow-2.0.0-py36.sif
 
 <br>
 
-# Hands-On 1: Create and run image from Container Library
+# Hands-On 1: Create and run image from Singularity Library
 ---
 *Objectives:*
 
 - URIs supported by Singularity and syntax
-- Pull an image from Container Library
+- Pull an image from Singularity Library
 - Verify, inspect, and run an image
 
 ---
@@ -145,7 +178,7 @@ singularity build <SIF> <URI>
 
 | Repository | URI prefix |
 |------------|------------|
-| [Container Library](https://cloud.sylabs.io/library) | `library://` |
+| [Singularity Library](https://cloud.sylabs.io/library) | `library://` |
 | [Docker Hub](https://hub.docker.com) | `docker://` |
 | [Singularity Hub](https://singularity-hub.org) | `shub://` |
 
@@ -369,6 +402,8 @@ On Rivanna, the following host directories are accessible inside the container:
 Singularity bind mounts these directories at runtime. 
 Other directories inside the container are owned by `root` and you cannot modify them.
 
+<br>
+
 **Exercise:** Run `ls -l` for your home directory both inside and outside the container. Verify that you see the same results. To exit the container shell, type `exit`.
 
 <details><summary>Show command</summary>
@@ -383,13 +418,14 @@ $ ls /home/$USER              # or ls ~
 </p>
 </details>
 
+<br>
+
 **Exercise:** View the content of `/etc/os-release` both inside and outside the container. Are they the same or different? Why?
 
 <details><summary>Show command</summary>
 <p>
 ```
 $ singularity shell lolcow_latest.sif
-Singularity> cat /etc/os-release
 Singularity> cat /etc/os-release
 NAME="Ubuntu"
 VERSION="16.04.5 LTS (Xenial Xerus)"
@@ -403,6 +439,7 @@ BUG_REPORT_URL="http://bugs.launchpad.net/ubuntu/"
 VERSION_CODENAME=xenial
 UBUNTU_CODENAME=xenial
 Singularity> exit
+
 $ cat /etc/os-release
 NAME="CentOS Linux"
 VERSION="7 (Core)"
@@ -423,16 +460,19 @@ REDHAT_SUPPORT_PRODUCT_VERSION="7"
 </p>
 </details>
 
+<br>
+
 To bind mount additional directories/files from the host, use `--bind` or `-B`:
 
 ```
 $ singularity <run|shell|exec> -B <host_path>:<container_path> <SIF>
 ```
 
+<br>
+
 **Exercise:** Bind your scratch directory `/scratch/$USER` to `/scratch` and verify the contents.
 
 <details><summary>Show command</summary>
-<p>
 ```
 $ singularity shell -B /scratch/$USER:/scratch lolcow_latest.sif
 Singularity> ls /scratch
@@ -442,6 +482,8 @@ $ ls /scratch/$USER
 ```
 </p>
 </details>
+
+<br>
 
 To disable the default binding:
 ```
@@ -471,9 +513,7 @@ $ singularity exec <SIF> <COMMAND>
 **Exercise:** If you run `singularity exec lolcow_latest.sif cat /etc/os-release`, do you expect to see the host's OS info or the container's? Think for a moment before running this command. Did you guess correctly?
 
 <details><summary>Show explanation</summary>
-<p>
 Although you did not shell into the container explicitly, the command is still executed within the container, where it does not have access to the host `/etc` directory. Therefore, the `/etc/os-release` of the container is shown.
-</p>
 </details>
 
 ### What about running a group of commands?
@@ -483,6 +523,8 @@ You can gather a list of commands into a "script" and pass that to the container
 singularity exec <SIF> /bin/bash my_bash_script.sh
 singularity exec <SIF> python my_python_script.py
 ```
+
+<br>
 
 **Exercise:** The `fortune` command prints a random message. Here are two ways to run `fortune` 5 times via the container.
 
@@ -505,7 +547,6 @@ $ for i in {1..5}; do singularity exec lolcow_latest.sif fortune; done
 Which method is better? Check by using the `time` command to time the total duration. Can you explain why?
 
 <details><summary>Show command </summary>
-<p>
 ```
 $ time singularity exec lolcow_latest.sif my_bash_script.sh
 ...
@@ -521,7 +562,6 @@ real	0m0.804s
 user	0m0.263s
 sys	0m0.424s
 ```
-</p>
 </details>
 
 
@@ -565,14 +605,14 @@ From: ...        #
 ### Header
 
 - At the top of the def file
-- Sets the base OS
+- Sets the base OS or base container
 
-#### `Boostrap` (mandatory)
+#### `Bootstrap` (mandatory)
 This is the very first entry. It defines the bootstrap agent:
 
-- library
-- docker
-- shub
+- `library`
+- `docker`
+- `shub`
 - and [many more](https://sylabs.io/guides/3.5/user-guide/appendix.html#buildmodules)
 
 #### `From` (mandatory)
@@ -604,7 +644,7 @@ Installation commands. Example:
 
 ```
 %post
-    apt-get update && apt-get install lolcat
+    apt-get update && apt-get -y install lolcat
 ```
 
 #### `%environment`
@@ -691,10 +731,10 @@ First let's load singularity and tensorflow:
 $ module load singularity/3.5.2
 $ module avail
 
---------------------------- /apps/modulefiles/standard/container/singularity/3.5.2 ---------------------------
-   cellprofiler/2.2.0        danpos/2.2.2       patric/1.026              tensorflow/2.0.0-py36 (D)
-   cellprofiler/3.1.8 (D)    hydrator/0.0.2     tensorflow/1.12.0-py27
-   cp-analyst/2.2.1          inkscape/0.92.3    tensorflow/1.12.0-py36
+------------------------ /apps/modulefiles/standard/container/singularity/3.5.2 -------------------------
+   caffe2/0.8.0              cp-analyst/2.2.1    inkscape/0.92.3           tensorflow/1.12.0-py36
+   cellprofiler/2.2.0        danpos/2.2.2        patric/1.026              tensorflow/2.0.0-py36
+   cellprofiler/3.1.8 (D)    hydrator/0.0.2      tensorflow/1.12.0-py27    tensorflow/2.1.0-py37  (D)
 
 $ module load tensorflow/2.0.0-py36 
 Before using this container for the FIRST time, copy it to your personal home (or /scratch) directory using this command:
@@ -719,25 +759,20 @@ $ ls -l ~/tensorflow-2.0.0-py36.sif
 3. Is Numpy available in the container? What command would you run to get its version?
 
 <details><summary>Show command 1</summary>
-<p>
 ```
 $ singularity inspect --runscript tensorflow-2.0.0-py36.sif
 $ singularity run-help tensorflow-2.0.0-py36.sif
 ```
-</p>
 </details>
 
 <details><summary>Show command 2</summary>
-<p>
 ```
 $ singularity exec tensorflow-2.0.0-py36.sif python -V
 $ python -V
 ```
-</p>
 </details>
 
 <details><summary>Show command 3</summary>
-<p>
 Method 1 (interactive):
 ```
 $ singularity shell tensorflow-2.0.0-py36.sif
@@ -756,7 +791,6 @@ Method 2:
 $ singularity exec tensorflow-2.0.0-py36.sif pip list|grep numpy
 numpy                1.17.2
 ```
-</p>
 </details>
 
 ### SLURM 
@@ -781,7 +815,7 @@ $ cp /share/resources/tutorials/singularity_ws/tensorflow-2.0.0.slurm ~
 module purge                          # start with clean environment
 module load singularity/3.5.2
 
-singularity exec --nv tensorflow-2.0.0-py36.simg python tf2test.py
+singularity exec --nv tensorflow-2.0.0-py36.sif python tf2test.py
 ```
 
 Copy the Python script to your home directory:
@@ -794,6 +828,7 @@ $ cp /share/resources/tutorials/singularity_ws/tf2test.py ~
 
 import tensorflow as tf
 
+print(tf.test.is_gpu_available())
 output = tf.constant('Testing Tensorflow')
 print (output)
 ```
@@ -813,13 +848,13 @@ $ squeue -u $USER
 
 `tftest-<JOBID>.out`:
 ```
+True
 tf.Tensor(b'Testing Tensorflow', shape=(), dtype=string)
 ```
 
 `tftest-<JOBID>.err`:
 
 <details><summary>Show content</summary>
-<p>
 ```
 2020-01-27 10:34:02.517153: I tensorflow/stream_executor/platform/default/dso_loader.cc:44] Successfully opened dynamic library libcuda.so.1
 2020-01-27 10:34:02.603723: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1618] Found device 0 with properties:
@@ -856,7 +891,6 @@ pciBusID: 0000:89:00.0
 2020-01-27 10:34:04.349501: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1178] 0:   N
 2020-01-27 10:34:04.353349: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1304] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 10794 MB memory) -> physical GPU (device: 0, name: Tesla K80, pci bus id: 0000:89:00.0, compute capability: 3.7)
 ```
-</p>
 </details>
 
 (Demo: Go over definition file for this container)
@@ -877,7 +911,7 @@ pciBusID: 0000:89:00.0
 - [Singularity User Guide](https://sylabs.io/guides/3.5/user-guide)
 - [Comparison between Singularity and Docker] (https://sylabs.io/guides/3.5/user-guide/singularity_and_docker.html)
 - Container repositories:
-    - [Container Library](https://cloud.sylabs.io/library)
+    - [Singularity Library](https://cloud.sylabs.io/library)
     - [Docker Hub](https://hub.docker.com)
     - [Singularity Hub](https://singularity-hub.org)
 - [SLURM on Rivanna](https://www.rc.virginia.edu/userinfo/rivanna/slurm/)
