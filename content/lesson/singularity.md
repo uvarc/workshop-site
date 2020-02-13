@@ -536,7 +536,7 @@ singularity exec <SIF> python my_python_script.py
 
 Method 1: Put the for loop within the script executed by the container.
 ```
-$ singularity exec lolcow_latest.sif my_bash_script.sh
+$ singularity exec lolcow_latest.sif /bin/bash my_bash_script.sh
 ```
 ```
 #!/bin/bash
@@ -659,7 +659,7 @@ Define environment variables (set at runtime). Not available at build time. Exam
 
 ```
 %environment
-    LC_ALL=C
+    export LC_ALL=C
 ```
 
 #### `%runscript`
