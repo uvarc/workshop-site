@@ -16,6 +16,8 @@ toc: true
 
 A container bundles an **application**, the **libraries** and other **executables** that are needed, and even the **data** used with the application, into a *portable*, *self-contained* file called **image**.
 
+<br>
+
 ## Why use software containers?
 #### **Simple**
 Containers simplify software installation and management.
@@ -24,6 +26,8 @@ You can build an image on one machine and run it on another.
 #### **Reproducible** 
 Versioning and freezing of containers enable data reproducibility.
 
+<br>
+
 ## Why use Singularity?
 It is designed for **HPC environments**:
 
@@ -31,6 +35,8 @@ It is designed for **HPC environments**:
 - Interoperates well with HPC resource managers in multi-node environments
 - Easily makes use of GPUs, high speed networks, parallel filesystems on a cluster or server by default
 - Able to convert Docker images into Singularity
+
+<br>
 
 ## How do containers work?
 
@@ -894,6 +900,38 @@ pciBusID: 0000:89:00.0
 </details>
 
 (Demo: Go over definition file for this container)
+
+<br>
+
+# Advanced Topics
+
+### Sandbox
+
+- Create and use a writable directory
+- Useful for debugging definition file
+
+```
+singularity build --sandbox <directory> <URI/DEF>
+singularity shell --writable <directory>
+```
+
+### Add environment variables in `%post` section
+
+```
+%post
+    <some step that determines x>  # cannot determine x before build
+    echo 'export VARIABLE_NAME=x' >>$SINGULARITY_ENVIRONMENT
+```
+
+### Remote
+
+- Host your own repository
+- Push image to repository
+- Remote build
+
+See [here](https://sylabs.io/guides/3.5/user-guide/endpoint.html)
+
+<br>
 
 **Congratulations - you have completed this workshop!**
 
