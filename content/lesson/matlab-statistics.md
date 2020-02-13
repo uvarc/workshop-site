@@ -163,6 +163,9 @@ This workshop provides hands-on experience for performing statistical data analy
 <img src="/images/additionalRes1.png" style="height:100%;width:100%"></img>
 
 <br/>
+**<a href="https://www.mathworks.com/matlabcentral/" target="_blank"><u>MATLAB Central</u></a>** &nbsp; &nbsp; **<a href="https://www.mathworks.com/support.html" target="_blank"> <strong><font size="3"> <u>MathWorks Support</u><font/> </strong> </a>** 
+
+<br/>
 
 ## Exercises
 
