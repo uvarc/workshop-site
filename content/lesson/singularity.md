@@ -903,7 +903,7 @@ pciBusID: 0000:89:00.0
 
 <br>
 
-# Advanced Topics
+# Other Features
 
 ### Sandbox
 
