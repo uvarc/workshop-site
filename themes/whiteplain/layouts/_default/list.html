@@ -38,7 +38,12 @@
         </td>
         <td>
           <h5>
-          <i class="fas fa-clock "> </i><em>  {{ .ReadingTime }} MIN READ</em>
+          <i class="fas fa-clock "> </i><em>
+            {{ if isset .Params "readingtime" }}
+              {{ .Params.ReadingTime }} MIN READ</em>
+            {{ else }}
+              {{ .ReadingTime }} MIN READ</em>
+            {{ end }}
           </h5>
         </td>
       </tr>
