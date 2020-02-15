@@ -8,8 +8,15 @@ url: /about/
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-<!-- <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-</p> -->
+<p class="lead">
+Research Computing is a support team at the University of Virginia whose mission is to empower researchers to achieve more through the use of cutting-edge computational resources. We strive to create innovative solutions for researchers who need help solving complex optimization, parallelization, workflow, and data analysis issues. Our strategy is to build and maintain the University's best computing platforms while educating the next generation of researchers on the power and utility of advanced computing.
+</p>
+
+- [UVA Research Computing - Main Website](https://rc.virginia.edu/)
+- [More UVARC Training Opportunities](https://www.rc.virginia.edu/education/workshops/)
+- [UVARC Discourse - Post your questions](https://discuss.rc.virginia.edu/)
+- [UVARC on GitHub](https://github.com/uvarc/)
+- [UVARC on Docker Hub](https://hub.docker.com/orgs/uvarc/repositories)
 
 --- 
 
