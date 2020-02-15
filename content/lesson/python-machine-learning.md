@@ -6,7 +6,7 @@ categories = [
   "workshop",
   "Python Programming"
 ]
-date = "2019-10-18T08:37:46-05:00"
+date = "2020-02-14T08:37:46-05:00"
 tags = [
   "lang",
 ]
@@ -15,10 +15,8 @@ shorttitle = "Machine Learning with Python"
 title = "Machine Learning with Python"
 description = "Machine Learning with Python Workshop"
 author = "J. Huband"
+readingtime = 30
 +++
-
-
-
 
 
 <img style="float: left;" src="/images/Images/Slide1.JPG"></img>
