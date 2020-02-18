@@ -5,7 +5,6 @@ images = [
 ]
 categories = [
   "HPC",
-  "software",
   "workshop",
   "MATLAB Programming"
 ]

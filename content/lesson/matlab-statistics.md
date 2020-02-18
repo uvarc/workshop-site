@@ -5,9 +5,8 @@ images = [
 ]
 categories = [
   "HPC",
-  "software",
   "workshop",
-  "MATLAB Statistics"
+  "MATLAB Programming"
 ]
 date = "2019-06-23T08:37:46-05:00"
 tags = [

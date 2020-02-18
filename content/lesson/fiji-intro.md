@@ -22,10 +22,10 @@ as well as identification and analysis of image objects of interest using segmen
 Fiji is available on Windows, Mac, and Linux platforms and can be downloaded directly
 from the Fiji website: [https://fiji.sc/](https://fiji.sc/). Fiji is a portable application,
 meaning it doesn't require an installer. To use Fiji, simply download and unzip the application,
-and then you are able to start running it.
+and then you are able to start it.
 
-* **MacOS X:** The Fiji application should be installed in the the user’s home directory rather than the default Applications folder.
-* **Windows 7 & 10:** The Fiji application should be installed in the the user’s home directory rather than the default C:\Program Files directory.
+* **MacOS X:** The Fiji application should be installed in the user’s home directory rather than the default Applications folder.
+* **Windows 7 & 10:** The Fiji application should be installed in the user’s home directory rather than the default C:\Program Files directory.
 * **Linux:** The Fiji application should be installed in a directory where the user has read, execution, and write permissions, e.g. the user’s home directory.
 
 ### Download Example Files {#example-files}

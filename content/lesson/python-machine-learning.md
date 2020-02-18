@@ -2,7 +2,6 @@
 type = "rivanna"
 categories = [
   "HPC",
-  "software",
   "workshop",
   "Python Programming"
 ]

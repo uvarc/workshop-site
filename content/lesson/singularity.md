@@ -2,7 +2,7 @@
 title: "Software Containers for HPC Environments"
 author: "Ruoshi Sun"
 # date: 2020-01-22T00:00:00-05:00
-categories: ["Advanced Research Computing"]
+categories: ["Software Containers", "HPC"]
 toc: true
 ---
 

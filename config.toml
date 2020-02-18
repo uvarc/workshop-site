@@ -1,5 +1,5 @@
 baseurl = "https://workshops.rc.virginia.edu/"
-title = "Research Computing Workshops"
+title = "Research Computing Workshops & Tutorials"
 theme = "whiteplain"
 languageCode = "en"
 # Disqus shortname

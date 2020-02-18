@@ -2,7 +2,7 @@
 title: Bioinformatics in a High-Performance Computing Environment
 author: "Karsten Siller"
 Weight: 1
-categories: ["Bioinformatics"]
+categories: ["Bioinformatics", "HPC"]
 toc: true
 ---
 

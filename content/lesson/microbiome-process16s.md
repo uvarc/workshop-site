@@ -1,7 +1,7 @@
 ---
 title: "Microbiome: Process 16S rRNA Amplicons"
 author: "Hardik I Parikh"
-categories: ["Bioinformatics"]
+categories: ["Bioinformatics", "HPC"]
 ---
 
 This tutorial outlines a *traditional* de-novo OTU clustering (@ 97% seq identity) for analyzing 16S rRNA sequencing data. We will cover the following:

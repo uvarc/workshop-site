@@ -2,7 +2,7 @@
 title: "Introduction to Containers"
 author: "Neal Magee"
 # date: 2015-07-23T21:13:14-05:00
-categories: ["Advanced Research Computing"]
+categories: ["Software Containers"]
 toc: true
 ---
 

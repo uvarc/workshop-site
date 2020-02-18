@@ -1,7 +1,7 @@
 ---
 title: "WDL-Cromwell on Rivanna"
 author: "Hardik I Parikh"
-categories: ["Bioinformatics"]
+categories: ["Bioinformatics", "HPC"]
 ---
 
 > **WDL** (pronounced *widdle*) is a workflow description language to define tasks and workflows. WDL aims to describe tasks with abstract commands that have inputs, and once defined, allows you to wire them together to form complex workflows.  

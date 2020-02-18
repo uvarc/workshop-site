@@ -1,7 +1,7 @@
 ---
 title: "Next-Gen Sequence Alignment"
 author: "Hardik I Parikh"
-categories: ["Bioinformatics"]
+categories: ["Bioinformatics", "HPC"]
 toc: true
 ---
 

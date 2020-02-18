@@ -5,10 +5,8 @@ images = [
 ]
 categories = [
   "HPC",
-  "software",
   "workshop",
-  "MATLAB Parallel Programming",
-  "parallel"
+  "MATLAB Programming",
 ]
 date = "2019-06-23T08:37:46-05:00"
 tags = [
