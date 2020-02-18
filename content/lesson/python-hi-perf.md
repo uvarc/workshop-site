@@ -326,8 +326,6 @@ Open the `MonteCarloPi.py` script.
 import sys
 import random
 
-from numba import jit
-
 def pi(numPoints):
     """Throw a series of imaginary darts at an imaginary dartboard of unit
         radius and count how many land inside the circle."""
