@@ -10,7 +10,7 @@ pygmentsCodefences = true
 pygmentsUseClasses = true
 pygmentsOptions = "linenos=table"
 # Copyright notice. This is displayer in the footer.
-copyright = "&copy; Copyright 2020 UVA Research Computing"
+copyright = "&copy; Copyright 2020"
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_files$", "_cache$"]
 paginate = 50
 
