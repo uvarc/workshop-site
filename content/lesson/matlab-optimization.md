@@ -187,8 +187,6 @@ This workshop introduces applied optimization in the MATLAB environment, focusin
 **<a href="https://www.mathworks.com/help/gads/visualize-tune-patternsearch.html" target="_blank"><font size="3">Effects of Pattern Search Options<font/></a>**
 
 
-**<a href="https://www.mathworks.com/help/gads/visualize-tune-patternsearch.html" target="_blank"><font size="3">Optimize an ODE in Parallel<font/></a>**
-
 ### Genetic Algorithm
 
 **<a href="https://www.mathworks.com/help/gads/genetic-algorithm.html" target="_blank"><font size="3">Genetic Algorithm<font/></a>**
