@@ -222,10 +222,14 @@ This workshop introduces applied optimization in the MATLAB environment, focusin
 
 **<a href="https://www.mathworks.com/help/gads/compare-paretosearch-gamultiobj.html" target="_blank"><font size="3">Compare paretosearch and gamultiobj<font/></a>**
 
-### Parallel Computing and Optimization
 
-**<a href="https://www.mathworks.com/help/optim/parallel-optimization.html" target="_blank"><font size="3">Parallel Computing<font/></a>**
 
 ### Documentations and Resources
 
 **<a href="https://www.mathworks.com/products/global-optimization.html#resources" target="_blank"><font size="3">Additional Global Optimization Toolbox Resources<font/></a>**
+
+## Parallel Computing and Optimization
+
+**<a href="https://www.mathworks.com/help/optim/parallel-optimization.html" target="_blank"><font size="3">Parallel Computing<font/></a>**
+
+**<a href="https://www.rc.virginia.edu/userinfo/rivanna/software/matlab/" target="_blank"><font size="3">Matlab on Rivanna<font/></a>**
