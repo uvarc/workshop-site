@@ -103,11 +103,11 @@ The following code snippet can be used to implement profiling of the `fib_seq` f
 ```
 import cProfile,pstats
 
-cProfile.runctx("fib_seq", globals(), {'n':20}, "Profile.prof")
-s = pstats.Stats("Profile.prof") 
+cProfile.runctx("fib_seq", globals(), {'n':20}, "Profile.result")
+s = pstats.Stats("Profile.result") 
 s.strip_dirs().sort_stats("time").print_stats()
 ```
-Note the passing of `{'n':20}` to pass local arguments to the `fib_seq` function. The profiling stats are read from the `Profile.prof` file, the path information of the involved Python modules is removed, and the output is sorted by `time` values before it is printed.
+Note the passing of `{'n':20}` to pass local arguments to the `fib_seq` function. The profiling stats are read from the `Profile.result` file, the path information of the involved Python modules is removed, and the output is sorted by `time` values before it is printed.
 
 
 ### Timing
