@@ -95,9 +95,9 @@ You can use the `cProfile` and `pstats` modules in your script to profile specif
 ```
 import MyModule
 import cProfile
-cProfile.runctx("MyModule.myFunc()", globals(), locals(), "Profile.prof") 
+cProfile.runctx("MyModule.myFunc()", globals(), locals(), "Profile.result") 
 ```
-Here `globals()` defines a set of global variables to be set for the profiling run.  The `locals()` is a dictionary for arguments passed to the specific function to be profiled, i.e. `MyModule.myFunc`. The last argument, `Profile.prof`, defines the file that the profiling output is written to.
+Here `globals()` defines a set of global variables to be set for the profiling run.  The `locals()` is a dictionary for arguments passed to the specific function to be profiled, i.e. `MyModule.myFunc`. The last argument, `Profile.result`, defines the file that the profiling output is written to.
 
 The following code snippet can be used to implement profiling of the `fib_seq` function in the `fibonacci.py` script.
 ```
