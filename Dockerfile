@@ -26,7 +26,7 @@ RUN unzip awscli-bundle.zip
 RUN ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
 
 # get app code
-ADD https://github.com/uvasomrc/workshop-site/archive/master.zip workshop-site-master.zip
+ADD https://github.com/uvarc/workshop-site/archive/master.zip workshop-site-master.zip
 RUN unzip workshop-site-master
 
 # change into workshop site dir
