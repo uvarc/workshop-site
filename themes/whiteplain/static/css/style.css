@@ -606,3 +606,19 @@ content: '\f067';
 margin:0 5px 0 -15px;
 color: #f00;
 }
+
+/*
+.icon-prev,
+.icon-next {
+  height: 100px;
+  width: 100px;
+  outline: black;
+  background-size: 100%, 100%;
+  border-radius: 50%;
+  border: 1px solid black;
+  background-image: none;
+}*/
+
+@import url('//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css');
+@import url('http://twitter.github.com/bootstrap/assets/css/bootstrap-responsive.css');
+ 
