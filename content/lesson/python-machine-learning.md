@@ -16,6 +16,9 @@ author = "J. Huband"
 readingtime = 40
 +++
 
+{{% slide-carousel folder="/images/python-ml" ext=".JPG" %}}
+
+<!--
 <img style="float: left;" src="/images/Images/Slide1.JPG" />
 
 <img style="float: left;" src="/images/Images/Slide2.JPG" />
@@ -190,4 +193,4 @@ readingtime = 40
 
 <img style="float: left;" src="/images/Images/Slide89.JPG" />
 
----
+-->

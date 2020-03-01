@@ -1,7 +1,9 @@
+{{ $extension := .Get "ext" }}
 {{ $folder := .Get "folder" }}
 {{ $staticFolder := (delimit (slice "/static" $folder) "/")}}
 {{ $files := readDir  $staticFolder}}
 {{ $nofiles := len $files }}
+
 
 <head>
   <title>Bootstrap Example</title>
@@ -11,8 +13,8 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 
-<div class="container" style="margin-top:0px;margin-bottom:150px;">
-	<div id="carousel" class="carousel slide" style="margin-left:40px;margin-right:40px;margin-top:0px;margin-bottom:150px" data-interval=0 data-ride="carousel">
+<div class="container" style="margin-top:0px;margin-bottom:150;">
+	<div id="carousel" class="carousel slide" style="margin-bottom:150px" data-interval=0 data-ride="carousel">
 		<!-- Slide indicators -->
 		<ol class="carousel-indicators">
 			{{- range $index,$name := $files }}
@@ -24,47 +26,42 @@
 			{{- end }}
 		</ol>
 		<!-- Slides and controllers -->
-		<div class="carousel-inner" style="margin-left:0px;margin-right:0px" role="listbox">
+		<div class="carousel-inner" role="listbox">
 			{{- range $i,$name := $files }}
 				{{- $index := add $i 1}}
+				{{- $file:= ( printf "Slide%d%s" $index $extension ) }}
 				{{- if eq $i 0 }}
-					<div class="item active">
-						<div class="numbertext" style="margin-left:40px">Slide: {{ $index }} / {{ $nofiles }}</div>
-						<img class="center-block img-fluid" src="{{ $folder}}/Slide{{ $index }}.png" alt="Slide {{ $index }}">
-					</div>
-				{{- else }}
+					<div  class="item active">
+				{{- else }}	
 					<div  class="item">
-						<div class="numbertext" style="margin-left:40px">Slide: {{ $index }} / {{ $nofiles }}</div>
-						<img class="center-block img-fluid" src="{{ $folder}}/Slide{{ $index }}.png" alt="Slide {{ $index }}">
-					</div>
 				{{- end }}
+					<div class="numbertext">Slide {{ $index }} / {{ $nofiles }}</div>
+					<img class="center-block img-fluid" src="{{ $folder}}/{{ $file }}" alt="Slide {{ $index }}">
+				</div>
 			{{- end }}  
 		</div>
-		<a class="carousel-control left" style="width:40px;left:-40px;" href="#carousel" data-slide="prev">
-			<span class="icon-prev left" style="width:40px;" aria-hidden="true"></span>
+		<a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
+			<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
 			<span class="sr-only">Previous</span>
 		</a>
-		<a class="carousel-control right" style="width:40px;right:-40px;" href="#carousel" data-slide="next">
-			<span class="icon-next right"style="width:40px;" aria-hidden="true"></span>
+		<a class="right carousel-control" href="#carousel" role="button" data-slide="next">
+			<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
 			<span class="sr-only">Next</span>
 		</a>
 	</div>
 </div>
 
 <style>
-.icon-prev:after
-{
-	content: '<';
-	font-size: 50px;
-	color: #000;
-	text-align: left;
-}
+.carousel-inner > .item > img,
+.carousel-inner > .item > div,
+.carousel-inner > .item > a > img {
+    width: 85%;
+    margin: auto;
+  }
 
-.icon-next:after {
-	content: '>';
-	font-size: 50px;
-	color: #000;
-	text-align: right;
+.carousel-control {
+    width: 7.5%;
+    color: #000
 }
 
 .carousel-indicators li {
@@ -86,7 +83,7 @@
 }    
 
 .carousel-indicators {
-    bottom: -100px;
+    bottom: -150px;
 }
 </style>
 

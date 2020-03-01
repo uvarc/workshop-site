@@ -17,4 +17,4 @@ author = "Katherine Holcomb, Ruoshi Sun"
 +++
 
 
-{{% slide-carousel folder="/images/building-running-c-cpp-fortran" %}}
+{{% slide-carousel folder="/images/building-running-c-cpp-fortran" ext=".png" %}}
