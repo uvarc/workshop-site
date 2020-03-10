@@ -39,23 +39,7 @@ Run `hugo server` and access the webpage at [http://localhost:1313/](http://loca
 ```
 $ hugo server
 
-                   | EN
-+------------------+-----+
-  Pages            |  78
-  Paginator pages  |   0
-  Non-page files   |   0
-  Static files     | 673
-  Processed images |   0
-  Aliases          |  15
-  Sitemaps         |   1
-  Cleaned          |   0
-
-Total in 1396 ms
-Watching for changes in /Users/rs7wz/Documents/website/workshop-site/{archetypes,content,layouts,static,themes}
-Watching for config changes in /Users/rs7wz/Documents/website/workshop-site/config.toml
-Environment: "development"
-Serving pages from memory
-Running in Fast Render Mode. For full rebuilds on change: hugo server --disableFastRender
+(snip)
 Web Server is available at http://localhost:1313/ (bind address 127.0.0.1)
 ```
 
