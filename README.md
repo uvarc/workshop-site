@@ -29,23 +29,11 @@ Alternatively, if you're using the `hugo` command-line interface the following w
 
 ### Testing a new lesson locally
 
-Once you've written your content, you can test the new lesson using an environment that includes all of the site dependencies. 
-There are two ways to do this.
+Once you've written your content, you can test the new lesson. There are two ways to do this.
 
-#### 1. Hugo
+#### 1. Docker
 
-Run `hugo server` and access the webpage at [http://localhost:1313/](http://localhost:1313/). 
-
-```
-$ hugo server
-
-(snip)
-Web Server is available at http://localhost:1313/ (bind address 127.0.0.1)
-```
-
-#### 2. Docker
-
-The environment is available as a `Docker` image:
+We use this Docker image to render the full Rmarkdown within an environment that includes all of the site dependencies:
 
 <https://hub.docker.com/r/somrc/hugo-workshop-build/>
 
@@ -62,3 +50,16 @@ From the root the workshop site folder (wherever you've cloned the `Git` reposit
 `docker run -v $(pwd):/root/workshop-site -p 4321:4321 somrc/hugo-workshop-build /root/workshop-site/test-site.sh`
 
 If you open a web browser and navigate to `localhost:4321` you should see a built version of the site. Any changes you make to the site on your computer will trigger the site to attempt a rebuild and refresh automatically.
+
+#### 2. Hugo
+
+If you don't need the full Rmarkdown rendering, simply run `hugo server` and go to [http://localhost:1313/](http://localhost:1313/). 
+
+```
+$ hugo server
+
+(snip)
+Web Server is available at http://localhost:1313/ (bind address 127.0.0.1)
+```
+
+
