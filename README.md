@@ -1,8 +1,8 @@
 # SOMRC Workshops Site
 
-[![Build Status](https://travis-ci.org/uvasomrc/workshop-site.svg?branch=master)](https://travis-ci.org/uvasomrc/workshop-site)
+[![Build Status](https://travis-ci.org/uvarc/workshop-site.svg?branch=master)](https://travis-ci.org/uvarc/workshop-site)
 
-Serves teaching content for SOMRC workshops. Commits here will automatically publish to https://workshops.somrc.virginia.edu/ via TravisCI.
+Serves teaching content for SOMRC workshops. Commits here will automatically publish to https://workshops.rc.virginia.edu/ via TravisCI.
 Content can be written in either standard markdown, HTML, or Rmarkdown.
 
 More about workshop offerings can be found [here](https://www.rc.virginia.edu/education/workshops/).
@@ -15,7 +15,7 @@ The material hosted on this site is written in Markdown and R Markdown (see [les
 
 First, install `Git` and clone this repository:
 
-`git clone https://github.com/uvasomrc/workshop-site.git`
+`git clone https://github.com/uvarc/workshop-site.git`
 
 `cd workshop-site`
  
@@ -29,7 +29,39 @@ Alternatively, if you're using the `hugo` command-line interface the following w
 
 ### Testing a new lesson locally
 
-Once you've written your content, you can test the new lesson using an environment that includes all of the site dependencies. This environment is available as a `Docker` image:
+Once you've written your content, you can test the new lesson using an environment that includes all of the site dependencies. 
+There are two ways to do this.
+
+#### 1. Hugo
+
+Run `hugo server` and access the webpage at [http://localhost:1313/](http://localhost:1313/). 
+
+```
+$ hugo server
+
+                   | EN
++------------------+-----+
+  Pages            |  78
+  Paginator pages  |   0
+  Non-page files   |   0
+  Static files     | 673
+  Processed images |   0
+  Aliases          |  15
+  Sitemaps         |   1
+  Cleaned          |   0
+
+Total in 1396 ms
+Watching for changes in /Users/rs7wz/Documents/website/workshop-site/{archetypes,content,layouts,static,themes}
+Watching for config changes in /Users/rs7wz/Documents/website/workshop-site/config.toml
+Environment: "development"
+Serving pages from memory
+Running in Fast Render Mode. For full rebuilds on change: hugo server --disableFastRender
+Web Server is available at http://localhost:1313/ (bind address 127.0.0.1)
+```
+
+#### 2. Docker
+
+The environment is available as a `Docker` image:
 
 <https://hub.docker.com/r/somrc/hugo-workshop-build/>
 
