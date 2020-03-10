@@ -1,8 +1,8 @@
-# SOMRC Workshops Site
+# RC Workshops Site
 
 [![Build Status](https://travis-ci.org/uvarc/workshop-site.svg?branch=master)](https://travis-ci.org/uvarc/workshop-site)
 
-Serves teaching content for SOMRC workshops. Commits here will automatically publish to https://workshops.rc.virginia.edu/ via TravisCI.
+Serves teaching content for RC workshops. Commits here will automatically publish to https://workshops.rc.virginia.edu/ via TravisCI.
 Content can be written in either standard markdown, HTML, or Rmarkdown.
 
 More about workshop offerings can be found [here](https://www.rc.virginia.edu/education/workshops/).
