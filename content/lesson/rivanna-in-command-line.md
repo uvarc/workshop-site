@@ -15,4 +15,4 @@ description = "This workshop provides an introduction to the command-line interf
 author = "Gladys Andino"
 +++
 
-{{% slide-carousel folder="/images/UsingRivannaCommandLine-02302020" ext=".png" %}}
+{{< slide-carousel folder="/images/UsingRivannaCommandLine-02302020" ext=".png" >}}
