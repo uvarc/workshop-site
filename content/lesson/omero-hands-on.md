@@ -212,7 +212,7 @@ in image processing. The examples below show how you can use OMERO with Fiji and
 
 Fiji/ImageJ is open-source software for scientific image processing. OMERO can be installed as a plugin for easy image import and export.
 
-Examples of using OMERO with Fiji can be found in the online tutorial for [Fiji/ImageJ: Script Development for Image Processing](https://workshops.rc.virginia.edu/lesson/fiji-scripting/#image-management-with-omero).
+Examples of using OMERO with Fiji can be found in the online tutorial for [Image Processing with Fiji and Omero](https://workshops.rc.virginia.edu/lesson/fiji-omero).
 
 
 ## MATLAB
