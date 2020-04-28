@@ -45,17 +45,17 @@ For more details, review the [OMERO tutorial](/lesson/omero-hands-on) or visit t
 
 ---
 
-### Check your Omero Database Account
+### Check your OMERO Database Account
 
-1. If you are accessing the Omero Database from an off-Grounds location, you have to connect through a UVA Virtual Private Network (VPN).  Please follow these [instructions to set up your VPN](https://virginia.service-now.com/its?id=itsweb_kb_article&sys_id=f24e5cdfdb3acb804f32fb671d9619d0).
+1. If you are accessing the OMERO Database from an off-Grounds location, you have to connect through a UVA Virtual Private Network (VPN).  Please follow these [instructions to set up your VPN](https://virginia.service-now.com/its?id=itsweb_kb_article&sys_id=f24e5cdfdb3acb804f32fb671d9619d0).
 
-2. Open a webbrowser and go to http://omero.hpc.virginia.edu. Login to the OMERO web interface as described [here](/lesson/omero/#using-omero-web).
+2. Open a webbrowser and go to http://omero.hpc.virginia.edu. Login to the OMERO web interface is described [here](/lesson/omero/#using-omero-web).
 
     * **Username:** Your computing ID
     
     * **Password:** Your personal password
     
-If you are new to UVA's Omero Database, a temporary password had been emailed to you.  
+If you are new to UVA's OMERO Database, a temporary password had been emailed to you.  
 
 **Please change your temporary password when you log in for the first time to the Omero database server as described in these [instructions](https://www.rc.virginia.edu/userinfo/omero/overview/#changing-your-omero-database-password).** 
 
@@ -87,7 +87,7 @@ Let's create a new dataset in the workshop project.
 
 # Scripting
 
-## Getting the Basic OMERO dataset Info
+### Getting the Basic OMERO dataset Info
 
 OMERO organizes users in groups. Each user can be a member of multiple groups. Images are organized in Projects and Datasets, or in Screens and Plates. The following script, `Omero_Info.py`, connects a user to a remote OMERO instance and shows a list of:
 
@@ -255,11 +255,11 @@ show_as_table("Images - Group: %s" % current_group, image_ids, order=['Dataset I
 gateway.disconnect()
 ```
 
-## Saving Images to the OMERO database
+### Saving Images to the OMERO database
 
 Let's try to export an image from Fiji to OMERO.
 
-### Single Image
+#### Single Image
 
 1. Go back to Fiji and then to `File` > `Open Samples` > `Blobs`.
 
@@ -286,7 +286,7 @@ IJ.run(imp, "OMERO... ", "")
 
 4. Go to the OMERO website and refresh the page. Double click on your `xxx_workshop` dataset icon to expand it. You should see the blobs.gif image.
 
-### Multiple Images
+#### Multiple Images
 
 Scripting provides a convenient way to automatically export many images at once. For this exercise we utilize the output produced by the `Split_Stack.py` script.  We will take the `Simple_Batch` script as a template and modify it so that the create TIF image files are directly exported to OMERO instead of saving them to our local disk.
 
@@ -372,7 +372,7 @@ print "Done.\n"
 
 **Note: You can see datasets and images of other members in the `omero-demo` group, but you can only manipulate (e.g. delete) your own datasets and images.**
 
-## Retrieving Images from the OMERO database
+### Retrieving Images from the OMERO database
 
 After exporting images to OMERO, let's try to download images from the database.
 
@@ -416,7 +416,7 @@ command+="iid=%s]" % image_id
 IJ.runPlugIn("loci.plugins.LociImporter", command)
 ```
 
-## Local Batch Processing of an entire OMERO Dataset
+### Local Batch Processing of an OMERO Dataset
 
 The previous examples demonstrated how to export local images to OMERO, or how to import OMERO images to a local workstation. Let's explore how an entire dataset comprised of many images can be downloaded from the remote OMERO instance, processed locally with the processed images getting uploaded to the original dataset again.
 
