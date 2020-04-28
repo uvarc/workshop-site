@@ -16,13 +16,18 @@ to import images in the OMERO database, organize and tag images, and how to use 
 with third-party software such as Fiji/ImageJ, MATLAB, and Python.
 </p>
 
+<br>
+
+<br>
+{{< slide-carousel folder="/images/omero-overview" ext=".png" >}}
+
+
 # Overview
 
 This tutorial is part of the Research Computing workshop, "Imaging Data Management with OMERO".
 You can download the PowerPoint presentation from the workshop below, as well as the sample 
 dataset and scripts so you can follow along with the examples.
 
-[Workshop Slides](https://virginia.box.com/s/cbur1yx6ekfzn81g2s9oyhcw0jor0a5g)
 
 [Sample Dataset](https://virginia.box.com/s/bq292bli5a4z2xyaz2vqmgr0jjcp3dqq)
 
@@ -212,7 +217,7 @@ in image processing. The examples below show how you can use OMERO with Fiji and
 
 Fiji/ImageJ is open-source software for scientific image processing. OMERO can be installed as a plugin for easy image import and export.
 
-Examples of using OMERO with Fiji can be found in the online tutorial for [Image Processing with Fiji and Omero](https://workshops.rc.virginia.edu/lesson/fiji-omero).
+Examples of using OMERO with Fiji can be found in the online tutorial for [Image Processing with Fiji and Omero](/lesson/fiji-omero).
 
 
 ## MATLAB
