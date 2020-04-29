@@ -236,6 +236,93 @@ Before you begin, you need to know the dataset ID that the image should be linke
 
 # Scripting
 
+Fiji provides convenient programming wrappers for the Fiji/ImageJ and OMERO functions that allow you to develop your scripts in a variety of programming languages:
+
+* ImageJ macro language: simple, slow, not very versatile
+* Jython: Python syntax with a few limitations, easy to learn, very versatile
+* BeanShell: Syntax similar to Java, versatile
+* Several others…
+
+Fiji provides a richer programming environment than ImageJ and it is recommended to use Fiji instead of ImageJ for any script development.  Our [Script development for Image Processing](/lesson/fiji-scripting/) provides a more general introduction to this topic.
+
+**Example Scripts:**
+To follow along, you can download the Jython scripts presented in this tutorial through [this link](/scripts/fiji/fiji-example-scripts.zip).
+
+
+### The Script Editor {#script-editor-id}
+
+We'll be using the built-in **Script Editor** in Fiji to run our scripts.  To start the script editor in Fiji go to menu `File` > `New` > `Script…`.
+
+<img src=/images/fiji-script-editor.png width=700>
+
+* The top pane provides the editor. Multiple scripts can be open at the same time and will show up as separate tabs.
+* The bottom pane shows output (e.g. produced by print statements) and any errors encountered during script execution.
+
+**Script editor menus:**
+
++ **File:** 		Load, save scripts
++ **Edit:**		Similar to word processor functionality (Copy, Paste, etc.)
++ **Language:**	Choose language your script is written in with syntax highlighting
++ **Templates:**	Example scripts
++ **Tools:**		Access to source code of a class in the ImageJ/Fiji package
++ **Tabs:**		Navigation aid in script
+
+<br>
+
+### The Macro Recorder {#macro-recorder-id}
+The Macro Recorder logs all commands entered through the Fiji graphical user interface (GUI). It is useful to convert these GUI actions into script commands.
+
+
+* In the Fiji menu, go to `Plugins` > `Macros…` > `Record`.
++ In the `Record` drop-down menu, select `BeanShell`.
++ Clicking the `Create` button copies the code to a new script in the [Script Editor](#script-editor-id).
+
+<br>
+ 
+### The Console Window {#console-id}
+In the Fiji menu, go to `Window` > `Console`.
+
++ The Console window shows the output and logging information produced by running plugins and scripts.
+
+<br>
+
+---
+
+### Connecting to OMERO
+In order to get full access to OMERO's programming interface, we will now use a more advanced approach to establish an authenticated connection with the OMERO database.  We need to instances of three classes: `LoginCredientials`, `SimpleLogger`, and `Gateway`.  The central one for the configuration is `LoginCredentials` which has to be initialized with user specific credentials and database host information.
+
+Our script would not be very useful or secure if we had to hardcode these values. Fortunately we can use the [SciJava@Parameter][https://imagej.net/Script_Parameters] annotation to prompt the script user for the relevant information
+```
+#@ String (label="Omero User") username
+#@ String (label="Omero Password", style="password") password
+#@ String (label="Omero Server", value="omero.hpc.virginia.edu") server
+#@ Integer (label="Omero Port", value=4064) server_port
+```
+
+These four lines at the top of our scripts are sufficient to prompt the user for information that will be populated in the `username`, `password`, `server`, and `port` variables. With these variables in place, we can now establish a connection to the OMERO database server.
+
+```
+cred = LoginCredentials()
+if group_id != -1:
+    cred.setGroupID(group_id)
+cred.getServer().setHostname(server)
+cred.getServer().setPort(server_port)
+cred.getUser().setUsername(username)
+cred.getUser().setPassword(password)
+simpleLogger = SimpleLogger()
+gateway = Gateway(simpleLogger)
+e = gateway.connect(cred)
+```
+
+The return value of the `connect` method is stored as a boolean value in the variable `e`. If `e==True`, the connection was established; if `e==False`, the connection failed.  We can reuse these code blocks for all our OMERO scripts.
+
+It is very important to close the connection to the database at the end of your script, like this:
+```
+gateway.disconnect()
+```
+
+---
+
 ### Getting the Basic OMERO Dataset Info
 
 OMERO organizes users in groups. Each user can be a member of multiple groups. Images are organized in Projects and Datasets, or in Screens and Plates. The following script, `Omero_Info.py`, connects a user to a remote OMERO instance and shows a list of:
@@ -243,6 +330,10 @@ OMERO organizes users in groups. Each user can be a member of multiple groups. I
 * the groups that the user belongs to and the associated group ID. This ID is important when you want to access images stored for a particular group;
 * the projects and datasets for a particular group (specified via unique grpup ID);
 * and a list of images, organized by project and dataset, that the user has access to in a particular group.
+
+The following script, `Omero_info.py` establishes a connection to the OMERO database and outputs your OMERO group memberships, as well as a list of all of your projects, datasets, and images. The code contains separate functions to connect to the database, retrieve information from the database, and parse the data into a set of tables.  If you're just starting with programming, you may find it helpful to work through our [Fiji Scripting](/lesson/fiji-scripting/) and other tutorials on our [learning portal](/categories/).
+
+(Click on the black triangle next to **View** to take a look at the script.)
 
 <details>
 <summary>View `Omero_Info.py` script</summary>
