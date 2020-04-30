@@ -243,10 +243,10 @@ Fiji provides convenient programming wrappers for the Fiji/ImageJ and OMERO func
 * BeanShell: Syntax similar to Java, versatile
 * Several others…
 
-Fiji provides a richer programming environment than ImageJ and it is recommended to use Fiji instead of ImageJ for any script development.  Our [Script development for Image Processing](/lesson/fiji-scripting/) provides a more general introduction to this topic.
+Fiji provides a richer programming environment than ImageJ and it is recommended to use Fiji instead of ImageJ for any script development.  Our [Fiji/ImageJ: Script development for Image Processing](/lesson/fiji-scripting/) tutorial provides a more general introduction to this topic.
 
-**Example Scripts:**
-To follow along, you can download the Jython scripts presented in this tutorial through [this link](/scripts/fiji/fiji-example-scripts.zip).
+### Example Scripts
+To follow along, you can download the Jython scripts presented in this tutorial through **[this link](/scripts/fiji/fiji-omero-scripts.zip)**.
 
 
 ### The Script Editor {#script-editor-id}
@@ -289,24 +289,24 @@ In the Fiji menu, go to `Window` > `Console`.
 ---
 
 ### Connecting to OMERO
-In order to get full access to OMERO's programming interface, we will now use a more advanced approach to establish an authenticated connection with the OMERO database.  We need to instances of three classes: `LoginCredientials`, `SimpleLogger`, and `Gateway`.  The central one for the configuration is `LoginCredentials` which has to be initialized with user specific credentials and database host information.
+In order to get full access to OMERO's programming interface, we will now use a more advanced approach to establish an authenticated connection with the OMERO database.  We need instances of three classes: `LoginCredientials`, `SimpleLogger`, and `Gateway`.  The central one for the configuration is `LoginCredentials` which has to be initialized with user specific credentials and database host information.
 
-Our script would not be very useful or secure if we had to hardcode these values. Fortunately we can use the [SciJava@Parameter][https://imagej.net/Script_Parameters] annotation to prompt the script user for the relevant information
+Our script would not be very useful or secure if we had to hardcode these values. Fortunately we can use the [SciJava@Parameter](https://imagej.net/Script_Parameters) annotation to prompt the script user for the relevant information
 ```
 #@ String (label="Omero User") username
 #@ String (label="Omero Password", style="password") password
 #@ String (label="Omero Server", value="omero.hpc.virginia.edu") server
-#@ Integer (label="Omero Port", value=4064) server_port
+#@ Integer (label="Omero Port", value=4064) port
 ```
 
-These four lines at the top of our scripts are sufficient to prompt the user for information that will be populated in the `username`, `password`, `server`, and `port` variables. With these variables in place, we can now establish a connection to the OMERO database server.
+These four lines at the top of our scripts are sufficient to create a dialog window that prompts the user for information that will be populated in the `username`, `password`, `host`, and `port` variables. With these variables in place we can now establish a connection to the OMERO database server.
 
 ```
 cred = LoginCredentials()
 if group_id != -1:
     cred.setGroupID(group_id)
 cred.getServer().setHostname(server)
-cred.getServer().setPort(server_port)
+cred.getServer().setPort(port)
 cred.getUser().setUsername(username)
 cred.getUser().setPassword(password)
 simpleLogger = SimpleLogger()
@@ -314,7 +314,7 @@ gateway = Gateway(simpleLogger)
 e = gateway.connect(cred)
 ```
 
-The return value of the `connect` method is stored as a boolean value in the variable `e`. If `e==True`, the connection was established; if `e==False`, the connection failed.  We can reuse these code blocks for all our OMERO scripts.
+The return value of the `connect` method is stored as a boolean value in the variable `e`. If `e==True`, the connection was established; if `e==False`, the connection failed.  We can reuse this code block for most of our OMERO scripts.
 
 It is very important to close the connection to the database at the end of your script, like this:
 ```
@@ -341,7 +341,7 @@ The following script, `Omero_info.py` establishes a connection to the OMERO data
 #@ String (label="Omero User") username
 #@ String (label="Omero Password", style="password") password
 #@ String (label="Omero Server", value="omero.hpc.virginia.edu") server
-#@ Integer (label="Omero Port", value=4064) server_port
+#@ Integer (label="Omero Port", value=4064) port
 #@ Integer (label="Omero Group ID", min=-1, value=-1) group_id
 
 
@@ -362,12 +362,12 @@ from omero.gateway.facility import BrowseFacility
 from omero.log import SimpleLogger
 
 
-def connect(group_id, username, password, host, port):    
-    '''Omero Connect with credentials and simpleLogger'''
+def connect(group_id, username, password, server, port):    
+    """Omero Connect with credentials and simpleLogger"""
     cred = LoginCredentials()
     if group_id != -1:
     	cred.setGroupID(group_id)
-    cred.getServer().setHostname(host)
+    cred.getServer().setHostname(server)
     cred.getServer().setPort(port)
     cred.getUser().setUsername(username)
     cred.getUser().setPassword(password)
@@ -378,6 +378,7 @@ def connect(group_id, username, password, host, port):
 
 
 def get_groups(gateway):
+    """Retrieves the groups for the user"""
     currentGroupId = gateway.getLoggedInUser().getGroupId()
     ctx = SecurityContext(currentGroupId)
     adminService = gateway.getAdminService(ctx, True)
@@ -395,6 +396,7 @@ def get_groups(gateway):
 
 
 def get_projects_datasets(gateway):
+    """Retrieves the projects and datasets for the user"""
     results = []
     proj_dict = {}
     ds_dict = {}
@@ -402,8 +404,8 @@ def get_projects_datasets(gateway):
     ctx = SecurityContext(groupid)
     containerService = gateway.getPojosService(ctx)
 
-    # Read datasets in "Project", "Dataset", "Screen", "Plate"
-    projects = containerService.loadContainerHierarchy("Project", None, None)
+    # Read datasets in all projects
+    projects = containerService.loadContainerHierarchy("Project", None, None) # allowed: 'Project", "Dataset", "Screen", "Plate"
     for p in projects:                # omero.model.ProjectI
         p_id = p.getId().getValue()
         p_name = p.getName().getValue()
@@ -420,7 +422,7 @@ def get_projects_datasets(gateway):
             })
             ds_dict[ds_id] = ds_name     
 
-    # read datasets not linked to any project
+    # read datasets not linked to any project 
     ds_in_proj = [p['Dataset Id'] for p in results]
     ds = containerService.loadContainerHierarchy("Dataset", None, None)
     for d in ds:                # omero.model.ProjectI
@@ -439,7 +441,7 @@ def get_projects_datasets(gateway):
 
 
 def get_images(gateway, datasets, orphaned=True):
-    '''Return all image ids and image names for provided dataset ids'''
+    """Return all image ids and image names for provided dataset ids"""
     browse = gateway.getFacility(BrowseFacility)
     experimenter = gateway.getLoggedInUser()
     ctx = SecurityContext(experimenter.getGroupId())
@@ -451,10 +453,10 @@ def get_images(gateway, datasets, orphaned=True):
         while j.hasNext():
             image = j.next()
             images.append({
-		        'Image Id': String.valueOf(image.getId()),
-		        'Image Name': image.getName(),
-		        'Dataset Id': dataset_id,
-		        'Dataset Name': datasets[dataset_id],
+                'Image Id': String.valueOf(image.getId()),
+                'Image Name': image.getName(),
+                'Dataset Id': dataset_id,
+                'Dataset Name': datasets[dataset_id],
             })
     if orphaned:
         orphans = browse.getOrphanedImages(ctx, ctx.getExperimenter()) # need to pass user id (long)
@@ -464,24 +466,24 @@ def get_images(gateway, datasets, orphaned=True):
                 'Image Name': image.getName(),
                 'Dataset Id': -1,
                 'Dataset Name': '<Orphaned>',
-            })
-     return images
+            })	
+    return images
 
 
 def show_as_table(title, data, order=[]):
+    """Helper function to display group and data information as a ResultsTable"""
     table = ResultsTable()
     for d in data:
         table.incrementCounter()
         order = [k for k in order]
         order.extend([k for k in d.keys() if not d in order])
         for k in order:
-            table.addValue(k, d[k])
+        	table.addValue(k, d[k])
     table.show(title)
 
 
 # Main code
-
-gateway = connect(group_id, username, password, server, server_port)
+gateway = connect(group_id, username, password, server, port)
 
 groups, current_group = get_groups(gateway)
 show_as_table("My Groups", groups, order=['Id', 'Name'])
@@ -489,23 +491,19 @@ show_as_table("My Groups", groups, order=['Id', 'Name'])
 all_data,_,datasets = get_projects_datasets(gateway)
 show_as_table("Projects and Datasets - Group: %s" % current_group, all_data, order=['Group Id', 'Dataset Id', 'Dataset Name', 'Project Name', 'Project Id'])
 
-# created sorted list of unique dataset ids
-image_ids = get_images(gateway, datasets, orphaned=True)
-show_as_table("Images - Group: %s" % current_group, image_ids, order=['Dataset Id', 'Dataset Name', 'Image Id', 'Image Name'])
-
-gateway.disconnect()
+gateway.disconnect()	
 ```
 </details>
 
 ---
 
-### Retrieving Images from the OMERO database
+### Downloading Images from the OMERO database
 
-After exporting images to OMERO, let's try to download images from the database.
+Let's try to download images from the database through a script.  The OMERO plugin provides simple download (aka import to Fiji) functionality to achieve this.
 
-1. In the OMERO web interface, click on any image in your `xxx_workshop` dataset and note the Image ID displayed in the sidebar on the right side. **Image retrieval relies on these unique image identifiers**.
+1. In the OMERO web interface, click on any image in the `Fiji Omero Workshop` project or your `xxx_workshop` project/dataset and note the Image ID displayed in the sidebar on the right side of the webpage. **Image retrieval relies on these unique image identifiers**.
 
-2. Go back to the Fiji Script Editor and open the `Omero_Open.py` script.
+2. Go back to the Fiji Script Editor and open the `Omero_Download_Image.py` script.
 
 3. Run the script. A dialog window will open; enter these values:
 
@@ -513,47 +511,48 @@ After exporting images to OMERO, let's try to download images from the database.
     * **Omero Password:** Your OMERO Password
     * **Omero Server:** omero.hpc.virginia.edu
     * **Omero Port:** 4064
-    * **Omero Group ID:** This is the ID for the `omero-demo` group.
-    * **Image ID:** Enter the ID for an image that is part of your `xxx_workshop` dataset.
+    * **Omero Group ID:** Enter `53` as ID for the `omero-demo` group, or use `-1` to use your default group
+    * **Image ID:** Enter the ID for an image that is part of your `xxx_workshop` dataset, or use `11980` from the example files. 
 
 The script consists of the these core blocks:
 
 * Lines 1-6 define user input to connect to OMERO.
-* Lines 11-17 define a `command` variable that specifies OMERO connection and image parameters.
-* Line 18 executes the OMERO importer plugin that retrieves the image.
+* Lines 11-21 define a `command` variable that specifies OMERO connection and image parameters.
+* Line 22 executes the OMERO importer plugin that retrieves the image.
 
 ```
 # @ String (label="Omero User") user
 # @ String (label="Omero Password", style="password") pwd
 # @ String (label="Omero Server", value="omero.hpc.virginia.edu") server
-# @ Integer (label="Omero Port", value=4064) server_port
-# @ Integer (label="Omero Group ID", value=53) omero_group_id
+# @ Integer (label="Omero Port", value=4064) port
+# @ Integer (label="Omero Group ID", min=-1, value=53) omero_group_id
 # @ Integer (label="Image ID", value=2014) image_id
 
 from ij import IJ
-
+from loci.plugins.in import ImporterOptions
+	 
 # Main code
 command="location=[OMERO] open=[omero:"
 command+="server=%s\n" % server
 command+="user=%s\n" % user
-command+="port=%s\n" % server_port
+command+="port=%s\n" % port
 command+="pass=%s\n" % pwd
-command+="groupID=%s\n" % omero_group_id
-command+="iid=%s]" % image_id
+if omero_group_id > -1:
+	command+="groupID=%s\n" % omero_group_id
+command+="iid=%s] " % image_id
+command+="windowless=true view=\'%s\' " % ImporterOptions.VIEW_HYPERSTACK
 IJ.runPlugIn("loci.plugins.LociImporter", command)
 ```
 
 ---
 
-### Saving Images to the OMERO database
+### Uploading Images to the OMERO database
 
-Let's try to export an image from Fiji to OMERO.
-
-#### Single Image
+Let's try to upload an image from Fiji to OMERO.
 
 1. Go back to Fiji and then to `File` > `Open Samples` > `Blobs`.
 
-2. Go back to the Fiji Script Editor and open the `Omero_Open.py file`.
+2. Go back to the Fiji Script Editor and open the `Omero_Upload_Image.py file`.
 
 ```
 from ij import IJ
@@ -564,120 +563,46 @@ IJ.run(imp, "OMERO... ", "")
 
 3. Run the script. The **Export to OMERO** dialog window will open. Enter the following values:
 
-    * **Server**: omero.hpc.virginia.edu.
+    * **Server**: omero.hpc.virginia.edu
+    
     * **Port:** 4064
+    
     * **User:** Your computing ID
+    
     * **Password:** Your OMERO password
-    * **OMERO Dataset ID:** Enter the ___ID___ for the `xxx_workshop` dataset that you created in the OMERO web interface.
-    * Check the **Upload new image** box.
+    
+    * **OMERO Dataset ID:** Enter the ___ID___ for the `xxx_workshop` dataset that you created in the OMERO web interface. 
+    
+    * Check the **Upload new image** box.  Leave the other boxes unchecked.
 
     Click `OK`.
 
-    If you see an error, make sure you entered the correct password and Dataset ID.
+    If you see an error, make sure you entered the correct password and Dataset ID.  **Note: you have to use your own project/dataset.** 
 
 4. Go to the OMERO website and refresh the page. Double click on your `xxx_workshop` dataset icon to expand it. You should see the blobs.gif image.
-
-#### Multiple Images
-
-Scripting provides a convenient way to automatically export many images at once. For this exercise we utilize the output produced by the `Split_Stack.py` script.  We will take the `Simple_Batch.py` script as a template and modify it so that the create TIF image files are directly exported to OMERO instead of saving them to our local disk.
-
-The modified script can be found as `Omero_Batch_Save.py` in the downloaded example folder.
-
-<details>
-<summary>View `Omero_Batch_Save.py` script</summary>
-```
-# @ File (label="Input directory", style="directory") inputdir
-# @ Float (label="Gaussian blur radius", value=2.0) radius
-# @ String (label="Omero User") user_id
-# @ String (label="Omero Password", style="password") password
-# @ String (label="Omero Server", value="omero.hpc.virginia.edu") host
-# @ Integer (label="Omero Port", value=4064) server_port
-# @ Integer (label="Omero Dataset ID", value=69) data_id
-
-from ij import IJ
-import os
-from os import path
-
-def process_file(f, radius):
-    """Opens a file and applies a Gaussian filter."""
-    print "Processing", f
-    imp = IJ.openImage(f)
-    IJ.run(imp, "Gaussian Blur...", "sigma=%s" % str(radius));
-    return imp
-
-
-# Main code
-basecommand = "server=%s " % host
-basecommand+= "port=%s " % server_port
-basecommand+= "user=%s " % user_id
-basecommand+= "password=%s " % password
-basecommand+= "datasetid=%d " % data_id
-basecommand+= "uploadimage=true uploadtables=false uploadrois=false updaterois=false tablenames= "
-
-inputdir = str(inputdir)
-if not path.isdir(inputdir):
-    print inputdir, " does not exist or is not a directory."
-else:
-    filenames = os.listdir(inputdir)
-    tif_files = [f for f in filenames if f.split(".")[-1] == "tif"]		# only .tif files
-    for tif_file in tif_files:
-        fullpath = path.join(inputdir, tif_file)
-        imp = process_file(fullpath, radius)
-        # need to show image for OMERO to pick it up
-        imp.show()
-        # export to OMERO
-        IJ.run(imp, "OMERO... ", basecommand+"image=%s" % imp.getTitle())
-        #ignore changes & close
-        imp.changes=False
-        imp.close()
-        #save_as_tif(outputdir, imp)
-print "Done.\n"
-```
-</details>
-
-<br>
-**The key changes to the script are:**
-
-* Lines 1-7: collect OMERO connection info and Gaussian Blur parameter.
-* Removal of the `save_as_tif` function.
-* Creation of the `basecommand` string variable that defines the OMERO connection image export parameters.
-* Insertion of `IJ.run(imp, "OMERO... ", basecommand+"image=%s" % imp.getTitle())` to export a single image to OMERO.
-
-<br>
-
-1. Run the `Omero_Batch_Save.py` file.
-
-2. A dialog window will appear. Enter the following values:
-
-    * **Input directory:** Browse to the directory that has the mitosis_xx.tif images produced by the `Split_Stack.py` script.
-    * **Gaussian Blur:** Enter a number between 1.0 and 5.0.
-    * **Omero User:** Your computing ID
-    * **Omero Password:** Your OMERO Password
-    * **Omero Server:** omero.hpc.virginia.edu
-    * **Omero Port:** 4064
-    * **Omero Dataset:** Enter the ID for the `xxx_workshop` dataset that you created in the OMERO web interface.
-
-    Click `OK`.
-
-4. The images should open and close one after another. If you receive any error messages, make sure that you entered the correct password and dataset ID.
-
-5. Go to the OMERO web interface and refresh the page. Expand the `xxx_workshop` dataset icon and view the new content of your dataset.
-
-6. In the top left area of the browser window, click on your name next to the `omero-demo` field. In the `MyGroups` drop-down go to `omero-demo` and select `All Members`. Now you should be able to see the datasets and image uploaded by your peers.
-
-**Note: You can see datasets and images of other members in the `omero-demo` group, but you can only manipulate (e.g. delete) your own datasets and images.**
 
 ---
 
 ### Creating Key:Value Annotations
 
+<img src=/images/fiji-omero/fiji-omero-keyvalue.png style="float:right;width=100%;border:10px solid white"</img>
+OMERO allows you to link other pieces of information to your Project, Dataset, Screen, Plate or Image objects. This additional information is displayed on the right side in the OMERO web client, labeled under the `General` tab as `Image Details`, `Tags`, `Key-Value Pairs`, `Tables`, `Attachments`, `Comments`, and `Ratings`. In addition, there is the `Acquistion` tab that provides metadata information that was automatically extracted from the image file headers during import.  
+
+For the remainder of this workshop, we will focus on `Key-Value` pairs and `Attachments`.  The key-value pairs are implemented as a dictionary (or HashMaps) that can be used to annotate individul images or whole datasets/project or plates/screens with additional information. Such information may include experimental conditions etc.. Let's look at an example:
+
+1. In the OMERO webclient, expand the `Fiji Omero Workshop` project folder and the `Sample Data` dataset folder inside it. 
+
+2. Click on the `blobs.gif` image.  In the general tab, you will see three entries under the `Key-Value` group. (You may have to clock on the triangle next to the label to expand the tab and see it).
+
+The values displayed are not particular meaningful, but they illustrate the concept. You can create and modify annotations interactively through the OMERO client.  In addition, you can manipulate key-value pairs (as well as other annotation categories) through Fiji scripts.
+   
 <details>
 <summary>View `Omero_Map_Annotation.py` script</summary>
 ```
 #@ String (label="Omero User") username
 #@ String (label="Omero Password", style="password") password
 #@ String (label="Omero Server", value="omero.hpc.virginia.edu") server
-#@ Integer (label="Omero Port", value=4064) server_port
+#@ Integer (label="Omero Port", value=4064) port
 #@ Integer (label="Omero Group ID", min=-1, value=-1) group_id
 #@ String (label="Target", value="Image", choices = ["Image", "Dataset", "Project"]) target_type
 #@ Integer (label="Target ID", min=-1, value=-1) target_id
@@ -710,12 +635,12 @@ from omero.model import DatasetI
 from omero.model import ImageI
 
 
-def connect(group_id, username, password, host, port):    
-    '''Omero Connect with credentials and simpleLogger'''
+def connect(group_id, username, password, server, port):    
+    """Omero Connect with credentials and simpleLogger"""
     cred = LoginCredentials()
     if group_id != -1:
     	cred.setGroupID(group_id)
-    cred.getServer().setHostname(host)
+    cred.getServer().setHostname(server)
     cred.getServer().setPort(port)
     cred.getUser().setUsername(username)
     cred.getUser().setPassword(password)
@@ -726,6 +651,7 @@ def connect(group_id, username, password, host, port):
 
 
 def create_map_annotation(ctx, annotation, target_id, target_type="Project"):
+    """Creates a map annotation, uploads it to Omero, and links it to target object"""
     # populate new MapAnnotationData object with dictionary
     result = ArrayList()
     for item in annotation:
@@ -735,7 +661,7 @@ def create_map_annotation(ctx, annotation, target_id, target_type="Project"):
     data.setContent(result);
     data.setDescription("Demo Example");
 
-    #Use the following namespace if you want the annotation to be editable in the webclient and insight
+    # use the following namespace if you want the annotation to be editable in the webclient and insight
     data.setNameSpace(MapAnnotationData.NS_CLIENT_CREATED);
     dm = gateway.getFacility(DataManagerFacility);
     target_obj = None
@@ -752,7 +678,7 @@ def create_map_annotation(ctx, annotation, target_id, target_type="Project"):
 
 
 # Main code
-gateway = connect(group_id, username, password, server, server_port)
+gateway = connect(group_id, username, password, server, port)
 currentGroupId = gateway.getLoggedInUser().getGroupId()
 ctx = SecurityContext(currentGroupId)	
 
@@ -762,14 +688,15 @@ annotation = {'Temperature': 25.3, 'Sample': 'control', 'Object count': 34}
 result = create_map_annotation(ctx, annotation, target_id, target_type=target_type)
 print "Annotation %s exported to Omero." % annotation
 
+gateway.disconnect()
 ```
 </details>
 
 ---
 
-### Local Batch Processing of an OMERO Dataset
+### Batch Processing and Results Tables for OMERO Datasets
 
-The previous examples demonstrated how to export local images to OMERO, or how to import OMERO images to a local workstation. Let's explore how an entire dataset comprised of many images can be downloaded from the remote OMERO instance, processed locally with the processed images getting uploaded to the original dataset again.
+The previous examples demonstrated how to export local images to OMERO, or how to import OMERO images to a local workstation. As the final exercise, let's explore how an entire dataset comprised of many images can be downloaded from the remote OMERO instance, processed and analyzed locally, followed by an upload of the processed images and created results filesback to the OMERO database.
 
 The example script, `Omero_Processing.py`, consists of five key functions:
 
@@ -778,9 +705,32 @@ The example script, `Omero_Processing.py`, consists of five key functions:
 * **open_image:** Downloads the image associated with an image ID and shows it in Fiji.
 * **process:** Applies a custom image processing routine to a given image. In this case a basic segmentation and counting of cells.
 * **create_map_annotation:** Uploads the cell count value to OMERO and links it to the original image.
+* **upload_csv_to_omero:** Converts an ImageJ ResultsTable into a csv file, uploads that csv file and links it ot the original image objects.
 * **upload_image:** Uploads an Image to a specific dataset managed by the remote OMERO instance.
 
 **Remember that the gateway connection needs to be closed at the end of the script**.
+
+<img src=/images/fiji-omero/fiji-omero-batchprocessing.png style="float:right;width=75%;border:10px solid white"</img>
+
+To test this and see the process in action we will process a set of four images that has been deposited in the OMERO database. The setup is as follows:
+
+1. Go to the OMERO webclient and make note of your `Project ID`, or you cna create a new project if you prefer. Again you need the `ID`.
+
+2. In the Fiji Script Editor, open the `Omero_Processing.py` script and execute it.
+
+3. In the popup window, specify the parameters as follows:
+
+	a. Replace the `mst3k` with your own credentials.
+	
+	b. **Omero Input Dataset ID:**  `265`
+	
+	c. **Omero Output Dataset Name:** Enter name to your liking
+	
+	d. **Omero Output Project ID:**  Enter the `ID` that you looked up as step 1. The script will create a new dataset (with the name you chose) and place all the processed images in there.
+	
+4. Click `OK`. Watch the console output for logging messages.
+
+5. After the script ru has completed, go to the OMERO webclient and open the Project that you had chosen to collect the output.  Look for the `binary segmentation masks`, the attached `Results.csv` files and the new `Key-Value Pairs` annotations for each image.
 
 <details>
 <summary>View `Omero_Processing_Nuclei.py` script</summary>
@@ -796,7 +746,8 @@ The example script, `Omero_Processing.py`, consists of five key functions:
 
 
 import os
-from os import path
+import tempfile
+
 
 from java.lang import Long
 from java.lang import String
@@ -805,8 +756,14 @@ from java.util import ArrayList
 from jarray import array
 from java.lang.reflect import Array
 import java
-from ij import ImagePlus
+from ij import IJ,ImagePlus
 from ij.measure import ResultsTable
+import loci.common
+from loci.formats.in import DefaultMetadataOptions
+from loci.formats.in import MetadataLevel
+from loci.plugins.in import ImporterOptions
+
+from loci.plugins.in import ImporterOptions
 
 # Omero Dependencies
 import omero
@@ -822,13 +779,17 @@ from omero.gateway.model import MapAnnotationData
 from omero.gateway.model import ProjectData
 from omero.gateway.model import DatasetData
 from omero.gateway.model import ImageData
+from omero.gateway.model import FileAnnotationData
+from omero.model import FileAnnotationI
+from omero.model import OriginalFileI
 from omero.model import Pixels
 from omero.model import NamedValue
 from omero.model import ProjectDatasetLinkI
 from omero.model import ProjectI
 from omero.model import DatasetI
 from omero.model import ImageI
-
+from omero.model import ChecksumAlgorithmI
+from omero.model.enums import ChecksumAlgorithmSHA1160
 
 from ome.formats.importer import ImportConfig
 from ome.formats.importer import OMEROWrapper
@@ -836,11 +797,7 @@ from ome.formats.importer import ImportLibrary
 from ome.formats.importer import ImportCandidates
 from ome.formats.importer.cli import ErrorHandler
 from ome.formats.importer.cli import LoggingImportMonitor
-import loci.common
-from loci.formats.in import DefaultMetadataOptions
-from loci.formats.in import MetadataLevel
-from loci.plugins.in import ImporterOptions
-from ij import IJ
+from omero.rtypes import rlong
 
 
 def connect(group_id, username, password, host, port):    
@@ -866,10 +823,11 @@ def open_image(username, password, host, server_port, group_id, image_id):
     command+="port=%s\n" % server_port
     command+="pass=%s\n" % password
     if group_id > -1:
-		command+="groupID=%s\n" % group_id
+        command+="groupID=%s\n" % group_id
     command+="iid=%s] " % image_id
-    command+="windowless=true " #view=\'%s\' " % ImporterOptions.VIEW_HYPERSTACK
-    command+="color_mode=Default view=[Standard ImageJ] stack_order=Default"
+    command+="windowless=true "
+    command+="splitWindows=false "
+    command+="color_mode=Default view=[%s] stack_order=Default" % ImporterOptions.VIEW_HYPERSTACK
     print "Opening image: id", image_id 
     IJ.runPlugIn("loci.plugins.LociImporter", command)
     imp = IJ.getImage()
@@ -902,28 +860,26 @@ def upload_image(gateway, server, dataset_id, filepath):
     candidates = ImportCandidates (reader, filepath, errorHandler)
     reader.setMetadataOptions(DefaultMetadataOptions(MetadataLevel.ALL))
     success = library.importCandidates(config, candidates)
-    print "candidates", candidates
-    print "success", success
     return success
 
 
 def get_image_ids(gateway, dataset_id):
-	"""Return all image ids for given dataset"""
-	browse = gateway.getFacility(BrowseFacility)
-	experimenter = gateway.getLoggedInUser()
-	ctx = SecurityContext(experimenter.getGroupId())
-	images = []
-	ids = ArrayList(1)
-	ids.add(Long(dataset_id))
-	j = browse.getImagesForDatasets(ctx, ids).iterator()
-	while j.hasNext():
-	    image = j.next()
-	    images.append({
-	        'Image Id': String.valueOf(image.getId()),
-	        'Image Name': image.getName(),
-	        'Dataset Id': dataset_id,
-	    })
-	return images
+    """Return all image ids for given dataset"""
+    browse = gateway.getFacility(BrowseFacility)
+    experimenter = gateway.getLoggedInUser()
+    ctx = SecurityContext(experimenter.getGroupId())
+    images = []
+    ids = ArrayList(1)
+    ids.add(Long(dataset_id))
+    j = browse.getImagesForDatasets(ctx, ids).iterator()
+    while j.hasNext():
+        image = j.next()
+        images.append({
+            'Image Id': String.valueOf(image.getId()),
+            'Image Name': image.getName(),
+            'Dataset Id': dataset_id,
+        })
+    return images
 
 
 def create_map_annotation(ctx, annotation, target_id, target_type="Project"):
@@ -952,27 +908,78 @@ def create_map_annotation(ctx, annotation, target_id, target_type="Project"):
     return result
 
 
-def process_file(imp):
-	"""Run segmentation"""
-	print "Processing", imp.getTitle()
-	title = imp.getTitle().split('.')[:-1]
-	title = '.'.join(title) + "_mask.ome.tiff"
-	print title
-	nimp = ImagePlus(title, imp.getStack().getProcessor(1))
-	IJ.run(nimp, "Median...", "radius=3")
-	IJ.run(nimp, "Auto Local Threshold", "method=Bernsen radius=15 parameter_1=0 parameter_2=0 white")
-	IJ.run(nimp, "Watershed", "")
+def upload_csv_to_omero(ctx, file, tablename, target_id, target_type="Project"):
+    """Upload the CSV file and attach it to the specified object"""
+    print file
+    print file.name
+    svc = gateway.getFacility(DataManagerFacility)
+    file_size = os.path.getsize(file.name)
+    original_file = OriginalFileI()
+    original_file.setName(rstring(tablename))
+    original_file.setPath(rstring(file.name))
+    original_file.setSize(rlong(file_size))
 
-	IJ.run("Set Measurements...", "area mean standard centroid decimal=3")
-	IJ.run(nimp, "Analyze Particles...", "size=50-Infinity summary exclude clear add")
-	rt = ResultsTable.getResultsTable()
-	rt.show("Results")
-	annotation = {
-		"Nuclei count":rt.size()
-	}
-	
-	imp.close()
-	return nimp, annotation 
+    checksum_algorithm = ChecksumAlgorithmI()
+    checksum_algorithm.setValue(rstring(ChecksumAlgorithmSHA1160.value))
+    original_file.setHasher(checksum_algorithm)
+    original_file.setMimetype(rstring("text/csv"))
+    original_file = svc.saveAndReturnObject(ctx, original_file)
+    store = gateway.getRawFileService(ctx)
+
+    # Open file and read stream
+    store.setFileId(original_file.getId().getValue())
+    print original_file.getId().getValue()
+    try:
+        store.setFileId(original_file.getId().getValue())
+        with open(file.name, 'rb') as stream:
+            buf = 10000
+            for pos in range(0, long(file_size), buf):
+                block = None
+                if file_size-pos < buf:
+                    block_size = file_size-pos
+                else:
+                    block_size = buf
+                stream.seek(pos)
+                block = stream.read(block_size)
+                store.write(block, pos, block_size)
+
+        original_file = store.save()
+    finally:
+        store.close()
+
+    # create the file annotation
+    namespace = "training.demo"
+    fa = FileAnnotationI()
+    fa.setFile(original_file)
+    fa.setNs(rstring(namespace))
+
+    if target_type == "Project":
+        target_obj = ProjectData(ProjectI(target_id, False))
+    elif target_type == "Dataset":	
+        target_obj = DatasetData(DatasetI(target_id, False))
+    elif target_type == "Image":	
+        target_obj = ImageData(ImageI(target_id, False))
+
+    svc.attachAnnotation(ctx, FileAnnotationData(fa), target_obj)
+ 
+
+def process_file(imp):
+    """Run segmentation"""
+    print "Processing", imp.getTitle()
+    title = imp.getTitle().split('.')[:-1]
+    title = '.'.join(title) + "_mask.ome.tiff"
+    nimp = ImagePlus(title, imp.getStack().getProcessor(1))
+    IJ.run(nimp, "Median...", "radius=3")
+    IJ.run(nimp, "Auto Local Threshold", "method=Bernsen radius=15 parameter_1=0 parameter_2=0 white")
+    IJ.run(nimp, "Watershed", "")
+
+    IJ.run("Set Measurements...", "area mean standard centroid decimal=3")
+    IJ.run(nimp, "Analyze Particles...", "size=50-Infinity summary exclude clear add")
+    rt = ResultsTable.getResultsTable()
+    rt.show("Results")
+
+    imp.close()
+    return nimp, rt 
 
 
 def create_new_dataset(ctx, project_id, ds_name, ):
@@ -993,34 +1000,65 @@ def create_new_dataset(ctx, project_id, ds_name, ):
 gateway = connect(omero_group_id, username, password, server, server_port)
 currentGroupId = gateway.getLoggedInUser().getGroupId()
 ctx = SecurityContext(currentGroupId)
-#sessionKey = gateway.getSessionId(gateway.getLoggedInUser())
 
 image_info = get_image_ids(gateway, dataset_id)
-tmp_dir = os.path.join(os.path.expanduser('~'), 'omero_tmp')
-if not os.path.exists(tmp_dir):
-    os.makedirs(tmp_dir)
+tmp_dir = tempfile.gettempdir()
 print tmp_dir
 
 target_ds_id = create_new_dataset(ctx, project_id, target_ds_name)
 for info in image_info:
-	imp = open_image(username, password, server, server_port, omero_group_id, info['Image Id'])
-	processed_imp, annotation = process_file(imp)
+    imp = open_image(username, password, server, server_port, omero_group_id, info['Image Id'])
+    processed_imp, rt = process_file(imp)
 
-	# Save processed image locally in omero_tmp dir
-	filepath = os.path.join(tmp_dir, processed_imp.getTitle())
-	options = "save=" + filepath + " export compression=Uncompressed"
-	IJ.run(processed_imp, "Bio-Formats Exporter", options)
-	#ignore changes & close
-	processed_imp.changes=False 
-	processed_imp.close()
+    # Save processed image locally in omero_tmp dir
+    imgfile = tempfile.TemporaryFile(mode='wb', prefix='img_', suffix='.tiff', dir=tmp_dir)
 
-	# export to OMERO
-	upload_image(gateway, server, target_ds_id, [filepath])
-	create_map_annotation(ctx, annotation, info['Image Id'], target_type="Image")
+    #filepath = os.path.join(tmp_dir, processed_imp.getTitle())
+    options = "save=" + imgfile.name + " export compression=Uncompressed"
+    IJ.run(processed_imp, "Bio-Formats Exporter", options)
+    # ignore changes & close
+    processed_imp.changes=False 
+    processed_imp.close()
 
+    # uploaad image to a target dataset
+    upload_image(gateway, server, target_ds_id, [imgfile.name])
+
+    # create annotation
+    annotation = {
+        "Cell count": rt.size()
+    }	
+    create_map_annotation(ctx, annotation, info['Image Id'], target_type="Image")
+
+    # export ResultsTable to csv file and link to image object
+    file = tempfile.TemporaryFile(mode='wb', prefix='results_', suffix='.csv', dir=tmp_dir)
+    rt.saveAs(file.name)
+    #upload_csv_to_omero(ctx, file, "Results.csv", long(info['Image Id']), "Image")
+
+# done, clean up	
+shutil.rmtree(tmp_dir)
 gateway.disconnect()	
-
 print "Done.\n"
-
 ```
-<br>
+</details>
+
+---
+
+# Resources {#resources-id}
+
+**OMERO**
+
+* OMERO: https://www.openmicroscopy.org/omero/
+* OMERO User Support: https://help.openmicroscopy.org
+* UVA Research Computing: https://www.rc.virginia.edu
+* OMERO at the University of Virginia: https://www.rc.virginia.edu/userinfo/omero/overview/
+ 
+**Fiji Scripting**
+
+* Tutorial: http://www.ini.uzh.ch/~acardona/fiji-tutorial/index.html
+* Tips for Developers: https://imagej.net/Tips_for_developers
+* API: https://imagej.nih.gov/ij/developer/api/
+* SciJava: https://javadoc.scijava.org/Fiji/
+
+**General Scripting**
+
+* Python: https://learning.arcs.virginia.edu/pythonvideos
