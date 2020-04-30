@@ -83,13 +83,13 @@ OMERO provides a group of client software to work with your imaging data.
 	
 	* Manage Results and Annotations
 
-* [OMERO.isight](https://docs.openmicroscopy.org/omero/5.6.1/users/clients-overview.html#omero-insight): 
+* [OMERO.insight](https://docs.openmicroscopy.org/omero/5.6.1/users/clients-overview.html#omero-insight): 
 
-	The two main additional features of OMERO.insight which are not available as yet for OMERO.web are:
+	The two main additional features of OMERO.insight which are not available yet for OMERO.web are:
 
 	* The Measurement Tool, a sub-application of ImageViewer that enables size and intensity measurements of defined regions-of-interest (ROIs), and 
 	
-	* image import
+	* image import.
 
 * [OMERO.importer](https://docs.openmicroscopy.org/omero/5.6.1/users/clients-overview.html#omero-importer): 
 
@@ -112,7 +112,7 @@ Images can be linked to individual projects, datasets, screens, or plates. A giv
 In addition, each group has a folder `Orphaned Images` that contains images that have not been linked to any projects, datasets, screens, or plates.
 
 **Note:**
-Each project, dataset, screen, plate, and image has a __unique numerical ID__ that unambiguously identifies the data artifact.  We use these numerical IDs rather than image, folder, or filenames to get access to these elements.
+Each project, dataset, screen, plate, and image has a __unique numerical ID__ that unambiguously identifies the data artifact.  We use these numerical IDs rather than image, folder, or file names to get access to these elements.
 
 ### Sample Data
 
@@ -122,18 +122,22 @@ Sample data has been added to the `Fiji Omero Workshop` project.  Inside the blu
 
 * Project: **Fiji Omero Workshop** (Project ID: `130`)
 
-**Take note of the Group ID and Project ID.**
+**Make note of the Group ID and Project ID.**
 
-### Your Personal Dataset
+### Your Personal Projects and Datasets
 
-Let's create a new dataset in the workshop project. 
+Let's create a new project and dataset through the OMERO web client. 
 
-1. Right click on the Blue folder icon labeled `Fiji Omero Workshop`. In the popup menu, select `Create new` > `Dataset`. 
+1. In the left `Explore` panel, click on `omero-demo` label and switch to `All Members`.  Now you can see all data shared within the `omero-demo` group.
 
-2. Name the new Dataset`<YOUR_UID>_workshop`, for example `mst3k_workshop`. After the dataset is generated, your user interface should look like this:
-    ![](/images/fiji-omero-dataset.png)
+2. Right click on the avatar with your name (or the All Members label). You can also just right click folder icon labeled `Fiji Omero Workshop`. In the popup menu, select `Create new` > `Project`. 
+
+2. Name the new Project `<YOUR_UID>_workshop`, for example `mst3k_workshop`. 
     
-3. Click on the green folder icon of your new dataset and take note of the `Dataset ID`. We will need this to direct Fiji where to load data from or save data to.
+3. Click on the blue folder icon of your new project and take note of the `Project ID`. We will need this to direct Fiji where to load data from or save data to.  No right click on your blue project folder icon and create a new dataset.  Right click on the dataset icon and take note of the `Dataset ID`.
+
+After the project is generated, your user interface should look like this:
+    ![](/images/fiji-omero/fiji-omero-datasetid.png)
 
 ---
 
