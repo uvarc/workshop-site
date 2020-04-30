@@ -203,7 +203,7 @@ Before you begin, you need to know the dataset ID that the image should be linke
 
 ---
 
-### Uploading Results and ROIs with Fiji
+### Uploading Results with Fiji
 
 1. In the OMERO.web client, make note of a dataset ID where you would like to upload an new image and associated results file to.  You make pick the dataset ID from the previous exercise.
 
@@ -235,6 +235,13 @@ Before you begin, you need to know the dataset ID that the image should be linke
 	<p float="right">	
   		<img src="/images/fiji-omero/fiji-omero-blobs-export.png" height="350" /> 
 	</p>
+	
+4. Click on the `Results` table window and go to `File` > `Save As`.  Save the file as `Results.csv` on your computer.  Repeat the same for the `Summary` table.  
+
+5. **Upload the results files:** Go to the OMERO web client, open the Dataset folder that you had chosen for the image upload. In the right side of the webpage, expand the `Attachments` pane and click on the `+` icon. In the popup dialog, click `Choose File` and select the saved csv files. Click `Accept`.  
+
+Now you have analyzed the image and uploaded the image as well as all results to the OMERO dataset.
+
 
 ---
 
