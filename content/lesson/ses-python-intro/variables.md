@@ -1,22 +1,13 @@
 ---
 title: "2. Variables, Expressions and Statements"
-author: "Erich Purpur & Karsten Siller"
+author: "Erich Purpur"
 date: 2020-05-11
 categories: ["Summer Education Series: Programming in Python"]
 toc: true
 ---
 
-#### The Variable Explorer
 
-The Variable Explorer allows us to show the values of variables in our programs.  It is particularly helpful for looking at a group of values (an array). We can change the number of decimal places printed by clicking `Format` and typing in an expression of the `%3f` for three decimal places.  The Variable Explorer also includes icons for saving, refreshing, or importing data to our workspace.
-
-To clear all values in the workspace, type at the iPython console
-
-```
-%reset
-```
-
-Now re-run your since-plotting code and observe how the variables acquire values.
+## Reminder of What variable explorer is
 
 
 

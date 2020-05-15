@@ -1,6 +1,6 @@
 ---
 title: "8. Matplotlib, Seaborn, Pandas"
-author: "Erich Purpur & Karsten Siller"
+author: "Erich Purpur"
 date: 2020-05-11
 categories: ["Summer Education Series: Programming in Python"]
 toc: true
@@ -221,27 +221,7 @@ for the possibilities.
 
 [Seaborn](https://seaborn.pydata.org/index.html) is a package built upon Matplotlib that is targeted to statistical graphics.  Seaborn can be used alone if its defaults are satisfactory, or plots can be enhanced with direct calls to Matplotlib functions.
 
-## Updating Packages in Anaconda
 
-Before working with seaborn, check that you have at least version 0.9 installed.  To update packages using the Anaconda Navigator, start Navigator, click Environments, change the dropdown from `Installed` to `Updateable`, then go through and select packages you wish to upgrade by clicking on the checkbox and selecting "Mark for update" from the dropdown.  The checkbox will change to an arrow.  When you select a package, a green `Apply` button and a red `Clear` button will appear at the lower right.  When you have marked all packages you wish to update, click the `Apply` button.  (It may take a while to complete.)
-
-If you are updating many packages it may be better to do it through a command line.  From your computer's applications menu, start the Anaconda Prompt.   To upgrade a package type 
-
-```
-conda update package
-```
-
-You can also install packages with either the Navigator interface or with the conda command line.
-
-```
-conda install newpackage
-```
-
-Many more options are available.  Conda can also be used to create "sandboxes" called _conda environments_.  Conda's [user guide](https://conda.io/projects/conda/en/latest/user-guide/index.html) describes conda's capabilities.
-
-![Conda.png](/images/python/Conda.png)
-
-If you have a very large number of packages to update, however, it may be better to uninstall Anaconda and install a new version.
 
 ## Working with Seaborn
 

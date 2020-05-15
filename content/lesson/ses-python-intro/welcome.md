@@ -1,6 +1,6 @@
 ---
 title: "1. Welcome and Getting Started"
-author: "Erich Purpur & Karsten Siller"
+author: "Karsten Siller"
 date: 2020-05-11
 categories: ["Summer Education Series: Programming in Python"]
 toc: true
@@ -8,7 +8,14 @@ toc: true
 
 # Course Overview
 
+-include table of contents and what we hope to accomplish
+
 # Introduction to Python
+
+-basic background info on what is python?
+
+
+
 
 # Setting up Your Environment
 
@@ -16,6 +23,8 @@ The Anaconda environment from [Anaconda Inc.](https://anaconda.com) is widely us
 
 Once you have installed Anaconda, find the Navigator application.  You should see a workspace similar to the screenshot, with several options for working environments, some of which are not installed.  We will use Spyder and Jupyterlab, which should already be installed.  If not, click the button to install the package.
 
+
+####MAKE JUPYTERLAB/NOTEBOOKS INTO OWN PAGE####
 ## JupyterLab
 
 ![AnacondaNavigator](/images/python/AnacondaNavigator.png)
@@ -221,3 +230,36 @@ To clear all values in the workspace, type at the iPython console
 Now re-run your since-plotting code and observe how the variables acquire values.
 
 
+#### The Variable Explorer
+
+The Variable Explorer allows us to show the values of variables in our programs.  It is particularly helpful for looking at a group of values (an array). We can change the number of decimal places printed by clicking `Format` and typing in an expression of the `%3f` for three decimal places.  The Variable Explorer also includes icons for saving, refreshing, or importing data to our workspace.
+
+To clear all values in the workspace, type at the iPython console
+
+```
+%reset
+```
+
+Now re-run your since-plotting code and observe how the variables acquire values.
+
+## Updating Packages in Anaconda
+
+Before working with seaborn, check that you have at least version 0.9 installed.  To update packages using the Anaconda Navigator, start Navigator, click Environments, change the dropdown from `Installed` to `Updateable`, then go through and select packages you wish to upgrade by clicking on the checkbox and selecting "Mark for update" from the dropdown.  The checkbox will change to an arrow.  When you select a package, a green `Apply` button and a red `Clear` button will appear at the lower right.  When you have marked all packages you wish to update, click the `Apply` button.  (It may take a while to complete.)
+
+If you are updating many packages it may be better to do it through a command line.  From your computer's applications menu, start the Anaconda Prompt.   To upgrade a package type 
+
+```
+conda update package
+```
+
+You can also install packages with either the Navigator interface or with the conda command line.
+
+```
+conda install newpackage
+```
+
+Many more options are available.  Conda can also be used to create "sandboxes" called _conda environments_.  Conda's [user guide](https://conda.io/projects/conda/en/latest/user-guide/index.html) describes conda's capabilities.
+
+![Conda.png](/images/python/Conda.png)
+
+If you have a very large number of packages to update, however, it may be better to uninstall Anaconda and install a new version.

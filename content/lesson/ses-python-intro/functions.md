@@ -1,6 +1,6 @@
 ---
 title: "6. Functions, Modules and Classes"
-author: "Erich Purpur & Karsten Siller"
+author: "Karsten Siller"
 date: 2020-05-11
 categories: ["Summer Education Series: Programming in Python"]
 toc: true
@@ -354,6 +354,8 @@ z=np.zeros(200)
 data=pd.read_csv("my_data"file)
 ```
 
+## Placeholder for Package Managers (pip or conda)
+
 ### Main Modules
 
 When you run a script directly through the interpreter, such as by using the Run arrow in Spyder, it is in the "main" namespace.  Your module can also be imported into the interpreter or into another module.  It will still execute everything in the module, including requests for inpout and the like, unless you use the special variables \_\_name\_\_ and \_\_main\_\_ (two underscores on each side).  If you use \_\_main\_\_ you can place all code you want to execute only when run directly after a conditional.  
@@ -613,31 +615,3 @@ aDataPoint=pData.fromfile(inputfile)
 
 The alternate constructor must return the new instance in order to invoke the constructor.
 
-## Pickling
-
-Objects may have a more complicated state than the simple variables we have encountered so far.  Saving it correctly could be tedious and error-prone.  Python provides an operation called "pickling" that coverts the state of an instance into a linear stream of bytes that can be stored or read back.
-
-```
-import pickle
-aclass=MyClass(11)
-f=open("myresults.dat","w")
-pickle.dump(aclass,f)
-```
-
-To restore, use 
-
-```
-aclass=pickle.load(f)
-```
-
-### Dill
-
-The pickle module is built into Python but it is limited.  It cannot handle several built-in types.  The dill package overcomes these limitations.  For consistency it is even possible to import it as the pickle namespace.
-
-```
-import dill as pickle
-```
-
-Dill is not included in the base Anaconda must can be installed through _conda_, the Anaconda package manager.  To invoke conda from the Navigator, go to the Environments tab, change the "Installed" dropdown to "Not installed" and wait for the package list to be populated.  Find `dill`, select it (and any other packages you find you might need), then click the green Apply button.
-
-![AnacondaPackageManager](/images/python/AnacondaPackageManager.png)
