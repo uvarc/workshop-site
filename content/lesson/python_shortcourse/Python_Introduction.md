@@ -18,7 +18,7 @@ Once you have installed Anaconda, find the Navigator application.  You should se
 
 ![AnacondaNavigator](/images/python/AnacondaNavigator.png)
 
-We will start with Jupyterlab.  Launching it will cause a tab to open in your Web browser. Select the Jupyterlab icon.  It may take a while to start.  When it opens, you will see a list of your files on the left and three icons to select the mode.  Jupyterlab incorporates a Jupyter notebook server as well as a plain Python console and a simple text editor.  We want to start a Jupyter notebook so click on the top tile. If this doesn't mean anything to you, don't worry. While we will mostly be using Spyder for the rest of the course, JupyterLab and Jupyter Notebooks serve many functions, one of which is to provide clean, easy to read code. The code is live, meaning you can modify it. When you run a "cell" the output is some visual representation of your data. This can be text, graphics, visuals, etc. 
+We will start with Jupyterlab.  Launching it will cause a tab to open in your Web browser. Select the Jupyterlab icon.  It may take a while to start.  When it opens, you will see a list of your files on the left and three icons to select the mode.  Jupyterlab incorporates a Jupyter notebook server as well as a plain Python console and a simple text editor.  We want to start a Jupyter notebook so click on the top tile. 
 
 ![JupyterLabSetup](/images/python/JupyterLabSetup.png)
 
@@ -135,7 +135,7 @@ print("Hello World")
 
 into the editor pane, it is a script and you must run it in order for the command to be carried out.  Click the green arrow to run the current script.
 
-You can also type commands directly into the iPython console.  Just as with JupyterLab, if you type an expression its value will be printed. You might wonder, why would I type commands directly into the iPython console? There are many reasons, but know that when you run your code either in the editor or console, new variables and objects are created and now living in the memory of your computer. These new variables are now immediately accessible by python. This is significant because sometimes it can take a while to run your code. If you realize you made a mistake in your code or want to test something on the fly, editing and re-running your script from the editor can be very time consuming. If you run a script and then want to modify, test, experiment with your data, you can do so much more quickly coding directly into the console.
+You can also type commands directly into the iPython console.  Just as with JupyterLab, if you type an expression its value will be printed. 
 
 Type the following directly into the console.
 
@@ -335,8 +335,8 @@ from __future__ import division, print_function
 <p>Type into your choice of Spyder's interpreter pane or a JupyterLab cell the following assignments.
 <pre>
 <code>
-x=17.0
-Xs=11.0
+x=17.
+Xs=11.
 num_1=10
 num_2=14
 </code>
@@ -662,7 +662,7 @@ Using whichever unit system you prefer, write some code to assign the weight and
 
 ## Loops
 
-One of the most fundamental processes in a computer program is to repeat statements many (perhaps many, many, many) times. Loops are super important because if you figure out the logic to do something once, the computer can carry out that logic a nearly unlimited amount of times, while humans will tire of it quickly. Computers never run out of patience. 
+One of the most fundamental processes in a computer program is to repeat statements many (perhaps many, many, many) times. While humans tire of repeated tasks, computers never run out of patience. 
 
 Like most languages, Python has two major types of loops.  
 
