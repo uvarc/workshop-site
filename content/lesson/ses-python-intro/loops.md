@@ -6,9 +6,35 @@ categories: ["Summer Education Series: Programming in Python"]
 toc: true
 ---
 
+
 # Conditionals and Loops
 
 Now that we understand the basic types, we can begin to study the fundamental programming constructs that all programs will use.  The two most important of these are _conditionals_ and _loops_.
+
+#### Code Blocks
+
+Now that we are adding a little sophistication to our python code, let's quickly talk about code blocks. Know that spacing is sometimes significant in python. Indention is always significant.
+
+Statements can be grouped into _blocks_ that function logically as a single statement.  In Python these blocks are indicated by the _indentation level_. You may indent each block by however many spaces you wish (3 or 4 is usually recommended), but each block level must be indented by exactly the same number.  Do not use tabs.
+
+Many editors, including Spyder, will automatically indent the next statement to the same level as the previous one.  You escape to an outer level with the backspace or some other key.  Spyder also provides _Indent_ and _Unindent_ options in its Edit menu.  These are extremely convenient for Python since you need only select lines, then click indent or unindent to create or move a code block level.
+
+Examples
+
+```
+def func(z):
+    x=99.0
+    y=1
+    return (x+y)/z
+
+
+n = 15
+for i in range(n):                          #first code block
+    if i < 10:                              #second code block
+        print("i is less than 10")          #third code block
+    else:
+        print("i is equal to or greater than 10")
+```
 
 ## Conditionals
 
@@ -100,23 +126,32 @@ else:
 <details>
 <summary>Exercise 4</summary>
 <pre>
-The Body Mass Index is a widely-used number to classify body shapes.  The formula in Imperial units (pounds, inches) is
+The Body Mass Index is a widely-used number to classify body shapes.
+
+
+The categories are as follows (we have omitted the top two):
+Under 18.5: underweight
+18.5 to 25: normal 
+25 to 30: overweight
+30 to 35: obese class I
+35 to 40: obese class II
+40 to 45: obese class III
+45: obese class IV (morbidly obese)
+Using whichever unit system you prefer, write some code to assign the weight and height, compute the number, and determine its classification.  
+Assign your own weight and height.  Try a few others.  Use an online calculator to check your results.
+
+The formula in Imperial units (pounds, inches) is
 <code>
-BMI=weight\*703.1/height**2
+BMI= (703 * weight) / height**2
 </code>
 In metric units (kg, m) the formula is
 <code>
 BMI=weight/height**2
 </code>
-The categories are as follows (we have omitted the top two):
-Under 18.5: underweight
-18.5 to 25: normal 
-over 25 to 30: overweight
-over 30 to 35: obese class I
-over 35 to 40: obese class II
-over 40 to 45: obese class III
-over 45: obese class IV (morbidly obese)
-Using whichever unit system you prefer, write some code to assign the weight and height, compute the number, and determine its classification.  Assign your own weight and height.  Try a few others.  Use an online calculator to check your results.
+
+
+So for example... If am 150lbs and 70 inches tall (5'10"), my BMI is 21.52 (Normal Weight)
+
 </pre>
 </details>
 
@@ -130,7 +165,7 @@ _For loops_ execute for a fixed number of iterations.  It is possible to exit ea
 
 _While loops_ do not start with a predetermined number of iterations.  They terminate when some condition becomes False.
 
-### For Loops in iPython
+### For Loops
 
 ```
 for item in iterator:
@@ -152,6 +187,24 @@ The range iterator is used to step over a sequence of numbers.  It takes up to t
 
 The interval is often called a stride.  If it is present the lower bound must also be present even if it is the default, 0.  Otherwise the lower bound may be omitted.  If the stride is omitted it is 1.  The last value is never reached.
 
+#### Accumulator variables
+
+An accumulator variable is a variable declared before a loop starts, but which is modified by the loop. Take this example:
+
+```
+x = 0
+
+print("x = ", x)
+
+for i in range(5):
+    x = x + i
+
+print("x = ", x)
+```
+
+What is this example doing?  Basically we are saying to computer:
+X = 0. For the numbers 0,1,2,3,4 (remember: python starts counting at 0), add the current number to x. So in this sense, x accumulates the total value of all the numbers in range(5).
+
 <details>
 <summary>Exercise 5</summary>
 <pre>
@@ -169,7 +222,7 @@ range(0,10,2)
 range(1,0,-2)
 </code>
 Modify your loop to print the first N integers.  Be sure that N is set to a value before you try to run the loop.
-Write a loop that will sum the first N integers.  Hint: you will need a variable called an <em>accumulator</em> whose value starts outside the loop at 0. Think, how do you add to an existing variable?
+Write a loop that will sum the first N integers.
 </pre>
 </details>
 
@@ -178,7 +231,7 @@ Write a loop that will sum the first N integers.  Hint: you will need a variable
 Sometimes we need both the item and its index.  We can use enumerate for this purpose.
 
 ```
-velocity=[-11.,-3.,-1.,1.,2.3,.4.]
+velocity=[15, 26, 3.2, 7.89, 25]
 for i,v in enumerate(velocity):
     print(i,v)
 ```
@@ -199,14 +252,14 @@ else:  #optional
 As for the _for_ loop, colons and indentations are required.  The optional _else_ clause is executed if and only if the conditional becomes False, which for a while loop is normal termination.
 
 ```
-x=-20
-y=-10
-while x<0 and y<0:
-    x=10-y
-    y=y+1
-    z=0
-print(x,y,z)
+x = 0
+
+while x < 10:
+    print("x =", x)
+    x+=1
 ```
+Why didn't the results print "x = 10"?
+
 
 <details>
 <summary>Exercise 6</summary>
@@ -287,7 +340,7 @@ We can write loops within loops.  The outer loop variable remains fixed while th
 ```
 for i in range(5):
     for j in range(10):
-        print(i,j)
+        print(f"i={i},j={j}")
 ```
 
 #### Reinitializing

@@ -7,11 +7,8 @@ toc: true
 ---
 
 
-## Reminder of What variable explorer is
 
 
-
-## Variables, Expressions, and Statements
 
 ### Variables
 
@@ -47,11 +44,13 @@ Integers are whole numbers and are not written with a decimal point.  In Python 
 
 #### Floating-Point Numbers
 
+Floating-point numbers are real numbers. Meaning numbers which contain a fractional part
+
 Floating-point numbers are represented internally by a variant of scientific notation, to base 2, with one bit for the sign and the rest for the mantissa and the exponent.  In most languages there are two types of floating-point numbers, single precision and double precision.  Single precision numbers are 32 bits long in total.  Double precision numbers occupy 64 bits.  Most of the time a Python floating-point variable is double precision.  Only in a few packages, mainly NumPy, is a single-precision floating-point number available.
 
 A double-precision floating-point number has an exponent range, in base 10, of approximately 10<sup>-308</sup> to 10<sup>308</sup> and a decimal precision of about 15-16 digits.  The first thing to note is that this is _finite_.  The number of mathematical real numbers is infinite, and they must all be represented by the finite number of floating-point values.  It should be obvious, then, that infinitely many real numbers will map to the same floating-point number.  It also follows that only integers or terminating rational numbers can be exactly represented at all.  All other numbers are approximated.  Some numbers that are terminating in base 10 are not terminating in base 2 and vice versa.  Floating-point numbers do not obey all the rules of mathematical real numbers; in particular, they are commutative (so a+b = b+a) but are not necessarily associative (i.e. a + (b+c) may not equal (a + b) + c) and they are generally not distributive (so a x (b-c) is not necessarily equal to a x b-a x c).  For most work these properties of floating-point numbers do not matter, but for some types of scientific programs this behavior can be important.
 
-The floating-point standard also defines special values INF (and -INF) and NAN.  INF or -INF means the absolute value of the number is too large to be represented.  NAN stands for "Not a Number" and is returned when a program attempts to perform a mathematically illegal operation, such as dividing by zero.  It is also frequently used in some Python packages to represent missing data.
+The floating-point standard also defines special values INF (and -INF) and NAN.  __INF__ or -INF means the absolute value of the number is too large to be represented.  __NAN__ stands for "Not a Number" and is returned when a program attempts to perform a mathematically illegal operation, such as dividing by zero.  It is also frequently used in some Python packages to represent missing data.
 
 #### Complex
 
@@ -68,6 +67,12 @@ R+I*1j
 ```
 
 The imaginary part is denoted by the letter "J" (not "i" as in most of mathematics) and it is not case sensitive in this context.  The numerical value of the imaginary part must immediately precede it with no multiplication symbol.  If the imaginary part is a variable, as in the examples, the digit 1 must be present.  This is so the interpeter knows that the J indicates imaginary and is not a variable.
+
+#### Spyder Variable Explorer
+
+I'll take a quick break to remind you of the variable explorer in Spyder. It is very handy!
+
+![AnacondaNavigator](/images/python/variable_explorer.png)
 
 #### Boolean
 
@@ -301,26 +306,7 @@ Examples
 * A=[1,2,3,
      4, 5, 6]
 
-#### Code Blocks
 
-Statements can be grouped into _blocks_ that function logically as a single statement.  In Python these blocks are indicated by the _indentation level_. You may indent each block by however many spaces you wish (3 or 4 is usually recommended), but each block level must be indented by exactly the same number.  Do not use tabs.
-
-Many editors, including Spyder, will automatically indent the next statement to the same level as the previous one.  You escape to an outer level with the backspace or some other key.  Spyder also provides _Indent_ and _Unindent_ options in its Edit menu.  These are extremely convenient for Python since you need only select lines, then click indent or unindent to create or move a code block level.
-
-Examples
-
-```
-def func(z):
-    x=99.0
-    y=1
-    return (x+y)/z
-
-if x==20:
-   x=99
-   if (x>=30):
-       for i in range(x):
-           j=i+x
-           print(j)
 ```
 
 #### Comments
@@ -329,10 +315,47 @@ Comments are statements or partial statements inserted for the benefit of human 
 
 Examples
 
-* \#The following line of code computes a number
-  z=a\*b+c
-* f=open("input.csv","r")  #open file for reading
+```
+#The following line of code computes a number
+z=a\*b+c
+  
+f=open("input.csv","r")            #open file for reading
+```
 
 #### Docstrings
 
 A special type of string literal is surrounded by triple double quotes """a""". When placed at the top of a unit of code, immediately after the declaration of the unit name if present, and indented to the correct level, the interpreter recognizes these as a special type of comment called a _doctring_ (documentation string).  Spyder automatically puts a mostly-empty docstring at the top of each new file.  Docstrings are used to summarize the purpose and usage of the code that follows.
+
+```
+def adding_function(x, y):
+"""This function adds two numbers together and returns the result"""
+
+    z = x + y
+    return z
+
+```
+or
+
+```
+"""
+This script does a bunch of simple math operations
+Date: 5/18/2020
+Author: John Doe
+"""
+
+x = 1
+y = 2
+
+z = x + y
+n = z - 10
+v = n * 3
+
+counter = 0
+
+for i in z:
+    count += 1
+```
+
+
+
+
