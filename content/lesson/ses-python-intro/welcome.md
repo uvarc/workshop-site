@@ -191,3 +191,16 @@ Many more options are available.  Conda can also be used to create "sandboxes" c
 ![Conda.png](/images/python/Conda.png)
 
 If you have a very large number of packages to update, however, it may be better to uninstall Anaconda and install a new version.
+
+---
+
+{{< series-buttons overview="/categories/summer-education-series-programming-in-python/"  next="/lesson/ses-python-intro/variables/" >}}
+
+
+
+
+
+
+
+
+
