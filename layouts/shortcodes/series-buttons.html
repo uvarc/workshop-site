@@ -1,0 +1,12 @@
+{{ $overview := .Get "overview" }}
+{{ $prev := .Get "prev" }}
+{{ $next := .Get "next" }}
+<div id="outer" style="float:right">
+  <div class="inner"><a href="{{ $overview }}"><button style="width: 100px;" class="btn btn-primary">Overview</button></a></div>
+  {{ with $prev }}
+      <div class="inner"><a href="{{ $prev }}"><button style="width: 100px;" class="btn btn-primary">< Previous</button></a></div>
+  {{ end }}
+  {{ with $next }}
+	  <div class="inner"><a href="{{ $next }}"><button style="width: 100px;" class="btn btn-primary">Next ></button></a></div>
+  {{ end }}
+</div>
