@@ -6,132 +6,57 @@ categories: ["Summer Education Series: Programming in Python"]
 toc: true
 ---
 
-# Course Overview
+# Workshop Overview
 
--include table of contents and what we hope to accomplish
+This workshop will allow students to go from beginner to basic proficiency in the Python language. Students should be able to commit to attend both morning and afternoon sessions both days for the greatest benefit.
+
+**Prerequisite:** None.
+
+## Table of Contents
+
+**Day 1**
+
+1. [Welcome and Getting Started](/lesson/ses-python-intro/welcome)
+2. [Variables, Expressions and Statements](/lesson/ses-python-intro/variables)
+3. [Conditionals and Loops](/lesson/ses-python-intro/loops)
+4. [Lists, Tuples, Sets and Dictionaries](/lesson/ses-python-intro/compound-types)
+5. [Input/Output and Exception Handling](/lesson/ses-python-intro/io)
+
+**Day 2**
+
+6. [Functions, Modules and Classes](/lesson/ses-python-intro/functions)
+7. [Numpy and SciPy](/lesson/ses-python-intro/numpy-scipy)
+8. [Matplotlib, Seaborn, Pandas](/lesson/ses-python-intro/matplotlib-pandas)
+9. [Jupyter Lab](/lesson/ses-python-intro/jupyterlab)
+10. [Conclusion & Resources](/lesson/ses-python-intro/resources)
+
+---
 
 # Introduction to Python
 
--basic background info on what is python?
+{{< callout >}}
+"Python is an interpreted, interactive, object-oriented programming language. It incorporates modules, exceptions, dynamic typing, very high level dynamic data types, and classes. Python combines remarkable power with very clear syntax. It has interfaces to many system calls and libraries, as well as to various window systems, and is extensible in C or C++. It is also usable as an extension language for applications that need a programmable interface. Finally, Python is portable: it runs on many Unix variants, on the Mac, and on Windows 2000 and later."  -- from <a  href="https://docs.python.org/3/faq/general.html#what-is-python">docs.python.org</a>
+{{< /callout >}}
 
-
-
+---
 
 # Setting up Your Environment
 
-The Anaconda environment from [Anaconda Inc.](https://anaconda.com) is widely used because it bundles a Python interpreter, most of the popular packages, and development environments. It is cross platform and freely available. Download and install the Anaconda Distribution product appropriate for your operating system (Windows, Mac OSX, or Linux).  There are two somewhat incompatible versions of Python; version 2.7 is deprecated but still fairly widely used.  Version 3 is the supported version.  We will use Python 3 but if you know you need to use Python 2.7, you can download that instead.  Anaconda even makes it relatively easy to install both versions.
+The Anaconda environment from [Anaconda Inc.](https://anaconda.org) is widely used because it bundles a Python interpreter, most of the popular packages, and development environments. It is cross platform and freely available. There are two somewhat incompatible versions of Python; __version 2.7__ is deprecated but still fairly widely used.  __Version 3__ is the supported version.  We will use Python 3 but if you know you need to use Python 2.7, you can download that instead.  Anaconda even makes it relatively easy to install both versions.
+
+1. Visit the [Anaconda Download website](https://www.anaconda.com/products/individual), click on the __Download__ button and download the installer for Python 3 for your operating system (Windows, Mac OSX, or Linux). We recommend to use the graphical installer for ease of use.
+
+2. Launch the downloaded installer, follow the onscreen prompts and install the Anaconda distribution on your local hard drive.
+
+## Navigator
 
 Once you have installed Anaconda, find the Navigator application.  You should see a workspace similar to the screenshot, with several options for working environments, some of which are not installed.  We will use Spyder and Jupyterlab, which should already be installed.  If not, click the button to install the package.
 
-
-####MAKE JUPYTERLAB/NOTEBOOKS INTO OWN PAGE####
-## JupyterLab
-
-![AnacondaNavigator](/images/python/AnacondaNavigator.png)
-
-We will start with Jupyterlab.  Launching it will cause a tab to open in your Web browser. Select the Jupyterlab icon.  It may take a while to start.  When it opens, you will see a list of your files on the left and three icons to select the mode.  Jupyterlab incorporates a Jupyter notebook server as well as a plain Python console and a simple text editor.  We want to start a Jupyter notebook so click on the top tile. If this doesn't mean anything to you, don't worry. While we will mostly be using Spyder for the rest of the course, JupyterLab and Jupyter Notebooks serve many functions, one of which is to provide clean, easy to read code. The code is live, meaning you can modify it. When you run a "cell" the output is some visual representation of your data. This can be text, graphics, visuals, etc. 
-
-![JupyterLabSetup](/images/python/JupyterLabSetup.png)
-
-A textbox will open.
-
-![JupyterLabInput](/images/python/JupyterLabInput.png)
-
-Your notebook is untitled.  Open the File menu and click Rename.  Name your notebook hello.ipynb then click the Rename button.
-
-![JupyterLabRename](/imags/python/JupyterLabRename.png)
-
-### Cells
-
-The blank line with the blinking cursor is a cell.  You can type code into the cell.  After the `In[]` prompt type `print("Hello")`
-To execute the cell click the arrowhead, or type the `shift+enter` keys together.
-
-### Your First Program
-
-If you are using Python 2.7 please begin all your programs with the line
-`from __future__ import print_function`
-The symbols surrounding `future` are double underscores.
-
-Type the following lines into a cell.
-
-```
-Numerals=list(range(1,11))
-print(Numerals[3])
-print(Numerals[:3])
-print(Numerals[3:])
-print(Numerals[4:6])
-```
-
-Run this cell.  Is the result what you expected?
-
-In a new cell Type
-
-```
-greeting="Hello World"
-hello=greeting[0:5]
-greeting2=hello+" there"
-output=greeting2+"\n"*2
-```
-
-The symbol `\n` stands for "new line."  Run this cell.  In a new cell type
-
-```
-output
-```
-
-Run cell.  then
-
-```
-print(output)
-```
-
-When your are working directly at the interpreter, you can type a variable and it will print the value.  This is called _expression evaluation_.  Using the `print` function observes any formatting.
-
-### Text Editor
-
-JupyterLab includes a simple text editor you can use to create files.  In the upper left of your JupyterLab tab, click `+` to start the launcher. Choose the text editor. Type
-
-```
-def hello():
-    print("Hello")
-    return None
-    
-hello()
-```
-
-Be sure to indent lines exactly as shown, and to return completely to the margin for `hello()`. Select your text. From the Editor menu select Language.  Scroll (far) down to Python.  You will now enable syntax coloring for this file.  From the File menu choose Save As. Name the file `hello_func.py`  By default, files will be saved into the folder in which JupyberLab is working. The default is your "User" directory.  After saving the file, return to your Jupyter notebook page and type
-
-```
-import hello_func
-```
-
-Then run the cell.
-
-### Plotting in JupyterLab
-
-In a new cell, copy and paste the following. Then run the cell(s).  What happens?
-
-You need to add a line
-
-```
-import matplotlib.pylab as plt
-
-x = plt.linspace(-1.*plt.pi,plt.pi,100)
-y = plt.sin(x)
-plt.plot(x,y)
-
-plt.show()
-```
-
-Put this into a new cell and run it.  In the upper cell change `sin` to `cos`.  In the Notebook menu select `Run All Cells`
-
-### Exporting
-
-You can export embedded text in your notebook into a script.  First make sure your notebook has a name.  If you have not named your current notebook yet, call it `first_script.ipynb`.  From the Notebook menu find Export To->Executable Script.  Save the script in the usual way from your browser.  If it is in `Downloads` move it to a location of your choice.  You can make a new directory for your Python scripts if you wish.
+![Navigator]()
 
 ## Spyder
 
-Now we will switch to Spyder.  Spyder is an Integrated Development Environment, or __IDE__, aimed at Python.  It is well suited to developing longer, more modular programs.  To start it, return to the Anaconda Navigator and click on its tile.  It may take a while to open (watch the lower left of the Navigator).  Once it starts, you will see a layout with an editor pane on the left, an explorer pane at the top right, and an iPython console on the lower right.  This arrangement can be customized but we will use the default for our examples. Type code into the editor.  The explorer window can show files, variable values, and other useful information.  The iPython console is a frontend to the Python interpreter itself.  It is comparable to a cell in JupyterLab.
+Now we will switch to Spyder.  Spyder is an Integrated Development Environment, or __IDE__, aimed at Python.  It is well suited for developing longer, more modular programs.  To start it, return to the Anaconda Navigator and click on its tile.  It may take a while to open (watch the lower left of the Navigator).  Once it starts, you will see a layout with an editor pane on the left, an explorer pane at the top right, and an iPython console on the lower right.  This arrangement can be customized but we will use the default for our examples. Type code into the editor.  The explorer window can show files, variable values, and other useful information.  The iPython console is a frontend to the Python interpreter itself.  It is comparable to a cell in JupyterLab.
 
 ![Spyder](/images/python/Spyder.png)
 
@@ -229,6 +154,7 @@ To clear all values in the workspace, type at the iPython console
 
 Now re-run your since-plotting code and observe how the variables acquire values.
 
+---
 
 #### The Variable Explorer
 
