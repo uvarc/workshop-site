@@ -6,13 +6,13 @@ categories: ["Summer Education Series: Programming in Python"]
 toc: true
 ---
 
-## Input/Output
+# Input/Output
 
 Programs are not very useful if they cannot communicate their results.  They are also not terribly useful if they cannot change their controlling parameters to compute different results.
 
 It is best to make your program read its input parameters, rather than embedding them (hard-coding) them into the program body.  You may want to change the parameters later or run it for many different sets of parameters.  You may give your program to somebody else who will have to modify it.  Always assume your program may later be used for a slightly different purpose, whether by someone else or by you.
 
-### Console Input
+## Console Input
 
 The console is a text interface for input to and output from the computer.  In Spyder, the iPython window itself can serve as a console.  In Jupyterlab the output console is indicated by lines marked with `Out []` whereas a reference to an input console will open a textbox. 
 
@@ -28,7 +28,7 @@ weight=float(input("Enter your weight in pounds:"))
 print(type(weight))
 ```
 
-### Console Output
+## Console Output
 
 We have already been using the `print` function.  Let us now examine it in more detail.
 
@@ -94,52 +94,12 @@ Examples:
 05d
 ```
 
-### Formatters
+---
 
-To construct our formatted output we use _format strings_, also called _formatters_.  We insert curly braces as placeholders for variables in the finished string.  Format codes go inside the braces following a colon.
+# Formatters
 
-* print("The value of pi is approximately {:.6f}".format(math.pi))
-* print("Pi to {:d} digits is {:.12f}".format(n,math.pi)
 
-We have left the space to the left of the colon blank, but it represents the order of the arguments to `format`.  Thus the second example is equivalent to
-
-* print("Pi to {0:d} digits is {1:.12f}".format(n,math.pi))
-
-This means we can rearrange the output if we wish.
-
-* print("Pi is {1:.12f} to {0:d} digits".format(n,math.pi))
-
-Empty curly braces result in default formatting and ordering.  In this situation one could use list-directed formatting as well, but using a formatter enables more control over layout and spacing.
-
-* print("I have {} books to read by {}".format(12,"tomorrow"))
-
-<details>
-<summary>Exercise 15</summary>
-<pre>
-<p>
-Type at the interpeter 
-<code>
-import math
-</code>
-Practice printing math.pi
-- Print without any formatting
-- Print using the default f format
-- Print to 5 decimal places 
-- Print the integer part 
-- For at least one of the above, add a message
-- Print the number of digits to at least 6 spaces and pad with zeros
-- Print the number with a message that specifies the number of digits, where the number of digits is also to be printed.
-</p>
-</pre>
-</p>
-</details>
-</p>
-
-Even more sophisticated formatting is possible.  In the above examples, when printing pi the value of `n` had to be 12 or my output would be inconsistent.  In newer Python versions we can make the width a variable.
-
-* print("Pi to {} digits is .{dec}f}".format(math.pi,dec=n))
-
-#### Formatting with f-Strings
+## Formatting with f-Strings
 
 For Python 3.6 and up the _formatted string literal_ or f-string was introduced.  These can be used to create formatted output easily.
 
@@ -160,13 +120,15 @@ In this example, the integer division is required because the result of the expr
 
 If quotation marks are needed inside an f-string (such as for a dictionary key) they must be single quotes.  In addition, the backslash () cannot be a character within an f-string, so if a character such as the newline (\\n) is needed, it must be assigned to a variable.
 
-## File IO
+---
+
+# File IO
 
 Most of the time we read or write from a file rather than from the console.  File input/output can be complicated in Python and we will later see some built-in means of reading particular types of files, particularly comma-separated-values (CSV) text files.
 
 Before anything can be done with a file we must _open_ it.  This attaches the file name to the program through some form of _file descriptor_, which is like an identifier for the file.  Once opened we do not refer to the file by its name anymore, but only via the ID.
 
-### Opening a File
+## Opening a File
 
 We open a file and associate an identifier with it by means of the `open` statement.
 
@@ -178,7 +140,7 @@ fout=open("filename","w")
 
 The default is read-only.  Adding the `r` makes this explicit.  To open for writing only, add the `w`.  This overwrites the file if it already exists.  To append to an existing file, use `a` in place of `w`.  Both `w` and `a` will create the file if it does not exist.  To open for both reading and writing, use `r+`; in this case the file must exist.  To open it for reading and writing even if it does not exist, use `w+`.
 
-### Reading from a File
+## Reading from a File
 
 The standard read commands in Python read _only strings_.  Even if the input values are intended to be numbers, they are read in as strings.  Any conversions must be done by the programmer.
 
@@ -226,7 +188,7 @@ When we have completed this loop x will contain the values from the first column
 
 We will not go into much detail about reading files since we will later cover packages that offer more convenient ways to read the most common formats.  
 
-### Writing Files
+## Writing Files
 
 To write a file it must have been opened appropriately.  We can use print with the addition of a `file=` argument.
 
@@ -253,7 +215,7 @@ fout.writelines(seq)
 
 here `seq` is a sequence, usually a list of strings.  The `writelines` will not add any end-of-line markers so as with write, they must be appended to every string in the sequence where a linebreak is desired.
 
-### Closing Files
+## Closing Files
 
 When you have completed all operations on a file you should close it.
 
@@ -290,7 +252,9 @@ Print the results for each n you have.
 </pre>
 </details>
 
-## Exceptions
+---
+
+# Exceptions
 
 Many situations can result in an error.  
 
@@ -301,7 +265,7 @@ Many situations can result in an error.
 
 All these conditions (and many more) are called __exceptions__.  If you do not handle them, the interpreter will, and it will just stop with some error message.  We can prepare for failure by _catching_ exceptions ourselves.
 
-### Catching Exceptions
+## Catching Exceptions
 
 The interpreter _throws_ an exception so we can _catch_ it.  We can do this with a `try except` block.  
 
@@ -370,7 +334,7 @@ finally:
 
 You cannot use an `else` in any `try` clause with a `finally`.
 
-#### With/As
+## With/As
 
 If properly supported, the `with` and `as` operators can replace the `try/except/finally` block.  This is probably most widely used with files.  The following will close the file whether the operation was successful or not.
 
@@ -380,3 +344,11 @@ with open('myfile','w') as f:
         mystring="whatever"
         f.write(mystring+'\n')
 ```
+
+---
+
+# Advanced Topics
+
+## Formatting without f-Strings
+
+## Types of Exceptions 

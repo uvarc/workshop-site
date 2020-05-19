@@ -6,13 +6,13 @@ categories: ["Summer Education Series: Programming in Python"]
 toc: true
 ---
 
-## Functions
+# Functions
 
 Functions are self-contained units of code.  They enable us to isolate chunks of code into small packages.
 
 Functions break down the programming into a series of well-defined tasks.  This makes code easier to read, debug, and maintain.  Functions also reduce "cut and paste" errors.  If a section of code does something more than once, it should be replaced with a function.
 
-### Arguments
+## Arguments
 
 Like mathematical functions, programming functions (usually) take _arguments_.  In computer-science language the variable that represents an argument in the function definition is often called a _parameter_ or a _dummy variable_.  Functions must be _called_ by name or they do nothing.  Their code is static until it is invoked by a _caller_.  The interpreter must have encountered the function definition before it can be called; interpreters cannot move upward in a file.  In addition, invoking a function causes its name to take on the return value, but in Python functions are not equivalent to variables -- that value will not be stored anywhere.  It must be explicitly assigned, used in an expression, or printed for the result to be captured.
 
@@ -20,7 +20,7 @@ In strict usage the sequence of variables may be called the _argument list_ in t
 
 Best practice is to place all the functions you will use at the top of the file, right after the main docstring.  Functions may have a docstring themselves.  This is particularly important if the function is lengthy or complicated.
 
-### Python Syntax
+## Python Syntax
 
 The keyword is `def` (define) followed by the name of the function.  The function name _must_ be followed by parentheses whether any arguments are passed or not.  The `def` keyword begins a code block, so a colon is required.  All statements in the body of the function must be indented.  The docstring must immediately follow the `def` line and be indented one level.  Recall that docstrings are enclosed in triple double quotes ("""string""").  Values are returned with the `return` statement.  The `return` causes an immediate exit from the function; no further statements will be executed.
 
@@ -63,7 +63,7 @@ s_3
 </p>
 </details>
 
-#### Dummy Parameters
+## Dummy Parameters
 
 The names of the variables in a function's parameter list are called dummies because they are placeholders.  The function can be called with any variable names in the caller.
 
@@ -88,7 +88,7 @@ Convert your program from Exercise 14 to use a function to compute the BMI.
 </p>
 </details>
 
-### Optional and Keyword Arguments
+## Optional and Keyword Arguments
 
 Arguments whose values are determined from their ordering in the parameter list are called _positional_ variables.  Python supports _optional_ and _keyword_ arguments as well.  Opetional arguments are assigned a default value in the parameter list of the function definition.  If an optional argument is not present in the argument list passed by the caller, it takes on its default value; otherwise it is positional.
 
@@ -114,7 +114,7 @@ val=func(x,w=9)
 
 Default values are set only _once_, when the function is first encountered by the interpreter.  Only immutable types should be used as default values.
 
-### Early Returns
+## Early Returns
 
 The `return` statement exits immediately with no more statements being executed.  A function may contain multiple return statements, but only the first encountered will be executed.  In conjunction with conditionals, the function can thus return early.
 
@@ -128,7 +128,7 @@ def sum_vals(x,y,z):
 
 In this example, an `else` clause is not required because there is no subsequent use of the results.  Also note that the conditional as it as written affects the types that will be valid within the function.
 
-### Variable Passing
+## Variable Passing
 
 Python passes variables in a manner called _assignment_. This means that if an argument is mutable and it is changed in the function, it __will change__ in the caller.  If it is _immutable_ it will not be changed even if the function changes its value; a local copy will be made within the function block.  If a function changes one of its parameters that is called a __side effect__.
 
@@ -151,7 +151,7 @@ What is printed in the last line and why?  What is <code>L</code> now?
 </p>
 </details>
 
-### Variable Scope
+## Variable Scope
 
 The __scope__ of a variable is the range over which it has a definted value.  In Python, the scope is the code block in which the variable is first referenced.  Therefore a calling program may have a variable `x`, a function may also have a variable `x`, and if `x` is not an argument to the function then it will be distinct in the two units.  Variables defined above a `def` are global to the functions below it in the same file; that is, they are _in scope_ in the entire file.
 
@@ -190,6 +190,155 @@ print(x); print(z)
 </pre>
 </p>
 </details>
+
+
+
+## Modules
+
+Modules are fundamental to the programming model of Python.  Modules are programming units that (should) consist of _related_ variables and functions that form a coherent block of _data_+_procedures_ (functions).  They are an extension of the concept of packaging code that we have already studied with functions.
+
+In Python every file you write is a module.  The name of themodule is the file name without the exension.  Every Python file must end in `.py` regardless of your operating system, so if you write a file `mycode.py` the corresponding module is `mycode`.  If you are using Jupyter you will need to export your code into a script in order to create a new module (Notebook tab -> Export to -> Executable Script).
+
+Modules that are not run as the main program must be _imported_ for its contents to be accessible.  When a module is imported, it is compiled to a special representation called __bytecode__.  A new file of the same base name with the suffix `.pyc` will be created.  
+
+Many modules and packages (collections of modules) are available through a base Python installation.  Anaconda provides dozens more, with others available for installation through the Environments tab of the Navigator.  We have already seen a handful of these built-in modules.  
+
+
+### Packages in PyPI and Conda
+
+[Installing Python Packges in Anaconda](/lesson/ses-python-intro/welcome#updating-packages-in-anaconda)
+
+
+```
+import math 
+import matplotlib.pyplot
+```
+
+When we import a module we bring in its __namespace__.  A namespace is an environment that holds a group of identifiers, such as variable and function names.  In Python the namespaces take the name of the module in which they are defined.  Namespaces can be renamed when the module is imported, but __not__ afterward.
+
+### Importing Modules
+
+With a simple import statement we must refer to the module's components with its native namespace.
+
+```
+import math 
+import os 
+import numpy 
+
+z=math.sqrt(x)
+home_dir=os.getenv("HOME")
+A=numpy.zeros(200)
+```
+
+We can select only certain components with `from`
+
+```
+from modulename import func1, func2
+```
+
+Now only func1 and func2 can be used, and we do \_not\* precede their names with the native namespace.
+
+```
+z=func1(x,y)
+w=a+b*func2(z)
+```
+
+To import __all__ symbols without a prefix use
+
+```
+from modulename import *
+```
+
+This statement imports all names that do not begin with a single underscore (\_) and makes them accessible without being preceded by the module name.
+
+We can also rename individual symbols
+
+```
+from math import sqrt as squareroot
+w=squareroot(10.)
+```
+
+One of the most commonly used versions of import changes the name of the namespace, typically to something simpler.
+
+```
+imoprt numpy as np
+import pandas as pd
+
+z=np.zeros(200)
+data=pd.read_csv("my_data"file)
+```
+
+### Main Modules
+
+When you run a script directly through the interpreter, such as by using the Run arrow in Spyder, it is in the "main" namespace.  Your module can also be imported into the interpreter or into another module.  It will still execute everything in the module, including requests for inpout and the like, unless you use the special variables \_\_name\_\_ and \_\_main\_\_ (two underscores on each side).  If you use \_\_main\_\_ you can place all code you want to execute only when run directly after a conditional.  
+
+```
+if __name__==__main__:
+    do_work
+```
+
+It is customary to include code for the main namespace into a function named `main()`.  
+
+```
+def main():
+    do_work
+
+if __name__==__main__:
+    main()
+```
+
+Example
+
+```
+#from __future__ import print_function, division #Python 2.7
+from math import sqrt
+
+def MySqrt(x):    
+    """Babylonian method."""    
+    my_sqrt=x/2.    
+    tol=1.e-12    
+    while abs(my_sqrt-s0)>tol:        
+        s0=my_sqrt        
+        my_sqrt=0.5*(my_sqrt+x/my_sqrt)    
+    return my_sqrt
+
+def relerr(x1,x2):    
+    return abs((x2-x1)/x2)
+
+def main():
+    print("{:s}{:s}{:s}".format("x".center(20),"sqrt".center(10),"rel_error".rjust(14)))    
+    N=5    
+    for i in range(-N,N+1):        
+        x=10.0**(-i)        
+        print("{:14.3e}{:14.3e}{:15.7e}".format(x,sqrt(x),relerr(MySqrt(x),sqrt(x))))
+
+if __name__==__main__:
+    main()
+```
+
+<details>
+<summary>Exercise 22</summary>
+<pre>
+Type in the example.  Save it into a file called `rooter.py`.  Type in and save a file `testmain.py`
+<p>
+<code>
+import rooter
+sqrtrt=rooter.MySqrt(11.0)
+print(sqrtrt)
+</code>
+</p>
+<p>
+First run rooter.py as a standalone script, then run testmain.py.  What's the difference?
+</p>
+</pre>
+</p>
+</details>
+
+
+
+---
+
+# Advanced Topics
 
 ## Functional Programming
 
@@ -285,148 +434,9 @@ Write an equivalent list comprehension for the map and filter statements.
 </pre>
 </details>
 
-## Modules
-
-Modules are fundamental to the programming model of Python.  Modules are programming units that (should) consist of _related_ variables and functions that form a coherent block of _data_+_procedures_ (functions).  They are an extension of the concept of packaging code that we have already studied with functions.
-
-In Python every file you write is a module.  The name of themodule is the file name without the exension.  Every Python file must end in `.py` regardless of your operating system, so if you write a file `mycode.py` the corresponding module is `mycode`.  If you are using Jupyter you will need to export your code into a script in order to create a new module (Notebook tab -> Export to -> Executable Script).
-
-Modules that are not run as the main program must be _imported_ for its contents to be accessible.  When a module is imported, it is compiled to a special representation called __bytecode__.  A new file of the same base name with the suffix `.pyc` will be created.  
-
-Many modules and packages (collections of modules) are available through a base Python installation.  Anaconda provides dozens more, with others available for installation through the Environments tab of the Navigator.  We have already seen a handful of these built-in modules.  
-
-```
-import math 
-import matplotlib.pyplot
-```
-
-When we import a module we bring in its __namespace__.  A namespace is an environment that holds a group of identifiers, such as variable and function names.  In Python the namespaces take the name of the module in which they are defined.  Namespaces can be renamed when the module is imported, but __not__ afterward.
-
-### Importing Modules
-
-With a simple import statement we must refer to the module's components with its native namespace.
-
-```
-import math 
-import os 
-import numpy 
-
-z=math.sqrt(x)
-home_dir=os.getenv("HOME")
-A=numpy.zeros(200)
-```
-
-We can select only certain components with `from`
-
-```
-from modulename import func1, func2
-```
-
-Now only func1 and func2 can be used, and we do \_not\* precede their names with the native namespace.
-
-```
-z=func1(x,y)
-w=a+b*func2(z)
-```
-
-To import __all__ symbols without a prefix use
-
-```
-from modulename import *
-```
-
-This statement imports all names that do not begin with a single underscore (\_) and makes them accessible without being preceded by the module name.
-
-We can also rename individual symbols
-
-```
-from math import sqrt as squareroot
-w=squareroot(10.)
-```
-
-One of the most commonly used versions of import changes the name of the namespace, typically to something simpler.
-
-```
-imoprt numpy as np
-import pandas as pd
-
-z=np.zeros(200)
-data=pd.read_csv("my_data"file)
-```
-
-## Placeholder for Package Managers (pip or conda)
-
-### Main Modules
-
-When you run a script directly through the interpreter, such as by using the Run arrow in Spyder, it is in the "main" namespace.  Your module can also be imported into the interpreter or into another module.  It will still execute everything in the module, including requests for inpout and the like, unless you use the special variables \_\_name\_\_ and \_\_main\_\_ (two underscores on each side).  If you use \_\_main\_\_ you can place all code you want to execute only when run directly after a conditional.  
-
-```
-if __name__==__main__:
-    do_work
-```
-
-It is customary to include code for the main namespace into a function named `main()`.  
-
-```
-def main():
-    do_work
-
-if __name__==__main__:
-    main()
-```
-
-Example
-
-```
-#from __future__ import print_function, division #Python 2.7
-from math import sqrt
-
-def MySqrt(x):    
-    """Babylonian method."""    
-    my_sqrt=x/2.    
-    tol=1.e-12    
-    while abs(my_sqrt-s0)>tol:        
-        s0=my_sqrt        
-        my_sqrt=0.5*(my_sqrt+x/my_sqrt)    
-    return my_sqrt
-
-def relerr(x1,x2):    
-    return abs((x2-x1)/x2)
-
-def main():
-    print("{:s}{:s}{:s}".format("x".center(20),"sqrt".center(10),"rel_error".rjust(14)))    
-    N=5    
-    for i in range(-N,N+1):        
-        x=10.0**(-i)        
-        print("{:14.3e}{:14.3e}{:15.7e}".format(x,sqrt(x),relerr(MySqrt(x),sqrt(x))))
-
-if __name__==__main__:
-    main()
-```
-
-<details>
-<summary>Exercise 22</summary>
-<pre>
-Type in the example.  Save it into a file called `rooter.py`.  Type in and save a file `testmain.py`
-<p>
-<code>
-import rooter
-sqrtrt=rooter.MySqrt(11.0)
-print(sqrtrt)
-</code>
-</p>
-<p>
-First run rooter.py as a standalone script, then run testmain.py.  What's the difference?
-</p>
-</pre>
-</p>
-</details>
-
 ## Classes
 
  A __class__ is a generalized, programmer-defined data type that can contain multiple variables under one name, as well as functions that work on the data represented by those variables.  The data and functions are said to be _encapsulated_ in the class.  These programmer-defined types are the foundation of _object-oriented programming_.  Python is an object-oriented language even though most programmers mostly used classes written by others, so it is useful to understand the basics.  
-
-### Objects and Classes
 
  An "object" is a concept; the class is its most common representation as code.  Strictly speaking, an object must contain both data (variables) and procedures (functions) and it must be possible to declare variables of its type.  Declaring a variable of a class is called _instantiation_ and each variable is called an _instance_ of the object/class.  This is a key difference between a class and module; as we have seen, a module also contains variables and functions, but no variables can be declared of its type.
 
@@ -434,7 +444,6 @@ First run rooter.py as a standalone script, then run testmain.py.  What's the di
 
  Classes may have two special methods called __constructors__ and __destructors__.  Constructors are called when a new instance is created and perform whatever setup work is needed.  If the language supports a destructor, it removes an instance and releases the memory it occupies.
 
-## Classes in Python
 
  We have already been using classes in our Python program, since all data types (including the apparently "primitive" types) are actually classes. In Python syntax, an instance is separated from its methods by a period.  So when we invoke
 
@@ -614,4 +623,3 @@ aDataPoint=pData.fromfile(inputfile)
 ```
 
 The alternate constructor must return the new instance in order to invoke the constructor.
-
