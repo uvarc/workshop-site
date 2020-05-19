@@ -10,7 +10,7 @@ toc: true
 
 Pandas is a python data anlysis library. It was developed to bring a portion of the statistical capabilities of R into python. Pandas creates a table or spreadsheet-like view of the data, arranged in rows and columns. You can then manipulate the data in nearly unlimited ways.
 
-Pandas introduces the Series and Dataframe objects to represtnt data, incorporating MatPlotLib and many features of NumPy in to these objects to simplify data representation, analysis, and plotting. Pandas works with the [statsmodel](http://www.statsmodels.org/stable/index.html) and [scikit-learn](https://scikit-learn.org/stable/) packages for data modeling. Pandas supports data alignment, missing data, pivoting, groupng, merging, joining datasets, and many other features.
+Pandas introduces the Series and Dataframe objects to represent data, incorporating MatPlotLib and many features of NumPy in to these objects to simplify data representation, analysis, and plotting. Pandas works with the [statsmodel](http://www.statsmodels.org/stable/index.html) and [scikit-learn](https://scikit-learn.org/stable/) packages for data modeling. Pandas supports data alignment, missing data, pivoting, groupng, merging, joining datasets, and many other features.
 
 ## Series
 
@@ -66,24 +66,35 @@ A new column can be appended (the number of rows must be the same)
 grade_book["Letter Grade"]=["B","A","C","B","A"]
 ```
 
+You can view the columns headers in several ways.
+
+```
+grade_book.columns
+grade_book.columns.tolist()
+```
+
 Extract values into an Ndarray 
 
 ```
 grades=grade_book["Grade"].values 
 ```
 
+### loc and iloc
+These are methods for data filtering in pandas which you will commonly use to do practically any data selection task on a dataframe.
+
+
 You can also access the rows of a dataframe based on their index. These individual rows are _series_ objects. Because pandas rows are indexed, you can call rows by index, just as you would in list or a string.
 ```
 grade_book[2:4]   #returns just rows with index between 2 and 4 (just rows index 2,3. Remeber that slicing excludes top boundary!)
-
 ```
 
-You can use .iloc to achieve the same result. Remeber, iloc selects rows based on their index.
+You can use .iloc to achieve the same result. Remeber, iloc selects rows based on their index. You must specify rows and columns by their integer index in order to filter them.
+
 ```
 grade_book.iloc[[2,3]]
 ```
 
-.loc is a little more interesting. Though it seems a bit verbose, loc allows you to access row indexes based on the value of a column. 
+.loc is a little more interesting. Though it seems a bit verbose, loc allows you to access row indexes based on the value of a column. loc is label-based, meaning that we have to specify the names of the rows and columns that we want to filter out.
 
 ```
 second_years = grade_book.loc[grade_book['Year'] == 2]
@@ -120,8 +131,15 @@ wdata
 Pandas offers a number of ways to reorganize, group, and extract data.  Conditionals are accepted much as for NumPy arrays 
 
 ```
-good_grades = grade_book.loc[grade_book['Grade'] > 90]
+grouped_years = grade_book.groupby('Year')
+year_2 = grouped_years.get_group(2)
 ```
+
+Or if you just want to see the values and a count of the values of a column, use the .value_counts() method
+```
+grade_book['Year'].value_counts()
+```
+
 
 You can add dataframes together
 
@@ -175,14 +193,10 @@ new_grades=student_grades.fillna(0.)
 
 Many other options exist.  
 
-## Summary and Exercise
-
-Download the file [pandas_demo.ipynb](/data/pandas_demo.ipynb) and the data files [eighthr.data](/data/eighthr.data) and [eightr.names](/data/eighthr.names). If you are using Windows, check that it does not append ".txt" to the data files.  You may need to open File Explorer, go to View, and check "File name extensions."  Open the notebook in JupyterLab or Jupyter.  Go through the exercises in each cell.
-
-
-After all this, you might wonder how to visualize your data further. That is where Matplotlib, Seaborn, and many other packages come in. 
 
 # Matplotlib
+
+After all this data analysis, you might wonder how to visualize and represent your data for other humans. That is where Matplotlib, Seaborn, and many other data visualization packages come in. 
 
 Matplotlib is a Python package that can be used to produce high-quality plots similar to those of MATLAB<sup>TM</sup>.  Its homepage and documentation can be found at [matplotlib.org](https://matplotlib.org).  A full complement of plot types is available, including
 
@@ -193,194 +207,149 @@ Matplotlib is a Python package that can be used to produce high-quality plots si
 * pie charts 
 * contour plots
 
-The Matplotlib [gallery](https://matplotlib.org/gallery.html) provides many examples, with downloadable source files.  Many of our examples are taken directly from this site.
+### Simple real world examples
 
-Simple example:
+To walk through some examples of how to represent a pandas dataframe in various ways using Matplotlib, let's first read [this file](/files/MikeTroutData.csv) into a pandas dataframe. This file is the American baseball player Mike Trout's career statistics (as of 2019).
 
-```
-import numpy as np
-import matplotlib.pyplot as plt
-x=np.linspace(-4.,4.,401)
-y=1./(np.pi*(1.+x**2))
-plt.plot(x,y)
-plt.show()
-```
+Let's start by reading in the data and making some changes to the various columns. As you can see below, I am renaming the columns to make them easier to read when plotting them in Matplotlib
 
-
-
-
-This results in
-![SimplePlot.png](/images/python/SimplePlot.png)
-
-Let us write a more sophisticated example.  This is a scatter plot with points randomly placed according to a normal distribution.
+![MikeTroutScreenshot.png](/images/python/MikeTroutScreenshot.png)
 
 ```
-import numpy as np
-import matplotlib.pyplot as plt
-fig = plt.figure()
-ax = fig.add_subplot(111)
-ax.plot(10*np.random.randn(100),10*np.random.randn\  	(100), 'o')
-ax.set_title('Scatter Plot')
-plt.show()
+import pandas as pd
+import matplotlib.pyplot as plt     #I am pretty sure pyplot is the original functionality of matplotlib
+import matplotlib.ticker as ticker
+
+#read data from the csv file into an object called 'df'
+df = pd.read_csv("MikeTroutData.csv")
+
+#renaming columns into variables
+year = df['Year']
+hits = df['H']
+at_bats = df['AB']
+home_runs = df['HR']
+salary = df['Salary']
 ```
-
-![ScatterPlot.png](/images/python/ScatterPlot.png)
-
-We can place more sophisticated labeling or multiple plots on a graph with `subplot`
-
-```
-import numpy as np 
-import matplotlib.pyplot as plt 
-x1 = np.linspace(0.0, 5.0) 
-x2 = np.linspace(0.0, 2.0) 
-y1 = np.cos(2 * np.pi * x1) * np.exp(-x1) 
-y2 = np.cos(2 * np.pi * x2) 
-plt.subplot(2, 1, 1) 
-plt.plot(x1, y1, 'yo-') 
-plt.title('A tale of 2 subplots') 
-plt.ylabel('Damped oscillation') 
-plt.subplot(2, 1, 2) 
-plt.plot(x2, y2, 'r.-') 
-plt.xlabel('time (s)') 
-plt.ylabel('Undamped') 
-plt.show()
-```
-
-![Subplot.png](/images/python/Subplot.png)
-
-Many other options are available for annotations, legends, and so forth.
-
-More advanced plots are provided.  The following demonstrates streamlines for vector fields, such as fluid flows.
+Now we can do our simplest bar plot showing hits on the Y axis, year on the X axis. No bells and whistles here.
 
 ```
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.gridspec as gridspec
-
-w = 3
-Y, X = np.mgrid[-w:w:100j, -w:w:100j]
-U = -1 - X**2 + Y
-V = 1 + X - Y**2
-speed = np.sqrt(U**2 + V**2)
-
-fig = plt.figure(figsize=(7, 9))
-gs = gridspec.GridSpec(nrows=3, ncols=2, height_ratios=[1, 1, 2])
-
-#  Varying density along a streamline
-ax0 = fig.add_subplot(gs[0, 0])
-ax0.streamplot(X, Y, U, V, density=[0.5, 1])
-ax0.set_title('Varying Density')
-
-# Varying color along a streamline
-ax1 = fig.add_subplot(gs[0, 1])
-strm = ax1.streamplot(X, Y, U, V, color=U, linewidth=2, cmap='autumn')
-fig.colorbar(strm.lines)
-ax1.set_title('Varying Color')
-
-#  Varying line width along a streamline
-ax2 = fig.add_subplot(gs[1, 0])
-lw = 5*speed / speed.max()
-ax2.streamplot(X, Y, U, V, density=0.6, color='k', linewidth=lw)
-ax2.set_title('Varying Line Width')
-
-# Controlling the starting points of the streamlines
-seed_points = np.array([[-2, -1, 0, 1, 2, -1], [-2, -1,  0, 1, 2, 2]])
-
-ax3 = fig.add_subplot(gs[1, 1])
-strm = ax3.streamplot(X, Y, U, V, color=U, linewidth=2,
-                     cmap='autumn', start_points=seed_points.T)
-fig.colorbar(strm.lines)
-ax3.set_title('Controlling Starting Points')
-
-# Displaying the starting points with blue symbols.
-ax3.plot(seed_points[0], seed_points[1], 'bo')
-ax3.set(xlim=(-w, w), ylim=(-w, w))
-
-# Create a mask
-mask = np.zeros(U.shape, dtype=bool)
-mask[40:60, 40:60] = True
-U[:20, :20] = np.nan
-U = np.ma.array(U, mask=mask)
-
-ax4 = fig.add_subplot(gs[2:, :])
-ax4.streamplot(X, Y, U, V, color='r')
-ax4.set_title('Streamplot with Masking')
-
-ax4.imshow(~mask, extent=(-w, w, -w, w), alpha=0.5,
-          interpolation='nearest', cmap='gray', aspect='auto')
-ax4.set_aspect('equal')
-
-plt.tight_layout()
-plt.show()
+plt.bar(year, hits)
 ```
+![barplot1.png](/images/python/barplot1.png)
 
-![Streamplotdemo.png](/images/python/Streamplotdemo.png)
 
-Matplotlib can also make histograms, pie charts, and so forth.  These are commonly used with Pandas, and Pandas can access them directly, as we will see.
-
-For higher-dimensional plots we can use `contour`, `contourf`, `surface`, and others.
-
-Contour plot example:
+Let's add some labels to make this more readable (and better!). See that I am using the .xlabel and .ylabel methods. There are tons of ways to customize your plot.
 
 ```
-import matplotlib
-import numpy as np
-import matplotlib.cm as cm
-import matplotlib.pyplot as plt
+plt.xlabel('Year')
+plt.ylabel('# of Hits')           
+plt.suptitle('Mike Trout Hits per year')
+plt.bar(year, hits)
+```
+![barplot2.png](/images/python/barplot2.png)
+
+Turn it into a horizontal bar and change the color.
+```
+plt.xlabel('# of Hits')
+plt.ylabel('Year')
+plt.suptitle('Mike Trout Hits per year')
+plt.barh(year, hits, color='red')
+```
+![barplot3.png](/images/python/barplot3.png)
+
+Make it a line plot using the .plot() function (instead of bar() for a bar chart)
+
+```
+plt.xlabel('Year')
+plt.ylabel('# of Hits')
+plt.grid()
+plt.plot(year, hits)
+```
+![lineplot1.png](/images/python/lineplot1.png)
+
+We can have a line and a bar plot together. See that we now have 'At Bats' shown by the red line and 'Hits' in the blue bars. Except now our old labels do not work. It is probably time for something more sophisticated such as a legend.
+```
+plt.xlabel('Year')
+plt.ylabel('# of Hits')
+plt.plot(year, at_bats, color='red')
+plt.bar(year, hits)
+```
+![barline1.png](/images/python/barline1.png)
+
+Let's add the legend. Note the use of the .legend() method. If you don't include that, it won't happen! The rest is fairly self explanatory. The legend renders the 'label' argument in each plot method.
+```
+plt.xlabel('Year')
+plt.plot(year, at_bats, color='red', label='At Bats')
+plt.bar(year, hits, label='Hits')
+plt.legend()         #makes the legend happen!
+```
+![plotwithlegend1.png](/images/python/plotwithlegend1.png)
+
+You can make a stacked bar chart. This illustrates the idea that you are literally drawing these plots on top of each other. Also notice another nice touch, the year is turned 45 degrees to make room for all year labels.
+```
+plt.xlabel('Year')
+plt.bar(year, hits, label='Hits')
+plt.bar(year, home_runs, label='Home Runs')
+plt.legend()
+
+plt.xlabel('Year')
+plt.xticks(rotation=45)
+plt.xticks(year)                #shows all years in label
+```
+![stackedbar1.png](/images/python/stackedbar1.png)
+
+To make a grouped bar chart, do the same as a stacked bar and move the position of one of the bars as shown below. Notice the second bar(), the first argument is 'year+.2'. This is hard coded, but basically the position on the x axis is .2 units to the right of the default starting point.
+```
+plt.xlabel('Year')
+plt.xticks(rotation=45)
+plt.xticks(year)                #shows all years in label
+
+plt.bar(year, hits, width=.2, label='Hits')
+plt.bar(year+.2, home_runs, width=.2, label='Home Runs')
+plt.legend()
+```
+![groupedbar1.png](/images/python/groupedbar1.png)
+
+Now a little more sophistication. Suppose you want to see exactly how many hits each bar represents. Now we are introducing labels. See that this works just as in a for loop. We are iterating through each bar to make modifications to it. Does this start to feel a little overwhelming? Don't worry, there are many resources online, in particular Matplotlib Documentation and StackOverflow, which will guide you to a solution. Find a code example and adapt it for your own use.
+```
+plt.xlabel('Year')
+plt.xticks(rotation=45)
+plt.xticks(year)                #shows all years in label
+
+plt.ylabel('# of Hits')           
+plt.suptitle('Mike Trout Hits per year')
+
+for bar in plt.bar(year, hits):        
+    plt.text(bar.get_x() + .4,              #x position of label
+             bar.get_height() - 20,           #y position of label
+             bar.get_height(),              #actual value of label
+             ha='center',
+             va='bottom')
+```
+![barwithlabels.png](/images/python/barwithlabels.png)
 
 
-delta = 0.025
-x = np.arange(-3.0, 3.0, delta)
-y = np.arange(-2.0, 2.0, delta)
-X, Y = np.meshgrid(x, y)
-Z1 = np.exp(-X**2 - Y**2)
-Z2 = np.exp(-(X - 1)**2 - (Y - 1)**2)
-Z = (Z1 - Z2) * 2
+Remember, you can do math with your pandas series elements (in your dataframe). In this example, I am displaing a ratio of how much Mike Trout is paid per home run. I am also doing some formatting with the Y axis to represent dollar values.
+```
+cost_per_home_run = salary/home_runs
+
+plt.xlabel('Year')
+plt.xticks(rotation=45)
+plt.xticks(year)     
+
+####START HERE, CHANGE Y AXIS TO BE DOLLAR AMOUNT
 fig, ax = plt.subplots()
-CS = ax.contourf(X, Y, Z)
-ax.clabel(CS, inline=1, fontsize=10)
-ax.set_title('Simplest default with labels')
+formatter = ticker.FormatStrFormatter('$%1.0f')
+ax.yaxis.set_major_formatter(formatter)
+
+plt.ylabel('Price')           
+plt.suptitle('Mike Trout Yearly Cost Per Home Run')
+plt.bar(year, cost_per_home_run)
 ```
+![Formatter.png](/images/python/Formatter.png)
 
-Surface plots require the `mplot3d` package and some additional commands to set views and sometimes lighting.  
+# START HERE
 
-```
-# This import registers the 3D projection, but is otherwise unused.
-from mpl_toolkits.mplot3d import Axes3D  # noqa: F401 unused import
-
-import matplotlib.pyplot as plt
-from matplotlib import cm
-from matplotlib.ticker import LinearLocator, FormatStrFormatter
-import numpy as np
-
-
-fig = plt.figure()
-ax = fig.gca(projection='3d')
-
-# Make data.
-X = np.arange(-5, 5, 0.25)
-Y = np.arange(-5, 5, 0.25)
-X, Y = np.meshgrid(X, Y)
-R = np.sqrt(X**2 + Y**2)
-Z = np.sin(R)
-
-# Plot the surface.
-surf = ax.plot_surface(X, Y, Z, cmap=cm.coolwarm,
-                       linewidth=0, antialiased=False)
-
-# Customize the z axis.
-ax.set_zlim(-1.01, 1.01)
-ax.zaxis.set_major_locator(LinearLocator(10))
-ax.zaxis.set_major_formatter(FormatStrFormatter('%.02f'))
-
-# Add a color bar which maps values to colors.
-fig.colorbar(surf, shrink=0.5, aspect=5)
-
-plt.show()
-```
-
-Recent versions of Matplotlib can apply _style sheets_ to change the overall appearance of plots.  For example, NumPy has modified its default style, but the older one (shown in some of our illustrations) is available as "classic."  Matplotlib can also be styled to imitate the R package `ggplot`.  See the [gallery](https://matplotlib.org/gallery/style_sheets/style_sheets_reference.html#sphx-glr-gallery-style-sheets-style-sheets-reference-py)
-for the possibilities.
 
 <details>
 <summary>Exercise 25</summary>
@@ -438,4 +407,9 @@ sns.heatmap(flights, annot=True, fmt="d", linewidths=.5, ax=ax)
 The call to `sns.set()` imposes the default Seaborn theme to all Matplotlib plots as well as those using Seaborn.  Seaborn provides a number of methods to modify the appearance of its plots as well as Matplotlib plots created while the settings are in scope.  For many examples see their [tuturial](https://seaborn.pydata.org/tutorial/aesthetics.html#aesthetics-tutorial) on styling plots.
 
 ---
+
+
+## Summary and Exercise
+
+Download the file [pandas_demo.ipynb](/data/pandas_demo.ipynb) and the data files [eighthr.data](/data/eighthr.data) and [eightr.names](/data/eighthr.names). If you are using Windows, check that it does not append ".txt" to the data files.  You may need to open File Explorer, go to View, and check "File name extensions."  Open the notebook in JupyterLab or Jupyter.  Go through the exercises in each cell.
 
