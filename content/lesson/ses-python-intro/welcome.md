@@ -10,7 +10,7 @@ toc: true
 
 This workshop will allow students to go from beginner to basic proficiency in the Python language. Students should be able to commit to attend both morning and afternoon sessions both days for the greatest benefit.
 
-**Prerequisite:** None.
+**Prerequisites:** None.
 
 ## Table of Contents
 
@@ -21,6 +21,7 @@ This workshop will allow students to go from beginner to basic proficiency in th
 3. [Conditionals and Loops](/lesson/ses-python-intro/loops)
 4. [Lists, Tuples, Sets and Dictionaries](/lesson/ses-python-intro/compound-types)
 5. [Input/Output and Exception Handling](/lesson/ses-python-intro/io)
+6. [Exercises - Day 1](/lesson/ses-python-intro/exercises#day1)
 
 **Day 2**
 
@@ -28,7 +29,8 @@ This workshop will allow students to go from beginner to basic proficiency in th
 7. [Numpy and SciPy](/lesson/ses-python-intro/numpy-scipy)
 8. [Matplotlib, Seaborn, Pandas](/lesson/ses-python-intro/matplotlib-pandas)
 9. [Jupyter Lab](/lesson/ses-python-intro/jupyterlab)
-10. [Conclusion & Resources](/lesson/ses-python-intro/resources)
+10. [Exercises - Day 2](/lesson/ses-python-intro/exercises#day2)
+11. [Conclusion & Resources](/lesson/ses-python-intro/resources)
 
 ---
 
