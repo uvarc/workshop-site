@@ -337,7 +337,7 @@ plt.xlabel('Year')
 plt.xticks(rotation=45)
 plt.xticks(year)     
 
-####START HERE, CHANGE Y AXIS TO BE DOLLAR AMOUNT
+#change Y Axis to show dollar amount
 fig, ax = plt.subplots()
 formatter = ticker.FormatStrFormatter('$%1.0f')
 ax.yaxis.set_major_formatter(formatter)
@@ -348,19 +348,7 @@ plt.bar(year, cost_per_home_run)
 ```
 ![Formatter.png](/images/python/Formatter.png)
 
-# START HERE
-
-
-<details>
-<summary>Exercise 25</summary>
-<p>
-1. Type into your choice of Spyder's interpreter pane or a JupyterLab cell the example plotting codes we have seen so far.  These were all taken from the Matplotlib gallery.
-</p>
-<p>
-2. In the contour plot example, change <code>contour</code> to <code>contourf</code> and observe the difference.
-</p>
-</pre>
-</details>
+To see many other examples (with code), check out the [Matplotlib Gallery](https://matplotlib.org/3.1.1/gallery/index.html)
 
 ---
 
@@ -404,12 +392,15 @@ sns.heatmap(flights, annot=True, fmt="d", linewidths=.5, ax=ax)
 
 ![SeabornDemo2.png](/images/python/SeabornDemo2.png)
 
-The call to `sns.set()` imposes the default Seaborn theme to all Matplotlib plots as well as those using Seaborn.  Seaborn provides a number of methods to modify the appearance of its plots as well as Matplotlib plots created while the settings are in scope.  For many examples see their [tuturial](https://seaborn.pydata.org/tutorial/aesthetics.html#aesthetics-tutorial) on styling plots.
+The call to `sns.set()` imposes the default Seaborn theme to all Matplotlib plots as well as those using Seaborn.  Seaborn provides a number of methods to modify the appearance of its plots as well as Matplotlib plots created while the settings are in scope.  For many examples see their [tutorial](https://seaborn.pydata.org/tutorial/aesthetics.html#aesthetics-tutorial) on styling plots.
 
 ---
 
 
 ## Summary and Exercise
 
-Download the file [pandas_demo.ipynb](/data/pandas_demo.ipynb) and the data files [eighthr.data](/data/eighthr.data) and [eightr.names](/data/eighthr.names). If you are using Windows, check that it does not append ".txt" to the data files.  You may need to open File Explorer, go to View, and check "File name extensions."  Open the notebook in JupyterLab or Jupyter.  Go through the exercises in each cell.
+Download the file [pandas_demo.ipynb](/data/pandas_demo.ipynb) and the data files [eighthr.data](/data/eighthr.data) and [eightr.names](/data/eighthr.names). Make sure all three files are saved in the same directory. If you are using Windows, check that it does not append ".txt" to the data files. You may need to open File Explorer, go to View, and check "File name extensions."  Open the notebook in JupyterLab or Jupyter.  Go through the exercises in each cell.
 
+
+
+{{< series-buttons overview="/categories/summer-education-series-programming-in-python/" prev="/lesson/ses-python-intro/io/" next="/lesson/ses-python-intro/numpy-scipy/" >}}

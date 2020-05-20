@@ -8,7 +8,9 @@ toc: true
 
 ![AnacondaNavigator](/images/python/AnacondaNavigator.png)
 
-We will start with Jupyterlab.  Launching it will cause a tab to open in your Web browser. Select the Jupyterlab icon.  It may take a while to start.  When it opens, you will see a list of your files on the left and three icons to select the mode.  Jupyterlab incorporates a Jupyter notebook server as well as a plain Python console and a simple text editor.  We want to start a Jupyter notebook so click on the top tile. If this doesn't mean anything to you, don't worry. While we will mostly be using Spyder for the rest of the course, JupyterLab and Jupyter Notebooks serve many functions, one of which is to provide clean, easy to read code. The code is live, meaning you can modify it. When you run a "cell" the output is some visual representation of your data. This can be text, graphics, visuals, etc. 
+We will start with Jupyterlab.  Launching it will cause a tab to open in your Web browser. Select the Jupyterlab icon.  It may take a while to start.  When it opens, you will see a list of your files on the left and three icons to select the mode.  Jupyterlab incorporates a Jupyter notebook server as well as a plain Python console and a simple text editor.  We want to start a Jupyter notebook so click on the top tile. If this doesn't mean anything to you, don't worry. While we will mostly be using Spyder for the rest of the course. JupyterLab and Jupyter Notebooks serve many functions, one of which is to provide clean, easy to read code. The code is live, meaning you can modify it. When you run a "cell" the output is some visual representation of your data. This can be text, graphics, visuals, etc. 
+
+The Jupyter Notebook enables users to create and share documents that combine live code with narrative text, mathematical equations, visualizations, interactive controls, and other rich output. It also provides building blocks for interactive computing with data: a file browser, terminals, and a text editor.
 
 ![JupyterLabSetup](/images/python/JupyterLabSetup.png)
 
@@ -107,3 +109,6 @@ Put this into a new cell and run it.  In the upper cell change `sin` to `cos`.  
 ### Exporting
 
 You can export embedded text in your notebook into a script.  First make sure your notebook has a name.  If you have not named your current notebook yet, call it `first_script.ipynb`.  From the Notebook menu find Export To->Executable Script.  Save the script in the usual way from your browser.  If it is in `Downloads` move it to a location of your choice.  You can make a new directory for your Python scripts if you wish.
+
+
+{{< series-buttons overview="/categories/summer-education-series-programming-in-python/" prev="/lesson/ses-python-intro/io/" next="/lesson/ses-python-intro/numpy-scipy/" >}}

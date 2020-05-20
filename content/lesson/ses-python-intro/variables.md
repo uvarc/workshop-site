@@ -307,7 +307,7 @@ Examples
      4, 5, 6]
 
 
-```
+
 
 #### Comments
 
@@ -358,4 +358,4 @@ for i in z:
 
 
 
-
+{{< series-buttons overview="/categories/summer-education-series-programming-in-python/" prev="/lesson/ses-python-intro/io/" next="/lesson/ses-python-intro/numpy-scipy/" >}}

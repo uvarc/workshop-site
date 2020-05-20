@@ -122,7 +122,6 @@ else:
 
 ```
 
-## Make code obvious from text
 <details>
 <summary>Exercise 4</summary>
 <pre>
@@ -365,3 +364,4 @@ for i in range(10):
 print(s)
 ```
 
+{{< series-buttons overview="/categories/summer-education-series-programming-in-python/" prev="/lesson/ses-python-intro/io/" next="/lesson/ses-python-intro/numpy-scipy/" >}}
