@@ -125,52 +125,7 @@ If you'd like the new print function as well, modify this line to
 from __future__ import division, print_function
 ```
 
-<details>
-<summary>Exercise 1</summary>
-<p>Type into your choice of Spyder's interpreter pane or a JupyterLab cell the following assignments.
-<pre>
-<code>
-x=17.0
-Xs=11.0
-num_1=10
-num_2=14
-</code>
-</pre>
-Use expression evaluation to look at the results of the next lines. In JupyterLab each expression must be in its own cell. In the Spyer interpreter pane it will evaluate each expression when you go to the next line.
-<pre>
-<code>
-x
-Xs/x
-Xs//x
-Xs/x+x
-Xs/(x+x)
-x/num_1
-num_1/num_2
-num_2/num_1
-</code>
-</pre>
-</details>
 
-<details>
-<summary>Exercise 2</summary>
-Use expression evaluation to examine the results of the following:
-<pre>
-<code>
-4+2*3
-(4+2)*3
-20/4*5
-20/(4*5)
-.1+.2
-5//2
-5//-2
-11//3
-11.4//3.5
-11%3
-11.4%3.5 #?
-11.4-(11.4//3.5)*3.5
-</code>
-</pre>
-</details>
 
 ##### Boolean Operators
 
@@ -251,22 +206,7 @@ The Boolean operators have their own precedence rules. Highest to lowest are `no
 
 All comparison operators have the same precedence relative to each other.  All comparison operators outrank all Boolean operators.
 
-<details>
-<summary>Exercise 3</summary>
-Examine the results of the following:
-<pre>
-<code>
-a=11.0; b=9.0; c=45.0 n=3
-print(a &gt b)
-print(a &lt b and c==n)
-print(a &lt b or c==n)
-print(a &gt b or c==n and a &lt b)
-print((a &gt b or c==n) and a &lt b)
-is_greater=a &gt b
-print(is_greater,type(is_greater))
-</code>
-</pre>
-</details>
+
 
 #### Type Conversions
 
@@ -356,6 +296,70 @@ for i in z:
     count += 1
 ```
 
+### Exercises
 
+<details>
+<summary>Exercise 1</summary>
+<p>Type into your choice of Spyder's interpreter pane or a JupyterLab cell the following assignments.
+<pre>
+<code>
+x=17.0
+Xs=11.0
+num_1=10
+num_2=14
+</code>
+</pre>
+Use expression evaluation to look at the results of the next lines. In JupyterLab each expression must be in its own cell. In the Spyer interpreter pane it will evaluate each expression when you go to the next line.
+<pre>
+<code>
+x
+Xs/x
+Xs//x
+Xs/x+x
+Xs/(x+x)
+x/num_1
+num_1/num_2
+num_2/num_1
+</code>
+</pre>
+</details>
+
+<details>
+<summary>Exercise 2</summary>
+Use expression evaluation to examine the results of the following:
+<pre>
+<code>
+4+2*3
+(4+2)*3
+20/4*5
+20/(4*5)
+.1+.2
+5//2
+5//-2
+11//3
+11.4//3.5
+11%3
+11.4%3.5 #?
+11.4-(11.4//3.5)*3.5
+</code>
+</pre>
+</details>
+
+<details>
+<summary>Exercise 3</summary>
+Examine the results of the following:
+<pre>
+<code>
+a=11.0; b=9.0; c=45.0 n=3
+print(a &gt b)
+print(a &lt b and c==n)
+print(a &lt b or c==n)
+print(a &gt b or c==n and a &lt b)
+print((a &gt b or c==n) and a &lt b)
+is_greater=a &gt b
+print(is_greater,type(is_greater))
+</code>
+</pre>
+</details>
 
 {{< series-buttons overview="/categories/summer-education-series-programming-in-python/" prev="/lesson/ses-python-intro/io/" next="/lesson/ses-python-intro/numpy-scipy/" >}}

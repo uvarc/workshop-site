@@ -122,38 +122,6 @@ else:
 
 ```
 
-<details>
-<summary>Exercise 4</summary>
-<pre>
-The Body Mass Index is a widely-used number to classify body shapes.
-
-
-The categories are as follows (we have omitted the top two):
-Under 18.5: underweight
-18.5 to 25: normal 
-25 to 30: overweight
-30 to 35: obese class I
-35 to 40: obese class II
-40 to 45: obese class III
-45: obese class IV (morbidly obese)
-Using whichever unit system you prefer, write some code to assign the weight and height, compute the number, and determine its classification.  
-Assign your own weight and height.  Try a few others.  Use an online calculator to check your results.
-
-The formula in Imperial units (pounds, inches) is
-<code>
-BMI= (703 * weight) / height**2
-</code>
-In metric units (kg, m) the formula is
-<code>
-BMI=weight/height**2
-</code>
-
-
-So for example... If am 150lbs and 70 inches tall (5'10"), my BMI is 21.52 (Normal Weight)
-
-</pre>
-</details>
-
 ## Loops
 
 One of the most fundamental processes in a computer program is to repeat statements many (perhaps many, many, many) times. Loops are super important because if you figure out the logic to do something once, the computer can carry out that logic a nearly unlimited amount of times, while humans will tire of it quickly. Computers never run out of patience. 
@@ -204,26 +172,6 @@ print("x = ", x)
 What is this example doing?  Basically we are saying to computer:
 X = 0. For the numbers 0,1,2,3,4 (remember: python starts counting at 0), add the current number to x. So in this sense, x accumulates the total value of all the numbers in range(5).
 
-<details>
-<summary>Exercise 5</summary>
-<pre>
-Execute the following for loop:
-<code>
-x = 10
-for i in range(x):
-    print(i)
-</code>
-Modify this loop to print the values of i for 
-<code>
-range(10)
-range(1,10)
-range(0,10,2)
-range(1,0,-2)
-</code>
-Modify your loop to print the first N integers.  Be sure that N is set to a value before you try to run the loop.
-Write a loop that will sum the first N integers.
-</pre>
-</details>
 
 ##### Enumerate
 
@@ -259,13 +207,6 @@ while x < 10:
 ```
 Why didn't the results print "x = 10"?
 
-
-<details>
-<summary>Exercise 6</summary>
-<pre>
-Modify each for loop in the previous exercise to use a while loop instead.
-</pre>
-</details>
 
 ## Leaving Early
 
@@ -363,5 +304,68 @@ for i in range(10):
         s=s+i+j
 print(s)
 ```
+
+### Exercises
+
+<details>
+<summary>Exercise 4</summary>
+<pre>
+The Body Mass Index is a widely-used number to classify body shapes.
+
+
+The categories are as follows (we have omitted the top two):
+Under 18.5: underweight
+18.5 to 25: normal 
+25 to 30: overweight
+30 to 35: obese class I
+35 to 40: obese class II
+40 to 45: obese class III
+45: obese class IV (morbidly obese)
+Using whichever unit system you prefer, write some code to assign the weight and height, compute the number, and determine its classification.  
+Assign your own weight and height.  Try a few others.  Use an online calculator to check your results.
+
+The formula in Imperial units (pounds, inches) is
+<code>
+BMI= (703 * weight) / height**2
+</code>
+In metric units (kg, m) the formula is
+<code>
+BMI=weight/height**2
+</code>
+
+
+So for example... If am 150lbs and 70 inches tall (5'10"), my BMI is 21.52 (Normal Weight)
+
+</pre>
+</details>
+
+<details>
+<summary>Exercise 5</summary>
+<pre>
+Execute the following for loop:
+<code>
+x = 10
+for i in range(x):
+    print(i)
+</code>
+Modify this loop to print the values of i for 
+<code>
+range(10)
+range(1,10)
+range(0,10,2)
+range(1,0,-2)
+</code>
+Modify your loop to print the first N integers.  Be sure that N is set to a value before you try to run the loop.
+Write a loop that will sum the first N integers.
+</pre>
+</details>
+
+<details>
+<summary>Exercise 6</summary>
+<pre>
+Modify each for loop in the previous exercise to use a while loop instead.
+</pre>
+</details>
+
 
 {{< series-buttons overview="/categories/summer-education-series-programming-in-python/" prev="/lesson/ses-python-intro/io/" next="/lesson/ses-python-intro/numpy-scipy/" >}}
