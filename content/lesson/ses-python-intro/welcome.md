@@ -25,12 +25,12 @@ This workshop will allow students to go from beginner to basic proficiency in th
 
 **Day 2**
 
-6. [Functions, Modules and Classes](/lesson/ses-python-intro/functions)
-7. [Numpy and SciPy](/lesson/ses-python-intro/numpy-scipy)
-8. [Matplotlib, Seaborn, Pandas](/lesson/ses-python-intro/matplotlib-pandas)
-9. [Jupyter Lab](/lesson/ses-python-intro/jupyterlab)
-10. [Exercises - Day 2](/lesson/ses-python-intro/exercises#day2)
-11. [Conclusion & Resources](/lesson/ses-python-intro/resources)
+7. [Functions, Modules and Classes](/lesson/ses-python-intro/functions)
+8. [Numpy and SciPy](/lesson/ses-python-intro/numpy-scipy)
+9. [Matplotlib, Seaborn, Pandas](/lesson/ses-python-intro/matplotlib-pandas)
+10. [Jupyter Lab](/lesson/ses-python-intro/jupyterlab)
+11. [Exercises - Day 2](/lesson/ses-python-intro/exercises#day2)
+12. [Conclusion & Resources](/lesson/ses-python-intro/resources)
 
 ---
 

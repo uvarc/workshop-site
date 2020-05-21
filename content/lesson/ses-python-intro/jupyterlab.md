@@ -8,7 +8,7 @@ toc: true
 
 ![AnacondaNavigator](/images/python/AnacondaNavigator.png)
 
-We will start with Jupyterlab.  Launching it will cause a tab to open in your Web browser. Select the Jupyterlab icon.  It may take a while to start.  When it opens, you will see a list of your files on the left and three icons to select the mode.  Jupyterlab incorporates a Jupyter notebook server as well as a plain Python console and a simple text editor.  We want to start a Jupyter notebook so click on the top tile. If this doesn't mean anything to you, don't worry. While we will mostly be using Spyder for the rest of the course. JupyterLab and Jupyter Notebooks serve many functions, one of which is to provide clean, easy to read code. The code is live, meaning you can modify it. When you run a "cell" the output is some visual representation of your data. This can be text, graphics, visuals, etc. 
+We will start with Jupyterlab.  Launching it will cause a tab to open in your Web browser. Select the Jupyterlab icon.  It may take a while to start.  When it opens, you will see a list of your files on the left and three icons to select the mode.  Jupyterlab incorporates a Jupyter notebook server as well as a plain Python console and a simple text editor.  We want to start a Jupyter notebook so click on the top tile. JupyterLab and Jupyter Notebooks serve many functions, one of which is to provide clean, easy to read code. The code is live, meaning you can run it and modify it as-is in a notebook. When you run a "cell" the output is some visual representation of your data. This can be text, graphics, visuals, etc. 
 
 The Jupyter Notebook enables users to create and share documents that combine live code with narrative text, mathematical equations, visualizations, interactive controls, and other rich output. It also provides building blocks for interactive computing with data: a file browser, terminals, and a text editor.
 
@@ -45,13 +45,13 @@ print(Numerals[4:6])
 
 Run this cell.  Is the result what you expected?
 
-In a new cell Type
+In a new cell type:
 
 ```
-greeting="Hello World"
-hello=greeting[0:5]
-greeting2=hello+" there"
-output=greeting2+"\n"*2
+greeting = "Hello World"
+hello = greeting[0:5]
+greeting2 = hello + " there"
+output = greeting2 + "\n" * 2
 ```
 
 The symbol `\n` stands for "new line."  Run this cell.  In a new cell type
@@ -70,7 +70,7 @@ When your are working directly at the interpreter, you can type a variable and i
 
 ### Text Editor
 
-JupyterLab includes a simple text editor you can use to create files.  In the upper left of your JupyterLab tab, click `+` to start the launcher. Choose the text editor. Type
+JupyterLab includes a simple text editor you can use to create files.  In the upper left of your JupyterLab tab, click `+` to start the launcher. Choose the text file button. Now, in JupyterLab go to "file" and "save as" and save your file as something like "hello_func.py". Make sure to save this in the same directory you saved your notebook.
 
 ```
 def hello():
@@ -80,13 +80,13 @@ def hello():
 hello()
 ```
 
-Be sure to indent lines exactly as shown, and to return completely to the margin for `hello()`. Select your text. From the Editor menu select Language.  Scroll (far) down to Python.  You will now enable syntax coloring for this file.  From the File menu choose Save As. Name the file `hello_func.py`  By default, files will be saved into the folder in which JupyberLab is working. The default is your "User" directory.  After saving the file, return to your Jupyter notebook page and type
+After saving the file, return to your Jupyter notebook page and type
 
 ```
-import hello_func
+import hello_func   #or whatever you named your .py file (module)
 ```
 
-Then run the cell.
+Then run the cell. The output should be "hello", which is running from your hello_func.py. This shows you that you can import modules just as you would in a regular script or program.
 
 ### Plotting in JupyterLab
 
