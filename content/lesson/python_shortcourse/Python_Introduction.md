@@ -18,7 +18,7 @@ Once you have installed Anaconda, find the Navigator application.  You should se
 
 ![AnacondaNavigator](/images/python/AnacondaNavigator.png)
 
-We will start with Jupyterlab.  Launching it will cause a tab to open in your Web browser. Select the Jupyterlab icon.  It may take a while to start.  When it opens, you will see a list of your files on the left and three icons to select the mode.  Jupyterlab incorporates a Jupyter notebook server as well as a plain Python console and a simple text editor.  We want to start a Jupyter notebook so click on the top tile.
+We will start with Jupyterlab.  Launching it will cause a tab to open in your Web browser. Select the Jupyterlab icon.  It may take a while to start.  When it opens, you will see a list of your files on the left and three icons to select the mode.  Jupyterlab incorporates a Jupyter notebook server as well as a plain Python console and a simple text editor.  We want to start a Jupyter notebook so click on the top tile. 
 
 ![JupyterLabSetup](/images/python/JupyterLabSetup.png)
 
@@ -52,16 +52,6 @@ print(Numerals[4:6])
 ```
 
 Run this cell.  Is the result what you expected?
-
-Now add lines
-
-```
-Numerals.extend(list(range(11,21)))
-Numerals[3]=11
-del Numerals[4]
-print(Numerals)
-len(Numerals)
-```
 
 ##### Some Strings
 
@@ -107,6 +97,24 @@ import hello_func
 
 Then run the cell.
 
+#### Plotting in JupyterLab
+
+In a new cell, copy and paste the following. Then run the cell(s).  What happens?
+
+You need to add a line
+
+```
+import matplotlib.pylab as plt
+
+x = plt.linspace(-1.*plt.pi,plt.pi,100)
+y = plt.sin(x)
+plt.plot(x,y)
+
+plt.show()
+```
+
+Put this into a new cell and run it.  In the upper cell change `sin` to `cos`.  In the Notebook menu select `Run All Cells`
+
 #### Exporting
 
 You can export embedded text in your notebook into a script.  First make sure your notebook has a name.  If you have not named your current notebook yet, call it `first_script.ipynb`.  From the Notebook menu find Export To->Executable Script.  Save the script in the usual way from your browser.  If it is in `Downloads` move it to a location of your choice.  You can make a new directory for your Python scripts if you wish.
@@ -127,7 +135,9 @@ print("Hello World")
 
 into the editor pane, it is a script and you must run it in order for the command to be carried out.  Click the green arrow to run the current script.
 
-You can also type commands directly into the iPython console.  Just as with JupyterLab, if you type an expression its value will be printed.
+You can also type commands directly into the iPython console.  Just as with JupyterLab, if you type an expression its value will be printed. 
+
+Type the following directly into the console.
 
 ```
 In  [1]: x=5
@@ -209,17 +219,7 @@ To clear all values in the workspace, type at the iPython console
 
 Now re-run your since-plotting code and observe how the variables acquire values.
 
-#### Plotting in JupyterLab
 
-In JupyterLab, open a new notebook with the `+` icon.  From the Files sidebar, navigate to your projects folder.  Double-click on the `sine.py` file to open it in the text editor.  Cut and paste the text into one or more cells in JupyterLab.  Run the cell(s).  What happens?
-
-You need to add a line
-
-```
-plt.show()
-```
-
-Put this into a new cell and run it.  In the upper cell change `sin` to `cos`.  In the Notebook menu select `Run All Cells`
 
 ## Variables, Expressions, and Statements
 
@@ -228,6 +228,13 @@ Put this into a new cell and run it.  In the upper cell change `sin` to `cos`.  
 Variables in a computer program are not quite like mathematical variables.  They are placeholders for _locations in memory_.  Memory values consists of a sequence of binary digits (bits) that can be `0` or `1`, so all numbers are represented internally in __base 2__.  A standard called IEEE 754 defines the way decimal numbers are represented as base-2 numbers with a specific, and finite, number of bits for each value.  In most computer languages the number of bits per number can be 32 or 64, with some languages allowing 128-bit representations.  Eight bits is a _byte_, another frequently used unit in computing.
 
 Names of variables are chosen by the programmer.  Python is case sensitive, so `myVariable` is not the same as `Myvariable` which in turn is not the same as `MyVariable`.  With some exceptions, however, the programmer should avoid assigning names that differ only by case since human readers can overlook such differences.
+
+To create a variable, you use the assignment operator: `=`. `=` in python does not mean '=' in math class. In python, `=` is more analagous to the english word "is". See example: 
+
+```
+x = 5
+```
+In english, you can read this as 'the variable x represents the integer 5'. 
 
 ### Literals
 
@@ -437,7 +444,7 @@ Among the rules for expression evaluation is operator precedence.  If you write
 x*z-w/y+v
 ```
 
-the interpreter must follow a set of rules to evaluate each operation.  Python, as well as most other programming language, carries out the operations from left to right by the priority assigned to each operator.  In Python the ranking for arithmetic operators is, from first to last, \*\*, then (\* /) have equal rank, followed by (+ -) also with equal rank.  So in the expression above, the interpeter first evaluates x\*z, then w/y, then adds those two results together, and finally adds v.  If you want a different grouping you must use parentheses. For example, you may want to add y and v before dividing.
+the interpreter must follow a set of rules to evaluate each operation.  Python, as well as most other programming language, carries out the operations from left to right by the priority assigned to each operator.  In Python the ranking for arithmetic operators is, from first to last, \*\*, then (\* /) have equal rank, followed by (+ -) also with equal rank.  So in the expression above, the interpeter first evaluates x\*z, then w/y, then subtracts the second from the first result, and finally adds v.  If you want a different grouping you must use parentheses. For example, you may want to add y and v before dividing.
 
 ```
 x*z-w/(y+v)
@@ -454,7 +461,7 @@ All comparison operators have the same precedence relative to each other.  All c
 Examine the results of the following:
 <pre>
 <code>
-a=11.; b=9.; c=45. n=3
+a=11.0; b=9.0; c=45.0 n=3
 print(a &gt b)
 print(a &lt b and c==n)
 print(a &lt b or c==n)
@@ -514,8 +521,8 @@ Examples
 
 ```
 def func(z):
-    x=99.
-    y=1.
+    x=99.0
+    y=1
     return (x+y)/z
 
 if x==20:
@@ -523,6 +530,7 @@ if x==20:
    if (x>=30):
        for i in range(x):
            j=i+x
+           print(j)
 ```
 
 #### Comments
@@ -533,7 +541,7 @@ Examples
 
 * \#The following line of code computes a number
   z=a\*b+c
-* f=open("input.dat","r")  #open file for reading
+* f=open("input.csv","r")  #open file for reading
 
 #### Docstrings
 
@@ -613,7 +621,21 @@ else:
     final choice
 ```
 
-The "condition" must be an expression that evaluates to True or False; that is, it must be a Boolean variable or expression.  Boolean expressions are formed from other types of variables with conditional operators.
+The "condition" must be an expression that evaluates to True or False; that is, it must be a Boolean variable or expression.  Boolean expressions are formed from other types of variables with conditional operators. Here is another example of this in action:
+
+```
+import random
+
+x = random.randint(0, 20)    #x becomes random integer between 0 and 20
+
+if x < 10:
+    print('x is less than 10')
+elif x > 10:
+    print('x is greater than 10')
+else:
+    print('x is 10')
+
+```
 
 <details>
 <summary>Exercise 4</summary>
@@ -640,7 +662,7 @@ Using whichever unit system you prefer, write some code to assign the weight and
 
 ## Loops
 
-One of the most fundamental processes in a computer program is to repeat statements many (perhaps many, many, many) times.  Computers never run out of patience.
+One of the most fundamental processes in a computer program is to repeat statements many (perhaps many, many, many) times. While humans tire of repeated tasks, computers never run out of patience. 
 
 Like most languages, Python has two major types of loops.  
 
@@ -675,7 +697,8 @@ The interval is often called a stride.  If it is present the lower bound must al
 <pre>
 Execute the following for loop:
 <code>
-for i in range(10):
+x = 10
+for i in range(x):
     print(i)
 </code>
 Modify this loop to print the values of i for 
@@ -686,7 +709,7 @@ range(0,10,2)
 range(1,0,-2)
 </code>
 Modify your loop to print the first N integers.  Be sure that N is set to a value before you try to run the loop.
-Write a loop that will sum the first N integers.  Hint: you will need a variable called an <em>accumulator</em> whose value starts outside the loop at 0.
+Write a loop that will sum the first N integers.  Hint: you will need a variable called an <em>accumulator</em> whose value starts outside the loop at 0. Think, how do you add to an existing variable?
 </pre>
 </details>
 

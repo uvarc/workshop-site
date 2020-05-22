@@ -1,5 +1,6 @@
 ---
 title: "NumPy"
+author: "Karsten Siller"
 date: 2019-04-29T11:06:47-04:00
 draft: false
 weight: 7

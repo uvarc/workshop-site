@@ -1,5 +1,6 @@
 ---
 title: "Matplotlib, SciPy, and Pandas"
+author: "Erich Purpur"
 date: 2019-04-29T11:06:47-04:00
 draft: false
 weight: 8
