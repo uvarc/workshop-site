@@ -93,8 +93,30 @@ The only widely used base greater than 10 is hexadecimal (base 16). Print a tabl
 
 If you have time, try base 20 (vigesimal), which has been used in some historic cultures such as the Mayans, some African tribes, and some areas in and around India. (We presume that for this base, people counted on toes as well as fingers.) Use the letter symbols for digits >10 even though they aren’t historically or culturally correct.
 
+---
 
 # Specific Modules
+
+## NumPy
+
+### Project 1
+Create a new Python script that performs the following operations: 
+- Create a numpy array, x,  of values from 1 to 20, with step sizes of 0.01.
+- Create a numpy array, y, where y = sin(x) + cos(2x)
+- Optional: Enhance Project 1 by allowing the user to specify the x start, end and stride values.
+- Optional: Plot y as a function of x using the matplotlib package (see below)
+
+Remember you need to add the `import numpy` (or commonly used `import numpy as np`) statement in your script before you can use the numpy package.
+
+### Project 2
+Find the maximum of a 3d surface by “brute force” evaluation of x, y, z values. 
+
+![](/images/ses-python-intro/exercise-bruteforce.png)
+
+- Generate a list of N random values for each of x and y over the above range. For testing you can use N=8,000,000.
+- Determine the maximum of the 3d surface. 
+- Optional: Plot the 3d surface using the matplotlib package (see below).
+
 
 ## Pandas 
 These are in generally in order of difficulty, from easiest to most difficult. We have not covered all of these items in our lectures, so feel free to ask questions or better yet, ask Google. Ex: ("python pandas create new dataframe")

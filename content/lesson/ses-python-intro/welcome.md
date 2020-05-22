@@ -54,13 +54,13 @@ The Anaconda environment from [Anaconda Inc.](https://anaconda.org) is widely us
 
 Once you have installed Anaconda, find the Navigator application.  You should see a workspace similar to the screenshot, with several options for working environments, some of which are not installed.  We will use Spyder and Jupyterlab, which should already be installed.  If not, click the button to install the package.
 
-![Navigator]()
+![Navigator](/images/ses-python-intro/anaconda-navigator.png)
 
 ## Spyder
 
 Now we will switch to Spyder.  Spyder is an Integrated Development Environment, or __IDE__, aimed at Python.  It is well suited for developing longer, more modular programs.  To start it, return to the Anaconda Navigator and click on its tile.  It may take a while to open (watch the lower left of the Navigator).  Once it starts, you will see a layout with an editor pane on the left, an explorer pane at the top right, and an iPython console on the lower right.  This arrangement can be customized but we will use the default for our examples. Type code into the editor.  The explorer window can show files, variable values, and other useful information.  The iPython console is a frontend to the Python interpreter itself.  It is comparable to a cell in JupyterLab.
 
-![Spyder](/images/python/Spyder.png)
+![Spyder](/images/ses-python-intro/anaconda-spyder.png)
 
 ### The Editor Pane
 
@@ -78,6 +78,8 @@ into the editor pane, it is a script and you must run it in order for the comman
 ### The iPython Console
 
 You can also type commands directly into the iPython console.  Just as with JupyterLab, if you type an expression its value will be printed. You might wonder, why would I type commands directly into the iPython console? There are many reasons, but know that when you run your code either in the editor or console, new variables and objects are created and now living in the memory of your computer. These new variables are now immediately accessible by python. This is significant because sometimes it can take a while to run your code. If you realize you made a mistake in your code or want to test something on the fly, editing and re-running your script from the editor can be very time consuming. If you run a script and then want to modify, test, experiment with your data, you can do so much more quickly coding directly into the console.
+
+![Spyder](/images/ses-python-intro/anaconda-ipy-console.png)
 
 Type the following directly into the console.
 
@@ -104,6 +106,8 @@ In the iPython console we can also use up-down arrow keys to screen in our comma
 ### The Variable Explorer
 
 The Variable Explorer allows us to show the values of variables in our programs.  It is particularly helpful for looking at a group of values (an array). We can change the number of decimal places printed by clicking `Format` and typing in an expression of the `%3f` for three decimal places.  The Variable Explorer also includes icons for saving, refreshing, or importing data to our workspace.
+
+![Spyder](/images/ses-python-intro/anaconda-variable-expl.png)
 
 To clear all values in the workspace, type at the iPython console
 
@@ -158,7 +162,7 @@ plt.plot(x,y)
 
 You must save a file before you can run it.  Go the File menu, Save As, and name it `sine.py`  Use the project folder you created earlier.  When we run this code, we see the plot appear embedded in the iPython window.  We can right-click on the image to bring up a menu that allows us to save the plot.
 
-![SpyderSine](/images/python/SpyderSine.png)
+![SpyderSine](/images/ses-python-intro/anaconda-plot-example.png)
 
 ---
 
