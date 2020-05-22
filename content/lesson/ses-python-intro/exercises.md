@@ -1,5 +1,5 @@
 ---
-title: "10. Exercises"
+title: "10. Projects"
 author: "Karsten Siller"
 date: 2020-05-10
 categories: ["Summer Education Series: Programming in Python"]

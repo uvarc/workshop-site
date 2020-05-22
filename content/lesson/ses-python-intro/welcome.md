@@ -21,7 +21,7 @@ This workshop will allow students to go from beginner to basic proficiency in th
 * [3. Conditionals and Loops](/lesson/ses-python-intro/loops)
 * [4. Lists, Tuples, Sets and Dictionaries](/lesson/ses-python-intro/compound-types)
 * [5. Input/Output and Exception Handling](/lesson/ses-python-intro/io)
-* [10. Exercises - Day 1](/lesson/ses-python-intro/exercises#day1)
+* [10. Projects](/lesson/ses-python-intro/exercises#day1)
 
 **Day 2**
 
@@ -29,7 +29,7 @@ This workshop will allow students to go from beginner to basic proficiency in th
 * [7. Numpy and SciPy](/lesson/ses-python-intro/numpy-scipy)
 * [8. Matplotlib, Seaborn, Pandas](/lesson/ses-python-intro/matplotlib-pandas)
 * [9. Jupyter Lab](/lesson/ses-python-intro/jupyterlab)
-* [10. Exercises - Day 2](/lesson/ses-python-intro/exercises#day2)
+* [10. Projects](/lesson/ses-python-intro/exercises#day2)
 * [11. Conclusion & Resources](/lesson/ses-python-intro/resources)
 
 ---
