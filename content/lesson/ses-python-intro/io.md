@@ -1,7 +1,7 @@
 ---
 title: "5. Input/Output and Exception Handling"
 author: "Karsten Siller"
-date: 2020-05-11
+date: 2020-05-16
 categories: ["Summer Education Series: Programming in Python"]
 toc: true
 ---

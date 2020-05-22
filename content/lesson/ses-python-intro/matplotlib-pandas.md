@@ -1,7 +1,7 @@
 ---
 title: "8. Pandas, Matplotlib, Seaborn"
 author: "Erich Purpur"
-date: 2020-05-11
+date: 2020-05-13
 categories: ["Summer Education Series: Programming in Python"]
 toc: true
 ---
@@ -401,6 +401,6 @@ The call to `sns.set()` imposes the default Seaborn theme to all Matplotlib plot
 
 Download the file [pandas_demo.ipynb](/data/pandas_demo.ipynb) and the data files [eighthr.data](/data/eighthr.data) and [eightr.names](/data/eighthr.names). Make sure all three files are saved in the same directory. If you are using Windows, check that it does not append ".txt" to the data files. You may need to open File Explorer, go to View, and check "File name extensions."  Open the notebook in JupyterLab or Jupyter.  Go through the exercises in each cell.
 
+---
 
-
-{{< series-buttons overview="/categories/summer-education-series-programming-in-python/" prev="/lesson/ses-python-intro/io/" next="/lesson/ses-python-intro/numpy-scipy/" >}}
+{{< series-buttons overview="/categories/summer-education-series-programming-in-python/" prev="/lesson/ses-python-intro/numpy-scipy/" next="/lesson/ses-python-intro/jupyterlab/" >}}

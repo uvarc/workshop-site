@@ -1,7 +1,7 @@
 ---
 title: "6. Functions, Modules and Classes"
 author: "Karsten Siller"
-date: 2020-05-11
+date: 2020-05-15
 categories: ["Summer Education Series: Programming in Python"]
 toc: true
 ---

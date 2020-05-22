@@ -1,7 +1,7 @@
 ---
-title: "Exercises"
+title: "10. Exercises"
 author: "Karsten Siller"
-date: 2020-05-11
+date: 2020-05-10
 categories: ["Summer Education Series: Programming in Python"]
 toc: true
 ---
@@ -178,3 +178,6 @@ Start by downloading [this dataset](/files/cvile_2017_april.xlsx), which contain
 - Make grouped bar chart of minimum and maximum temperatures for each day
 - Several ways to do this, but plot the number of each weather 'condition'. Plot sunndy days, partly cloudy days, and rain days
 
+---
+
+{{< series-buttons overview="/categories/summer-education-series-programming-in-python/" prev="/lesson/ses-python-intro/jupyterlab/" next="/lesson/ses-python-intro/resources/" >}}

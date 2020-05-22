@@ -1,7 +1,7 @@
 ---
 title: "1. Welcome and Getting Started"
 author: "Karsten Siller"
-date: 2020-05-11
+date: 2020-05-20
 categories: ["Summer Education Series: Programming in Python"]
 toc: true
 ---

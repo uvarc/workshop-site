@@ -1,7 +1,7 @@
 ---
-title: "9. Conclusion & Resources"
+title: "11. Conclusion & Resources"
 author: "Erich Purpur"
-date: 2020-05-11
+date: 2020-05-09
 categories: ["Summer Education Series: Programming in Python"]
 toc: true
 ---
@@ -63,6 +63,9 @@ Because you are a part of the UVA community, you have many places to go for help
 
 - [Python Tutor](http://pythontutor.com/) - Are you confused as to why your for loop is producing crazy results? Iterate through your code step by step in a visual manner via python tutor.
 
+---
+
+{{< series-buttons overview="/categories/summer-education-series-programming-in-python/" prev="/lesson/ses-python-intro/exercises/" >}}
 
 
 

@@ -1,7 +1,7 @@
 ---
-title: "Jupyter Lab"
-author: "Karsten Siller"
-date: 2020-05-15
+title: "9. Jupyter Lab"
+author: "Erich Purpur"
+date: 2020-05-12
 categories: ["Summer Education Series: Programming in Python"]
 toc: true
 ---
@@ -110,5 +110,6 @@ Put this into a new cell and run it.  In the upper cell change `sin` to `cos`.  
 
 You can export embedded text in your notebook into a script.  First make sure your notebook has a name.  If you have not named your current notebook yet, call it `first_script.ipynb`.  From the Notebook menu find Export To->Executable Script.  Save the script in the usual way from your browser.  If it is in `Downloads` move it to a location of your choice.  You can make a new directory for your Python scripts if you wish.
 
+---
 
-{{< series-buttons overview="/categories/summer-education-series-programming-in-python/" prev="/lesson/ses-python-intro/io/" next="/lesson/ses-python-intro/numpy-scipy/" >}}
+{{< series-buttons overview="/categories/summer-education-series-programming-in-python/" prev="/lesson/ses-python-intro/matplotlib-pandas/" next="/lesson/ses-python-intro/exercises/" >}}

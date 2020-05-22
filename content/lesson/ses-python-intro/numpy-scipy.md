@@ -1,7 +1,7 @@
 ---
 title: "7. Numpy and SciPy"
 author: "Karsten Siller"
-date: 2020-05-11
+date: 2020-05-14
 categories: ["Summer Education Series: Programming in Python"]
 toc: true
 ---

@@ -1,7 +1,7 @@
 ---
 title: "4. Lists, Tuples, Sets and Dictionaries"
 author: "Karsten Siller"
-date: 2020-05-11
+date: 2020-05-17
 categories: ["Summer Education Series: Programming in Python"]
 toc: true
 ---

@@ -1,7 +1,7 @@
 ---
 title: "2. Variables, Expressions and Statements"
 author: "Erich Purpur"
-date: 2020-05-11
+date: 2020-05-19
 categories: ["Summer Education Series: Programming in Python"]
 toc: true
 ---
@@ -266,17 +266,17 @@ f=open("input.csv","r")            #open file for reading
 
 A special type of string literal is surrounded by triple double quotes """a""". When placed at the top of a unit of code, immediately after the declaration of the unit name if present, and indented to the correct level, the interpreter recognizes these as a special type of comment called a _doctring_ (documentation string).  Spyder automatically puts a mostly-empty docstring at the top of each new file.  Docstrings are used to summarize the purpose and usage of the code that follows.
 
-```
+<pre>
 def adding_function(x, y):
 """This function adds two numbers together and returns the result"""
 
     z = x + y
     return z
 
-```
+</pre>
 or
 
-```
+<pre>
 """
 This script does a bunch of simple math operations
 Date: 5/18/2020
@@ -294,7 +294,7 @@ counter = 0
 
 for i in z:
     count += 1
-```
+</pre>
 
 ### Exercises
 
@@ -362,4 +362,6 @@ print(is_greater,type(is_greater))
 </pre>
 </details>
 
-{{< series-buttons overview="/categories/summer-education-series-programming-in-python/" prev="/lesson/ses-python-intro/io/" next="/lesson/ses-python-intro/numpy-scipy/" >}}
+---
+
+{{< series-buttons overview="/categories/summer-education-series-programming-in-python/" prev="/lesson/ses-python-intro/welcome/" next="/lesson/ses-python-intro/loops/" >}}

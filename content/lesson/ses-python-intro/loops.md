@@ -1,7 +1,7 @@
 ---
 title: "3. Conditionals and Loops"
 author: "Erich Purpur"
-date: 2020-05-11
+date: 2020-05-18
 categories: ["Summer Education Series: Programming in Python"]
 toc: true
 ---
@@ -367,5 +367,6 @@ Modify each for loop in the previous exercise to use a while loop instead.
 </pre>
 </details>
 
+---
 
-{{< series-buttons overview="/categories/summer-education-series-programming-in-python/" prev="/lesson/ses-python-intro/io/" next="/lesson/ses-python-intro/numpy-scipy/" >}}
+{{< series-buttons overview="/categories/summer-education-series-programming-in-python/" prev="/lesson/ses-python-intro/variables/" next="/lesson/ses-python-intro/compound-types/" >}}
