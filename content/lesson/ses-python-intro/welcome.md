@@ -16,21 +16,21 @@ This workshop will allow students to go from beginner to basic proficiency in th
 
 **Day 1**
 
-1. [Welcome and Getting Started](/lesson/ses-python-intro/welcome)
-2. [Variables, Expressions and Statements](/lesson/ses-python-intro/variables)
-3. [Conditionals and Loops](/lesson/ses-python-intro/loops)
-4. [Lists, Tuples, Sets and Dictionaries](/lesson/ses-python-intro/compound-types)
-5. [Input/Output and Exception Handling](/lesson/ses-python-intro/io)
-6. [Exercises - Day 1](/lesson/ses-python-intro/exercises#day1)
+* [1. Welcome and Getting Started](/lesson/ses-python-intro/welcome)
+* [2. Variables, Expressions and Statements](/lesson/ses-python-intro/variables)
+* [3. Conditionals and Loops](/lesson/ses-python-intro/loops)
+* [4. Lists, Tuples, Sets and Dictionaries](/lesson/ses-python-intro/compound-types)
+* [5. Input/Output and Exception Handling](/lesson/ses-python-intro/io)
+* [10. Exercises - Day 1](/lesson/ses-python-intro/exercises#day1)
 
 **Day 2**
 
-7. [Functions, Modules and Classes](/lesson/ses-python-intro/functions)
-8. [Numpy and SciPy](/lesson/ses-python-intro/numpy-scipy)
-9. [Matplotlib, Seaborn, Pandas](/lesson/ses-python-intro/matplotlib-pandas)
-10. [Jupyter Lab](/lesson/ses-python-intro/jupyterlab)
-11. [Exercises - Day 2](/lesson/ses-python-intro/exercises#day2)
-12. [Conclusion & Resources](/lesson/ses-python-intro/resources)
+* [6. Functions, Modules and Classes](/lesson/ses-python-intro/functions)
+* [7. Numpy and SciPy](/lesson/ses-python-intro/numpy-scipy)
+* [8. Matplotlib, Seaborn, Pandas](/lesson/ses-python-intro/matplotlib-pandas)
+* [9. Jupyter Lab](/lesson/ses-python-intro/jupyterlab)
+* [10. Exercises - Day 2](/lesson/ses-python-intro/exercises#day2)
+* [11. Conclusion & Resources](/lesson/ses-python-intro/resources)
 
 ---
 
@@ -62,6 +62,8 @@ Now we will switch to Spyder.  Spyder is an Integrated Development Environment, 
 
 ![Spyder](/images/python/Spyder.png)
 
+### The Editor Pane
+
 If you are using Python 2.7, add the `future` line immediately after the triple-quoted section.
 
 If you type
@@ -71,6 +73,9 @@ print("Hello World")
 ```
 
 into the editor pane, it is a script and you must run it in order for the command to be carried out.  Click the green arrow to run the current script.
+
+
+### The iPython Console
 
 You can also type commands directly into the iPython console.  Just as with JupyterLab, if you type an expression its value will be printed. You might wonder, why would I type commands directly into the iPython console? There are many reasons, but know that when you run your code either in the editor or console, new variables and objects are created and now living in the memory of your computer. These new variables are now immediately accessible by python. This is significant because sometimes it can take a while to run your code. If you realize you made a mistake in your code or want to test something on the fly, editing and re-running your script from the editor can be very time consuming. If you run a script and then want to modify, test, experiment with your data, you can do so much more quickly coding directly into the console.
 
@@ -94,6 +99,17 @@ x+y
 We will see nothing if we run this as a script.  You must add a `print` command to see any output as well as running the script.
 
 In the iPython console we can also use up-down arrow keys to screen in our commands, and right-left arrows to edit them.
+
+
+### The Variable Explorer
+
+The Variable Explorer allows us to show the values of variables in our programs.  It is particularly helpful for looking at a group of values (an array). We can change the number of decimal places printed by clicking `Format` and typing in an expression of the `%3f` for three decimal places.  The Variable Explorer also includes icons for saving, refreshing, or importing data to our workspace.
+
+To clear all values in the workspace, type at the iPython console
+
+```
+%reset
+```
 
 ### Example
 
@@ -144,31 +160,7 @@ You must save a file before you can run it.  Go the File menu, Save As, and name
 
 ![SpyderSine](/images/python/SpyderSine.png)
 
-### The Variable Explorer
-
-The Variable Explorer allows us to show the values of variables in our programs.  It is particularly helpful for looking at a group of values (an array). We can change the number of decimal places printed by clicking `Format` and typing in an expression of the `%3f` for three decimal places.  The Variable Explorer also includes icons for saving, refreshing, or importing data to our workspace.
-
-To clear all values in the workspace, type at the iPython console
-
-```
-%reset
-```
-
-Now re-run your since-plotting code and observe how the variables acquire values.
-
 ---
-
-#### The Variable Explorer
-
-The Variable Explorer allows us to show the values of variables in our programs.  It is particularly helpful for looking at a group of values (an array). We can change the number of decimal places printed by clicking `Format` and typing in an expression of the `%3f` for three decimal places.  The Variable Explorer also includes icons for saving, refreshing, or importing data to our workspace.
-
-To clear all values in the workspace, type at the iPython console
-
-```
-%reset
-```
-
-Now re-run your since-plotting code and observe how the variables acquire values.
 
 ## Updating Packages in Anaconda
 
