@@ -335,14 +335,14 @@ with open('myfile','w') as f:
 # Exercises
 
 <details>
-<summary>Exercise 12 - Console IO</summary>
+<summary>Exercise 11 - Console IO</summary>
 <p>
 Use Spyder to write a <em>complete</em> program to compute BMI from weight and height input from a user.  First request the user's choice of units.  We have not spent much time with strings yet so you may use a digit to indicate the user's choice. Then request weight and height.  Remember that you will need to convert from strings.  Compute the BMI using the appropriate units and print the result to the console.   
 </p>
 </details>
 
 <details>
-<summary>Exercise 13 - File IO</summary>
+<summary>Exercise 12 - File IO</summary>
 <p>
 1. Open a file <code>data.txt</code> in write mode.  Write to the file three columns of numbers separated by commas.  These columns should be <code>n</code>, <code>n<sup>2</code> and <code>n<sup>3</code> for <code>n</code> going from 1 to 20.  
 

@@ -22,8 +22,8 @@ An __array__ is an ordered data structure that contains elements all of the same
 
 ```
 import numpy 
-A=numpy.array([1,0,0,0])
-lenA=len(A)    #number of rows 
+A = numpy.array([1,0,0,0])
+lenA = len(A)    #number of rows 
 A.size         #number of elements 
 A.shape        #tuple of dimensions 
 ```
@@ -31,17 +31,17 @@ A.shape        #tuple of dimensions
 Unlike most Python data types, arrays must be initialized before they can be addressed.  Several methods are available.
 
 * Convert from list 
-  * A=numpy.array([x,y,z])
+  * `A = numpy.array([x,y,z])`
 * Size and initialize to all zeros.  The dimensions must be in a tuple.  There is no explicit maximum rank, but memory can be rapidly exhausted with large arrays.
-  * A=numpy.zeros((10,10))
+  * `A = numpy.zeros((10,10))`
 * Size and initialize to arbitrary contents of memory 
-  * A=numpy.empty(100) 
+  * `A = numpy.empty(100)` 
 * Size and initialize to ones 
-  * A=numpy.ones((2,3,4))
+  * `A = numpy.ones((2,3,4))`
 * Identity matrix (NxN but only N is declared)
-  * A=numpy.eye(100) 
+  * `A = numpy.eye(100)` 
 * Initialize to all zeros, same shape as a pre-existing array 
-  * B=numpy.zeros_like(A)
+  * `B = numpy.zeros_like(A)`
 
 There are other functions that can be used to initialize but these are among the most common.
 
@@ -51,22 +51,22 @@ Python is typed by _inference_, meaning that it uses context to determine type, 
 
 ```
 import numpy as np
-Z=np.zeros((3,4),dtype='complex')
-M=np.array([True,True,False,False])
+Z = np.zeros((3,4),dtype='complex')
+M = np.array([True,True,False,False])
 ```
 
 Be sure to note the differences between
 
 ```
-A=np.zeros((10,10))
-IM=np.zeros((10,10),dtype='int')
-mask=np.zeros((10,10),dtype='bool')
+A = np.zeros((10,10))
+IM = np.zeros((10,10),dtype='int')
+mask = np.zeros((10,10),dtype='bool')
 ```
 
 We can explicitly declare multidimensional arrays as well.
 
 ```
-C=np.array([[1,2,3], [4,5,6]], dtype=float)
+C = np.array([[1,2,3], [4,5,6]], dtype=float)
 print(C)
 [[ 1.  2.  3.]
  [ 4.  5.  6.]]
@@ -75,24 +75,10 @@ print(C)
  However, this is not very practical for large arrays.  If we can declare an array as a linear sequence of numbers, we can use the built-in function `arange`.  The syntax is similar to `range` but it can take arguments of any numerical type, and it returns an Ndarray.
 
 ```
-V=np.arange(10,30,5)
+V = np.arange(10,30,5)
 print(V)
 [10 15 20 25]
 ```
-
-<details>
-<summary>Exercise 24</summary>
-<pre>
-Use the zeros function for the following:
-Initialize an array A1 of rank 1 with size 4 and type double.
-Initialize an array IU of rank 1 with size 4 and type integer.
-Initialze an array M1 of rank 1 with size 4 and type Boolean.
-Print each of the arrays you just created.
-Initialize a rank-3 array to arbitrary elements.
-</p>
-</pre>
-</p>
-</details>
 
 ## Array Elements and Slices
 
@@ -105,25 +91,25 @@ A[i,j,k]
 Negative indices count from the last element.
 
 ```
-V[-1]   #last element
-A[0,-2] #first in column 0, next to last in column 1.
+V[-1]   # last element
+A[0,-2] # first in column 0, next to last in column 1.
 ```
 
 Subarrays, or slices, are indicated by the colon-separated range operator we have seen several times now.   As usual for Python, the upper bound must be one greater than the intended upper bound, i.e. it is _non-inclusive_.  We can omit lower and upper bounds if they are the edges; `\[lb:\]` extends from `lb` to the last element, while `\[:ub\]` extends from the beginning to `ub-1`.  The entire axis is expressed as `\[:\]`.
 
 ```
 import numpy
-A=numpy.zeros((100,100))
-B=A[0:11,:]
-C=A[S1:E1,S2:E2]
-D=A[:,1]  #second column
+A = numpy.zeros((100,100))
+B = A[0:11,:]
+C = A[S1:E1,S2:E2]
+D = A[:,1]  # second column
 ```
 
 Pay close attention to negative indices, especially when they are part of a slice specification.
 
 ```
-V=np.array([0,1,2,3,4])
-u=np.arange(25).reshape(5,5)
+V = np.array([0,1,2,3,4])
+u = np.arange(25).reshape(5,5)
 V[-1]
  4
 V[:-1] #note element versus slice
@@ -140,7 +126,7 @@ u[:-1,:]
 NumPy refers to dimensions as axes.  Many NumPy intrinsic functions take an optional axis argument.  
 
 ```
-a=np.arange(12).reshape(3,4)
+a = np.arange(12).reshape(3,4)
 print(a.sum())
  66
 print(a.sum(0))
@@ -149,14 +135,14 @@ print(a.sum(1))
  [ 6 22 38]
 ```
 
- In sum and similar methods, such as prod, the axis argument is the one to be _summed out_.  In these examples, the first sum uses all elements, resulting in a single value.  In the second two examples, we reduce the rank by one and the shape of the result removes the summed axis.
+In sum and similar methods, such as prod, the axis argument is the one to be _summed out_.  In these examples, the first sum uses all elements, resulting in a single value.  In the second two examples, we reduce the rank by one and the shape of the result removes the summed axis.
 
 ## Array Attributes
 
  An Ndarray is a class with attributes that can be accessed.
 
 ```
-A=np.random.random((10,10))
+A = np.random.random((10,10))
 print(A.shape)
 (10,10)
 print(A.size)
@@ -172,10 +158,10 @@ dtype('float64')
  An Ndarray can take as its index an integer or Boolean array.
 
 ```
-A=np.array([-2.,3.,-8.,
+A = np.array([-2.,3.,-8.,
              -11.,12.,12.,45.,19.])
-I=np.array([2,4,5])
-valid=A>0
+I = np.array([2,4,5])
+valid = A>0
 print(A[I])
 [-8.,12.,12.]
 print(A[valid])
@@ -187,9 +173,9 @@ print(A[valid])
 NumPy includes several functions that can simplify reading and writing files.  For files with a simple spreadsheet-like structure, `loadtxt` works well.  The first argument can be either a file name or a file handle.
 
 ```
-x,y=np.loadtxt(f, delimiter=',', usecols=(0, 2), unpack=True)
-v=np.loadtxt(f,delimiter=',',usecols=(1,)) #usecols needs tuple
-W=np.loadtxt(fin,skiprows=2)
+x,y = np.loadtxt(f, delimiter=',', usecols=(0, 2), unpack=True)
+v = np.loadtxt(f,delimiter=',',usecols=(1,)) #usecols needs tuple
+W = np.loadtxt(fin,skiprows=2)
 ```
 
 If `unpack` is not specified, `loadtxt` returns the values into a rank-2 array; otherwise it returns the values into a tuple of rank-1 arrays.  Columns may optionally be selected with `usecols`.  Header rows can be ignored with `skiprows`.  Other options are available.
@@ -216,7 +202,7 @@ np.savez(A)  #compresses, saves as .npz
 Its counterpart is `load`
 
 ```
-A=np.load(f,A)
+A = np.load(f,A)
 ```
 
 ### Array Operations
@@ -224,12 +210,12 @@ A=np.load(f,A)
 NumPy provides many functions, including a large selection of mathematical functions, that accept array arguments as well as scalars.  They operate on the arrays _elementwise_.
 
 ```
-T=numpy.ones(4)
-Z=3.0*T+numpy.ones_like(T)
-I=numpy.array([1,0,0,0])
-A=math.pi*I
-B=numpy.sin(A)
-C=A/B  #remember: elementwise
+T = numpy.ones(4)
+Z = 3.0*T+numpy.ones_like(T)
+I = numpy.array([1,0,0,0])
+A = math.pi*I
+B = numpy.sin(A)
+C = A/B  #remember: elementwise
 ```
 
 ## Frequently Used NumPy Functions
@@ -271,8 +257,8 @@ import numpy as np
 def F2C(T):
     return 5.*(T-32.)/9.
 
-TempsF=np.arange(0.,213.,2.)
-TempsC=F2C(TempsF)
+TempsF = np.arange(0.,213.,2.)
+TempsC = F2C(TempsF)
 print(TempsC)
 print(F2C(50.))
 ```
@@ -284,7 +270,7 @@ Python can be quite slow, as is the case for most interpreted languages. Loops a
 Example: the built-in sum over an array or array slice can replace the corresponding loops, and is much faster.
 
 ```
-s=0
+s = 0
 for e in V:
     s+=s+e
 ```
@@ -292,7 +278,7 @@ for e in V:
 Use instead
 
 ```
-s=V.sum()
+s = V.sum()
 ```
 
 # SciPy
@@ -332,13 +318,26 @@ import numpy as np
 from scipy import linalg
 A = np.array([[1, 2], [3, 4]])
 b = np.array([[5], [6]])
-c=linalg.solve(A, b)
+c = linalg.solve(A, b)
 print(c)
 ```
 
 ---
 
 # Exercises
+
+<details>
+<summary>Exercise 18</summary>
+Use the <code>zeros</code> function for the following:
+<ul>
+	<li>Initialize an array A1 of rank 1 with size 4 and type double.</li>
+	<li>Initialize an array IU of rank 1 with size 4 and type integer.</li>
+	<li>Initialze an array M1 of rank 1 with size 4 and type Boolean.</li>
+	<li>Print each of the arrays you just created.</li>
+	<li>Initialize a rank-3 array to arbitrary elements.</li>
+</ul>	
+</p>
+</details>
 
 ---
 

@@ -562,27 +562,27 @@ string.whitespace    #space, tab, linefeed, return, formfeed, and vertical tab.
 # Exercises
 
 <details>
-<summary>Exercise 8 - Lists</summary>
-<pre>
+<summary>Exercise 7 - Lists</summary>
 <p>
-Type
+In Spyder, start with:
 <code>
-numList=list(range(10))
+numList = list(range(10))
 </code>
-Print the length of the list.
-Change the fourth element to 11.
-Extend the list with L=[20,30,40]
-Print the index of the item 9
-Remove that item from the list.
-Printe the current length of the list.
-Sort the list and then reverse the sorted version.
-</p>
-</pre>
+Then implement the following list manipulations:
+<ul>
+	<li>Print the length of the list.</li>
+	<li>Change the fourth element to 11.</li>
+	<li>Extend the list with <code>L = [20,30,40]</code></li>
+	<li>Print the index of the item 9.</li>
+	<li>Remove that item from the list.</li>
+	<li>Print the current length of the list.</li>
+	<li>Sort the list and then reverse the sorted version.</li>
+</ul>
 </p>
 </details>
 
 <details>
-<summary>Exercise 9 - Strings</summary>
+<summary>Exercise 8 - Strings</summary>
 <br>
 Compare the output of the following code:
 <pre>
@@ -618,7 +618,7 @@ print(number_1 < number_2)
 </details>
 
 <details>
-<summary>Exercise 10 - Dictionaries</summary>
+<summary>Exercise 9 - Dictionaries</summary>
 <pre>
 <p>
 Type into Spyder or Jupyterlab and run
@@ -642,7 +642,7 @@ for key in capitals:
 </details>
 
 <details>
-<summary>Exercise 11 - Sets</summary>
+<summary>Exercise 10 - Sets</summary>
 <pre>
 <p>
 Type at the interpeter 
