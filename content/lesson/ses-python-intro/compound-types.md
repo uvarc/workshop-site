@@ -12,6 +12,8 @@ Lists are one of the most important data types in Python.  They are flexible and
 
 Lists are dynamically sized and they are __mutable__.  Unlike most variables in Python, they must be declared in some manner before they can be used.
 
+## Initialization & Elements
+
 Creating an empty List:
 ```
 L = []
@@ -25,8 +27,6 @@ This returns a list of integers 0,1,..11
 
 As for all ordered types in Python, the indices start at 0.  The upper bound in any range is the limit we _do not_ reach.
 
-## List Elements
-
 To access a particular element by its index, we enclose the index value in square brackets `[]`.  Note that the list elements are zero-indexed , meaning that the first element has the index `0`, the second element has index `1`, and so forth.
 
 To get the third element in the list, we would use:
@@ -34,14 +34,19 @@ To get the third element in the list, we would use:
 L[2]
 ```
 
-
-
 Lists are mutable so individual elements can be changed. Let's create a new list and update element 2 (index `1`):
 ```
 myL = [1,2,3]
 myL[1] = 4
 print(myL)
 ```
+
+Getting the last element:
+```
+print(myL[-1])
+```
+
+## Sublists
 
 Sublists are obtained much like substrings.  They are often called _slices_.
 ```
@@ -51,52 +56,73 @@ Here the colon is again the range operator.  Always remember that the upper boun
 
 
 ```
-subL=L[2:]
+subL = L[2:]
 ```
 This extracts elements from the third to the last.
 
 ```
-subL=L[:3]
+subL = L[:3]
 ```
 This extracts the elements from the beginning to the third element (index number 2).
 
-A stride can also be specified
+A stride can also be specified as [start:end:stride]
 ```
-subL=L[1:7:2]
+subL = L[1:7:2]	
 ```
 
 This extracts elements 1, 3, and 5.
 
 ## Growing Lists
 
-Initialize
+Initialize and empty List:
 ```
 L = []
 ```
 
-Initialize a list of known size (the value can be a variable but must have a value when this statement is executed)
+Initialize a list of known size (the value can be a variable but must have a value when this statement is executed):
 ```
+N = 5
 L1 = [0] * N
 ```
 
-Append an element to a list
+**Append an element to a list:**
 ```
 L1.append("Graham")
 ```
 
-Extend a list with another list
+**Extend a list with another list:**
 ```
 L1.extend(["Michael","Terry"])
+# print entire list
+print (L1)
+# print last list element
+print (L1[-1])
+```
+Output:
+```
+[0, 0, 0, 0, 0, 'Graham', 'Michael', 'Terry']
+Terry
 ```
 
-Appending adds the argument as the new last element exactly as it appears. It takes any type.  Extending requires a list as its argument.  It concatenates that list at the end of the original one.  It is is equivalent to
-
 ```
-L = [1,2,3] + [4,5,6]
+L1.append(["Sophie","Mary"])
+print (L1)
+print (L1[-1])
+```
+Output:
+```
+[0, 0, 0, 0, 0, 'Graham', 'Michael', 'Terry', ['Sophie', 'Mary']]
+['Sophie', 'Mary']
 ```
 
-Insert an element
-```L.insert(i,item)
+{{< callout >}}
+<b>Appending</b> adds the argument as the new last element exactly as it appears. It takes any type.  <b>Extending</b> requires a list as its argument.  It concatenates that list at the end of the original one.  It is is equivalent to <code>L = [1,2,3] + [4,5,6]</code>.
+{{< /callout >}}
+
+
+**Insert an element:**
+```
+L.insert(i,item)
 ```
 This inserts `item` before element `i`. To add an item at the beginning of the list, use
 ```
@@ -125,70 +151,51 @@ The `pop` method allows an optional argument.  If it is absent, like in the firs
 
 Much more can be done with lists.
 
-* Length
-  * lenL=len(L)
-* Maximum or minimum value of the items (if they are the same type)
-  * max(L) min(L)
-* Membership test (returns Boolean)
-  * item in list
-* Index of first time item occurs
-  * myIndex=L.index(item)
-* Number of times item occurs
-  * numItem=L.count(item)
-* Sort a list (when possible) in place (overwrites the original)
-  * L.sort()
-* Return a sorted list to a new list
-  * Lsorted=sorted(L)
-* Reverse the list in place (overwrites)
-  * L.reverse()
-* There is no direct function to reverse and return another list, so we use this handy trick
-  * Lreversed=L\[::-1]
-* In Python 3, `reversed(L)` returns an _iterator_ and not a list, but you may use 
-  * Lreversed=list(reversed(L))
+* Length (number of elements): `lenL = len(L)`
+* Maximum or minimum value of the items (if they are the same type): `max(L)` `min(L)`
+* Membership test (returns Boolean): `item in list`
+* Index of first time item occurs: `myIndex = L.index(item)`
+* Number of times item occurs: `numItem = L.count(item)`
+* Sort a list (when possible) in place (overwrites the original): `L.sort()`
+* Return a sorted list to a new list: `Lsorted = sorted(L)`
+* Reverse the list in place (overwrites): `L.reverse()`
+* There is no direct function to reverse and return another list, so we use this handy trick: `Lreversed = L[::-1]`
+* In Python 3, `reversed(L)` returns an _iterator_ and not a list, but you may use `Lreversed = list(reversed(L))`
 
-<details>
-<summary>Exercise 8</summary>
-<pre>
-<p>
-Type
-<code>
-numList=list(range(10))
-</code>
-Print the length of the list.
-Change the fourth element to 11.
-Extend the list with L=[20,30,40]
-Print the index of the item 9
-Remove that item from the list.
-Printe the current length of the list.
-Sort the list and then reverse the sorted version.
-</p>
-</pre>
-</p>
-</details>
 
-Copying lists:
+
+## Copying lists
 
 ```
-A=[1,2,3,4]
-B=A
-print(A)
-B[2]=9
-print(a)
+A = [1,2,3,4]
+B = A
+print('A=',A)
+B[2] = 9		# update 3rd element in B
+print('Now A=',A)	# what happens to A?
+```
+Output:
+```
+A= [1, 2, 3, 4]
+Now A= [1, 2, 9, 4]
 ```
 
 B is just an alias (a "nickname") for A.  If B changes so does A.  __This is true for all mutable types.__ Slicing notation creates a _view_ that can make a copy if the entire list is included.
 
 ```
-C=A[:]
-C[1]=11
+C = A[:]
+C[1] = 11
 print(A)
 print(C)
 ```
+Output:
+```
+[1, 2, 9, 4]
+[1, 11, 9, 4]
+```
 
 An alternative is to explicitly use the list constructor function:
-
 ```
-D=list(A)
+D = list(A)
 ```
 
 ---
@@ -197,22 +204,38 @@ D=list(A)
 
 A tuple is a Python ordered sequence object that is similar to a list but is __immutable__.  Tuples are indicated by parentheses (round brackets). Like all ordered sequences, we can refer to individual elements with [n] and slices with [lb:ub].  As for all other ordered sequences, numbering of elements starts at 0 and the upper bound of a range is excluded.
 
-Creation
-  T=tuple((1,2,3))
-Length
-  len(T)
-Concatenation (as for strings, must assign to a new variable)
-  T3=T+T2
-Membership
-  3 in T
-Iteration
-  for i in T: print(i)
+## Tuple Creation
+```
+T = tuple((1,2,3))
+```
+
+## Length (number of elements)
+```
+len(T)
+```
+
+## Concatenation 
+```
+T3 = T + T2
+```
+Since tuples are immutable, the concatenated result must be assigned to a new variable.
+
+## Membership
+```
+3 in T
+```
+
+## Iteration
+```
+for i in T: 
+   print(i)
+```
 
 Although the tuple is immutable, any mutable _elements_ can be changed.
 
 ```
-myList=list()
-t=(myList,myList)
+myList = list()
+t = (myList,myList)
 myList.append(1)
 print(t)
 myList.append(2)
@@ -239,11 +262,11 @@ Occasionally we need a tuple with one element.  This is not the same thing as a 
 
 ## Lists or Tuples?
 
-A tuple should be used whenever the structure should not be dynamically changed or resized.  
+* A tuple should be used whenever the structure should not be dynamically changed or resized.  
 
-Tuples are preferred over lists for returning multiple values from functions.  
+* Tuples are preferred over lists for returning multiple values from functions.  
 
-Tuples are often used for heterogenous data, i.e. elements of different types.  List elements are typically homogeneous (all the same type) though this is not a requirement.
+* Tuples are often used for heterogenous data, i.e. elements of different types.  List elements are typically homogeneous (all the same type) though this is not a requirement.
 
 # Strings
 
@@ -254,17 +277,17 @@ The length of a string can be dynamically determined when the script is run, but
 String literals are indicated by double quotes "a".
 
 ```
-Line_1="The first line of a file\\n"
+Line_1 = "The first line of a file\\n"
 ```
 
 The `\n` symbol represents a new line and is treated as a single character.  The length of the above string is 25; spaces and the newline count.
 
 If a string literal is surrounded by triple double quotes """s""" it is verbatim, including newlines typed.
 
-```
-s="""This string is a
-     multiline quote."""
-```
+<pre>
+s = """This string is a
+       multiline quote."""
+</pre>
 
 If evaluated as an expression, the string will show the newline.  If the print function is used, it will print exactly as typed.
 
@@ -272,198 +295,330 @@ If evaluated as an expression, the string will show the newline.  If the print f
 
 Python supplies many string operators and functions.  Among the most commonly used are
 
-* concatenation
-  * s1 + s2
-* number of characters
-  * len(string)
-* type conversion from numerical type to string
-  * str(f)
-* type conversion from string to numerical type.  This must be possible according to the interpreter's rules for the numbers.  In particular, the string "3." does not represent an integer.
-  * float(s)
-* raw string: no characters are taken to be special characters.  Sometimes particularly useful on Windows. Either `r` or `R` can be used.
-  * r'This is a string \\ with no special characters \\n'
+* Concatenation: `s1 + s2`
+* Number of characters: `len(s)`
+* Type conversion from numerical type to string: `str(f)`
+* Type conversion from string to numerical type.  This must be possible according to the interpreter's rules for the numbers.  In particular, the string "3." does not represent an integer.  Convert to a foat: `float(s)`
+* Raw string: no characters are taken to be special characters.  Sometimes particularly useful on Windows. Either `r` or `R` can be used. `r'This is a string \\ with no special characters \\n'`
 
-<details>
-<summary>Exercise 9</summary>
-<pre>
-<code>
-s1="Today \n is a new day."
-s2=r"Today \n is a new day."
-print(s1)
-print(s2)
-</code>
-<p>
-Define variables <code>x=21.0, n=30, s="My new string."</code>.
-Convert <code>n</code> into a float and store the results into a new variable <code>y</code>
-Set a variable <code>the_answer</code> containing the literal string "42." (be sure to include the period). Type
-<code>
-z=int(the_answer)
-</code>
-What happened? Try
-<code>
-z=float(the_answer)
-</code>
-</pre>
-</p>
-</details>
 
 ## String Comparison Operators
 
 String comparisons use the familiar symbols but _lexical_ ordering.  This can result in some surprises if the strings represent numbers.  Never forget that strings are a completely different type from the numbers they may seem to represent!  Equality also requires exact equality, including spaces, matching cases, etc. 
 
-* Equality 
-  * ==
-* Lexically greater than or lexically greater than or equal
-  * \> >=
-* Lexically less than or lexically less than or equal 
-  * &lt; &lt;= 
+* Equality: `==`
+* Lexically greater than or lexically greater than or equal: `>`, `>=`
+* Lexically less than or lexically less than or equal: `<`, `<=` 
 
-Example
-
+**Examples:**
 ```
-s1="This is a string."
-s2="That is a string."
-s3="This is a string"  #no period
+s1 = "This is a string."
+s2 = "That is a string."
+s3 = "This is a string"  # no period
 print(s1==s3)
 print(s1<=s2)
 ```
 
-<details>
-<summary>Exercise 10</summary>
-<pre>
-<p>
-<code>
-number_1="10"
-number_2="2"
-print(number_1 &lt number_2)
-</code>
-</pre>
-</p>
-</details>
 
 ## Substrings
 
 Although a particular string variable is immutable, it is possible to extract substrings from it.
 
 ```
-sub_string=string[0:3]
+sub_string = string[0:3]
 ```
 
 In this context the colon (:) is called the _range operator_.  For all ordered types, Python counts _from zero_.  So the first character is numbered 0, the second is 1, and so forth.  The upper bound is always _exclusive_ in Python. Thus the sub_string consists of characters 0, 1, and 2.
 
 Since strings are immutable we cannot assign values to a substring; that is, they cannot appear on the left-hand sign of an assignment = statement.
 
-<details>
-<summary>Exercise 11</summary>
-Type into the Spyder interpreter pane or a JupyterLab notebook.  Remember that in Jupyter each evaluation expression should be run in its own cell.
-<pre>
-<code>
-title="This is a string."
-subtitle="This is another string."
-len(title)
-title+":"+subtitle
-newtitle=title+" : "+subtitle
-len(newtitle)
-newtitle[2:4]="at"  #Error-why?
-x=19.58
-print("The value of x is {:f}".format(x))
-</code>
-</pre>
-</details>
 
 ---
 
 # Dictionaries
 
-So far the compound types we have studied have been _ordered_.  We access elements by integer _indices_ numbered from 0 to N-1, where N is the total number of elements.  Dictionaries, in contrast, are _unordered_.  Elements are accessed by a _key_ which may be of any immutable type. If a tuple is used as a key, no elements of the tuple may be mutable.  Keys must be _unique_ (no duplication)
+So far the compound types we have studied have been _ordered_.  We access elements by integer _indices_ numbered from 0 to N-1, where N is the total number of elements.  Dictionaries, in contrast, are _unordered_.  Elements are accessed by a _key_ which may be of any immutable type. If a tuple is used as a key, no elements of the tuple may be mutable.  Keys must be _unique_ (no duplication).
 
 The key corresponds to a _value_ which may be of any type, including mutable types such as lists. The dictionary consists of all key-value pairs.  Dictionaries themselves are _mutable_ and may be of any length up to the limits of the system.  Dictionaries can be nested, i.e. the value may itself be a dictionary.
 
-Dictionaries are denoted by curly braces (){}).  A key-value pair is separated by a colon (:).
+Dictionaries are denoted by curly braces `{}`.  A key-value pair is separated by a colon `:`.
 
 ## Creating Dictionaries
 
-* Declaring an empty dictionary
-  * D={}
-  * Note the similarity to an empty list, but we use curly braces.
-* Enumerating the key-value pairs
-  * D={'Alice':'2341', 'Beth':'9102', 'Cecil':'3258'}
-  * Another option to create a dictionary with initial entries
-    * D=dict([('Alice','2341'),('Beth','9102'),('Cecil','3258')])
-* Adding an entry
-  * D['Dan']='5837'
-  * If the key 'Dan' is not present, it will be created and the specified value assigned.  If it is present already in the dictionary, the value will be replaced.
+**Declaring an empty dictionary:** 
+```
+D = {}
+```
+Note the similarity to an empty list, but we use curly braces.
+
+**Enumerating the key-value pairs**
+```
+D = {'Alice':'2341', 'Beth':'9102', 'Cecil':'3258'}
+```
+
+**Another option to create a dictionary with initial entries:**
+```
+D = dict([('Alice','2341'),('Beth','9102'),('Cecil','3258')])`
+```
+Note how we are passing a list of 2-element tuples. Each tuple contains a key and the associated value.
+
+## Adding an entry:
+```
+D['Dan']='5837'
+```
+If the key 'Dan' is not present, it will be created and the specified value assigned.  If it is present already in the dictionary, the value will be replaced.
 
 ## Dictionary Operations
 
-* Length of the Dictionary
-  * len(D)
+* Length of the Dictionary: `len(D)`
   * The length is the number of key-value pairs, i.e. the number of keys.
-* Delete the key-value entry
-  * del D[k]
-* Delete all entries
-  * D.clear()
-* Generate an iterator of keys 
-  * keys=list(D.keys())
+* Delete the key-value entry: `del D[k]`
+* Delete all entries: `D.clear()`
+* Generate an iterator of keys: `keys = list(D.keys())`
   * Omit the list constructor if all you need is an interator.
     * for k in D.keys():
     * In a `for` loop the keys() can be omitted:
-      * for k in D:
-* Generate an iterator of values
-  * D.values()
-* Analogous to `enumerate` for lists, we may use `items` to loop through a dictionary and obtain both the key and value
-  * for k,v in D.items():
+      `for k in D:`
+* Generate an iterator of values: `D.values()`
+* Analogous to `enumerate` for lists, we may use `items` to loop through a dictionary and obtain both the key and value:
+	`for k,v in D.items():`
 
-Quiz:
 
-What is the difference between
+## More Key Handling Methods
 
-```
-data=[]
-data[0]=12
-data[1]=4
-```
-
-and 
-
-```
-data={}
-data[0]=12
-data[1]=4
-```
-
-Are both correct? Is either correct?
-
-#### More Key Handling Methods
-
-D[key] alone results in an error if the key is not in the dictionary.  If you must attempt a lookup and do not know whether the key is present, use `get` instead.  
+`D[key]` alone results in an error if the key is not in the dictionary.  If you must attempt a lookup and do not know whether the key is present, use `get` instead.  
 
 ```
 D.get(key)
 ```
 
-This returns None by default if the key is not found.  It can be set to return a value with an optional argument.
+This returns None by default if the key is not found.  It can be set to return a value with an optional argument. In the following exampe we set the default return value to be `0`.
 
 ```
 D.get(key,0)
 ```
 
-The `in` operator may also be used 
+The `in` operator may also be used to check if a key is or is not contained in your dictionary:
 
 ```
-if key in D
+if key in D:
 ```
 
 or
 
 ```
-if key not in D
+if key not in D:
 ```
 
 depending on what you want to do.
 
+
+
+---
+
+# Sets
+
+Sets are another _unordered_ type.  No element of a set may be duplicated.  The set is mutable but all elements must be immutable.
+
+Create the set with the set() function.  Empty parentheses will not work because those are used for an empty tuple (which will thus remain empty).
+
+A frequent application of sets is to eliminate duplicates.
+
+```
+L = [0,0,1,4,8,8,10]
+M = list(set(L))
+print(M)
+```
+Output:
+```
+[0, 1, 10, 4, 8]
+```
+
+Since sets are unordered, the order of the `L` elements is not guaranteed to be preserved in the set.
+
+## Set Operations
+
+* Add an element to set s: `s.add(item)``
+* Extend with a sequence: `s.update(t)`
+* Remove an item (will fail silently if the item isn't present): `s.discard(item)`
+* Remove with an exception if the item isn't is_present: `s.remove(item)`
+
+The `in` operator works even though, strictly speaking, sets are not sequences.
+
+```
+item in s
+```
+
+Sets attempt to reproduce most of the properties of mathematical sets.  
+
+* Test for subset (a set is a subset of itself): `s2.issubset(s1)` or `s2 <= s1`
+* Test for superset (similarly, a set is its own superset): `s1.issuperset(s2)` or `s2 >= s1`
+* Intersection: `s1.intersection(s2)` or `s1 & s2`
+* Union -- the `|` symbol is a pipe: `s1.union(s2)` or `s1 | s2`
+* Symmetric difference (elements in one or the other but not both): `s1.symmetric_difference(s2)` or `s1 ^ s2`
+* Set difference (elements in s1 but not in s2): `s1.difference(s2)` or `s1 - s2`
+
+
+
+---
+
+# Advanced Topics
+
+## More String Handling
+
+One of Python's strong points is its ability to do many things well, so both numerical and textual analysis can be done with the same language.  We will look at some of the many ways we can manipulate strings in Python.  It is important to distinguish between string _functions_, which take a string as an argument, e.g. `sfunc(mystring)`, and string _methods_ that follow the string variable, e.g. `mystr.amethod()`.  Both perform operations on the string.  Later, when we have studied classes, we will better understand why the syntax differs.
+
+### Categorization
+
+Several methods are available to determine whether a string represents letters or may be text.  They apply to the entire string.
+
+* `isalpha`, `isdigit`, `isalnum`
+  * is alphabetic, is a number, is alphanumeric (combination of numbers and other characters)
+  	* **Example:** `mystr.isalpha()`
+* `isupper`, `islower`, `istitle`
+  	* is uppercase, is lowercase, is "title case" (first letter of each word capitalized, all others lower case)
+    * **Example:** `mystr.isupper()``
+
+### Manipulating Case
+
+* Switch to all uppercase:
+    * **Example:** `mystr.upper()`
+* Switch to all lowercase: 
+    * **Example:** `mystr.lower()`
+* Convert to title case: 
+    * **Example:** `mystr.title()`
+* Swap cases:
+    * **Example:** `mystr.swapcase()`
+
+### Searching and Tests
+
+* Find a character or substring.  Returns location of _first_ occurrence only.
+	* Search left to right:
+    	* **Example:** `mystr.find(s)`
+	* Search right to left:
+    	* **Example:** `mystr.rfind(s)`
+	* Both methods returns -1 if they don't find the substring.
+* Find the position of a substring 
+	* Search left to right:
+    	* **Example:** `mystr.index(s)``
+    * Search right to left:
+		* **Example:** `rindex(s)
+  	* Both throw an exception if the substring is not found.  	 
+* Count the number of occurrences of substring s.  Case sensitive.
+    * **Example:** `mystr.count(s)`
+
+### Modifying and Filling
+
+* Remove characters from beginning and end (empty parentheses remove spaces and tabs). The angle brackets indicate an option and are not typed
+  * mystr.strip(\\&lt;;chars>)
+    * mystr.rstrip(\\<chars>), string.lstrip(\\&lt;chars>)
+* Replace substring a with b
+  * mystr.replace(a,b)
+* Expand tabs 
+  * The default is 8 spaces per tab.  If a different number is required, pass it in the parentheses.
+  * mystr.expandtabs()  #8 spaces 
+  * mystr.expandtabs(4) #4 spaces 
+* Justify in a field of width n spaces 
+  * mystr.rjust(n), mystr.ljust(n)
+* Center in a field of n spaces 
+  * mystr.center(n)
+* Fill spaces with zeros in field of width n (mainly used for numbers)
+  * mystr.zfill(n)
+
+### Splitting and Joining
+
+* Split on string `s`.  Most usually splits on a character.  Splits on whitespace (spaces and tabs) when the delimiter isn't specified.  Returns a list with the delimiter removed, and each separated string an element of the list.
+  * split(\\&lt;s>)
+    * mystr.split()
+    * mystr.split(',')
+* Split on newlines.  Returns a list of the lines, with newline characters stripped.
+  * mystr.splitlines()
+* Join a list of strings with a string (usually a single character).  This is the inverse of split.  The syntax is peculiar, for Python.
+  * \\&lt;s>.join(list)
+    * "".join(strlist)
+      * joins a list with no spaces or other characters between
+    * ",".join(strlist)
+      * joins a list with commas between
+
+### String Module
+
+All of the string operators and methods are available in the base Python installation.  However, there is a package `string` which contains some useful string literals.
+
+```
+import string 
+string.ascii_letters
+string.ascii_lowercase 
+string.ascii_uppercase 
+string.digits 
+string.hexdigits 
+string.octdigits 
+string.punctuation   #(depends on the locale)
+string.printable 
+string.whitespace    #space, tab, linefeed, return, formfeed, and vertical tab.
+```
+
+---
+
+# Exercises
+
 <details>
-<summary>Exercise 12</summary>
+<summary>Exercise 8 - Lists</summary>
+<pre>
+<p>
+Type
+<code>
+numList=list(range(10))
+</code>
+Print the length of the list.
+Change the fourth element to 11.
+Extend the list with L=[20,30,40]
+Print the index of the item 9
+Remove that item from the list.
+Printe the current length of the list.
+Sort the list and then reverse the sorted version.
+</p>
+</pre>
+</p>
+</details>
+
+<details>
+<summary>Exercise 9 - Strings</summary>
+<br>
+Compare the output of the following code:
+<pre>
+s1 = "Today \n is a new day."
+s2 = r"Today \n is a new day."
+print(s1)
+print(s2)
+print("Length of s1:", len(s1))
+</pre>
+We can slice a string:
+<pre>
+newstr = s1[13:16]
+print(newstr)
+</pre>
+But we cannot modify string elements (i.e. characters) in place. So this does not work and produces an error:
+<pre>
+s1[13:16] = "bad"
+</pre>
+<p>
+Convert string <code>mynumber</code> into a float and store the results into a new variable <code>number</code>.
+<pre>
+mynumber = "42.1"
+number = float(mynumber)
+print(number + 5.3)
+</pre>
+
+Compare two strings:
+<pre>
+number_1 = "10"
+number_2 = "2"
+print(number_1 < number_2)
+</pre>
+</details>
+
+<details>
+<summary>Exercise 10 - Dictionaries</summary>
 <pre>
 <p>
 Type into Spyder or Jupyterlab and run
@@ -486,58 +641,8 @@ for key in capitals:
 </p>
 </details>
 
----
-
-# Sets
-
-Sets are another _unordered_ type.  No element of a set may be duplicated.  The set is mutable but all elements must be immutable.
-
-Create the set with the set() function.  Empty parentheses will not work because those are used for an empty tuple (which will thus remain empty).
-
-A frequent application of sets is to eliminate duplicates.
-
-```
-L=[0,0,1,4,8,8,10]
-M=list(set(L))
-print(M)
-```
-
-Since sets are unordered, the order of `L` is not guaranteed to be preserved.
-
-## Set Operations
-
-* Add an element to set s
-  * s.add(item)
-* Extend with a sequence 
-  * s.update(t)
-* Remove an item (will fail silently if the item isn't present)
-  * s.discard(item)
-* Remove with an exception if the item isn't is_present 
-  * s.remove(item)
-
-The `in` operator works even though, strictly speaking, sets are not sequences.
-
-```
-item in s
-```
-
-Sets attempt to reproduce most of the properties of mathematical sets.  
-
-* Test for subset (a set is a subset of itself)
-  * s2.issubset(s1) or s2&lt;=s1
-* Test for superset (similarly, a set is its own superset)
-  * s1.issuperset(s2) or s2>=s1
-* Intersection
-  * s1.intersection(s2) or s1&s2
-* Union -- the | symbol is a pipe 
-  * s1.union(s2) or s1|s2
-* Symmetric difference (elements in one or the other but not both)
-  * s1.symmetric_difference(s2) or s1^s2
-* Set difference (elements in s1 but not in s2)
-  * s1.difference(s2) or s1-s2
-
 <details>
-<summary>Exercise 13</summary>
+<summary>Exercise 11 - Sets</summary>
 <pre>
 <p>
 Type at the interpeter 
@@ -567,101 +672,5 @@ states|states2
 
 ---
 
-# Advanced Topics
+{{< series-buttons overview="/categories/summer-education-series-programming-in-python/" prev="/lesson/ses-python-intro/loops/" next="/lesson/ses-python-intro/io/" >}}
 
-## More Advanced String Handling
-
-One of Python's strong points is its ability to do many things well, so both numerical and textual analysis can be done with the same language.  We will look at some of the many ways we can manipulate strings in Python.  It is important to distinguish between string _functions_, which take a string as an argument, e.g. `sfunc(mystring)`, and string _methods_ that follow the string variable, e.g. `mystr.amethod()`.  Both perform operations on the string.  Later, when we have studied classes, we will better understand why the syntax differs.
-
-#### Categorization
-
-Several methods are available to determine whether a string represents letters or may be text.  They apply to the entire string.
-
-* isalpha, isdigit, isalnum
-  * is alphabetic, is a number, is alphanumeric (combination of numbers and other characters)
-    * mystr.isalpha()
-* isupper, islower, istitle
-  * is uppercase, is lowercase, is "title case" (first letter of each word capitalized, all others lower case)
-    * mystr.isupper()
-
-#### Manipulating Case
-
-* Switch to all uppercase
-  * upper
-    * mystr.upper()
-* Switch to all lowercase
-  * lower 
-    * mystr.lower()
-* Convert to title case 
-  * title 
-    * mystr.title()
-* Swap cases 
-  * swapcase
-    * mystr.swapcase()
-
-#### Searching and Tests
-
-* Find a character or substring.  Returns location of _first_ occurrence only.
-  * find(s)
-    * returns -1 if it does not find the substring 
-    * mystr.find(s)
-  * rfind(s)
-    * searches right to left
-* index(s)
-  * throws an exception if the substring is not found 
-    * mystr.index(s)
-  * rindex(s)
-    * searches right to left
-* count(s)
-  * Counts the number of occurrences of substring s.  Case sensitive.
-    * mystr.count(s)
-
-#### Modifying and Filling
-
-* Remove characters from beginning and end (empty parentheses remove spaces and tabs). The angle brackets indicate an option and are not typed
-  * mystr.strip(\\&lt;;chars>)
-    * mystr.rstrip(\\<chars>), string.lstrip(\\&lt;chars>)
-* Replace substring a with b
-  * mystr.replace(a,b)
-* Expand tabs 
-  * The default is 8 spaces per tab.  If a different number is required, pass it in the parentheses.
-  * mystr.expandtabs()  #8 spaces 
-  * mystr.expandtabs(4) #4 spaces 
-* Justify in a field of width n spaces 
-  * mystr.rjust(n), mystr.ljust(n)
-* Center in a field of n spaces 
-  * mystr.center(n)
-* Fill spaces with zeros in field of width n (mainly used for numbers)
-  * mystr.zfill(n)
-
-#### Splitting and Joining
-
-* Split on string `s`.  Most usually splits on a character.  Splits on whitespace (spaces and tabs) when the delimiter isn't specified.  Returns a list with the delimiter removed, and each separated string an element of the list.
-  * split(\\&lt;s>)
-    * mystr.split()
-    * mystr.split(',')
-* Split on newlines.  Returns a list of the lines, with newline characters stripped.
-  * mystr.splitlines()
-* Join a list of strings with a string (usually a single character).  This is the inverse of split.  The syntax is peculiar, for Python.
-  * \\&lt;s>.join(list)
-    * "".join(strlist)
-      * joins a list with no spaces or other characters between
-    * ",".join(strlist)
-      * joins a list with commas between
-
-#### String Module
-
-All of the string operators and methods are available in the base Python installation.  However, there is a package `string` which contains some useful string literals.
-
-```
-import string 
-string.ascii_letters
-string.ascii_lowercase 
-string.ascii_uppercase 
-string.digits 
-string.hexdigits 
-string.octdigits 
-string.punctuation   #(depends on the locale)
-string.printable 
-string.whitespace    #space, tab, linefeed, return, formfeed, and vertical tab.
-```

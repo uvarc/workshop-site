@@ -335,3 +335,12 @@ b = np.array([[5], [6]])
 c=linalg.solve(A, b)
 print(c)
 ```
+
+---
+
+# Exercises
+
+---
+
+{{< series-buttons overview="/categories/summer-education-series-programming-in-python/" prev="/lesson/ses-python-intro/functions/" next="/lesson/ses-python-intro/matplotlib-pandas/" >}}
+
