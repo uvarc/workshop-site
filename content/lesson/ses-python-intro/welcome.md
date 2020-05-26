@@ -137,7 +137,7 @@ y = plt.sin(x)
 plt.plot(x,y)
 ```
 
-You must save a file before you can run it.  Go the File menu, Save As, and name it `sine.py`  Use the project folder you created earlier.  When we run this code, we see the plot appear embedded in the iPython window.  We can right-click on the image to bring up a menu that allows us to save the plot.
+You must save a file before you can run it.  Go the File menu, Save As, and name it `sine.py`  Use the project folder you created earlier.  When we run this code, we see the plot appear embedded in a window associated with the **Plots** tab (If you have an older Spyder version, the plot will be embedded in the iPython window).  We can right-click on the image to bring up a menu that allows us to save the plot.
 
 ![SpyderSine](/images/ses-python-intro/anaconda-plot-example.png)
 
