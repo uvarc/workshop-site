@@ -137,11 +137,17 @@ _While loops_ do not start with a predetermined number of iterations.  They term
 ```
 for item in iterator:
     block1
-else:
-    block2
 ```
 
 The `else` clause is executed if the loop completes all iterations and is optional.  The colons are required as indicated.  Code blocks must be indented.  The `item` is a variable which successively takes on the values in the `iterator`.  An iterator is a data structure through which we can step, item by item.  Until we study some more general examples, let's look at the __range__ iterator. 
+
+Very simple example:
+```
+x = 3
+
+for i in range(x):
+    print(i)
+```
 
 ##### Range
 
@@ -172,6 +178,18 @@ print("x = ", x)
 What is this example doing?  Basically we are saying to computer:
 X = 0. For the numbers 0,1,2,3,4 (remember: python starts counting at 0), add the current number to x. So in this sense, x accumulates the total value of all the numbers in range(5).
 
+Another example (this time with strings):
+```
+old_cities = ['Charlottesville', 'Richmond', 'Roanoke']
+
+new_cities = []
+
+for city in old_cities:
+    city = city + ", Virginia"
+    new_cities.append(city)
+    
+print(new_cities)
+```
 
 ##### Enumerate
 
