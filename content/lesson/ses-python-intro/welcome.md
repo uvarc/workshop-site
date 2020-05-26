@@ -125,38 +125,15 @@ import matplotlib.pylab as plt
 
 First we see a yellow triangle, indicating a syntax problem -- in this case, `plt` is imported but not used.  We ignore this warning since we will be using it.  As we type
 
+Type in the following statement on the next line:
 ```
-x=plt.
+x = plt.linspace(-1.*plt.pi,plt.pi,100)
 ```
+After typing `x = plt.linspace` the editor should show a context menu of the required function arguments, in this case a start value, stop value that define the range of x values, and an optional argument `num=` defining the number of equally spaced values across the x range.  Here we plot 100 values in the -Pi <= x <= Pi range. 
 
-we see the editor show us our choices from the pylab _package_. We can select one or keep typing.  We type
-
+Add two more lines:
 ```
-x=plt.linsp
-```
-
-to narrow it down further.  That leads us to
-
-```
-x=plt.linspace
-```
-
-The editor then pops up a box with the arguments required by linspace.  Finally we type inside the parentheses
-
-```
--1.*plt.pi,plt.pi,100
-```
-
-for a final result of
-
-```
-x=plt.linspace(-1.*plt.pi,plt.pi,100)
-```
-
-After this we type
-
-```
-y=plt.sin(x)
+y = plt.sin(x)
 plt.plot(x,y)
 ```
 
@@ -166,21 +143,35 @@ You must save a file before you can run it.  Go the File menu, Save As, and name
 
 ---
 
+
 ## Updating Packages in Anaconda
 
-Before working with seaborn, check that you have at least version 0.9 installed.  To update packages using the Anaconda Navigator, start Navigator, click Environments, change the dropdown from `Installed` to `Updateable`, then go through and select packages you wish to upgrade by clicking on the checkbox and selecting "Mark for update" from the dropdown.  The checkbox will change to an arrow.  When you select a package, a green `Apply` button and a red `Clear` button will appear at the lower right.  When you have marked all packages you wish to update, click the `Apply` button.  (It may take a while to complete.)
+To update packages using the **Anaconda Navigator**, start **Navigator**, click **Environments**, change the dropdown from `Installed` to `Updateable`, then go through and select packages you wish to upgrade by clicking on the checkbox and selecting "Mark for update" from the dropdown.  The checkbox will change to an arrow.  When you select a package, a green `Apply` button and a red `Clear` button will appear at the lower right.  When you have marked all packages you wish to update, click the `Apply` button.  (It may take a while to complete.)
 
-If you are updating many packages it may be better to do it through a command line.  From your computer's applications menu, start the Anaconda Prompt.   To upgrade a package type 
+If you are updating many packages it may be better to do it through a command line in terminal winow.  
+
+- **On Windows:** From your computer's applications menu, start the Anaconda Prompt.
+- **On MacOS or Linux:** Start a terminal window.
+
+**List installed Packages** - In the terminal type the following command and press the **Enter/Return** key:
+```
+conda list
+```
+
+**Update Existing Packages** - In the terminal window execute this command. 
 
 ```
-conda update package
+conda update <package>
 ```
+Here \<package> is a placeholder for the name of the package to be udpdated.
 
-You can also install packages with either the Navigator interface or with the conda command line.
+**Install new Packages** - In the terminal window execute this command:
+```
+conda install <newpackage>
+```
+Here \<newpackage> is a placeholder for the name of the package to be installed.
 
-```
-conda install newpackage
-```
+
 
 Many more options are available.  Conda can also be used to create "sandboxes" called _conda environments_.  Conda's [user guide](https://conda.io/projects/conda/en/latest/user-guide/index.html) describes conda's capabilities.
 
