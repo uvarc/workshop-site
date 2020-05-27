@@ -113,23 +113,51 @@ print (f"Filtered: {filtered}")
 **A.** Write a program that obtains the sum of the numbers from 1 to some specified positive (>0) integer N. Request the value of N as console input from the user. Your program should catch user inputs that cannot be converted to integers greater than 0.  Do not use the Gauss formula, do this via “brute force.”
 Print the number, its sum as obtained from your work, and the correct answer from the Gauss formula sum(N)=N(N+1)/2.  Test your program with N=1, N=25, N=1000.
 
-**B.** Modify your program to print a table of the sums of the first 25 numbers. Use a function to implement the sum computation. Print a header that indicates the columns are Integer and Sum. Try to line up your output as best you can using f-strings.
-
 <details>
-<summary>See a basic solution here:</summary>
+<summary>See solution here:</summary>
 <pre>
+<code>
 n_str = input("Please enter integer number N > 0: ")
 try:
     N = int(n_str)
     if N >0:
-        sum = 0
+        b_sum = 0
         for number in range(1,N+1):
-            sum = sum+number
-        print (f"Sum (brute force): {sum}, sum (Gaussian method): {N*(N+1)//2}.")
+            b_sum = b_sum+number
+        print (f"Sum (brute force): {b_sum}, sum (Gaussian method): {N*(N+1)//2}.")
     else:
         print ("Please enter an integer number greater than 0.")
 except:
     print (f"The entered value {n_str} cannot be converted to an integer number")
+</code>
+</pre>
+</details>
+
+**B.** Modify your program to print a table of the sums of the first 25 numbers. Use a function to implement the sum computation. Print a header that indicates the columns are Integer and Sum. Try to line up your output as best you can using f-strings.
+
+<details>
+<summary>See solution here:</summary>
+<pre>
+<code>
+def calculate_sum(N):
+    b_sum = 0
+    for number in range(1,N+1):
+        b_sum = b_sum+number
+    return b_sum    
+
+n_str = input("Please enter integer number N > 0: ")
+try:
+    N = int(n_str)
+    if N >0:
+        print (f"{'N':5} | {'Sum (brute force)':17} | {'Sum (Gaussian method)':17}")
+        for n in range(1,N+1):
+            brute_sum = calculate_sum(n)
+            print (f"{n:5} | {brute_sum:17} | {n*(n+1)//2:17}")    
+    else:
+        print ("Please enter an integer number greater than 0.")
+except:
+    print (f"The entered value {n_str} cannot be converted to an integer number")
+</code>
 </pre>
 </details>
 
