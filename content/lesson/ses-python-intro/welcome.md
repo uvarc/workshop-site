@@ -52,7 +52,7 @@ The Anaconda environment from [Anaconda Inc.](https://anaconda.org) is widely us
 
 ## Navigator
 
-Once you have installed Anaconda, find the Navigator application.  You should see a workspace similar to the screenshot, with several options for working environments, some of which are not installed.  We will use Spyder and Jupyterlab, which should already be installed.  If not, click the button to install the package.
+Once you have installed Anaconda, start the Navigator application.  You should see a workspace similar to the screenshot, with several options for working environments, some of which are not installed.  We will use Spyder and Jupyterlab, which should already be installed.  If not, click the button to install the package.
 
 ![Navigator](/images/ses-python-intro/anaconda-navigator.png)
 
@@ -64,7 +64,7 @@ Now we will switch to Spyder.  Spyder is an Integrated Development Environment, 
 
 ### The Editor Pane
 
-If you are using Python 2.7, add the `future` line immediately after the triple-quoted section.
+If you are using Python 2.7, add the `from __future__ import print_function` line immediately after the triple-quoted section.
 
 If you type
 
@@ -123,7 +123,7 @@ We can see some of these features in action by creating a simple plot. after the
 import matplotlib.pylab as plt
 ```
 
-First we see a yellow triangle, indicating a syntax problem -- in this case, `plt` is imported but not used.  We ignore this warning since we will be using it.  As we type
+First we see a yellow triangle, indicating a syntax problem -- in this case, `plt` is imported but not used.  We ignore this warning since we will be using it.
 
 Type in the following statement on the next line:
 ```
@@ -137,7 +137,9 @@ y = plt.sin(x)
 plt.plot(x,y)
 ```
 
-You must save a file before you can run it.  Go the File menu, Save As, and name it `sine.py`  Use the project folder you created earlier.  When we run this code, we see the plot appear embedded in a window associated with the **Plots** tab (If you have an older Spyder version, the plot will be embedded in the iPython window).  We can right-click on the image to bring up a menu that allows us to save the plot.
+You must save a file before you can run it.  Go to the **File** menu, **Save As**, and name it `sine.py`.  Use a folder dedicated for this course.  
+
+When we run this code, we see the plot appears embedded in a window associated with the **Plots** tab (If you have an older Spyder version, the plot will be embedded in the iPython console pane).  The small icons at the top of **Plots** pane allow us to save, copy, or close our plots.  (In older Spyder versions you may right-click on the plot image to save it.)
 
 ![SpyderSine](/images/ses-python-intro/anaconda-plot-example.png)
 
@@ -146,7 +148,13 @@ You must save a file before you can run it.  Go the File menu, Save As, and name
 
 ## Updating Packages in Anaconda
 
-To update packages using the **Anaconda Navigator**, start **Navigator**, click **Environments**, change the dropdown from `Installed` to `Updateable`, then go through and select packages you wish to upgrade by clicking on the checkbox and selecting "Mark for update" from the dropdown.  The checkbox will change to an arrow.  When you select a package, a green `Apply` button and a red `Clear` button will appear at the lower right.  When you have marked all packages you wish to update, click the `Apply` button.  (It may take a while to complete.)
+To update packages using the **Anaconda Navigator**, follow these steps:
+
+1. Start the **Navigator**.
+2. Click **Environments**.
+3. Click **Update index...**.
+4. Change the dropdown from **Installed** to **Updateable**. This will only show you those packages that can be updated. You can also type in a package name in the search box next to the **Update index...** box to filter the list. Then go through and select packages you wish to upgrade by clicking on the checkbox and selecting **Mark for update** from the dropdown.   After you click, the checkbox will change to an arrow.  When you select a package, a green `Apply` button and a red `Clear` button will appear at the lower right. 
+5. When you have marked all packages you wish to update, click the `Apply` button.  (It may take a while to complete.)
 
 If you are updating many packages it may be better to do it through a command line in terminal winow.  
 
