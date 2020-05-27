@@ -350,13 +350,13 @@ Use expression evaluation to examine the results of the following:
 Examine the results of the following:
 <pre>
 <code>
-a=11.0; b=9.0; c=45.0 n=3
-print(a &gt b)
-print(a &lt b and c==n)
-print(a &lt b or c==n)
-print(a &gt b or c==n and a &lt b)
-print((a &gt b or c==n) and a &lt b)
-is_greater=a &gt b
+a=11.0; b=9.0; c=45.0; n=3
+print(a > b)
+print(a < b and c==n)
+print(a < b or c==n)
+print(a > b or c==n and a < b)
+print((a > b or c==n) and a < b)
+is_greater=a > b
 print(is_greater,type(is_greater))
 </code>
 </pre>
