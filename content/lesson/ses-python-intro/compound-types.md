@@ -131,18 +131,18 @@ L.insert(0,item)
 
 ## Shortening lists
 
-Delete an element by its indext
+Delete an element by its index:
 ```
 del L[i]
 ```
 
-Delete the first occurrence of a particular element
+Delete the first occurrence of a particular element:
 ```
 L.remove(item)
 ```
 The `item` must match exactly or an error occurs.
 
-Remove and return an element
+Remove and return an element:
 ```
 lastitem = L.pop()
 thirditem = L.pop(2)
