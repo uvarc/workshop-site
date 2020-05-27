@@ -144,28 +144,41 @@ In sum and similar methods, such as prod, the axis argument is the one to be _su
 ```
 A = np.random.random((10,10))
 print(A.shape)
-(10,10)
-print(A.size)
-100
-print(A.ndim)
-2
-print(A.dtype)
-dtype('float64')
 ```
+**Output:** `(10,10)`
+
+```
+print(A.size)
+```
+**Output:** `100`
+
+```
+print(A.ndim)
+```
+**Output:** `2`
+
+```
+print(A.dtype)
+```
+**Output:** `dtype('float64')`
 
 ### More Advanced Indexing
 
  An Ndarray can take as its index an integer or Boolean array.
 
 ```
-A = np.array([-2.,3.,-8.,
-             -11.,12.,12.,45.,19.])
+A = np.array([-2.,3.,-8.,-11.,12.,12.,45.,19.])
 I = np.array([2,4,5])
-valid = A>0
+valid = A>0    #creates a Boolean array
 print(A[I])
-[-8.,12.,12.]
+print(valid)
 print(A[valid])
-[  3.  12.  12.  45.  19.]
+```
+**Output:**
+```
+[-8. 12. 12.]
+[False  True False False  True  True  True  True]
+[ 3. 12. 12. 45. 19.]
 ```
 
 ## Reading and Writing Files
@@ -211,7 +224,7 @@ NumPy provides many functions, including a large selection of mathematical funct
 
 ```
 T = numpy.ones(4)
-Z = 3.0*T+numpy.ones_like(T)
+Z = 3.0*T+numpy.ones_like(T)     #array of ones with same shape as array T
 I = numpy.array([1,0,0,0])
 A = math.pi*I
 B = numpy.sin(A)
@@ -236,6 +249,7 @@ NumPy provides many built-in functions for array manipulation or mathematical/st
 | rollaxis, swapaxis | linspace                   |
 | transpose          | lstsq                      |
 
+<br>
 This is just a sample; the full reference can be examined at the [manual](https://docs.scipy.org/doc/numpy/reference/routines.html).
 
 ### Ufuncs
@@ -249,7 +263,7 @@ Functions that accept both arrays and scalars are called __ufuncs__ for "univers
 
 Functions that adhere to these rules are said to be _pure_.  The prohibition on printing does complicate debugging somewhat.
 
-Example:
+**Example:**
 
 ```
 import numpy as np 

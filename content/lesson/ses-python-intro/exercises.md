@@ -110,7 +110,7 @@ print (f"Filtered: {filtered}")
 
 ### Project 4
 
-**A.** Write a program that obtains the sum of the numbers from 1 to some specified positive (>0) integer N. Request the value of N as console input from the user. Your program should catch user inputs that cannot be converted to integers greather than 0.  Do not use the Gauss formula, do this via “brute force.”
+**A.** Write a program that obtains the sum of the numbers from 1 to some specified positive (>0) integer N. Request the value of N as console input from the user. Your program should catch user inputs that cannot be converted to integers greater than 0.  Do not use the Gauss formula, do this via “brute force.”
 Print the number, its sum as obtained from your work, and the correct answer from the Gauss formula sum(N)=N(N+1)/2.  Test your program with N=1, N=25, N=1000.
 
 **B.** Modify your program to print a table of the sums of the first 25 numbers. Use a function to implement the sum computation. Print a header that indicates the columns are Integer and Sum. Try to line up your output as best you can using f-strings.
@@ -148,7 +148,7 @@ Test your program for N=30 and N=50.
 **B.** Modify your program to print the starting number, its stopping time, and the maximum value of the sequence of numbers. **Hint:** If you use a list you will be able to use the len() and max() intrinsic (built-in) functions. Confirm that you get the same stopping numbers as before.
 
 <details>
-<summary>See a basic solution here:</summary>
+<summary>See solution here:</summary>
 <pre>
 def collatz(N):
     steps = [N]
@@ -186,7 +186,7 @@ The algorithm for converting a number in base 10 to another base is as follows:
 That is two (regular, not “smart”) double quotes with nothing between them, followed by a period, followed by join and in parentheses, the name of the list you have created.
 
 <details>
-<summary>See a basic solution here:</summary>
+<summary>See solution here:</summary>
 <pre>
 def convert_8(N, base=8):
     digits = []
@@ -204,8 +204,31 @@ for n in range(51):
 </pre>
 </details>    
     
-**B.** Modify your program to handle bases >10. Use the letters of the alphabet to represent digits 10, 11, 12, ... as A, B, C, ... Hint: the char(<number>) built-in converts from an integer to its representation in the ASCII collating sequence. Note that A is number 65, i.e. chr(65)="A". The rest of the alphabet follows in numerical sequence to 96, then the lower-case letters begin at 97. Please use upper case letters.
+**B.** Modify your program to handle bases up to 16 (hexadecimal). Use the letters of the alphabet to represent digits 10, 11, 12, ... as A, B, C, ... Hint: the char(<number>) built-in converts from an integer to its representation in the ASCII collating sequence. Note that A is number 65, i.e. chr(65)="A". The rest of the alphabet follows in numerical sequence to 96, then the lower-case letters begin at 97. Please use upper case letters.
 The only widely used base greater than 10 is hexadecimal (base 16). Print a table of 0 to 50 as hexadecimal numbers.
+
+<details>
+<summary>See solution here:</summary>
+<pre>
+def convert(N, alphabet, base=16):
+    digits = []
+    if n==0:
+        return "0"
+    while N>0:
+        r = N % base
+        N = N // base
+        digits.append(alphabet[r])
+    return "".join(digits[::-1])
+
+base = 8
+alphabet = {i:chr(48+i) for i in range(10)}
+alphabet.update({10+i:chr(65+i) for i in range(6)})
+print (f"{'Base 10':>8}|{'Base {base}':>8}")
+for n in range(51):
+    conv = convert(n, alphabet, base=base)
+    print (f"{n:8d}|{conv:>8}")
+</pre>
+</details>    
 
 ---
 
@@ -216,12 +239,30 @@ The only widely used base greater than 10 is hexadecimal (base 16). Print a tabl
 ### Project 1
 Create a new Python script that performs the following operations: 
 
-- Create a numpy array, x,  of values from 1 to 20, with step sizes of 0.01.
-- Create a numpy array, y, where y = sin(x) + cos(2x)
-- Optional: Enhance Project 1 by allowing the user to specify the x start, end and stride values.
+- Create a numpy array, x, of values from 1.0 to 50.0, with step sizes of 0.01.
+- Create a numpy array, y, where y = sin(x) + cos(1.4*x) + 0.1*x.
+- Determine and print the mean y value.
+- Determine and print the x coordinates where y reaches a minimum and where y reaches a maximum in the given interval. **Hint:** Lookup the argmin and argmax functions.
+- Optional: Allow the user to specify the x start, end and stride values.
 - Optional: Plot y as a function of x using the matplotlib package (see below)
 
 Remember you need to add the `import numpy` (or commonly used `import numpy as np`) statement in your script before you can use the numpy package.
+
+<details>
+<summary>See solution here:</summary>
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.arange(0.0,50.0,0.01)
+y = np.sin(x) + np.cos(2*x) #np.cos(1.4*x) + 0.1*x
+mean_y = y.mean()
+min_index = np.argmin(y) # np.where(y==y.min())
+max_index = np.argmax(y) # np.where(y==y.max())
+print (f"mean y:{mean_y}")
+print (f"max y:{y[min_index]} at x={x[min_index]}")
+print (f"max y:{y[max_index]} at x={x[max_index]}")
+</pre>
+</details> 
 
 ### Project 2
 Find the maximum of a 3d surface by “brute force” evaluation of x, y, z values. 
@@ -229,9 +270,36 @@ Find the maximum of a 3d surface by “brute force” evaluation of x, y, z valu
 ![](/images/ses-python-intro/exercise-bruteforce.png)
 
 - Generate a list of N random values for each of x and y over the above range. For testing you can use N=8,000,000.
-- Determine the maximum of the 3d surface. 
-- Optional: Plot the 3d surface using the matplotlib package (see below).
+- Determine the x/y coordinates that define the maximum z value of the 3d surface. Once the code is working, vary N and compare how the x,y,z max values change.
+- Optional: Plot the surface using the matplotlib package (see below).
 
+<details>
+<summary>See solution here:</summary>
+<pre>
+import numpy as np
+
+m1 = np.sqrt(2.)
+m2 = np.sqrt(np.pi)
+s1 = 3.1
+s2 = 1.4
+s1_2x_sqr = 2*(s1**2)
+s2_2x_sqr = 2*(s2**2)
+s1_x_s2_x_sqrt_2x_pi = s1 * s2 * (np.pi * 2) ** 0.5
+
+def calc_z(x,y):
+    z1 = 0.1 * np.sin(x) * np.sin(x*y)
+    alpha = ((x - m1) ** 2)/ s1_2x_sqr
+    beta = ((y - m2) ** 2)/ s2_2x_sqr
+    z2 = 1 / (np.exp(alpha + beta) * s1_x_s2_x_sqrt_2x_pi) 
+    return z1 + z2
+
+N = 8000000
+x = np.random.uniform(-10.0*np.pi, 10.0*np.pi, N)
+y = np.random.uniform(-10.0*np.pi, 10.0*np.pi, N)
+z = calc_z(x,y)
+max_idx = np.argmax(z)
+</pre>
+</details> 
 
 ## Pandas 
 These are in generally in order of difficulty, from easiest to most difficult. We have not covered all of these items in our lectures, so feel free to ask questions or better yet, ask Google. Ex: ("python pandas create new dataframe")
