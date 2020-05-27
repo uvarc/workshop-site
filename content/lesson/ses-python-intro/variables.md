@@ -362,6 +362,7 @@ print(is_greater,type(is_greater))
 </pre>
 </details>
 
+
 ---
 
 {{< series-buttons overview="/categories/summer-education-series-programming-in-python/" prev="/lesson/ses-python-intro/welcome/" next="/lesson/ses-python-intro/loops/" >}}
