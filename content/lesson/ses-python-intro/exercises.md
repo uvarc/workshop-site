@@ -335,6 +335,7 @@ x = np.random.uniform(-10.0*np.pi, 10.0*np.pi, N)
 y = np.random.uniform(-10.0*np.pi, 10.0*np.pi, N)
 z = calc_z(x,y)
 max_idx = np.argmax(z)
+print (f"Max z @ x={x[max_idx]},y={y[max_idx]}, z={z[max_idx]}")
 </pre>
 </details> 
 
