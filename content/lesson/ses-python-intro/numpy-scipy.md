@@ -23,9 +23,34 @@ An __array__ is an ordered data structure that contains elements all of the same
 ```
 import numpy 
 A = numpy.array([1,0,0,0])
-lenA = len(A)    #number of rows 
+lenA = len(A)  #number of rows 
+A.ndim         #array rank, i.e. number axes
+A.shape        #tuple with length of each dimension
 A.size         #number of elements 
-A.shape        #tuple of dimensions 
+```
+
+```
+A = np.array(list(range(24))).reshape(2,4,3)
+print (A)
+print (f"ndim:{A.ndim}")
+print (f"shape:{A.shape}")
+print (f"size:{A.size}")
+```
+
+**Output:**
+```
+[[[ 0  1  2]
+  [ 3  4  5]
+  [ 6  7  8]
+  [ 9 10 11]]
+
+ [[12 13 14]
+  [15 16 17]
+  [18 19 20]
+  [21 22 23]]]
+ndim:3
+shape:(2, 4, 3)
+size:24
 ```
 
 Unlike most Python data types, arrays must be initialized before they can be addressed.  Several methods are available.
@@ -40,7 +65,7 @@ Unlike most Python data types, arrays must be initialized before they can be add
   * `A = numpy.ones((2,3,4))`
 * Identity matrix (NxN but only N is declared)
   * `A = numpy.eye(100)` 
-* Initialize to all zeros, same shape as a pre-existing array 
+* Initialize to all zeros, same shape as a pre-existing array `A`
   * `B = numpy.zeros_like(A)`
 
 There are other functions that can be used to initialize but these are among the most common.
@@ -60,7 +85,7 @@ Be sure to note the differences between
 ```
 A = np.zeros((10,10))
 IM = np.zeros((10,10),dtype='int')
-mask = np.zeros((10,10),dtype='bool')
+mask = np.zeros((10,10),dtype='bool') #Boolean representation of zero is False
 ```
 
 We can explicitly declare multidimensional arrays as well.
@@ -72,7 +97,7 @@ print(C)
  [ 4.  5.  6.]]
 ```
 
- However, this is not very practical for large arrays.  If we can declare an array as a linear sequence of numbers, we can use the built-in function `arange`.  The syntax is similar to `range` but it can take arguments of any numerical type, and it returns an Ndarray.
+However, this is not very practical for large arrays.  If we can declare an array as a linear sequence of numbers, we can use the built-in function `arange`.  The syntax is similar to `range` but it can take arguments of any numerical type, and it returns an Ndarray.
 
 ```
 V = np.arange(10,30,5)
@@ -92,17 +117,18 @@ Negative indices count from the last element.
 
 ```
 V[-1]   # last element
-A[0,-2] # first in column 0, next to last in column 1.
+A[0,-2] # row 0 (row=first axis), next to last in column (column=second axis).
 ```
 
-Subarrays, or slices, are indicated by the colon-separated range operator we have seen several times now.   As usual for Python, the upper bound must be one greater than the intended upper bound, i.e. it is _non-inclusive_.  We can omit lower and upper bounds if they are the edges; `\[lb:\]` extends from `lb` to the last element, while `\[:ub\]` extends from the beginning to `ub-1`.  The entire axis is expressed as `\[:\]`.
+Subarrays, or slices, are indicated by the colon-separated range operator we have seen several times now.   As usual for Python, the upper bound must be one greater than the intended upper bound, i.e. it is _non-inclusive_.  We can omit lower and upper bounds if they are the edges; `[lb:]` extends from `lb` to the last element, while `[:ub]` extends from the beginning to `ub-1`.  The entire axis is expressed as `[:]`.
 
 ```
 import numpy
 A = numpy.zeros((100,100))
 B = A[0:11,:]
 C = A[S1:E1,S2:E2]
-D = A[:,1]  # second column
+D = A[:,1]  # second column from all rows
+E = A[-1,:] # last row, all columns
 ```
 
 Pay close attention to negative indices, especially when they are part of a slice specification.
@@ -110,16 +136,17 @@ Pay close attention to negative indices, especially when they are part of a slic
 ```
 V = np.array([0,1,2,3,4])
 u = np.arange(25).reshape(5,5)
-V[-1]
- 4
-V[:-1] #note element versus slice
- [0,1,2,3]  
-u[:-1,:]
- [[ 0  1  2  3  4]
+V[-1]    #4
+V[:-1]   #note element versus slice: [0,1,2,3]  
+print(u[:-1,:])
+```
+**Output:**
+```
+[[ 0  1  2  3  4]
  [ 5  6  7  8  9]
  [10 11 12 13 14]
  [15 16 17 18 19]]
-```
+``` 
 
 ## Axes
 
@@ -187,8 +214,8 @@ NumPy includes several functions that can simplify reading and writing files.  F
 
 ```
 x,y = np.loadtxt(f, delimiter=',', usecols=(0, 2), unpack=True)
-v = np.loadtxt(f,delimiter=',',usecols=(1,)) #usecols needs tuple
-W = np.loadtxt(fin,skiprows=2)
+v = np.loadtxt(f, delimiter=',', usecols=(1,))                    #usecols needs tuple
+W = np.loadtxt(fin, skiprows=2)
 ```
 
 If `unpack` is not specified, `loadtxt` returns the values into a rank-2 array; otherwise it returns the values into a tuple of rank-1 arrays.  Columns may optionally be selected with `usecols`.  Header rows can be ignored with `skiprows`.  Other options are available.
@@ -297,7 +324,7 @@ s = V.sum()
 
 # SciPy
 
-SciPy, the \_sci_entific \_py_thon library, builds on NumPy to provide a set of modules and packages that add functions for data analysis and numerical computations.  These include 
+SciPy, the **Sci**entific **Py**thon library, builds on NumPy to provide a set of modules and packages that add functions for data analysis and numerical computations.  These include 
 
 * special functions 
 * optimizations 
