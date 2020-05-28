@@ -58,12 +58,10 @@ for t in range(0,70,10):
     c_temps.append(t)
     f = t * 1.8 + 32
     f_temps.append(f)
-
 for index in range(len(c_temps)):
-    print (f"Celsius: {c_temps[index]:.1f}, Fahrenheit: {f_temps[index]:.1f}") 
+    print (f"Celsius: {c_temps[index]:.1f}, Fahrenheit: {f_temps[index]:.1f}")
 </pre>
 </details>
-
 
 ### Project 3
 
@@ -92,6 +90,7 @@ for index in range(len(c_temps)):
 print (f"Filtered: {filtered}") 
 </pre>
 </details>
+
 
 <details>
 <summary>See an advanced solution here:</summary>
@@ -139,7 +138,8 @@ except:
 <summary>See solution here:</summary>
 <pre>
 <code>
-def calculate_sum(N):
+calculate_sum(N):
+    """Calculates the sum 1..N for given integer N."""
     b_sum = 0
     for number in range(1,N+1):
         b_sum = b_sum+number
@@ -149,7 +149,9 @@ n_str = input("Please enter integer number N > 0: ")
 try:
     N = int(n_str)
     if N >0:
-        print (f"{'N':5} | {'Sum (brute force)':17} | {'Sum (Gaussian method)':17}")
+        header = f"{'N':5} | {'Sum (brute force)':17} | {'Sum (Gaussian method)':17}"
+        print (header)
+        print ("".join(["-"] * len(header)))
         for n in range(1,N+1):
             brute_sum = calculate_sum(n)
             print (f"{n:5} | {brute_sum:17} | {n*(n+1)//2:17}")    
@@ -178,7 +180,8 @@ Test your program for N=30 and N=50.
 <details>
 <summary>See solution here:</summary>
 <pre>
-def collatz(N):
+collatz(N):
+    """Collatz conjecture algorithm."""
     steps = [N]
     while N>1:
         if (N % 2 == 0):
@@ -191,7 +194,9 @@ def collatz(N):
 numbers = [30,50]
 for N in numbers:
     print (f"Computing Collatz for N={N}")
-    print (f"{'N':>5}|{'stopping time':>15}|{'max value':>10}")
+    header = f"{'N':>5}|{'stopping time':>15}|{'max value':>10}"
+    print (header)
+    print ("".join(['-'] * len(header)))
     for n in range(1,N+1):
         stop,max_value = collatz(n)
         print (f"{n:5}|{stop:15d}|{max_value:10d}")
@@ -217,6 +222,7 @@ That is two (regular, not “smart”) double quotes with nothing between them, 
 <summary>See solution here:</summary>
 <pre>
 def convert_8(N, base=8):
+    """Convert base 10 number to number with base 8 (octal)."""
     digits = []
     if n==0:
         return "0"
@@ -239,6 +245,7 @@ The only widely used base greater than 10 is hexadecimal (base 16). Print a tabl
 <summary>See solution here:</summary>
 <pre>
 def convert(N, alphabet, base=16):
+    """Convert base 10 number to number with custom base.""" 
     digits = []
     if n==0:
         return "0"
@@ -278,14 +285,14 @@ Remember you need to add the `import numpy` (or commonly used `import numpy as n
 
 <details>
 <summary>See solution here:</summary>
+<pre>
 import numpy as np
-import matplotlib.pyplot as plt
 
 x = np.arange(0.0,50.0,0.01)
-y = np.sin(x) + np.cos(2*x) #np.cos(1.4*x) + 0.1*x
+y = np.sin(x) + np.cos(1.4*x) + 0.1*x
 mean_y = y.mean()
-min_index = np.argmin(y) # np.where(y==y.min())
-max_index = np.argmax(y) # np.where(y==y.max())
+min_index = np.argmin(y) #np.where(y==y.min())
+max_index = np.argmax(y) #np.where(y==y.max())
 print (f"mean y:{mean_y}")
 print (f"max y:{y[min_index]} at x={x[min_index]}")
 print (f"max y:{y[max_index]} at x={x[max_index]}")
@@ -297,9 +304,10 @@ Find the maximum of a 3d surface by “brute force” evaluation of x, y, z valu
 
 ![](/images/ses-python-intro/exercise-bruteforce.png)
 
-- Generate a list of N random values for each of x and y over the above range. For testing you can use N=8,000,000.
-- Determine the x/y coordinates that define the maximum z value of the 3d surface. Once the code is working, vary N and compare how the x,y,z max values change.
-- Optional: Plot the surface using the matplotlib package (see below).
+- Generate a list of N random values for each of x and y over the above range. Use numpy arrays. For testing you can use N=8,000,000.
+- Write a function that determines the x/y coordinates that define the maximum z value of the 3d surface. Once the code is working, vary N and compare how the x,y,z max values change.
+- Optional: Plot the surface using the matplotlib package (see below).  Be careful, you may want to reduce the number of points to plots while experimenting with the best approach.
+- Optional: Create a module for your z calculating function.  Import that module into a main script.  Use the `__name__ = "__main__":` code block in your calling script.
 
 <details>
 <summary>See solution here:</summary>
@@ -315,6 +323,7 @@ s2_2x_sqr = 2*(s2**2)
 s1_x_s2_x_sqrt_2x_pi = s1 * s2 * (np.pi * 2) ** 0.5
 
 def calc_z(x,y):
+    """Calculates z value for x/y coordinates.""" 
     z1 = 0.1 * np.sin(x) * np.sin(x*y)
     alpha = ((x - m1) ** 2)/ s1_2x_sqr
     beta = ((y - m2) ** 2)/ s2_2x_sqr

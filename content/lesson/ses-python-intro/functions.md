@@ -14,30 +14,34 @@ Functions break down the programming into a series of well-defined tasks.  This 
 
 ## Arguments
 
-Like mathematical functions, programming functions (usually) take _arguments_.  In computer-science language the variable that represents an argument in the function definition is often called a _parameter_ or a _dummy variable_.  Functions must be _called_ by name or they do nothing.  Their code is static until it is invoked by a _caller_.  The interpreter must have encountered the function definition before it can be called; interpreters cannot move upward in a file.  In addition, invoking a function causes its name to take on the return value, but in Python functions are not equivalent to variables -- that value will not be stored anywhere.  It must be explicitly assigned, used in an expression, or printed for the result to be captured.
+Like mathematical functions, programming functions (usually) take _arguments_.  In computer-science language the variable that represents an argument in the function definition is often called a _parameter_ or a _dummy variable_.  
 
-In strict usage the sequence of variables may be called the _argument list_ in the caller and the _parameter list_ in the function definition; however, these terms tend to be used interchangeably.  Arguments are said to be _passed_ from the caller to the function.  The function _returns_ a value, which replaces the function's name after it has been executed.  In Python functions must always return a value; if the programmer does not specify one, Python returns the special value `None`.  A function may return exactly one item, but that quantity may be a compound data structure such as a list or tuple, so it is possible to return multiple values from a function.
+* Functions must be _called_ by name or they do nothing.  Their code is static until it is invoked by a _caller_.  The interpreter must have encountered the function definition before it can be called; interpreters cannot move upward in a file.  
+* In strict usage the sequence of variables may be called the _argument list_ in the caller and the _parameter list_ in the function definition; however, these terms tend to be used interchangeably.  Arguments are said to be _passed_ from the caller to the function.  
+* The function _returns_ a value, which replaces the function's name after it has been executed.  In Python functions must always return a value; if the programmer does not specify one, Python returns the special value `None`.  A function may return exactly one item, but that quantity may be a compound data structure such as a list or tuple, so it is possible to return multiple values from a function.
 
 Best practice is to place all the functions you will use at the top of the file, right after the main docstring.  Functions may have a docstring themselves.  This is particularly important if the function is lengthy or complicated.
 
 ## Python Syntax
 
-The keyword is `def` (define) followed by the name of the function.  The function name _must_ be followed by parentheses whether any arguments are passed or not.  The `def` keyword begins a code block, so a colon is required.  All statements in the body of the function must be indented.  The docstring must immediately follow the `def` line and be indented one level.  Recall that docstrings are enclosed in triple double quotes (`"""My documentation"""`).  Values are returned with the `return` statement.  The `return` causes an immediate exit from the function; no further statements will be executed.
+* The beginning of a function is specified with the keyword `def` (define) followed by the name of the function.  The function name _must_ be followed by parentheses whether any arguments are passed or not.  
+* The `def` keyword begins a code block, so a colon is required.  All statements in the body of the function must be indented.  
+* The docstring must immediately follow the `def` line and be indented one level.  Recall that docstrings are enclosed in triple double quotes (`"""My documentation"""`).  Values are returned with the `return` statement.  The `return` causes an immediate exit from the function; no further statements will be executed.
 
 <a name="func_example"></a>
 **Examples**
 ```
 def sum_vals(x,y,z):
-    "Computes the sum of its input values"
+    """Computes the sum of its input values"""
     return x+y+z
 
 def make_list(x,y,z):
-   "Makes a new list"
+   """Makes a new list"""
     new_list = [x,y,z]
     return new_list
 
 def sum_diff(x,y):
-    "Returns the sum and difference of two values"
+    """Returns the sum and difference of two values"""
     return x+y,x-y
 ```
 
@@ -63,7 +67,7 @@ The arguments in the lists in both caller and callee must agree in _number_ and 
 
 ## Optional and Keyword Arguments
 
-Arguments whose values are determined from their ordering in the parameter list are called _positional_ variables.  Python supports _optional_ and _keyword_ arguments as well.  Opetional arguments are assigned a default value in the parameter list of the function definition.  If an optional argument is not present in the argument list passed by the caller, it takes on its default value; otherwise it is positional.
+Arguments whose values are determined from their ordering in the parameter list are called _positional_ variables.  Python supports _optional_ and _keyword_ arguments as well.  Optional arguments are assigned a default value in the parameter list of the function definition.  If an optional argument is not present in the argument list passed by the caller, it takes on its default value; otherwise it is positional.
 
 ```
 def func(x,y=0,w=3):
@@ -108,7 +112,7 @@ Python passes variables in a manner called _assignment_. This means that if an a
 
 ## Variable Scope
 
-The __scope__ of a variable is the range over which it has a definted value.  In Python, the scope is the code block in which the variable is first referenced.  Therefore a calling program may have a variable `x`, a function may also have a variable `x`, and if `x` is not an argument to the function then it will be distinct in the two units.  Variables defined above a `def` are global to the functions below it in the same file; that is, they are _in scope_ in the entire file.
+The __scope__ of a variable is the range over which it has a defined value.  In Python, the scope is the code block in which the variable is first referenced.  Therefore a calling program may have a variable `x`, a function may also have a variable `x`, and if `x` is not an argument to the function then it will be distinct in the two units.  Variables defined above a `def` are global to the functions below it in the same file; that is, they are _in scope_ in the entire file.
 
 When working in the interpreter (including running codes through Spyder repeatedly in the same kernal), the interpreter stores all variables with global scope into a workspace.  It may be desirable to reset these variables for new runs.  In an iPython console you can type
 
@@ -116,11 +120,7 @@ When working in the interpreter (including running codes through Spyder repeated
 %reset 
 ```
 
-to clear the workspace.  In Jupyterlab go to the URL bar and add `?reset` at the end, _viz_
-
-```
-http://localhost:8888/lab?reset 
-```
+to clear the workspace.   
 
 ## Modules
 
@@ -135,7 +135,7 @@ Many modules and packages (collections of modules) are available through a base 
 
 ### Packages in PyPI and Conda
 
-[Installing Python Packges in Anaconda](/lesson/ses-python-intro/welcome#updating-packages-in-anaconda)
+The process for installing and updating your Python packages provided by Anaconda is described [here](/lesson/ses-python-intro/welcome#updating-packages-in-anaconda).  Once a package is installed, either from official repository or as local module, you are ready to import it in your scripts.
 
 
 ```
@@ -165,7 +165,7 @@ We can select only certain components with `from`, for example:
 from modulename import func1, func2
 ```
 
-Now only `func1` and `func2` can be used, and we do _not_ precede their names with the native namespace.
+Now only `func1` and `func2` can be used, and we do _not_ precede their names with the native namespace when calling them.
 
 ```
 z = func1(x,y)
@@ -199,10 +199,17 @@ data = pd.read_csv("my_data"file)
 
 ### Main Modules
 
-When you run a script directly through the interpreter, such as by using the Run arrow in Spyder, it is in the "main" namespace.  Your module can also be imported into the interpreter or into another module.  It will still execute everything in the module, including requests for inpout and the like, unless you use the special variables \_\_name\_\_ and \_\_main\_\_ (two underscores on each side).  If you use \_\_main\_\_ you can place all code you want to execute only when run directly after a conditional.  
+When you run a script directly through the interpreter, such as by using the Run arrow in Spyder, it is in the "main" namespace.  Your module can also be imported into the interpreter or into another module.  It will still execute everything in the module, including requests for input and the like, unless you create a conditional branch `if __name__== '__main__':` and place all code you want to execute only when run directly after this conditional.  
+
+
+{{< callout >}}
+
+<b>Remember:</b> Every module in Python has a special attribute called <code>__name__</code>. The value of <code>__name__</code>  attribute is set to <code>'__main__'</code>  when module run as main program. Otherwise, the value of <code>__name__</code>  is set to contain the name of the module.
+
+{{< /callout >}}
 
 ```
-if __name__==__main__:
+if __name__== '__main__':
     do_work
 ```
 
@@ -212,36 +219,31 @@ It is customary to include code for the main namespace into a function named `ma
 def main():
     do_work
 
-if __name__==__main__:
+if __name__ == '__main__':
     main()
 ```
 
-**Example**
+**Example**:
 
 ```
-# from __future__ import print_function, division # only needed for Python 2.7
 from math import sqrt
 
 def MySqrt(x):    
-    """Babylonian method."""    
+    """Babylonian method to calculate sqrt."""    
     my_sqrt = x/2.    
-    tol = 1.e-12    
+    tol = 1.e-12
+    s0 = 0    
     while abs(my_sqrt-s0)>tol:        
         s0 = my_sqrt        
         my_sqrt = 0.5*(my_sqrt+x/my_sqrt)    
     return my_sqrt
 
-def relerr(x1,x2):    
-    return abs((x2-x1)/x2)
-
 def main():
-    print("{:s}{:s}{:s}".format("x".center(20),"sqrt".center(10),"rel_error".rjust(14)))    
-    N=5    
-    for i in range(-N,N+1):        
-        x = 10.0**(-i)        
-        print("{:14.3e}{:14.3e}{:15.7e}".format(x,sqrt(x),relerr(MySqrt(x),sqrt(x))))
+    N = 10  
+    for x in range(1,N+1):        
+        print(f"x={x:.3e}, sqrt(x)={sqrt(x):.3e}, MySqrt(x)={MySqrt(x):.7e}")
 
-if __name__==__main__:
+if __name__ == '__main__':
     main()
 ```
 
