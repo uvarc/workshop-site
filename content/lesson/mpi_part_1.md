@@ -34,3 +34,8 @@ Also download the labs and sample code for your language (C++ use C):
 
 Fortran users may download my random.f90 module
 [random.f90](/data/random.f90)
+
+Some sample solutions
+[Monte Carlo Pi in Python](/data/MonteCarloPiMPI.py)
+[Find maximum with gather](/data/find_max_gather.py)
+

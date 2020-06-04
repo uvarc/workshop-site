@@ -33,3 +33,8 @@ Also download the labs and sample code for your language (C++ use C):
 [heatedplate.cxx](/data/heatedplate.cxx)
 [heatedplate.f90](/data/heatedplate.f90)
 [heatedplate.py](/data/heatedplate.py)
+
+Some solutions
+[Token ring](/data/ring.py)
+[Heated plate in C++](/data/mpiheatedplate.cxx)
+[Heated plate in Python](/data/mpiheatedplate.py)
